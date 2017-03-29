@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深度学习入门实战（一） | Melon Team</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~
+
+既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习入门实战（一）">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/index.html">
+<meta property="og:site_name" content="Melon Team">
+<meta property="og:description" content="导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~
+
+既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/1.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/2.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/3.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/4.png">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/6.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/7.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/8.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/9.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/10.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/11.jpg">
+<meta property="og:updated_time" content="2017-03-29T07:46:42.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习入门实战（一）">
+<meta name="twitter:description" content="导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~
+
+既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～">
+<meta name="twitter:image" content="http://yoursite.com/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Melon Team" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Melon Team</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Deep_learning_entry_1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/Deep_learning_entry_1/" class="article-date">
+  <time datetime="2017-03-28T01:04:58.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度学习入门实战（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~</p>
+</blockquote>
+<p>既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～</p>
+<a id="more"></a>
+<h2 id="0x00-深度学习简介"><a href="#0x00-深度学习简介" class="headerlink" title="0x00 深度学习简介"></a>0x00 深度学习简介</h2><p>虽然吧，我们不讲哪些深奥的数学原理，但是基本的原理还是要掌握下的～</p>
+<p>在介绍深度学习之前我们要先了解两个概念，机器学习和神经网络</p>
+<h3 id="机器学习："><a href="#机器学习：" class="headerlink" title="机器学习："></a>机器学习：</h3><p>在介绍深度学习之前，我们先简单介绍下机器学习，我们引用下维基百科上机器学习的定义：</p>
+<p>机器学习是人工智能的一个分支。人工智能的研究是从以“推理”为重点到以“知识”为重点，再到以“学习”为重点，一条自然、清晰的脉络。显然，机器学习是实现人工智能的一个途径，即以机器学习为手段解决人工智能中的问题。机器学习在近30多年已发展为一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、计算复杂性理论等多门学科。机器学习理论主要是设计和分析一些让计算机可以自动“学习”的算法。机器学习算法是一类从数据中自动分析获得规律，并利用规律对未知数据进行预测的算法。因为学习算法中涉及了大量的统计学理论，机器学习与推断统计学联系尤为密切，也被称为统计学习理论。算法设计方面，机器学习理论关注可以实现的，行之有效的学习算法。很多推论问题属于无程序可循难度，所以部分的机器学习研究是开发容易处理的近似算法。</p>
+<p>简单的说机器学习就是让机器去分析数据找规律，并通过找到的规律对新的数据进行处理。</p>
+<h3 id="神经网络："><a href="#神经网络：" class="headerlink" title="神经网络："></a>神经网络：</h3><h4 id="神经元："><a href="#神经元：" class="headerlink" title="神经元："></a>神经元：</h4><p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/1.png" alt="Alt text"></p>
+<p>以图像为例子，每个数据或者输入就是一张图片，而里面的每个x可以是图片中的每个像素。对于每个像素我们都赋予一个权重，然后经过转换函数（Transfer Function, 这里是线性叠加）得到一个数值。简单来说，我们对所有像素做个线性加权叠加。得到的数值会经过激活函数得到新的数值。这个激活函数（Activation Function）往往是那几个符合某些特性的非线性函数。为什么需要非线性的转换呢？举个简单的例子，在同一个平面你和你的影子是重叠是分不开的，在立体的空间你们却能分开了。非线性的转换有类似的作用。常用的激活函数有relu, softmax, tanh。</p>
+<p>简单的说一个神经元是一个简单的分类器，你输入一个</p>
+<p>比如我们有一大堆猫、狗照片，把每一张照片送进一个机器里，机器需要判断这幅照片里的东西是猫还是狗。我们把猫狗图片处理一下，左边是狗的特征向量，右边是猫的</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/2.png" alt="Alt text"></p>
+<p>大家想想，最简单地把这两组特征向量分开的方法是啥？当然是在两组数据中间画一条竖直线，直线左边是狗，右边是猫，分类器就完成了。以后来了新的向量，凡是落在直线左边的都是狗，落在右边的都是猫。<br>一条直线把平面一分为二，一个平面把三维空间一分为二，一个n-1维超平面把n维空间一分为二，两边分属不同的两类，这种分类器就叫做神经元。<br>当然，上面那幅图我们是开了上帝视角才知道“一条竖直线能分开两类”，在实际训练神经元时，我们并不知道特征是怎么抱团的。神经元模型的一种学习方法称为Hebb算法：<br>先随机选一条直线/平面/超平面，然后把样本一个个拿过来，如果这条直线分错了，说明这个点分错边了，就稍微把直线移动一点，让它靠近这个样本，争取跨过这个样本，让它跑到直线正确的一侧；如果直线分对了，它就暂时停下不动。因此训练神经元的过程就是这条直线不断在跳舞，最终跳到两个类之间的竖直线位置。</p>
+<h4 id="神经网络：-1"><a href="#神经网络：-1" class="headerlink" title="神经网络："></a>神经网络：</h4><p>神经网络简单点将就是由好多个神经元组成的系统。</p>
+<p>神经元一个缺点是：它只能切一刀！你给我说说一刀怎么能把下面这两类分开吧。</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/3.png" alt="Alt text"></p>
+<p>解决办法是多层神经网络，底层神经元的输出是高层神经元的输入。我们可以在中间横着砍一刀，竖着砍一刀，然后把左上和右下的部分合在一起，与右上的左下部分分开；也可以围着左上角的边沿砍10刀把这一部分先挖出来，然后和右下角合并。</p>
+<p>每砍一刀，其实就是使用了一个神经元，把不同砍下的半平面做交、并等运算，就是把这些神经元的输出当作输入，后面再连接一个神经元。这个例子中特征的形状称为异或，这种情况一个神经元搞不定，但是两层神经元就能正确对其进行分类。</p>
+<p>只要你能砍足够多刀，把结果拼在一起，什么奇怪形状的边界神经网络都能够表示，所以说神经网络在理论上可以表示很复杂的函数/空间分布。但是真实的神经网络是否能摆动到正确的位置还要看网络初始值设置、样本容量和分布。</p>
+<h3 id="深度学习："><a href="#深度学习：" class="headerlink" title="深度学习："></a>深度学习：</h3><p>那什么是深度学习呢？深度学习简单点说就是一种为了让层数较多的多层神经网络可以训练，能够运行起来而演化出来的一系列的新的结构和新的方法。</p>
+<p>就像下图</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/4.png" alt="Alt text"></p>
+<p>普通的神经网络可能只有几层，深度学习可以达到十几层。深度学习中的深度二字也代表了神经网络的层数。现在流行的深度学习网络结构有”CNN(卷积神经网络)、RNN(循环神经网络)、DNN(深度神经网络)的等。</p>
+<p>当然我们是以实战为主，可以直接使用现在市面上的一些现有深度学习框架，现在流行的深度学习框架有MXnet,tensorflow,caffe等，本文主要介绍<a href="https://github.com/dmlc/mxnet" target="_blank" rel="external">MXnet</a>这个开源的优秀深度学习框架。</p>
+<h2 id="0x01-安装MXnet"><a href="#0x01-安装MXnet" class="headerlink" title="0x01 安装MXnet"></a>0x01 安装MXnet</h2><p>这里我们安装的是CPU版的MXnet，为什么不安装GPU版？因为偶的Macbook是AMD的卡啊，MXnet只支持CUDA</p>
+<h4 id="1-下载源码"><a href="#1-下载源码" class="headerlink" title="1. 下载源码"></a>1. 下载源码</h4><p>新建一个目录，到那个目录下执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --recursive https://github.com/dmlc/mxnet</div></pre></td></tr></table></figure>
+<h4 id="2-编译安装"><a href="#2-编译安装" class="headerlink" title="2. 编译安装"></a>2. 编译安装</h4><p>运行setup-utils目录下的install-mxnet-osx.sh脚本，中间要编译些东西，要多等会，再输入个密码，就自动编译安装完成啦。<br>注意一下：<br>1.因为要读取make目录下的文件，所以这里要在MXnet源码的根目录执行安装脚本～<br>比如在mxnet的源码根目录执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh ./setup-utils/install-mxnet-osx.sh</div></pre></td></tr></table></figure>
+<p>2.以后运行脚本可能需要一些python模块，建议安装下pip<br>mac下安装的方法也很简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo easy_install pip</div></pre></td></tr></table></figure>
+<h2 id="0x02-样例运行"><a href="#0x02-样例运行" class="headerlink" title="0x02 样例运行"></a>0x02 样例运行</h2><p>我们可以试着运行下MXnet自带的一些样例，这里我们试下Neural art这个样例<br>Neural art是个让机器模仿已有画作的绘画风格来把一张照片重新绘画的算法。<br>比如我们输入<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/5.jpg" alt="Alt text"><br>和<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/6.jpg" alt="Alt text"></p>
+<p>最终生成<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/7.jpg" alt="Alt text"></p>
+<p>1.首先打开example/neural-style目录，大部分样例都是有README的，大家在运行之前可以先看看<br>这个样例的README有说<br>First use <code>download.sh</code> to download pre-trained model and sample inputs</p>
+<p>Then run <code>python nstyle.py</code>, use -h to see more options</p>
+<p>那我们就要运行这个目录下的download.sh</p>
+<p>脚本会自动下载训练模型vgg19.params到Model目录，输入的素材到input目录</p>
+<p>2.运行Demo<br>因为我们运行的是CPU版，所以要这么输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python nstyle.py --gpu -1 --max-num-epochs 150 --output_dir ~/Desktop/</div></pre></td></tr></table></figure>
+<p>–gpu：使用哪个一个GPU,-1代表使用CPU<br>–max-num-epochs：最大迭代次数，这里我们迭代150次<br>–output_dir：结果输出路径<br>可能大家一次运行不起来，会出现No module named for xxx的提示，一般是相应的python模块没有安装，在google搜下No module named for xxx一般都能找到安装方法，大部分都能通过pip安装~</p>
+<p>运行结果<br>我们看下不同迭代次数时的结果是什么样的<br>10次：</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/8.jpg" alt="Alt text"></p>
+<p>50次：</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/9.jpg" alt="Alt text"></p>
+<p>100次：</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/10.jpg" alt="Alt text"></p>
+<p>150次：</p>
+<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/11.jpg" alt="Alt text"></p>
+<p>可以看出迭代次数越多效果越好~当然由于深度学习是有很多层神经网络组成，需要的运算量巨大，使用CPU即使是i7，150次迭代也需要好几十分钟了，有条件的看官可以尝试使用GPU版，可以将时间缩短到几分钟，甚至在云平台上跑。<br>样例的具体原理可以参考参考附录的第二个链接。</p>
+<p><strong>参考附录：</strong></p>
+<p><a href="http://www.leiphone.com/news/201608/wh8osGY4vg28XlvM.html" target="_blank" rel="external">http://www.leiphone.com/news/201608/wh8osGY4vg28XlvM.html</a><br><a href="http://phunter.farbox.com/post/mxnet-tutorial2" target="_blank" rel="external">http://phunter.farbox.com/post/mxnet-tutorial2</a><br><a href="https://zhuanlan.zhihu.com/p/20634163" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/20634163</a><br><a href="http://www.cnblogs.com/peizhe123/p/4641149.html" target="_blank" rel="external">http://www.cnblogs.com/peizhe123/p/4641149.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/Deep_learning_entry_1/" data-id="cj0unw2bs0004m01uz4vg03e6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/Deep_learning_entry_2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          深度学习入门实战（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/27/Video_codec_learning_sharing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">视频编解码学习分享</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IM/">IM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/我说/">我说</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/视频/">视频</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/28/Deep_learning_entry_2/">深度学习入门实战（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/Deep_learning_entry_1/">深度学习入门实战（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/27/Video_codec_learning_sharing/">视频编解码学习分享</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/27/IOS_touch_event_distribution_mechanism/">IOS触摸事件分发机制详解</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">Android短视频边下边播详解</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Melon Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
