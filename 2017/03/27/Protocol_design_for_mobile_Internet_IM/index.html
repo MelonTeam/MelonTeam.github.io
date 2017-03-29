@@ -10,24 +10,24 @@
 &amp;#160; &amp;#160; &amp;#160; &amp;#160;虽然现在市面上已经存在各种各样的消息推送SDK如信鸽，但可能由于各种原因无法全面满足需求，还是想自己实现一个IM或推送功能。那么你需要解决哪些问题呢？首先面临的第一个问题就是如何实现IM协议？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="移动互联网IM之协议设计">
-<meta property="og:url" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/index.html">
+<meta property="og:url" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/index.html">
 <meta property="og:site_name" content="Melon Team">
 <meta property="og:description" content="导语：如果想自己动手实现一个移动互联网IM app，要怎么做？第一个要解决的问题就是IM协议的设计。本文将讲述如何从0到1设计一个私有的tcp协议。
 
 &amp;#160; &amp;#160; &amp;#160; &amp;#160;虽然现在市面上已经存在各种各样的消息推送SDK如信鸽，但可能由于各种原因无法全面满足需求，还是想自己实现一个IM或推送功能。那么你需要解决哪些问题呢？首先面临的第一个问题就是如何实现IM协议？">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/1.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/2.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/3.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/4.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/5.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/6.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/1.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/2.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/3.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/4.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/5.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/6.png">
 <meta property="og:updated_time" content="2017-03-29T07:48:12.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="移动互联网IM之协议设计">
 <meta name="twitter:description" content="导语：如果想自己动手实现一个移动互联网IM app，要怎么做？第一个要解决的问题就是IM协议的设计。本文将讲述如何从0到1设计一个私有的tcp协议。
 
 &amp;#160; &amp;#160; &amp;#160; &amp;#160;虽然现在市面上已经存在各种各样的消息推送SDK如信鸽，但可能由于各种原因无法全面满足需求，还是想自己实现一个IM或推送功能。那么你需要解决哪些问题呢？首先面临的第一个问题就是如何实现IM协议？">
-<meta name="twitter:image" content="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/1.png">
+<meta name="twitter:image" content="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Melon Team" type="application/atom+xml">
   
@@ -67,10 +67,10 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://melonteam.com"></form>
       </div>
     </div>
   </div>
@@ -246,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/" data-id="cj0unw2c2000cm01uij14hkvo" class="article-share-link">Share</a>
+      <a data-url="http://melonteam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/" data-id="cj0uqj9250008us1uf2spw3ky" class="article-share-link">Share</a>
       
       
     </footer>
@@ -281,7 +281,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IM/">IM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/我说/">我说</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/视频/">视频</a></li></ul>
     </div>
@@ -296,9 +296,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul>
     </div>
   </div>
 
@@ -306,7 +306,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
         

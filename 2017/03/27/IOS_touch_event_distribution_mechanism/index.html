@@ -9,18 +9,18 @@
 某个点击消息由父视图来处理，子视图怎么把消息传递给父视图这个按钮不灵敏，怎么扩大点击响应区域怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IOS触摸事件分发机制详解">
-<meta property="og:url" content="http://yoursite.com/2017/03/27/IOS_touch_event_distribution_mechanism/index.html">
+<meta property="og:url" content="http://melonteam.com/2017/03/27/IOS_touch_event_distribution_mechanism/index.html">
 <meta property="og:site_name" content="Melon Team">
 <meta property="og:description" content="前言很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:
 某个点击消息由父视图来处理，子视图怎么把消息传递给父视图这个按钮不灵敏，怎么扩大点击响应区域怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-t">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/IOS_touch_event_distribution_mechanism/1.png">
-<meta property="og:image" content="http://yoursite.com/2017/03/27/IOS_touch_event_distribution_mechanism/2.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/IOS_touch_event_distribution_mechanism/1.png">
+<meta property="og:image" content="http://melonteam.com/2017/03/27/IOS_touch_event_distribution_mechanism/2.png">
 <meta property="og:updated_time" content="2017-03-29T07:46:14.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IOS触摸事件分发机制详解">
 <meta name="twitter:description" content="前言很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:
 某个点击消息由父视图来处理，子视图怎么把消息传递给父视图这个按钮不灵敏，怎么扩大点击响应区域怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-t">
-<meta name="twitter:image" content="http://yoursite.com/2017/03/27/IOS_touch_event_distribution_mechanism/1.png">
+<meta name="twitter:image" content="http://melonteam.com/2017/03/27/IOS_touch_event_distribution_mechanism/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Melon Team" type="application/atom+xml">
   
@@ -60,10 +60,10 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://melonteam.com"></form>
       </div>
     </div>
   </div>
@@ -140,7 +140,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/27/IOS_touch_event_distribution_mechanism/" data-id="cj0unw2bq0003m01uot485d6p" class="article-share-link">Share</a>
+      <a data-url="http://melonteam.com/2017/03/27/IOS_touch_event_distribution_mechanism/" data-id="cj0uqj91y0005us1utwagz49k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +175,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IM/">IM</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/我说/">我说</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/视频/">视频</a></li></ul>
     </div>
@@ -190,9 +190,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul>
     </div>
   </div>
 
@@ -200,7 +200,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
         
