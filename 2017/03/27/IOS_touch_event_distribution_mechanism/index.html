@@ -1,789 +1,488 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            IOS触摸事件分发机制详解 | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>IOS触摸事件分发机制详解</title>
+    <meta name="description" content="## 前言很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:某个点击消息由父视图来处理，子视图怎么把消息传递给父视图这个按钮不灵敏，怎么扩大点击响应区域怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息阅读本文，你会明白两个问题：IOS如何找到响...">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="IOS触摸事件分发机制详解 | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理详解"><span class="post-toc-number">2.</span> <span class="post-toc-text">原理详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#UIEvent"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">UIEvent</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Hit-Testing"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">Hit-Testing</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#UIResponder"><span class="post-toc-number">2.0.3.</span> <span class="post-toc-text">UIResponder</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Responder-Chain"><span class="post-toc-number">2.0.4.</span> <span class="post-toc-text">Responder Chain</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用"><span class="post-toc-number">3.</span> <span class="post-toc-text">应用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#扩大按钮点击区域"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">扩大按钮点击区域</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#子视图消息传递给父视图"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">子视图消息传递给父视图</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                IOS触摸事件分发机制详解
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 27, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=IOS触摸事件分发机制详解&url=http://melonteam.com//2017/03/27/IOS_touch_event_distribution_mechanism/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=IOS触摸事件分发机制详解&url=http://melonteam.com//2017/03/27/IOS_touch_event_distribution_mechanism/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/27/IOS_touch_event_distribution_mechanism/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/27/IOS_touch_event_distribution_mechanism/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:</p>
-<p>某个点击消息由父视图来处理，子视图怎么把消息传递给父视图<br>这个按钮不灵敏，怎么扩大点击响应区域<br>怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息<br>阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-test view 、人为干预响应者能否对这一事件作出响应最终来控制触摸事件的分发机制。</p>
-<a id="more"></a>
-<h2 id="原理详解"><a href="#原理详解" class="headerlink" title="原理详解"></a>原理详解</h2><p>IOS把用户触发事件打包成一个UIEvent对象，作为事件传递的消息载体，放入当前活跃的APP的消息队列中，然后通过Hit-Testing来找到响应者，响应者通过响应链的传递做出响应，这就是IOS事件分发机制的实现原理。</p>
-<p>接下来从这三个概念UIEvent,UIResponder、Hit-Testing、Responder Chain入手，为你详细讲解这句话的含义。</p>
-<h4 id="UIEvent"><a href="#UIEvent" class="headerlink" title="UIEvent"></a>UIEvent</h4><p>UIEvent包含最常见的三种事件：Touch Events(触摸事件)、Motion Events(运动事件，比如重力感应和摇一摇等)、Remote Events(远程事件，比如用耳机上得按键来控制手机)， 通过 type、 subtype属性表明事件类型。IOS把屏幕监测到的点击事件用UITouch对象来表示，最终被封装成UIEvent作为事件的消息载体在响应链上传递。</p>
-<h4 id="Hit-Testing"><a href="#Hit-Testing" class="headerlink" title="Hit-Testing"></a>Hit-Testing</h4><p>屏幕上有很多UIView，你点击一下屏幕，IOS是怎么知道你点击的是哪个UIView呢？</p>
-<p>Hit-Testing就完美的解决了这个问题，通过检测触摸点是否在相关的视图边界范围内，如果在，就继续递归检测该视图的所有子视图，离用户最近的那个视图的边界如果包含触摸点，那么它就是我们要找的Hit-Test view。<br>举例说明，假如用户点击下图中的 view E，那么IOS是通过如下顺序来找到view E的：</p>
-<p>点击在view A的范围内,所以就检测它的子视图 view B和 view C。<br>点击不在view B内，但是在view C内，所以接下来检测view D和view E<br>点击不在view D内，而是在view E内，并且view E是在包含点击的视图树中离用户最近的，所以view E就是要找的Hit-Test view。</p>
-<p><img src="/2017/03/27/IOS_touch_event_distribution_mechanism/1.png" alt="Alt text"></p>
-<p>具体的检测工作是通过UIView中两个方法来完成的</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;   <span class="comment">// recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system</span></div><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;   <span class="comment">// default returns YES if point is in bounds</span></div></pre></td></tr></table></figure>
-<p><code>hitTest:withEvent:</code> 方法通过传递进来CGPoint和UIEvent返回Hit-Test view，该方法调用 <code>pointInside:withEvent:</code> 方法来检测point是否在view的边界范围内，如果在view的边界范围内，则返回YES，然后，在子视图中递归调用 <code>hitTest:withEvent:</code> 。如果不在范围内，则返回NO，那么它的所有子视图都会被忽略，hitTest:withEvent:返回 <code>nil</code> 。</p>
-<p>Hit-Test view只是有权优先处理该事件，如果它不能处理那么事件消息就会沿着响应链传递给下一个响应者来处理。所以能通过控制 Hit-Test view 和 能否响应两个途径来控制消息的传递和处理。</p>
-<h4 id="UIResponder"><a href="#UIResponder" class="headerlink" title="UIResponder"></a>UIResponder</h4><p><code>UIResponder</code> 类提供了一组接口专门用来响应用户的操作，处理各种事件，其中包括触摸事件(Touch Events)、运动事件(Motion Events)、远程控制事件(Remote Control Events)，标准文本编辑事件(Standard Edit Actions)如：复制、选择、粘贴、剪切等。在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类</p>
-<p><strong>第一响应者（first responder）</strong></p>
-<p>第一响应者能够优先处理事件，通常是一个UIView的对象，如果一个普通的对象想成为第一响应者，只需要做两件事情：</p>
-<ol>
-<li>重写<code>canBecomeFirstResponder</code>方法返回YES</li>
-<li>调用<code>becomeFirstResponder</code></li>
-</ol>
-<p>提示：当一个对象变成第一响应者的时候，要确保APP已经建立了object graph（暂且翻译为”对象图“），举例说明，你可以在viewDidAppear: 调用becomeFirstResponder，如果你在viewWillAppear:中调用这个方法可能会返回NO。</p>
-<p><strong>触摸事件接口</strong></p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Generally, all responders which do custom touch handling should override all four of these methods.</span></div><div class="line"><span class="comment">// Your responder will receive either touchesEnded:withEvent: or     touchesCancelled:withEvent: for each</span></div><div class="line"><span class="comment">// touch it is handling (those touches it received in touchesBegan:withEvent:).</span></div><div class="line"><span class="comment">// *** You must handle cancelled touches to ensure correct behavior in your application.  Failure to</span></div><div class="line"><span class="comment">// do so is very likely to lead to incorrect behavior or crashes.</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;</div><div class="line">- (<span class="keyword">void</span>)touchesMoved:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;</div><div class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;</div><div class="line">- (<span class="keyword">void</span>)touchesCancelled:(<span class="keyword">nullable</span> <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event;</div><div class="line">- (<span class="keyword">void</span>)touchesEstimatedPropertiesUpdated:(<span class="built_in">NSSet</span> * _Nonnull)touches <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">9</span>_1);</div></pre></td></tr></table></figure>
-<p><strong>运动事件</strong></p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)motionBegan:(<span class="built_in">UIEventSubtype</span>)motion withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0);</div><div class="line">- (<span class="keyword">void</span>)motionEnded:(<span class="built_in">UIEventSubtype</span>)motion withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0);</div><div class="line">- (<span class="keyword">void</span>)motionCancelled:(<span class="built_in">UIEventSubtype</span>)motion withEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">3</span>_0);</div></pre></td></tr></table></figure>
-<p><strong>远程控制事件</strong></p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)remoteControlReceivedWithEvent:(<span class="keyword">nullable</span> <span class="built_in">UIEvent</span> *)event <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">4</span>_0);</div></pre></td></tr></table></figure>
-<p><strong>标准编辑事件</strong></p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TBExtendedHitButton</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>)extendedHitButton</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (TBExtendedHitButton *)[TBExtendedHitButton buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGRect</span> relativeFrame = <span class="keyword">self</span>.bounds;</div><div class="line">    <span class="built_in">UIEdgeInsets</span> hitTestEdgeInsets = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">-15</span>, <span class="number">-15</span>, <span class="number">-15</span>, <span class="number">-15</span>);</div><div class="line">    <span class="built_in">CGRect</span> hitFrame = <span class="built_in">UIEdgeInsetsInsetRect</span>(relativeFrame, hitTestEdgeInsets);</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectContainsPoint</span>(hitFrame, point);</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<h4 id="Responder-Chain"><a href="#Responder-Chain" class="headerlink" title="Responder Chain"></a>Responder Chain</h4><p><code>Responder Chain</code> 暂且翻译为“响应链”，它是由一些列的响应者（<code>UIResponder</code>）链接起来的，起始于第一响应者（first responder），结束于<code>UIApplication</code>,当第一响应者（first responder）不能处理该事件的时候,事件消息沿着响应链继续转发。响应链能为一下几种事件进行消息转发，但不仅限于一下几类事件类型：</p>
-<p>触摸事件(Touch Events)<br>运动事件(Motion Events)<br>远程控制事件(Remote Control Events) 耳机等<br>control事件(Action messages)，UIBUtton，UISwitch等<br>编辑菜单事件（Editing-menu messages）复制、粘贴、剪切等<br>文本控件编辑事件（Text editing），UITextView、UITextfiled等</p>
-<p><strong>传递路径</strong></p>
-<p>如果初始化对象（initial object 即hit-test view或者first responder）不处理事件，<code>UIKit</code>会将事件传递给响应链中的下一个响应者。每个响应者决定它是传递事件还是通过nextResponder方法传递给它的下一个响应者。这个操作继续直到一个响应者处理该事件或者没有响应者了。</p>
-<p>响应链序列在iOS确定一个事件并将它传递给initial object（通常是view）时开始。所以initial view有处理事件的第一个机会。<br>下图描述了两个不同的事件传递路径（因为不同的app设置），一个App的事件传递路径由app特殊的构成决定，但事件传递路径会遵守相同的规则。以下图片很能说明响应链是如何传递的。</p>
-<p><img src="/2017/03/27/IOS_touch_event_distribution_mechanism/2.png" alt="Alt text"></p>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h4 id="扩大按钮点击区域"><a href="#扩大按钮点击区域" class="headerlink" title="扩大按钮点击区域"></a>扩大按钮点击区域</h4><p>当视图调用 <code>- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event</code> 进行边界检测的时候，重写该方法扩大视图的检测边界值。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TBExtendedHitButton</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>)extendedHitButton</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (TBExtendedHitButton *)[TBExtendedHitButton buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGRect</span> relativeFrame = <span class="keyword">self</span>.bounds;</div><div class="line">    <span class="built_in">UIEdgeInsets</span> hitTestEdgeInsets = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">-15</span>, <span class="number">-15</span>, <span class="number">-15</span>, <span class="number">-15</span>);</div><div class="line">    <span class="built_in">CGRect</span> hitFrame = <span class="built_in">UIEdgeInsetsInsetRect</span>(relativeFrame, hitTestEdgeInsets);</div><div class="line">    <span class="keyword">return</span> <span class="built_in">CGRectContainsPoint</span>(hitFrame, point);</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<h4 id="子视图消息传递给父视图"><a href="#子视图消息传递给父视图" class="headerlink" title="子视图消息传递给父视图"></a>子视图消息传递给父视图</h4><p>解决办法通常有两种：</p>
-<p>父视图和子视图都重写- (nullable UIView <em>)hitTest:(CGPoint)point withEvent:(nullable UIEvent </em>)event;,其中子视图返回nil，让父视图成为Hit-Test view.<br>父视图成为first responder，子视图把事件沿着响应链转发。<br>更多应用解决方案，请参考<a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">http://zhoon.github.io/ios/2015/04/12/ios-event.html</a></p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIResponder_Class/" target="_blank" rel="external">UIResponder Class Reference</a><br><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIEvent_Class/index.html" target="_blank" rel="external">UIResponder Class Reference</a><br><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/event_delivery_responder_chain/event_delivery_responder_chain.html#//apple_ref/doc/uid/TP40009541-CH4-SW4" target="_blank" rel="external">Event Handling Guide for iOS</a><br><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">深入浅出iOS事件机制</a></p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/27/Video_codec_learning_sharing/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>IOS触摸事件分发机制详解</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
+            </div>
+
+            <div class="label-card">
                 
-                About
-            </a>
-        </li>
-        
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
-
-    <!-- Article Number  -->
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
-</ul>
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
+            </div>
 
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
 
-<!-- Sidebar Divider -->
+</span>
 
-    <div class="sidebar-divider"></div>
+            </div>
 
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
         </div>
-    </a>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">原理详解</a>    <ul>
+      <li><a href="#uievent" id="markdown-toc-uievent">UIEvent</a></li>
+      <li><a href="#hit-testing" id="markdown-toc-hit-testing">Hit-Testing</a></li>
+      <li><a href="#uiresponder" id="markdown-toc-uiresponder">UIResponder</a></li>
+      <li><a href="#responder-chain" id="markdown-toc-responder-chain">Responder Chain</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-1" id="markdown-toc-section-1">应用</a>    <ul>
+      <li><a href="#section-2" id="markdown-toc-section-2">扩大按钮点击区域</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">子视图消息传递给父视图</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-4" id="markdown-toc-section-4">参考文献</a></li>
+</ul>
+<p>## 前言</p>
+
+<p>很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:</p>
+
+<p>某个点击消息由父视图来处理，子视图怎么把消息传递给父视图<br />
+这个按钮不灵敏，怎么扩大点击响应区域<br />
+怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息<br />
+阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-test view 、人为干预响应者能否对这一事件作出响应最终来控制触摸事件的分发机制。</p>
+
+<!--more-->
+
+<h2 id="section">原理详解</h2>
+
+<p>IOS把用户触发事件打包成一个UIEvent对象，作为事件传递的消息载体，放入当前活跃的APP的消息队列中，然后通过Hit-Testing来找到响应者，响应者通过响应链的传递做出响应，这就是IOS事件分发机制的实现原理。</p>
+
+<p>接下来从这三个概念UIEvent,UIResponder、Hit-Testing、Responder Chain入手，为你详细讲解这句话的含义。</p>
+
+<h4 id="uievent">UIEvent</h4>
+
+<p>UIEvent包含最常见的三种事件：Touch Events(触摸事件)、Motion Events(运动事件，比如重力感应和摇一摇等)、Remote Events(远程事件，比如用耳机上得按键来控制手机)， 通过 type、 subtype属性表明事件类型。IOS把屏幕监测到的点击事件用UITouch对象来表示，最终被封装成UIEvent作为事件的消息载体在响应链上传递。</p>
+
+<h4 id="hit-testing">Hit-Testing</h4>
+
+<p>屏幕上有很多UIView，你点击一下屏幕，IOS是怎么知道你点击的是哪个UIView呢？</p>
+
+<p>Hit-Testing就完美的解决了这个问题，通过检测触摸点是否在相关的视图边界范围内，如果在，就继续递归检测该视图的所有子视图，离用户最近的那个视图的边界如果包含触摸点，那么它就是我们要找的Hit-Test view。<br />
+举例说明，假如用户点击下图中的 view E，那么IOS是通过如下顺序来找到view E的：</p>
+
+<p>点击在view A的范围内,所以就检测它的子视图 view B和 view C。<br />
+点击不在view B内，但是在view C内，所以接下来检测view D和view E<br />
+点击不在view D内，而是在view E内，并且view E是在包含点击的视图树中离用户最近的，所以view E就是要找的Hit-Test view。</p>
+
+<p><img src="/image/IOS_touch_event_distribution_mechanism/1.png" alt="Alt text" /></p>
+
+<p>具体的检测工作是通过UIView中两个方法来完成的</p>
+
+<pre><code class="language-objectivec">- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event;   // recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system
+- (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event;   // default returns YES if point is in bounds  
+</code></pre>
+
+<p><code>hitTest:withEvent:</code> 方法通过传递进来CGPoint和UIEvent返回Hit-Test view，该方法调用 <code>pointInside:withEvent:</code> 方法来检测point是否在view的边界范围内，如果在view的边界范围内，则返回YES，然后，在子视图中递归调用 <code>hitTest:withEvent:</code> 。如果不在范围内，则返回NO，那么它的所有子视图都会被忽略，hitTest:withEvent:返回 <code>nil</code> 。</p>
+
+<p>Hit-Test view只是有权优先处理该事件，如果它不能处理那么事件消息就会沿着响应链传递给下一个响应者来处理。所以能通过控制 Hit-Test view 和 能否响应两个途径来控制消息的传递和处理。</p>
+
+<h4 id="uiresponder">UIResponder</h4>
+
+<p><code>UIResponder</code> 类提供了一组接口专门用来响应用户的操作，处理各种事件，其中包括触摸事件(Touch Events)、运动事件(Motion Events)、远程控制事件(Remote Control Events)，标准文本编辑事件(Standard Edit Actions)如：复制、选择、粘贴、剪切等。在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类</p>
+
+<p><strong>第一响应者（first responder）</strong></p>
+
+<p>第一响应者能够优先处理事件，通常是一个UIView的对象，如果一个普通的对象想成为第一响应者，只需要做两件事情：</p>
+
+<ol>
+  <li>重写<code>canBecomeFirstResponder</code>方法返回YES</li>
+  <li>调用<code>becomeFirstResponder</code></li>
+</ol>
+
+<p>提示：当一个对象变成第一响应者的时候，要确保APP已经建立了object graph（暂且翻译为”对象图“），举例说明，你可以在viewDidAppear: 调用becomeFirstResponder，如果你在viewWillAppear:中调用这个方法可能会返回NO。</p>
+
+<p><strong>触摸事件接口</strong></p>
+
+<pre><code class="language-objectivec">// Generally, all responders which do custom touch handling should override all four of these methods.
+// Your responder will receive either touchesEnded:withEvent: or     touchesCancelled:withEvent: for each
+// touch it is handling (those touches it received in touchesBegan:withEvent:).
+// *** You must handle cancelled touches to ensure correct behavior in your application.  Failure to
+// do so is very likely to lead to incorrect behavior or crashes.
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(nullable UIEvent *)event;
+- (void)touchesMoved:(NSSet&lt;UITouch *&gt; *)touches withEvent:(nullable UIEvent *)event;
+- (void)touchesEnded:(NSSet&lt;UITouch *&gt; *)touches withEvent:(nullable UIEvent *)event;
+- (void)touchesCancelled:(nullable NSSet&lt;UITouch *&gt; *)touches withEvent:(nullable UIEvent *)event;
+- (void)touchesEstimatedPropertiesUpdated:(NSSet * _Nonnull)touches NS_AVAILABLE_IOS(9_1);
+</code></pre>
+
+<p><strong>运动事件</strong></p>
+
+<pre><code class="language-objectivec">- (void)motionBegan:(UIEventSubtype)motion withEvent:(nullable UIEvent *)event NS_AVAILABLE_IOS(3_0);
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(nullable UIEvent *)event NS_AVAILABLE_IOS(3_0);
+- (void)motionCancelled:(UIEventSubtype)motion withEvent:(nullable UIEvent *)event NS_AVAILABLE_IOS(3_0);
+</code></pre>
+
+<p><strong>远程控制事件</strong></p>
+
+<pre><code class="language-objectivec">- (void)remoteControlReceivedWithEvent:(nullable UIEvent *)event NS_AVAILABLE_IOS(4_0);
+</code></pre>
+
+<p><strong>标准编辑事件</strong></p>
+
+<pre><code class="language-objectivec">@implementation TBExtendedHitButton
++ (instancetype)extendedHitButton
+{
+    return (TBExtendedHitButton *)[TBExtendedHitButton buttonWithType:UIButtonTypeCustom];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect relativeFrame = self.bounds;
+    UIEdgeInsets hitTestEdgeInsets = UIEdgeInsetsMake(-15, -15, -15, -15);
+    CGRect hitFrame = UIEdgeInsetsInsetRect(relativeFrame, hitTestEdgeInsets);
+    return CGRectContainsPoint(hitFrame, point);
+}
+@end  
+</code></pre>
+
+<h4 id="responder-chain">Responder Chain</h4>
+
+<p><code>Responder Chain</code> 暂且翻译为“响应链”，它是由一些列的响应者（<code>UIResponder</code>）链接起来的，起始于第一响应者（first responder），结束于<code>UIApplication</code>,当第一响应者（first responder）不能处理该事件的时候,事件消息沿着响应链继续转发。响应链能为一下几种事件进行消息转发，但不仅限于一下几类事件类型：</p>
+
+<p>触摸事件(Touch Events)<br />
+运动事件(Motion Events)<br />
+远程控制事件(Remote Control Events) 耳机等<br />
+control事件(Action messages)，UIBUtton，UISwitch等<br />
+编辑菜单事件（Editing-menu messages）复制、粘贴、剪切等<br />
+文本控件编辑事件（Text editing），UITextView、UITextfiled等</p>
+
+<p><strong>传递路径</strong></p>
+
+<p>如果初始化对象（initial object 即hit-test view或者first responder）不处理事件，<code>UIKit</code>会将事件传递给响应链中的下一个响应者。每个响应者决定它是传递事件还是通过nextResponder方法传递给它的下一个响应者。这个操作继续直到一个响应者处理该事件或者没有响应者了。</p>
+
+<p>响应链序列在iOS确定一个事件并将它传递给initial object（通常是view）时开始。所以initial view有处理事件的第一个机会。<br />
+下图描述了两个不同的事件传递路径（因为不同的app设置），一个App的事件传递路径由app特殊的构成决定，但事件传递路径会遵守相同的规则。以下图片很能说明响应链是如何传递的。</p>
+
+<p><img src="/image/IOS_touch_event_distribution_mechanism/2.png" alt="Alt text" /></p>
+
+<h2 id="section-1">应用</h2>
+
+<h4 id="section-2">扩大按钮点击区域</h4>
+
+<p>当视图调用 <code>- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event</code> 进行边界检测的时候，重写该方法扩大视图的检测边界值。</p>
+
+<pre><code class="language-objectivec">@implementation TBExtendedHitButton
++ (instancetype)extendedHitButton
+{
+    return (TBExtendedHitButton *)[TBExtendedHitButton buttonWithType:UIButtonTypeCustom];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect relativeFrame = self.bounds;
+    UIEdgeInsets hitTestEdgeInsets = UIEdgeInsetsMake(-15, -15, -15, -15);
+    CGRect hitFrame = UIEdgeInsetsInsetRect(relativeFrame, hitTestEdgeInsets);
+    return CGRectContainsPoint(hitFrame, point);
+}
+@end  
+</code></pre>
+
+<h4 id="section-3">子视图消息传递给父视图</h4>
+
+<p>解决办法通常有两种：</p>
+
+<p>父视图和子视图都重写- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event;,其中子视图返回nil，让父视图成为Hit-Test view.<br />
+父视图成为first responder，子视图把事件沿着响应链转发。<br />
+更多应用解决方案，请参考http://zhoon.github.io/ios/2015/04/12/ios-event.html</p>
+
+<h2 id="section-4">参考文献</h2>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIResponder_Class/">UIResponder Class Reference</a><br />
+<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIEvent_Class/index.html">UIResponder Class Reference</a><br />
+<a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/event_delivery_responder_chain/event_delivery_responder_chain.html#//apple_ref/doc/uid/TP40009541-CH4-SW4">Event Handling Guide for iOS</a><br />
+<a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html">深入浅出iOS事件机制</a></p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">Android短视频边下边播详解</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/28/Video_codec_learning_sharing/">视频编解码学习分享</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Help & Support -->
-<!--
+        <h2 id="comments">Comments</h2>
+        
 
--->
 
-<!-- Feedback -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- About Theme -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

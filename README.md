@@ -1,2 +1,5 @@
-# http://MelonTeam.com
-腾讯移动终端开发团队 MelonTeam 官网
+# MelonTeam
+
+>The Melon team, 移动终端前沿技术的探索者
+
+![image/Melon-100.png](image/Melon-100.png)

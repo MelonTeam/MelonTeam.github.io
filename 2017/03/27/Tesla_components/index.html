@@ -1,768 +1,351 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            【特斯拉组件】跨线程渲染圆角图片 | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>【特斯拉组件】跨线程渲染圆角图片</title>
+    <meta name="description" content="关于app的卡顿发生的原因，kM上相关的文章已经有很多了。有些文章已经分析得很深入，这里不再赘言。其本质原因是在一个VSync（垂直同步）时间片内（约等于1/60s，因为CADisplayLink的频率是1秒钟60次），App无法把一帧画面渲染到屏幕缓冲区，导致了掉帧。一帧画面的数据通过总线经过 1，CPU的计算...">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="【特斯拉组件】跨线程渲染圆角图片 | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/Tesla_components/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                【特斯拉组件】跨线程渲染圆角图片
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 27, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=【特斯拉组件】跨线程渲染圆角图片&url=http://melonteam.com//2017/03/27/Tesla_components/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=【特斯拉组件】跨线程渲染圆角图片&url=http://melonteam.com//2017/03/27/Tesla_components/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/27/Tesla_components/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/27/Tesla_components/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <p>关于app的卡顿发生的原因，kM上相关的文章已经有很多了。有些文章已经分析得很深入，这里不再赘言。其本质原因是在一个VSync（垂直同步）时间片内（约等于1/60s，因为CADisplayLink的频率是1秒钟60次），App无法把一帧画面渲染到屏幕缓冲区，导致了掉帧。</p>
-<p>一帧画面的数据通过总线经过 1，CPU的计算，再进入 2， GPU的渲染，最后被拷贝到屏幕缓冲区的，这两个过程都有可能导致屏幕掉帧：</p>
-<a id="more"></a>
-<p><strong>CPU（主线程）：</strong></p>
-<p>UI类相关的改动都必须在主线程完成，即使你用了Facebook的ASDK框架，最后也是要回到主线程提交相关的改动，所以任何堵塞主线程的操作，都可能引起掉帧。就看堵塞是发生在用户的代码还是堵塞在系统的lib里，常见的比如IO，长逻辑，死循环等等，都是比较容易发现然后解决的，比较难查的还是发生在系统库里的堵塞，经常发现用instrument去查看自己代码，基本不耗时，但是系统里的函数耗时却很长，比如自动布局的使用不当，就有可能引起这种问题。这里有两个大原则：</p>
-<p>1 降低页面的复杂度。减少view的数目。就等于减少了布局计算，减少View的构建时间，减少View的销毁时间，而这些，通常都是发生了主线程的。</p>
-<p>2 不要重复布局。 一个很明显的例子就是在tableviewcell里setFrame或者重新绑定自动布局，这会引起大量的布局计算。</p>
-<p>3 尽量把逻辑放到后台线程。 图片编解码，网络，IO等等，能异步的就异步，网上很多的开源库，比如sdWebImage， fmdb等等，都是这个原理。</p>
-<p>从作者度过的相关文章，基本上cpu的优化，都是从以上三个角度去优化程序的。</p>
-<p><strong>GPU：</strong></p>
-<p>GPU渲染比较复杂，涉及到的模块比较多，这里也不深入。主要讲讲离屏渲染，离屏渲染是什么呢？就是app在屏幕的硬件缓冲区外，自己开辟了缓冲区，进行图片的渲染，注意，硬件本身已经是双缓冲了，离屏渲染是硬件双缓冲之外的东西，当Layer设置了圆角，遮罩，阴影，transation等等，都会触发离屏渲染。可以简单理解一张需要离屏渲染的图片渲染成bitmap的性能是普通图片性能耗时的3倍，因为离屏渲染一般要经历三次渲染：</p>
-<p>1 离屏渲染主图片</p>
-<p>2 离屏渲染遮罩图片（比如，maskToBound）</p>
-<p>3 主屏合成上述的两张图片</p>
-<p>这里面可能会发生频繁的上下文切换，图片合成，是非常影响性能的。</p>
-<p>好，下面进入正题，既然项目中带圆角的图片会严重影响tableview的性能，使用后台线程把矩形图片渲染成圆角图片既可以不卡主线程，又可以避免离屏渲染 ，节省GPU资源，大大提供性能。所以我们封装了一个圆角图片控件，实现借鉴了YYKit和参考了ASDK的思想，但是因为我们的项目大量使用了自动布局技术，所以我们没有直接使用第三方的控件，而是选择自己封装了一个。 </p>
-<p>优化前：（iPhone4， ios7， 26fps）</p>
-<p><img src="/2017/03/27/Tesla_components/1.jpg" alt="Alt text"></p>
-<p>优化后：（iPhone4， ios7， 60fps）</p>
-<p><img src="/2017/03/27/Tesla_components/2.jpg" alt="Alt text"></p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/27/Protocol_design_for_mobile_Internet_IM/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/01/01/welcome/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>【特斯拉组件】跨线程渲染圆角图片</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
+            </div>
+
+            <div class="label-card">
                 
-                About
-            </a>
-        </li>
-        
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
-
-    <!-- Article Number  -->
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
-</ul>
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
 
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
+            </div>
 
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
 
-<!-- Sidebar Divider -->
+</span>
 
-    <div class="sidebar-divider"></div>
+            </div>
 
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
         </div>
-    </a>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>关于app的卡顿发生的原因，kM上相关的文章已经有很多了。有些文章已经分析得很深入，这里不再赘言。其本质原因是在一个VSync（垂直同步）时间片内（约等于1/60s，因为CADisplayLink的频率是1秒钟60次），App无法把一帧画面渲染到屏幕缓冲区，导致了掉帧。</p>
+
+<p>一帧画面的数据通过总线经过 1，CPU的计算，再进入 2， GPU的渲染，最后被拷贝到屏幕缓冲区的，这两个过程都有可能导致屏幕掉帧：</p>
+
+<!--more-->
+
+<p><strong>CPU（主线程）：</strong></p>
+
+<p>UI类相关的改动都必须在主线程完成，即使你用了Facebook的ASDK框架，最后也是要回到主线程提交相关的改动，所以任何堵塞主线程的操作，都可能引起掉帧。就看堵塞是发生在用户的代码还是堵塞在系统的lib里，常见的比如IO，长逻辑，死循环等等，都是比较容易发现然后解决的，比较难查的还是发生在系统库里的堵塞，经常发现用instrument去查看自己代码，基本不耗时，但是系统里的函数耗时却很长，比如自动布局的使用不当，就有可能引起这种问题。这里有两个大原则：</p>
+
+<p>1 降低页面的复杂度。减少view的数目。就等于减少了布局计算，减少View的构建时间，减少View的销毁时间，而这些，通常都是发生了主线程的。</p>
+
+<p>2 不要重复布局。 一个很明显的例子就是在tableviewcell里setFrame或者重新绑定自动布局，这会引起大量的布局计算。</p>
+
+<p>3 尽量把逻辑放到后台线程。 图片编解码，网络，IO等等，能异步的就异步，网上很多的开源库，比如sdWebImage， fmdb等等，都是这个原理。</p>
+
+<p>从作者度过的相关文章，基本上cpu的优化，都是从以上三个角度去优化程序的。</p>
+
+<p><strong>GPU：</strong></p>
+
+<p>GPU渲染比较复杂，涉及到的模块比较多，这里也不深入。主要讲讲离屏渲染，离屏渲染是什么呢？就是app在屏幕的硬件缓冲区外，自己开辟了缓冲区，进行图片的渲染，注意，硬件本身已经是双缓冲了，离屏渲染是硬件双缓冲之外的东西，当Layer设置了圆角，遮罩，阴影，transation等等，都会触发离屏渲染。可以简单理解一张需要离屏渲染的图片渲染成bitmap的性能是普通图片性能耗时的3倍，因为离屏渲染一般要经历三次渲染：</p>
+
+<p>1 离屏渲染主图片</p>
+
+<p>2 离屏渲染遮罩图片（比如，maskToBound）</p>
+
+<p>3 主屏合成上述的两张图片</p>
+
+<p>这里面可能会发生频繁的上下文切换，图片合成，是非常影响性能的。</p>
+
+<p>好，下面进入正题，既然项目中带圆角的图片会严重影响tableview的性能，使用后台线程把矩形图片渲染成圆角图片既可以不卡主线程，又可以避免离屏渲染 ，节省GPU资源，大大提供性能。所以我们封装了一个圆角图片控件，实现借鉴了YYKit和参考了ASDK的思想，但是因为我们的项目大量使用了自动布局技术，所以我们没有直接使用第三方的控件，而是选择自己封装了一个。</p>
+
+<p>优化前：（iPhone4， ios7， 26fps）</p>
+
+<p><img src="/image/Tesla_components/1.jpg" alt="Alt text" /></p>
+
+<p>优化后：（iPhone4， ios7， 60fps）</p>
+
+<p><img src="/image/Tesla_components/2.jpg" alt="Alt text" /></p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/27/Protocol_design_for_mobile_Internet_IM/">移动互联网IM之协议设计</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Help & Support -->
-<!--
+        <h2 id="comments">Comments</h2>
+        
 
--->
 
-<!-- Feedback -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/27/Tesla_components/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/27/Tesla_components/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- About Theme -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

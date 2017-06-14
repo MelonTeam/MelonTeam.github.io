@@ -1,821 +1,517 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            机器学习入门系列01，Introduction 简介 | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>机器学习入门系列01，Introduction 简介</title>
+    <meta name="description" content="  我们将要学习什么东东？          什么是机器学习？        引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）  CSD...">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="机器学习入门系列01，Introduction 简介 | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/ML01Introduction/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#我们将要学习什么东东？"><span class="post-toc-number">1.</span> <span class="post-toc-text">我们将要学习什么东东？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是机器学习？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">什么是机器学习？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#机器学习-approx-寻找一个函数"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">机器学习 $\approx$ 寻找一个函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Framework-框架"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">Framework 框架</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#整体都学习哪些知识（Learning-Map）"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">整体都学习哪些知识（Learning Map）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Regression（回归）是什么"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Regression（回归）是什么?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Classification（分类）"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Classification（分类）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Binary-Classification（二元分类）"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">Binary Classification（二元分类）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Multi-class-Classification（多元分类）"><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">Multi-class Classification（多元分类）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Deep-Learning（深度学习）"><span class="post-toc-number">1.2.2.3.</span> <span class="post-toc-text">Deep Learning（深度学习）</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Supervised-Learning（有监督学习）"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">Supervised Learning（有监督学习）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Semi-supervised-Learning（半监督学习）"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">Semi-supervised Learning（半监督学习）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Transfer-Learning（迁移学习）"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">Transfer Learning（迁移学习）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Unsupervised-Learning（无监督学习）"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">Unsupervised Learning（无监督学习）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Structured-Learning（结构化学习）"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">Structured Learning（结构化学习）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reinforcement-Learning（增强学习）"><span class="post-toc-number">1.2.8.</span> <span class="post-toc-text">Reinforcement Learning（增强学习）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#理解Learning-Map颜色的意义"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">理解Learning Map颜色的意义</span></a></li></ol></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                机器学习入门系列01，Introduction 简介
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 27, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=机器学习入门系列01，Introduction 简介&url=http://melonteam.com//2017/03/27/ML01Introduction/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=机器学习入门系列01，Introduction 简介&url=http://melonteam.com//2017/03/27/ML01Introduction/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/27/ML01Introduction/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/27/ML01Introduction/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <blockquote>
-<p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html" target="_blank" rel="external">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
-</blockquote>
-<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）</p>
-<blockquote>
-<p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66478149" target="_blank" rel="external">http://blog.csdn.net/zyq522376829/article/details/66478149</a></p>
-</blockquote>
-<h1 id="我们将要学习什么东东？"><a href="#我们将要学习什么东东？" class="headerlink" title="我们将要学习什么东东？"></a>我们将要学习什么东东？</h1><h2 id="什么是机器学习？"><a href="#什么是机器学习？" class="headerlink" title="什么是机器学习？"></a>什么是机器学习？</h2><a id="more"></a>
-<p> <img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0endla38j210e0lsn5o.jpg" alt=""><br>有右边这样非常大的音频数据集，写程序来进行学习，然后可以输出音频“Hello”</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0esd0he0j20zw0mc49q.jpg" alt=""><br>有右边这样非常大的图片数据集，写程序来进行学习，然后可以识别左边这样图，识别为正确的物种。</p>
-<h3 id="机器学习-approx-寻找一个函数"><a href="#机器学习-approx-寻找一个函数" class="headerlink" title="机器学习 $\approx$ 寻找一个函数"></a>机器学习 $\approx$ 寻找一个函数</h3><p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0euzrz3uj21360lowla.jpg" alt=""></p>
-<h3 id="Framework-框架"><a href="#Framework-框架" class="headerlink" title="Framework 框架"></a>Framework 框架</h3><ul>
-<li>Image Recognition 图像识别</li>
-</ul>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0evuvwccj20ng042gn5.jpg" alt=""></p>
-<p>函数集($f<em>{1},f</em>{2},\ldots $)，通常将一个函数称为Model（模型）</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0ewlwd1yj20vw0byn3v.jpg" alt=""></p>
-<p>为了找到最好的函数 $f$ ，将训练集图像放入函数集的输入中，函数集输出识别结果。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0exn3ri5j21080legwh.jpg" alt=""></p>
-<p>下面来看具体步骤</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0eyillqbj212k0lythh.jpg" alt=""></p>
-<p>Step1.确定一组函数（Model），函数集怎么找后面会再介绍。<br>Step2.将训练集对函数集进行训练。<br>Step3.挑选出“最好”的函数 $f^{<em>}$<br>然后就可以使用 $f^{</em>}$ 来对新的测试集进行检测。</p>
-<h2 id="整体都学习哪些知识（Learning-Map）"><a href="#整体都学习哪些知识（Learning-Map）" class="headerlink" title="整体都学习哪些知识（Learning Map）"></a>整体都学习哪些知识（Learning Map）</h2><p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ezk7m7kj210c0qqtcg.jpg" alt=""></p>
-<h3 id="Regression（回归）是什么"><a href="#Regression（回归）是什么" class="headerlink" title="Regression（回归）是什么?"></a>Regression（回归）是什么?</h3><p>Regression 意思是，我们要找到这样一个函数 $f$，使得输出为 scalar（标量，数值）</p>
-<blockquote>
-<p>这里说法当然是比较不严谨，数学上简单的线性，一元或多元回归的知识可以在概率论与数理统计课本中进行学习。《概率论与数理统计》，浙江大学，第九章，P244。</p>
-</blockquote>
-<p>举个例子，比如预测PM2.5.</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f0l1hi0j20oe04gwf0.jpg" alt=""></p>
-<p>输入就是之前每一天的PM2.5数值，输出是明天的PM2.5，是个标量。<br>具体做法：</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f1e0somj211y0ag3zn.jpg" alt=""></p>
-<h3 id="Classification（分类）"><a href="#Classification（分类）" class="headerlink" title="Classification（分类）"></a>Classification（分类）</h3><p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f2vi19lj20z00l8dgm.jpg" alt=""></p>
-<p>分类比较容易理解，比如二元分类或者多元分类。</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f3jd278j20xo0j8jsp.jpg" alt=""></p>
-<h4 id="Binary-Classification（二元分类）"><a href="#Binary-Classification（二元分类）" class="headerlink" title="Binary Classification（二元分类）"></a>Binary Classification（二元分类）</h4><p>比如垃圾邮件过滤，就是要找到一个Function，输入为一封邮件，输出是二元的，是或者不是垃圾邮件。训练集就是很多封邮件，每一封邮件知道它是否是垃圾邮件，让Function进行学习。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f49759tj20zq0jwgy4.jpg" alt=""></p>
-<h4 id="Multi-class-Classification（多元分类）"><a href="#Multi-class-Classification（多元分类）" class="headerlink" title="Multi-class Classification（多元分类）"></a>Multi-class Classification（多元分类）</h4><p>多元分类；例如下面的新闻分类系统，找一个Function，输入就是新闻的内容，输出则是新闻的类型（政治，经济，体育等等）</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f4uqylgj21160nawt0.jpg" alt=""></p>
-<h4 id="Deep-Learning（深度学习）"><a href="#Deep-Learning（深度学习）" class="headerlink" title="Deep Learning（深度学习）"></a>Deep Learning（深度学习）</h4><p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5g8hvdj20qs0jeq49.jpg" alt=""></p>
-<p>上面讲过，机器学习的第一个步骤就是确定一个函数集，可以选择Linear Model（线性模型），但是 Linear Model 比较有限。更多的则是 Non-lilnear Model（非线性模型）。比如深度学习就是 Non-lilnear Model 。</p>
-<p>举个例子，比如图像识别：</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5zur6pj211g0lik15.jpg" alt=""></p>
-<p>这里举例深度学习中的一种，Convolutional Neural Network（CNN，卷积神经网络），输入就是很多的图像，输出为图像的类型，这里将每个对象都当作一个类别。训练集就是很多张图片，并告诉机器每张图片对应的是什么类型。深度学习的Function非常复杂。</p>
-<p>再举一个例子，下围棋：</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f6o89p0j211e08on2j.jpg" alt=""></p>
-<p>输入就是黑白子在19<em>19棋盘上的位置，输出就是下一步应该下在哪里。这也就是一个选择题，可能的选项有19</em>19个。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f781j5vj212s0cwdpw.jpg" alt=""></p>
-<p>训练集就是一堆棋谱，每一步是怎么走的。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f7s2pkfj210e0dmjx5.jpg" alt=""></p>
-<h3 id="Supervised-Learning（有监督学习）"><a href="#Supervised-Learning（有监督学习）" class="headerlink" title="Supervised Learning（有监督学习）"></a>Supervised Learning（有监督学习）</h3><p>Non-lilnear Model 不只Deep Learning，后面还会接触到SVM，decision tree等。<br>上面提到这些我们都叫做Supervised Learning（有监督学习），所谓 Supervised Learning 就是说训练集的输入和输出对于目标函数是成对的，目标函数看到一个输入，就应该对应有一个输出。也把这样的输出叫做 label。<br>见到说需要 Labelled data 的情况，就是指我们要告诉机器看到一个输入，要有一个输出。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f8g4v9sj21040o241r.jpg" alt=""></p>
-<p>其他的比如还有Semi-supervised Learning（半监督学习）</p>
-<h3 id="Semi-supervised-Learning（半监督学习）"><a href="#Semi-supervised-Learning（半监督学习）" class="headerlink" title="Semi-supervised Learning（半监督学习）"></a>Semi-supervised Learning（半监督学习）</h3><p>比如图像识别一些猫和狗，Labelled data 就是训练集中每个图片知道它对应的是什么类型。而Unlabelled data 就是不知道图片对应的类型。这种其实也是可以让机器学习的比较好的，后面也会介绍。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9310jsj20z20jytki.jpg" alt=""></p>
-<h3 id="Transfer-Learning（迁移学习）"><a href="#Transfer-Learning（迁移学习）" class="headerlink" title="Transfer Learning（迁移学习）"></a>Transfer Learning（迁移学习）</h3><p>举例说一下迁移学习：</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9xlbl6j21040mawum.jpg" alt=""></p>
-<p>比如有 Labelled data ，但我们还有一些labelled 或者 unlabelled 数据，这些数据和 Labelled data 中识别猫和狗都没有关系，但它也是怎么帮助Labelled data 更好的识别。这就是 Transfer Learning 要做的事情。</p>
-<h3 id="Unsupervised-Learning（无监督学习）"><a href="#Unsupervised-Learning（无监督学习）" class="headerlink" title="Unsupervised Learning（无监督学习）"></a>Unsupervised Learning（无监督学习）</h3><p>举一个Unsupervised Learning 的例子：让机器阅读非常多的文章，然后机器就可以学习单词的含义。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0fahrm70j21040lk7ll.jpg" alt=""></p>
-<p>这个Unsupervised Learning 的例子中，训练集只有输入（很多的文章），没有输出。假设通过Neural Network（神经网络）学习之后，给一个单词，就可以输出一个向量。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g0n0om7j21d40t41ki.jpg" alt=""></p>
-<p>再举一个例子：比如想要让机器绘制一下自己的内心世界。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g196w8zj210i0k61kx.jpg" alt=""></p>
-<p>具体说就是给机器一堆数字，他就能自己绘制一张图片，此时训练集只有输出（很多的图片），没有输入。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g1tadjsj21do0syb29.jpg" alt=""></p>
-<h3 id="Structured-Learning（结构化学习）"><a href="#Structured-Learning（结构化学习）" class="headerlink" title="Structured Learning（结构化学习）"></a>Structured Learning（结构化学习）</h3><p>比如看下面例子：第一个是语音识别，假设我们想要找的function是输入一段语音，然后输出语音的文字。如果把世界上不同的句子当作一个类别，这样是没有办法穷举所有类型的，所以这种超越分类的问题，就需要另外一套完整的思想来解决。<br>还有例子就是机器翻译，将中文翻译成英文，也是没有办法穷举所有的句子。再或者人脸识别，没有办法穷举所有人脸框。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2cnb63j20zu0s8tjh.jpg" alt=""></p>
-<h3 id="Reinforcement-Learning（增强学习）"><a href="#Reinforcement-Learning（增强学习）" class="headerlink" title="Reinforcement Learning（增强学习）"></a>Reinforcement Learning（增强学习）</h3><p>举个Reinforcement Learning 的例子：AlphaGo。<br>举例来比较 Supervised 和 Reinforcement：比如学习对话，Supervised 训练集每句话，都有对应的输出；但是Reinforcement就只是不断的对话，机器只能知道它做的好或者不好，没有其他更多的信息。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2x9gqrj212i0q044l.jpg" alt=""></p>
-<p>再举一个围棋的例子，比如 Supervised 情况就是机器看到一个棋局，告诉它下一步应该走什么。Reinforcement 的情况就是走了很多步，输了或者赢了，就是知道一个结果。AlphaGo 就是两个都用到了，先看棋谱学习，但是棋谱的数量是有限的，然后再进行增强型学习。所以 AlphaGo 第一轮和世界高手对局时还捉襟见肘，第二轮就基本横扫了。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g3h5048j21340l27cv.jpg" alt=""></p>
-<h2 id="理解Learning-Map颜色的意义"><a href="#理解Learning-Map颜色的意义" class="headerlink" title="理解Learning Map颜色的意义"></a>理解Learning Map颜色的意义</h2><p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0g40v56nj211y0s8wil.jpg" alt=""></p>
-<p>蓝色的都是代表Scenario（方案），红色部分指的是你要找的function的样子，可以在Semi-supervised Learning 的情况下做红色的task，也可以在 Transfer Learning下做红色task，就是右上角的4个虽然是小方块，但是 Supervised Learning 里面的 task 都可以在其他蓝色 scenario 中做。绿色的部分就是方法或者说模型，绿色的内容虽然写在 Classification 里面，但是可以放在 Regression 或者 Structured Learning 中。</p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/27/ML02Regression/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/27/Protocol_design_for_mobile_Internet_IM/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>机器学习入门系列01，Introduction 简介</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                About
-            </a>
-        </li>
-        
-    
+            </div>
 
-    <!-- Article Number  -->
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">我们将要学习什么东东？</a>    <ul>
+      <li><a href="#section-1" id="markdown-toc-section-1">什么是机器学习？</a>        <ul>
+          <li><a href="#approx-" id="markdown-toc-approx-">机器学习 $\approx$ 寻找一个函数</a></li>
+          <li><a href="#framework-" id="markdown-toc-framework-">Framework 框架</a></li>
+        </ul>
+      </li>
+      <li><a href="#learning-map" id="markdown-toc-learning-map">整体都学习哪些知识（Learning Map）</a>        <ul>
+          <li><a href="#regression" id="markdown-toc-regression">Regression（回归）是什么?</a></li>
+          <li><a href="#classification" id="markdown-toc-classification">Classification（分类）</a>            <ul>
+              <li><a href="#binary-classification" id="markdown-toc-binary-classification">Binary Classification（二元分类）</a></li>
+              <li><a href="#multi-class-classification" id="markdown-toc-multi-class-classification">Multi-class Classification（多元分类）</a></li>
+              <li><a href="#deep-learning" id="markdown-toc-deep-learning">Deep Learning（深度学习）</a></li>
+            </ul>
+          </li>
+          <li><a href="#supervised-learning" id="markdown-toc-supervised-learning">Supervised Learning（有监督学习）</a></li>
+          <li><a href="#semi-supervised-learning" id="markdown-toc-semi-supervised-learning">Semi-supervised Learning（半监督学习）</a></li>
+          <li><a href="#transfer-learning" id="markdown-toc-transfer-learning">Transfer Learning（迁移学习）</a></li>
+          <li><a href="#unsupervised-learning" id="markdown-toc-unsupervised-learning">Unsupervised Learning（无监督学习）</a></li>
+          <li><a href="#structured-learning" id="markdown-toc-structured-learning">Structured Learning（结构化学习）</a></li>
+          <li><a href="#reinforcement-learning" id="markdown-toc-reinforcement-learning">Reinforcement Learning（增强学习）</a></li>
+        </ul>
+      </li>
+      <li><a href="#learning-map-1" id="markdown-toc-learning-map-1">理解Learning Map颜色的意义</a></li>
+    </ul>
+  </li>
+</ul>
+<blockquote>
+  <p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
+</blockquote>
+
+<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）</p>
+
+<blockquote>
+  <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66478149">http://blog.csdn.net/zyq522376829/article/details/66478149</a></p>
+</blockquote>
+
+<h1 id="section">我们将要学习什么东东？</h1>
+
+<h2 id="section-1">什么是机器学习？</h2>
+
+<!--more-->
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0endla38j210e0lsn5o.jpg" alt="" /><br />
+有右边这样非常大的音频数据集，写程序来进行学习，然后可以输出音频“Hello”</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0esd0he0j20zw0mc49q.jpg" alt="" /><br />
+有右边这样非常大的图片数据集，写程序来进行学习，然后可以识别左边这样图，识别为正确的物种。</p>
+
+<h3 id="approx-">机器学习 $\approx$ 寻找一个函数</h3>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0euzrz3uj21360lowla.jpg" alt="" /></p>
+
+<h3 id="framework-">Framework 框架</h3>
+<ul>
+  <li>Image Recognition 图像识别</li>
 </ul>
 
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0evuvwccj20ng042gn5.jpg" alt="" /></p>
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
+<p>函数集($f_{1},f_{2},\ldots $)，通常将一个函数称为Model（模型）</p>
 
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0ewlwd1yj20vw0byn3v.jpg" alt="" /></p>
 
-<!-- Sidebar Divider -->
+<p>为了找到最好的函数 $f$ ，将训练集图像放入函数集的输入中，函数集输出识别结果。</p>
 
-    <div class="sidebar-divider"></div>
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0exn3ri5j21080legwh.jpg" alt="" /></p>
+
+<p>下面来看具体步骤</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0eyillqbj212k0lythh.jpg" alt="" /></p>
+
+<p>Step1.确定一组函数（Model），函数集怎么找后面会再介绍。<br />
+Step2.将训练集对函数集进行训练。<br />
+Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
+然后就可以使用 $f^{</em>}$ 来对新的测试集进行检测。</p>
+
+<h2 id="learning-map">整体都学习哪些知识（Learning Map）</h2>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ezk7m7kj210c0qqtcg.jpg" alt="" /></p>
+
+<h3 id="regression">Regression（回归）是什么?</h3>
+
+<p>Regression 意思是，我们要找到这样一个函数 $f$，使得输出为 scalar（标量，数值）</p>
+
+<blockquote>
+  <p>这里说法当然是比较不严谨，数学上简单的线性，一元或多元回归的知识可以在概率论与数理统计课本中进行学习。《概率论与数理统计》，浙江大学，第九章，P244。</p>
+</blockquote>
+
+<p>举个例子，比如预测PM2.5.</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f0l1hi0j20oe04gwf0.jpg" alt="" /></p>
+
+<p>输入就是之前每一天的PM2.5数值，输出是明天的PM2.5，是个标量。<br />
+具体做法：</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f1e0somj211y0ag3zn.jpg" alt="" /></p>
+
+<h3 id="classification">Classification（分类）</h3>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f2vi19lj20z00l8dgm.jpg" alt="" /></p>
+
+<p>分类比较容易理解，比如二元分类或者多元分类。</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f3jd278j20xo0j8jsp.jpg" alt="" /></p>
+
+<h4 id="binary-classification">Binary Classification（二元分类）</h4>
+
+<p>比如垃圾邮件过滤，就是要找到一个Function，输入为一封邮件，输出是二元的，是或者不是垃圾邮件。训练集就是很多封邮件，每一封邮件知道它是否是垃圾邮件，让Function进行学习。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f49759tj20zq0jwgy4.jpg" alt="" /></p>
+
+<h4 id="multi-class-classification">Multi-class Classification（多元分类）</h4>
+
+<p>多元分类；例如下面的新闻分类系统，找一个Function，输入就是新闻的内容，输出则是新闻的类型（政治，经济，体育等等）</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f4uqylgj21160nawt0.jpg" alt="" /></p>
+
+<h4 id="deep-learning">Deep Learning（深度学习）</h4>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5g8hvdj20qs0jeq49.jpg" alt="" /></p>
+
+<p>上面讲过，机器学习的第一个步骤就是确定一个函数集，可以选择Linear Model（线性模型），但是 Linear Model 比较有限。更多的则是 Non-lilnear Model（非线性模型）。比如深度学习就是 Non-lilnear Model 。</p>
+
+<p>举个例子，比如图像识别：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5zur6pj211g0lik15.jpg" alt="" /></p>
+
+<p>这里举例深度学习中的一种，Convolutional Neural Network（CNN，卷积神经网络），输入就是很多的图像，输出为图像的类型，这里将每个对象都当作一个类别。训练集就是很多张图片，并告诉机器每张图片对应的是什么类型。深度学习的Function非常复杂。</p>
+
+<p>再举一个例子，下围棋：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f6o89p0j211e08on2j.jpg" alt="" /></p>
+
+<p>输入就是黑白子在19<em>19棋盘上的位置，输出就是下一步应该下在哪里。这也就是一个选择题，可能的选项有19</em>19个。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f781j5vj212s0cwdpw.jpg" alt="" /></p>
+
+<p>训练集就是一堆棋谱，每一步是怎么走的。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f7s2pkfj210e0dmjx5.jpg" alt="" /></p>
+
+<h3 id="supervised-learning">Supervised Learning（有监督学习）</h3>
+<p>Non-lilnear Model 不只Deep Learning，后面还会接触到SVM，decision tree等。<br />
+上面提到这些我们都叫做Supervised Learning（有监督学习），所谓 Supervised Learning 就是说训练集的输入和输出对于目标函数是成对的，目标函数看到一个输入，就应该对应有一个输出。也把这样的输出叫做 label。<br />
+见到说需要 Labelled data 的情况，就是指我们要告诉机器看到一个输入，要有一个输出。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f8g4v9sj21040o241r.jpg" alt="" /></p>
+
+<p>其他的比如还有Semi-supervised Learning（半监督学习）</p>
+
+<h3 id="semi-supervised-learning">Semi-supervised Learning（半监督学习）</h3>
+
+<p>比如图像识别一些猫和狗，Labelled data 就是训练集中每个图片知道它对应的是什么类型。而Unlabelled data 就是不知道图片对应的类型。这种其实也是可以让机器学习的比较好的，后面也会介绍。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9310jsj20z20jytki.jpg" alt="" /></p>
+
+<h3 id="transfer-learning">Transfer Learning（迁移学习）</h3>
+
+<p>举例说一下迁移学习：</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9xlbl6j21040mawum.jpg" alt="" /></p>
+
+<p>比如有 Labelled data ，但我们还有一些labelled 或者 unlabelled 数据，这些数据和 Labelled data 中识别猫和狗都没有关系，但它也是怎么帮助Labelled data 更好的识别。这就是 Transfer Learning 要做的事情。</p>
+
+<h3 id="unsupervised-learning">Unsupervised Learning（无监督学习）</h3>
+<p>举一个Unsupervised Learning 的例子：让机器阅读非常多的文章，然后机器就可以学习单词的含义。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0fahrm70j21040lk7ll.jpg" alt="" /></p>
+
+<p>这个Unsupervised Learning 的例子中，训练集只有输入（很多的文章），没有输出。假设通过Neural Network（神经网络）学习之后，给一个单词，就可以输出一个向量。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g0n0om7j21d40t41ki.jpg" alt="" /></p>
+
+<p>再举一个例子：比如想要让机器绘制一下自己的内心世界。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g196w8zj210i0k61kx.jpg" alt="" /></p>
+
+<p>具体说就是给机器一堆数字，他就能自己绘制一张图片，此时训练集只有输出（很多的图片），没有输入。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g1tadjsj21do0syb29.jpg" alt="" /></p>
+
+<h3 id="structured-learning">Structured Learning（结构化学习）</h3>
+
+<p>比如看下面例子：第一个是语音识别，假设我们想要找的function是输入一段语音，然后输出语音的文字。如果把世界上不同的句子当作一个类别，这样是没有办法穷举所有类型的，所以这种超越分类的问题，就需要另外一套完整的思想来解决。<br />
+还有例子就是机器翻译，将中文翻译成英文，也是没有办法穷举所有的句子。再或者人脸识别，没有办法穷举所有人脸框。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2cnb63j20zu0s8tjh.jpg" alt="" /></p>
+
+<h3 id="reinforcement-learning">Reinforcement Learning（增强学习）</h3>
+<p>举个Reinforcement Learning 的例子：AlphaGo。<br />
+举例来比较 Supervised 和 Reinforcement：比如学习对话，Supervised 训练集每句话，都有对应的输出；但是Reinforcement就只是不断的对话，机器只能知道它做的好或者不好，没有其他更多的信息。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2x9gqrj212i0q044l.jpg" alt="" /></p>
+
+<p>再举一个围棋的例子，比如 Supervised 情况就是机器看到一个棋局，告诉它下一步应该走什么。Reinforcement 的情况就是走了很多步，输了或者赢了，就是知道一个结果。AlphaGo 就是两个都用到了，先看棋谱学习，但是棋谱的数量是有限的，然后再进行增强型学习。所以 AlphaGo 第一轮和世界高手对局时还捉襟见肘，第二轮就基本横扫了。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g3h5048j21340l27cv.jpg" alt="" /></p>
+
+<h2 id="learning-map-1">理解Learning Map颜色的意义</h2>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0g40v56nj211y0s8wil.jpg" alt="" /></p>
+
+<p>蓝色的都是代表Scenario（方案），红色部分指的是你要找的function的样子，可以在Semi-supervised Learning 的情况下做红色的task，也可以在 Transfer Learning下做红色task，就是右上角的4个虽然是小方块，但是 Supervised Learning 里面的 task 都可以在其他蓝色 scenario 中做。绿色的部分就是方法或者说模型，绿色的内容虽然写在 Classification 里面，但是可以放在 Regression 或者 Structured Learning 中。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/27/Protocol_design_for_mobile_Internet_IM/">移动互联网IM之协议设计</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/27/ML02Regression/">机器学习入门系列02，Regression 回归：案例研究</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
+        <h2 id="comments">Comments</h2>
+        
 
 
-<!-- Help & Support -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/27/ML01Introduction/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/27/ML01Introduction/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- Feedback -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
 
-<!-- About Theme -->
-<!--
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
--->
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

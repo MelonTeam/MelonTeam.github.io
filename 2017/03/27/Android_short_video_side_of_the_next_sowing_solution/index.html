@@ -1,788 +1,397 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            Android短视频边下边播详解 | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>Android短视频边下边播详解</title>
+    <meta name="description" content="       短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易...">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android短视频边下边播详解 | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                Android短视频边下边播详解
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 27, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android短视频边下边播详解&url=http://melonteam.com//2017/03/27/Android_short_video_side_of_the_next_sowing_solution/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android短视频边下边播详解&url=http://melonteam.com//2017/03/27/Android_short_video_side_of_the_next_sowing_solution/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/27/Android_short_video_side_of_the_next_sowing_solution/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/27/Android_short_video_side_of_the_next_sowing_solution/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <p>&#160; &#160; &#160; &#160;短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。<br><strong>【视频格式】</strong><br>&#160; &#160; &#160; &#160;想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：</p>
-<a id="more"></a>
-<p><img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/1.png" alt="视频文件结构"></p>
-<p>  内容元素主要包括：</p>
-<ul>
-<li>图像(image)</li>
-<li>音频(audio)</li>
-<li>元信息(metadata)<br>编码格式(codec)主要包括：</li>
-<li>video:H.264、H.265、…</li>
-<li>audio:AAC、HE-AAC、…<br>容器封装(container)主要包括：</li>
-<li>MP4、FLV、AVI、MOV、RMVB、…</li>
-</ul>
-<p>&#160; &#160; &#160; &#160;播放器在播放视频文件时，之所以知道该怎么去解码，以什么样的时间间隔去显示每一帧，是因为metadata记录了当前视频文件的图像尺寸、编码格式、帧率、码率等等信息，播放器通过解析metadata得到了这些信息，才能控制视频的显示，也就是说播放器要先解析完metadata才会开始播放。<br>&#160; &#160; &#160; &#160;我们拿MP4作为例子来说明，不同容器的封装在数据存储上会存在一些差异，MP4视频文件结构如下所示：</p>
-<p><img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/2.png" alt="MP4文件结构"></p>
-<p>&#160; &#160; &#160; &#160;它对应的metadata信息称为moov，mdat包含了音频和视频数据。MP4在实际制作中，moov有可能被放到了mdat后面，所以我们要保证制作出来的MP4的moov是放置在mdat前面的，这样才可以实现边下边播功能。如果不是这样，可以用FFmpeg的faststart命令（ffmpeg -i input.mp4 -movflags +faststart output.mp4）处理一下。<br>&#160; &#160; &#160; &#160;另外值得一提的是，如果moov比较大，播放器需要较多的时间去解析，所以在播放之前可能会出现较长的缓冲时间，特别是视频文件较大的情况下，所以现在有些点播网站会采用每段mdat都有自己独立的metadata的封装方式，这样就可实现渐进式下载和快速缓冲的效果。</p>
-<p><strong>【本地代理】</strong></p>
-<p>&#160; &#160; &#160; &#160;在确保视频文件的metadata在头部后，我们只要完整下载metadata，再加上少许音视频数据，就可以开始播放视频了，那么如何实现“边下”呢？我们都知道，Android平台上要播放视频，最基本的方式就是实例化一个MediaPlayer, 将视频的URL通过setDataSource()设置给播放器，之后调用prepare()或prepareAsync()和start()就可以开始播放视频了。于是我们很容易想到将MediaPlayer的视频源设置为本地文件，然后通过子线程不断将下载数据追加到该文件，但笔者经过验证，这种做法会经常导致MediaPlayer各种报错，无法顺利播放。<br>&#160; &#160; &#160; &#160;经过深入调研，很遗憾MediaPlayer并没有提供类似可以拦截URL或文件流的API可以让我们将视频文件保存到本地（然而，iOS视频播放器有提供了类似接口）。所以我们换了一个思路，就是当播放器请求播放远程视频文件时，我们将远程URL篡改成本地URL，播放器播放视频时不再是直接访问远程视频文件，而是先访问本地代理，本地代理再去下载远程视频，下载多少就给播放器输送多少，这样就实现了边下边播，我们将这种做法称之为本地代理服务器。</p>
-<p><strong>【数据流程】</strong><br>播放器请求本地代理服务器的数据流程如下图：</p>
-<p> <img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/3.png" alt="播放器请求本地代理的数据流程"></p>
-<p>1、播放器播放之前，先把网络视频的远程url替换成本地的url（类似<a href="http://127.0.0.1/xxx）；" target="_blank" rel="external">http://127.0.0.1/xxx）；</a><br>2、播放器开始播放时将本地url请求发给proxy server；<br>3、proxy server根据本地url在本地缓存中查找是否存在该视频，如果存在则直接跳到步骤7，如果不存在，则进入步骤4；<br>4、proxy server根据视频远程url向视频server请求下载视频数据；<br>5、视频server返回给proxy server视频数据；<br>6、proxy server将返回的视频数据缓存到本地，并且处理其他业务逻辑；<br>7、proxy server将视频数据返回给播放器，播放器开始播放。<br>比起播放器直接播放网络视频，Proxy的做法使得视频的播放和下载在一定程度上变得可控，除了能够提供边下边播能力以外，还可以增加额外的视频相关业务逻辑，比如缓存、预下载、防盗链等等。</p>
-<p><strong>【技术架构】</strong></p>
-<p>&#160; &#160; &#160; &#160;Proxy Server的http服务器实现可以参考一些开源项目如NanoHttpd，但如果想自己实现也不会很难，我们一起来看下它的技术架构，如下所示：</p>
-<p> <img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/4.png" alt="Proxy Server架构"></p>
-<ul>
-<li>proxy server为播放器提供http服务，是一个本地http服务器，内部通过线程轮询监听播放器请求，可以支持get和range header的请求和响应，range 主要用来支持视频断点续传或播放拖拽功能；</li>
-<li>由于播放器可能会有多个请求或多个播放器同时请求，所以需要线程池来支持并发请求；</li>
-<li>当播放器发起视频下载请求，proxy首先会根据url在本地缓存查找对应的视频文件，如果找到就直接返回数据给播放器，如果没有找到，proxy会向视频server发起http请求；</li>
-<li>由于SD卡空间有限，下载后的视频采用LRU算法进行淘汰。</li>
-</ul>
-<p><strong>【缓存淘汰】</strong><br>&#160; &#160; &#160; &#160;关于Proxy Server下载的视频缓存路径，由于手机内部存储空间有限，视频又比较大，不建议内部存储，所以可以放到SD卡上的路径/sdcard/Android/data/<application package="">/cache下，并且为了唯一标识文件，可以使用MD5(url)作为文件名。选择在这个位置有两点好处：第一，这是存储在SD卡上的，因此即使缓存再多的数据也不会对手机的内置存储空间有任何影响，只要SD卡空间足够。第二，这个路径被Android系统认定为应用程序的缓存路径，当程序被卸载的时候，这里的数据也会一起被清除掉，这样就不会出现卸载应用之后手机上还有残留数据的问题。<br>&#160; &#160; &#160; &#160;由于SD卡存储空间有限，下载的视频如果不清除很快就会爆满。或许我们可以在达到爆满之前给用户提醒要手动清除，但用户自己可能也很难做出正确的淘汰判断，而且经常提醒会让用户容易厌烦，所以我们可以使用LRU（Least Recently Used，近期最少使用算法）来实现视频的自动清除，它是一种较为常见的缓存淘汰算法，其核心思想是“如果数据最近经常被访问过，那么将来被访问的几率也更高，反之就应该被淘汰”。缓存淘汰的逻辑流程如下所示：</application></p>
-<p><img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/5.png" alt="缓存淘汰逻辑流程"> </p>
-<ul>
-<li>触发时机：因缓存淘汰需要遍历所有视频并排序，视频数量多会比 较耗IO和CPU，所以可以选择应用进入后台再异步进行；</li>
-<li>淘汰条件：视频总数超过300个，视频总大小超过500M，视频过期 （未使用超过1周），具体数值可根据需求动态配置。</li>
-</ul>
-<p><strong>【安全设计】</strong><br>&#160; &#160; &#160; &#160;手机连接网络，实际上是通过运营商网关（SGSN和GGSN）做一个网络地址转换(Network Address Translation，NAT)，实现内网IP和外网IP的映射，从而连接上了Internet，所以手机移动网络实际上是一个大型的“局域网”。<br>&#160; &#160; &#160; &#160;由于Proxy Server本质是一个http服务器，启动时会随机开放一个端口，如此一来，就相当于将本地服务端口暴露给整个手机网络，在这种情况下，黑客可以在这个大“局域网”内扫描出开放的端口，然后再伪造非法url模拟请求。臭名昭著的“WormHole虫洞漏洞”就是该漏洞的典型，其根本原因就是没有对请求进行限制和验证，而本身又提供了敏感服务，让黑客有机可乘。明白了攻击原理，我们就知道如何预防，措施如下：<br>1、对请求url进行规则限制，只接受特定的url请求；<br>2、对请求者进行身份验证，只接受播放器发起的请求，这里使用了消息摘要算法HMAC-MD5或HMAC-SHA1，并对其稍作改造：<br>1).播放器请求时，生成一个随机数random_key；<br>2).将random_key作为密钥，url和timestamp作为输入，使用HMAC-MD5/SHA1生成一个hash值sign，然后将该字符串追加到url后面，向proxy发起请求，如下图所示：</p>
-<p><img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/6.png" alt="client生成url流程"></p>
-<p>3).proxy收到请求后，先验证timestamp是否超过时间限制，防止重放攻击，接着根据random_key（本地获取）、url、timestamp使用同样的签名算法也生成一个签名字符串sign，然后和请求的sign比对，如果一致，则认为是授权的，否则就拒绝请求，如下图所示：</p>
-<p> <img src="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/7.png" alt="server解析url流程"></p>
-<p>&#160; &#160; &#160; &#160;综上所述，为了实现短视频的边下边播功能，本文首先分析了实现“边播”的要点在于视频的Metadata要在头部，然后分析了“边下”的实现方案，提出本地代理并对其架构进行说明，接着介绍如何使用LRU对缓存视频进行淘汰，最后针对本地代理可能存在的安全性问题进行了思考并给出解决方案。通过文章全篇分析可以看出，边下边播其实是“短视频类应用”播放短视频的较好的通用解决方案，因此笔者后续会将本文描述的解决方案的代码封装成组件提供出来，供类似场景快速复用。</p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/27/IOS_touch_event_distribution_mechanism/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/27/ML04GradientDescent/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Android短视频边下边播详解</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                About
-            </a>
-        </li>
-        
-    
+            </div>
 
-    <!-- Article Number  -->
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <p>       短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。<br />
+<strong>【视频格式】</strong><br />
+       想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：</p>
+
+<!--more-->
+
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/1.png" alt="视频文件结构" /></p>
+
+<p>内容元素主要包括：<br />
+* 图像(image)<br />
+* 音频(audio)<br />
+* 元信息(metadata)<br />
+编码格式(codec)主要包括：<br />
+* video:H.264、H.265、…<br />
+* audio:AAC、HE-AAC、…<br />
+容器封装(container)主要包括：<br />
+* MP4、FLV、AVI、MOV、RMVB、…</p>
+
+<p>       播放器在播放视频文件时，之所以知道该怎么去解码，以什么样的时间间隔去显示每一帧，是因为metadata记录了当前视频文件的图像尺寸、编码格式、帧率、码率等等信息，播放器通过解析metadata得到了这些信息，才能控制视频的显示，也就是说播放器要先解析完metadata才会开始播放。<br />
+       我们拿MP4作为例子来说明，不同容器的封装在数据存储上会存在一些差异，MP4视频文件结构如下所示：</p>
+
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/2.png" alt="MP4文件结构" /></p>
+
+<p>       它对应的metadata信息称为moov，mdat包含了音频和视频数据。MP4在实际制作中，moov有可能被放到了mdat后面，所以我们要保证制作出来的MP4的moov是放置在mdat前面的，这样才可以实现边下边播功能。如果不是这样，可以用FFmpeg的faststart命令（ffmpeg -i input.mp4 -movflags +faststart output.mp4）处理一下。<br />
+       另外值得一提的是，如果moov比较大，播放器需要较多的时间去解析，所以在播放之前可能会出现较长的缓冲时间，特别是视频文件较大的情况下，所以现在有些点播网站会采用每段mdat都有自己独立的metadata的封装方式，这样就可实现渐进式下载和快速缓冲的效果。</p>
+
+<p><strong>【本地代理】</strong></p>
+
+<p>       在确保视频文件的metadata在头部后，我们只要完整下载metadata，再加上少许音视频数据，就可以开始播放视频了，那么如何实现“边下”呢？我们都知道，Android平台上要播放视频，最基本的方式就是实例化一个MediaPlayer, 将视频的URL通过setDataSource()设置给播放器，之后调用prepare()或prepareAsync()和start()就可以开始播放视频了。于是我们很容易想到将MediaPlayer的视频源设置为本地文件，然后通过子线程不断将下载数据追加到该文件，但笔者经过验证，这种做法会经常导致MediaPlayer各种报错，无法顺利播放。<br />
+       经过深入调研，很遗憾MediaPlayer并没有提供类似可以拦截URL或文件流的API可以让我们将视频文件保存到本地（然而，iOS视频播放器有提供了类似接口）。所以我们换了一个思路，就是当播放器请求播放远程视频文件时，我们将远程URL篡改成本地URL，播放器播放视频时不再是直接访问远程视频文件，而是先访问本地代理，本地代理再去下载远程视频，下载多少就给播放器输送多少，这样就实现了边下边播，我们将这种做法称之为本地代理服务器。</p>
+
+<p><strong>【数据流程】</strong><br />
+播放器请求本地代理服务器的数据流程如下图：</p>
+
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/3.png" alt="播放器请求本地代理的数据流程" /></p>
+
+<p>1、播放器播放之前，先把网络视频的远程url替换成本地的url（类似http://127.0.0.1/xxx）；<br />
+2、播放器开始播放时将本地url请求发给proxy server；<br />
+3、proxy server根据本地url在本地缓存中查找是否存在该视频，如果存在则直接跳到步骤7，如果不存在，则进入步骤4；<br />
+4、proxy server根据视频远程url向视频server请求下载视频数据；<br />
+5、视频server返回给proxy server视频数据；<br />
+6、proxy server将返回的视频数据缓存到本地，并且处理其他业务逻辑；<br />
+7、proxy server将视频数据返回给播放器，播放器开始播放。<br />
+比起播放器直接播放网络视频，Proxy的做法使得视频的播放和下载在一定程度上变得可控，除了能够提供边下边播能力以外，还可以增加额外的视频相关业务逻辑，比如缓存、预下载、防盗链等等。</p>
+
+<p><strong>【技术架构】</strong></p>
+
+<p>       Proxy Server的http服务器实现可以参考一些开源项目如NanoHttpd，但如果想自己实现也不会很难，我们一起来看下它的技术架构，如下所示：</p>
+
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/4.png" alt="Proxy Server架构" /></p>
+
+<ul>
+  <li>proxy server为播放器提供http服务，是一个本地http服务器，内部通过线程轮询监听播放器请求，可以支持get和range header的请求和响应，range 主要用来支持视频断点续传或播放拖拽功能；</li>
+  <li>由于播放器可能会有多个请求或多个播放器同时请求，所以需要线程池来支持并发请求；</li>
+  <li>当播放器发起视频下载请求，proxy首先会根据url在本地缓存查找对应的视频文件，如果找到就直接返回数据给播放器，如果没有找到，proxy会向视频server发起http请求；</li>
+  <li>由于SD卡空间有限，下载后的视频采用LRU算法进行淘汰。</li>
 </ul>
 
+<p><strong>【缓存淘汰】</strong><br />
+       关于Proxy Server下载的视频缓存路径，由于手机内部存储空间有限，视频又比较大，不建议内部存储，所以可以放到SD卡上的路径/sdcard/Android/data/<application package="">/cache下，并且为了唯一标识文件，可以使用MD5(url)作为文件名。选择在这个位置有两点好处：第一，这是存储在SD卡上的，因此即使缓存再多的数据也不会对手机的内置存储空间有任何影响，只要SD卡空间足够。第二，这个路径被Android系统认定为应用程序的缓存路径，当程序被卸载的时候，这里的数据也会一起被清除掉，这样就不会出现卸载应用之后手机上还有残留数据的问题。
+&#160; &#160; &#160; &#160;由于SD卡存储空间有限，下载的视频如果不清除很快就会爆满。或许我们可以在达到爆满之前给用户提醒要手动清除，但用户自己可能也很难做出正确的淘汰判断，而且经常提醒会让用户容易厌烦，所以我们可以使用LRU（Least Recently Used，近期最少使用算法）来实现视频的自动清除，它是一种较为常见的缓存淘汰算法，其核心思想是“如果数据最近经常被访问过，那么将来被访问的几率也更高，反之就应该被淘汰”。缓存淘汰的逻辑流程如下所示：</application></p>
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/5.png" alt="缓存淘汰逻辑流程" /></p>
 
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
+<ul>
+  <li>触发时机：因缓存淘汰需要遍历所有视频并排序，视频数量多会比 较耗IO和CPU，所以可以选择应用进入后台再异步进行；</li>
+  <li>淘汰条件：视频总数超过300个，视频总大小超过500M，视频过期 （未使用超过1周），具体数值可根据需求动态配置。</li>
+</ul>
 
-<!-- Sidebar Divider -->
+<p><strong>【安全设计】</strong><br />
+       手机连接网络，实际上是通过运营商网关（SGSN和GGSN）做一个网络地址转换(Network Address Translation，NAT)，实现内网IP和外网IP的映射，从而连接上了Internet，所以手机移动网络实际上是一个大型的“局域网”。<br />
+       由于Proxy Server本质是一个http服务器，启动时会随机开放一个端口，如此一来，就相当于将本地服务端口暴露给整个手机网络，在这种情况下，黑客可以在这个大“局域网”内扫描出开放的端口，然后再伪造非法url模拟请求。臭名昭著的“WormHole虫洞漏洞”就是该漏洞的典型，其根本原因就是没有对请求进行限制和验证，而本身又提供了敏感服务，让黑客有机可乘。明白了攻击原理，我们就知道如何预防，措施如下：<br />
+1、对请求url进行规则限制，只接受特定的url请求；<br />
+2、对请求者进行身份验证，只接受播放器发起的请求，这里使用了消息摘要算法HMAC-MD5或HMAC-SHA1，并对其稍作改造：<br />
+1).播放器请求时，生成一个随机数random_key；<br />
+2).将random_key作为密钥，url和timestamp作为输入，使用HMAC-MD5/SHA1生成一个hash值sign，然后将该字符串追加到url后面，向proxy发起请求，如下图所示：</p>
 
-    <div class="sidebar-divider"></div>
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/6.png" alt="client生成url流程" /></p>
+
+<p>3).proxy收到请求后，先验证timestamp是否超过时间限制，防止重放攻击，接着根据random_key（本地获取）、url、timestamp使用同样的签名算法也生成一个签名字符串sign，然后和请求的sign比对，如果一致，则认为是授权的，否则就拒绝请求，如下图所示：</p>
+
+<p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/7.png" alt="server解析url流程" /></p>
+
+<p>       综上所述，为了实现短视频的边下边播功能，本文首先分析了实现“边播”的要点在于视频的Metadata要在头部，然后分析了“边下”的实现方案，提出本地代理并对其架构进行说明，接着介绍如何使用LRU对缓存视频进行淘汰，最后针对本地代理可能存在的安全性问题进行了思考并给出解决方案。通过文章全篇分析可以看出，边下边播其实是“短视频类应用”播放短视频的较好的通用解决方案，因此笔者后续会将本文描述的解决方案的代码封装成组件提供出来，供类似场景快速复用。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/27/ML04GradientDescent/">机器学习入门系列04，Gradient Descent（梯度下降法）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/27/IOS_touch_event_distribution_mechanism/">IOS触摸事件分发机制详解</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
+        <h2 id="comments">Comments</h2>
+        
 
 
-<!-- Help & Support -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- Feedback -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
 
-<!-- About Theme -->
-<!--
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
--->
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

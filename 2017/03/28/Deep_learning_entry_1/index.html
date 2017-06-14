@@ -1,802 +1,471 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            深度学习入门实战（一） | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>深度学习入门实战（一）</title>
+    <meta name="description" content="  导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="深度学习入门实战（一） | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/28/Deep_learning_entry_1/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x00-深度学习简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">0x00 深度学习简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#机器学习："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">机器学习：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">神经网络：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#神经元："><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">神经元：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#神经网络：-1"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">神经网络：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#深度学习："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">深度学习：</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x01-安装MXnet"><span class="post-toc-number">2.</span> <span class="post-toc-text">0x01 安装MXnet</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-下载源码"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">1. 下载源码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-编译安装"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">2. 编译安装</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x02-样例运行"><span class="post-toc-number">3.</span> <span class="post-toc-text">0x02 样例运行</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                深度学习入门实战（一）
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 28, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=深度学习入门实战（一）&url=http://melonteam.com//2017/03/28/Deep_learning_entry_1/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=深度学习入门实战（一）&url=http://melonteam.com//2017/03/28/Deep_learning_entry_1/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/28/Deep_learning_entry_1/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/28/Deep_learning_entry_1/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <blockquote>
-<p>导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~</p>
-</blockquote>
-<p>既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～</p>
-<a id="more"></a>
-<h2 id="0x00-深度学习简介"><a href="#0x00-深度学习简介" class="headerlink" title="0x00 深度学习简介"></a>0x00 深度学习简介</h2><p>虽然吧，我们不讲哪些深奥的数学原理，但是基本的原理还是要掌握下的～</p>
-<p>在介绍深度学习之前我们要先了解两个概念，机器学习和神经网络</p>
-<h3 id="机器学习："><a href="#机器学习：" class="headerlink" title="机器学习："></a>机器学习：</h3><p>在介绍深度学习之前，我们先简单介绍下机器学习，我们引用下维基百科上机器学习的定义：</p>
-<p>机器学习是人工智能的一个分支。人工智能的研究是从以“推理”为重点到以“知识”为重点，再到以“学习”为重点，一条自然、清晰的脉络。显然，机器学习是实现人工智能的一个途径，即以机器学习为手段解决人工智能中的问题。机器学习在近30多年已发展为一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、计算复杂性理论等多门学科。机器学习理论主要是设计和分析一些让计算机可以自动“学习”的算法。机器学习算法是一类从数据中自动分析获得规律，并利用规律对未知数据进行预测的算法。因为学习算法中涉及了大量的统计学理论，机器学习与推断统计学联系尤为密切，也被称为统计学习理论。算法设计方面，机器学习理论关注可以实现的，行之有效的学习算法。很多推论问题属于无程序可循难度，所以部分的机器学习研究是开发容易处理的近似算法。</p>
-<p>简单的说机器学习就是让机器去分析数据找规律，并通过找到的规律对新的数据进行处理。</p>
-<h3 id="神经网络："><a href="#神经网络：" class="headerlink" title="神经网络："></a>神经网络：</h3><h4 id="神经元："><a href="#神经元：" class="headerlink" title="神经元："></a>神经元：</h4><p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/1.png" alt="Alt text"></p>
-<p>以图像为例子，每个数据或者输入就是一张图片，而里面的每个x可以是图片中的每个像素。对于每个像素我们都赋予一个权重，然后经过转换函数（Transfer Function, 这里是线性叠加）得到一个数值。简单来说，我们对所有像素做个线性加权叠加。得到的数值会经过激活函数得到新的数值。这个激活函数（Activation Function）往往是那几个符合某些特性的非线性函数。为什么需要非线性的转换呢？举个简单的例子，在同一个平面你和你的影子是重叠是分不开的，在立体的空间你们却能分开了。非线性的转换有类似的作用。常用的激活函数有relu, softmax, tanh。</p>
-<p>简单的说一个神经元是一个简单的分类器，你输入一个</p>
-<p>比如我们有一大堆猫、狗照片，把每一张照片送进一个机器里，机器需要判断这幅照片里的东西是猫还是狗。我们把猫狗图片处理一下，左边是狗的特征向量，右边是猫的</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/2.png" alt="Alt text"></p>
-<p>大家想想，最简单地把这两组特征向量分开的方法是啥？当然是在两组数据中间画一条竖直线，直线左边是狗，右边是猫，分类器就完成了。以后来了新的向量，凡是落在直线左边的都是狗，落在右边的都是猫。<br>一条直线把平面一分为二，一个平面把三维空间一分为二，一个n-1维超平面把n维空间一分为二，两边分属不同的两类，这种分类器就叫做神经元。<br>当然，上面那幅图我们是开了上帝视角才知道“一条竖直线能分开两类”，在实际训练神经元时，我们并不知道特征是怎么抱团的。神经元模型的一种学习方法称为Hebb算法：<br>先随机选一条直线/平面/超平面，然后把样本一个个拿过来，如果这条直线分错了，说明这个点分错边了，就稍微把直线移动一点，让它靠近这个样本，争取跨过这个样本，让它跑到直线正确的一侧；如果直线分对了，它就暂时停下不动。因此训练神经元的过程就是这条直线不断在跳舞，最终跳到两个类之间的竖直线位置。</p>
-<h4 id="神经网络：-1"><a href="#神经网络：-1" class="headerlink" title="神经网络："></a>神经网络：</h4><p>神经网络简单点将就是由好多个神经元组成的系统。</p>
-<p>神经元一个缺点是：它只能切一刀！你给我说说一刀怎么能把下面这两类分开吧。</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/3.png" alt="Alt text"></p>
-<p>解决办法是多层神经网络，底层神经元的输出是高层神经元的输入。我们可以在中间横着砍一刀，竖着砍一刀，然后把左上和右下的部分合在一起，与右上的左下部分分开；也可以围着左上角的边沿砍10刀把这一部分先挖出来，然后和右下角合并。</p>
-<p>每砍一刀，其实就是使用了一个神经元，把不同砍下的半平面做交、并等运算，就是把这些神经元的输出当作输入，后面再连接一个神经元。这个例子中特征的形状称为异或，这种情况一个神经元搞不定，但是两层神经元就能正确对其进行分类。</p>
-<p>只要你能砍足够多刀，把结果拼在一起，什么奇怪形状的边界神经网络都能够表示，所以说神经网络在理论上可以表示很复杂的函数/空间分布。但是真实的神经网络是否能摆动到正确的位置还要看网络初始值设置、样本容量和分布。</p>
-<h3 id="深度学习："><a href="#深度学习：" class="headerlink" title="深度学习："></a>深度学习：</h3><p>那什么是深度学习呢？深度学习简单点说就是一种为了让层数较多的多层神经网络可以训练，能够运行起来而演化出来的一系列的新的结构和新的方法。</p>
-<p>就像下图</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/4.png" alt="Alt text"></p>
-<p>普通的神经网络可能只有几层，深度学习可以达到十几层。深度学习中的深度二字也代表了神经网络的层数。现在流行的深度学习网络结构有”CNN(卷积神经网络)、RNN(循环神经网络)、DNN(深度神经网络)的等。</p>
-<p>当然我们是以实战为主，可以直接使用现在市面上的一些现有深度学习框架，现在流行的深度学习框架有MXnet,tensorflow,caffe等，本文主要介绍<a href="https://github.com/dmlc/mxnet" target="_blank" rel="external">MXnet</a>这个开源的优秀深度学习框架。</p>
-<h2 id="0x01-安装MXnet"><a href="#0x01-安装MXnet" class="headerlink" title="0x01 安装MXnet"></a>0x01 安装MXnet</h2><p>这里我们安装的是CPU版的MXnet，为什么不安装GPU版？因为偶的Macbook是AMD的卡啊，MXnet只支持CUDA</p>
-<h4 id="1-下载源码"><a href="#1-下载源码" class="headerlink" title="1. 下载源码"></a>1. 下载源码</h4><p>新建一个目录，到那个目录下执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --recursive https://github.com/dmlc/mxnet</div></pre></td></tr></table></figure>
-<h4 id="2-编译安装"><a href="#2-编译安装" class="headerlink" title="2. 编译安装"></a>2. 编译安装</h4><p>运行setup-utils目录下的install-mxnet-osx.sh脚本，中间要编译些东西，要多等会，再输入个密码，就自动编译安装完成啦。<br>注意一下：<br>1.因为要读取make目录下的文件，所以这里要在MXnet源码的根目录执行安装脚本～<br>比如在mxnet的源码根目录执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh ./setup-utils/install-mxnet-osx.sh</div></pre></td></tr></table></figure>
-<p>2.以后运行脚本可能需要一些python模块，建议安装下pip<br>mac下安装的方法也很简单：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo easy_install pip</div></pre></td></tr></table></figure>
-<h2 id="0x02-样例运行"><a href="#0x02-样例运行" class="headerlink" title="0x02 样例运行"></a>0x02 样例运行</h2><p>我们可以试着运行下MXnet自带的一些样例，这里我们试下Neural art这个样例<br>Neural art是个让机器模仿已有画作的绘画风格来把一张照片重新绘画的算法。<br>比如我们输入<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/5.jpg" alt="Alt text"><br>和<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/6.jpg" alt="Alt text"></p>
-<p>最终生成<br><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/7.jpg" alt="Alt text"></p>
-<p>1.首先打开example/neural-style目录，大部分样例都是有README的，大家在运行之前可以先看看<br>这个样例的README有说<br>First use <code>download.sh</code> to download pre-trained model and sample inputs</p>
-<p>Then run <code>python nstyle.py</code>, use -h to see more options</p>
-<p>那我们就要运行这个目录下的download.sh</p>
-<p>脚本会自动下载训练模型vgg19.params到Model目录，输入的素材到input目录</p>
-<p>2.运行Demo<br>因为我们运行的是CPU版，所以要这么输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python nstyle.py --gpu -1 --max-num-epochs 150 --output_dir ~/Desktop/</div></pre></td></tr></table></figure>
-<p>–gpu：使用哪个一个GPU,-1代表使用CPU<br>–max-num-epochs：最大迭代次数，这里我们迭代150次<br>–output_dir：结果输出路径<br>可能大家一次运行不起来，会出现No module named for xxx的提示，一般是相应的python模块没有安装，在google搜下No module named for xxx一般都能找到安装方法，大部分都能通过pip安装~</p>
-<p>运行结果<br>我们看下不同迭代次数时的结果是什么样的<br>10次：</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/8.jpg" alt="Alt text"></p>
-<p>50次：</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/9.jpg" alt="Alt text"></p>
-<p>100次：</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/10.jpg" alt="Alt text"></p>
-<p>150次：</p>
-<p><img src="/2017/03/28/Deep_learning_entry_1/Deep_learning_entry/11.jpg" alt="Alt text"></p>
-<p>可以看出迭代次数越多效果越好~当然由于深度学习是有很多层神经网络组成，需要的运算量巨大，使用CPU即使是i7，150次迭代也需要好几十分钟了，有条件的看官可以尝试使用GPU版，可以将时间缩短到几分钟，甚至在云平台上跑。<br>样例的具体原理可以参考参考附录的第二个链接。</p>
-<p><strong>参考附录：</strong></p>
-<p><a href="http://www.leiphone.com/news/201608/wh8osGY4vg28XlvM.html" target="_blank" rel="external">http://www.leiphone.com/news/201608/wh8osGY4vg28XlvM.html</a><br><a href="http://phunter.farbox.com/post/mxnet-tutorial2" target="_blank" rel="external">http://phunter.farbox.com/post/mxnet-tutorial2</a><br><a href="https://zhuanlan.zhihu.com/p/20634163" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/20634163</a><br><a href="http://www.cnblogs.com/peizhe123/p/4641149.html" target="_blank" rel="external">http://www.cnblogs.com/peizhe123/p/4641149.html</a></p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/28/Deep_learning_entry_2/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/27/Video_codec_learning_sharing/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>深度学习入门实战（一）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-28
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
+            </div>
+
+            <div class="label-card">
                 
-                About
-            </a>
-        </li>
-        
+            </div>
+
+            <div class="label-card">
+            
+
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
     
+  
 
-    <!-- Article Number  -->
-    
-</ul>
+</span>
 
+            </div>
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
         </div>
-    </a>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#x00-" id="markdown-toc-x00-">0x00 深度学习简介</a>    <ul>
+      <li><a href="#section" id="markdown-toc-section">机器学习：</a></li>
+      <li><a href="#section-1" id="markdown-toc-section-1">神经网络：</a>        <ul>
+          <li><a href="#section-2" id="markdown-toc-section-2">神经元：</a></li>
+          <li><a href="#section-3" id="markdown-toc-section-3">神经网络：</a></li>
+        </ul>
+      </li>
+      <li><a href="#section-4" id="markdown-toc-section-4">深度学习：</a></li>
+    </ul>
+  </li>
+  <li><a href="#x01-mxnet" id="markdown-toc-x01-mxnet">0x01 安装MXnet</a>    <ul>
+      <li><a href="#section-5" id="markdown-toc-section-5">1. 下载源码</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">2. 编译安装</a></li>
+    </ul>
+  </li>
+  <li><a href="#x02-" id="markdown-toc-x02-">0x02 样例运行</a></li>
+</ul>
+<blockquote>
+  <p>导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~</p>
+</blockquote>
+
+<p>既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～</p>
+
+<!--more-->
+
+<h2 id="x00-">0x00 深度学习简介</h2>
+
+<p>虽然吧，我们不讲哪些深奥的数学原理，但是基本的原理还是要掌握下的～</p>
+
+<p>在介绍深度学习之前我们要先了解两个概念，机器学习和神经网络</p>
+
+<h3 id="section">机器学习：</h3>
+
+<p>在介绍深度学习之前，我们先简单介绍下机器学习，我们引用下维基百科上机器学习的定义：</p>
+
+<p>机器学习是人工智能的一个分支。人工智能的研究是从以“推理”为重点到以“知识”为重点，再到以“学习”为重点，一条自然、清晰的脉络。显然，机器学习是实现人工智能的一个途径，即以机器学习为手段解决人工智能中的问题。机器学习在近30多年已发展为一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、计算复杂性理论等多门学科。机器学习理论主要是设计和分析一些让计算机可以自动“学习”的算法。机器学习算法是一类从数据中自动分析获得规律，并利用规律对未知数据进行预测的算法。因为学习算法中涉及了大量的统计学理论，机器学习与推断统计学联系尤为密切，也被称为统计学习理论。算法设计方面，机器学习理论关注可以实现的，行之有效的学习算法。很多推论问题属于无程序可循难度，所以部分的机器学习研究是开发容易处理的近似算法。</p>
+
+<p>简单的说机器学习就是让机器去分析数据找规律，并通过找到的规律对新的数据进行处理。</p>
+
+<h3 id="section-1">神经网络：</h3>
+
+<h4 id="section-2">神经元：</h4>
+
+<p><img src="/image/Deep_learning_entry/1.png" alt="Alt text" /></p>
+
+<p>以图像为例子，每个数据或者输入就是一张图片，而里面的每个x可以是图片中的每个像素。对于每个像素我们都赋予一个权重，然后经过转换函数（Transfer Function, 这里是线性叠加）得到一个数值。简单来说，我们对所有像素做个线性加权叠加。得到的数值会经过激活函数得到新的数值。这个激活函数（Activation Function）往往是那几个符合某些特性的非线性函数。为什么需要非线性的转换呢？举个简单的例子，在同一个平面你和你的影子是重叠是分不开的，在立体的空间你们却能分开了。非线性的转换有类似的作用。常用的激活函数有relu, softmax, tanh。</p>
+
+<p>简单的说一个神经元是一个简单的分类器，你输入一个</p>
+
+<p>比如我们有一大堆猫、狗照片，把每一张照片送进一个机器里，机器需要判断这幅照片里的东西是猫还是狗。我们把猫狗图片处理一下，左边是狗的特征向量，右边是猫的</p>
+
+<p><img src="/image/Deep_learning_entry/2.png" alt="Alt text" /></p>
+
+<p>大家想想，最简单地把这两组特征向量分开的方法是啥？当然是在两组数据中间画一条竖直线，直线左边是狗，右边是猫，分类器就完成了。以后来了新的向量，凡是落在直线左边的都是狗，落在右边的都是猫。<br />
+一条直线把平面一分为二，一个平面把三维空间一分为二，一个n-1维超平面把n维空间一分为二，两边分属不同的两类，这种分类器就叫做神经元。<br />
+当然，上面那幅图我们是开了上帝视角才知道“一条竖直线能分开两类”，在实际训练神经元时，我们并不知道特征是怎么抱团的。神经元模型的一种学习方法称为Hebb算法：<br />
+先随机选一条直线/平面/超平面，然后把样本一个个拿过来，如果这条直线分错了，说明这个点分错边了，就稍微把直线移动一点，让它靠近这个样本，争取跨过这个样本，让它跑到直线正确的一侧；如果直线分对了，它就暂时停下不动。因此训练神经元的过程就是这条直线不断在跳舞，最终跳到两个类之间的竖直线位置。</p>
+
+<h4 id="section-3">神经网络：</h4>
+
+<p>神经网络简单点将就是由好多个神经元组成的系统。</p>
+
+<p>神经元一个缺点是：它只能切一刀！你给我说说一刀怎么能把下面这两类分开吧。</p>
+
+<p><img src="/image/Deep_learning_entry/3.png" alt="Alt text" /></p>
+
+<p>解决办法是多层神经网络，底层神经元的输出是高层神经元的输入。我们可以在中间横着砍一刀，竖着砍一刀，然后把左上和右下的部分合在一起，与右上的左下部分分开；也可以围着左上角的边沿砍10刀把这一部分先挖出来，然后和右下角合并。</p>
+
+<p>每砍一刀，其实就是使用了一个神经元，把不同砍下的半平面做交、并等运算，就是把这些神经元的输出当作输入，后面再连接一个神经元。这个例子中特征的形状称为异或，这种情况一个神经元搞不定，但是两层神经元就能正确对其进行分类。</p>
+
+<p>只要你能砍足够多刀，把结果拼在一起，什么奇怪形状的边界神经网络都能够表示，所以说神经网络在理论上可以表示很复杂的函数/空间分布。但是真实的神经网络是否能摆动到正确的位置还要看网络初始值设置、样本容量和分布。</p>
+
+<h3 id="section-4">深度学习：</h3>
+
+<p>那什么是深度学习呢？深度学习简单点说就是一种为了让层数较多的多层神经网络可以训练，能够运行起来而演化出来的一系列的新的结构和新的方法。</p>
+
+<p>就像下图</p>
+
+<p><img src="/image/Deep_learning_entry/4.png" alt="Alt text" /></p>
+
+<p>普通的神经网络可能只有几层，深度学习可以达到十几层。深度学习中的深度二字也代表了神经网络的层数。现在流行的深度学习网络结构有”CNN(卷积神经网络)、RNN(循环神经网络)、DNN(深度神经网络)的等。</p>
+
+<p>当然我们是以实战为主，可以直接使用现在市面上的一些现有深度学习框架，现在流行的深度学习框架有MXnet,tensorflow,caffe等，本文主要介绍<a href="https://github.com/dmlc/mxnet">MXnet</a>这个开源的优秀深度学习框架。</p>
+
+<h2 id="x01-mxnet">0x01 安装MXnet</h2>
+
+<p>这里我们安装的是CPU版的MXnet，为什么不安装GPU版？因为偶的Macbook是AMD的卡啊，MXnet只支持CUDA</p>
+
+<h4 id="section-5">1. 下载源码</h4>
+
+<p>新建一个目录，到那个目录下执行</p>
+
+<pre><code class="language-bash">git clone --recursive https://github.com/dmlc/mxnet
+</code></pre>
+
+<h4 id="section-6">2. 编译安装</h4>
+<p>运行setup-utils目录下的install-mxnet-osx.sh脚本，中间要编译些东西，要多等会，再输入个密码，就自动编译安装完成啦。<br />
+注意一下：<br />
+1.因为要读取make目录下的文件，所以这里要在MXnet源码的根目录执行安装脚本～<br />
+比如在mxnet的源码根目录执行</p>
+
+<pre><code class="language-bash">sh ./setup-utils/install-mxnet-osx.sh
+</code></pre>
+
+<p>2.以后运行脚本可能需要一些python模块，建议安装下pip<br />
+mac下安装的方法也很简单：</p>
+
+<pre><code class="language-bash"> sudo easy_install pip
+</code></pre>
+
+<h2 id="x02-">0x02 样例运行</h2>
+<p>我们可以试着运行下MXnet自带的一些样例，这里我们试下Neural art这个样例<br />
+Neural art是个让机器模仿已有画作的绘画风格来把一张照片重新绘画的算法。<br />
+比如我们输入<br />
+<img src="/image/Deep_learning_entry/5.jpg" alt="Alt text" /><br />
+和<br />
+<img src="/image/Deep_learning_entry/6.jpg" alt="Alt text" /></p>
+
+<p>最终生成<br />
+<img src="/image/Deep_learning_entry/7.jpg" alt="Alt text" /></p>
+
+<p>1.首先打开example/neural-style目录，大部分样例都是有README的，大家在运行之前可以先看看<br />
+这个样例的README有说<br />
+First use <code>download.sh</code> to download pre-trained model and sample inputs</p>
+
+<p>Then run <code>python nstyle.py</code>, use -h to see more options</p>
+
+<p>那我们就要运行这个目录下的download.sh</p>
+
+<p>脚本会自动下载训练模型vgg19.params到Model目录，输入的素材到input目录</p>
+
+<p>2.运行Demo<br />
+因为我们运行的是CPU版，所以要这么输入</p>
+
+<pre><code class="language-bash">python nstyle.py --gpu -1 --max-num-epochs 150 --output_dir ~/Desktop/
+</code></pre>
+
+<p>–gpu：使用哪个一个GPU,-1代表使用CPU<br />
+–max-num-epochs：最大迭代次数，这里我们迭代150次<br />
+–output_dir：结果输出路径<br />
+可能大家一次运行不起来，会出现No module named for xxx的提示，一般是相应的python模块没有安装，在google搜下No module named for xxx一般都能找到安装方法，大部分都能通过pip安装~</p>
+
+<p>运行结果<br />
+我们看下不同迭代次数时的结果是什么样的<br />
+10次：</p>
+
+<p><img src="/image/Deep_learning_entry/8.jpg" alt="Alt text" /></p>
+
+<p>50次：</p>
+
+<p><img src="/image/Deep_learning_entry/9.jpg" alt="Alt text" /></p>
+
+<p>100次：</p>
+
+<p><img src="/image/Deep_learning_entry/10.jpg" alt="Alt text" /></p>
+
+<p>150次：</p>
+
+<p><img src="/image/Deep_learning_entry/11.jpg" alt="Alt text" /></p>
+
+<p>可以看出迭代次数越多效果越好~当然由于深度学习是有很多层神经网络组成，需要的运算量巨大，使用CPU即使是i7，150次迭代也需要好几十分钟了，有条件的看官可以尝试使用GPU版，可以将时间缩短到几分钟，甚至在云平台上跑。<br />
+样例的具体原理可以参考参考附录的第二个链接。</p>
+
+<p><strong>参考附录：</strong></p>
+
+<p>http://www.leiphone.com/news/201608/wh8osGY4vg28XlvM.html<br />
+http://phunter.farbox.com/post/mxnet-tutorial2<br />
+https://zhuanlan.zhihu.com/p/20634163<br />
+http://www.cnblogs.com/peizhe123/p/4641149.html</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/28/Video_codec_learning_sharing/">视频编解码学习分享</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/28/Deep_learning_entry_2/">深度学习入门实战（二）</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Help & Support -->
-<!--
+        <h2 id="comments">Comments</h2>
+        
 
--->
 
-<!-- Feedback -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/28/Deep_learning_entry_1/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/28/Deep_learning_entry_1/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- About Theme -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

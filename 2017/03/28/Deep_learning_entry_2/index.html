@@ -1,810 +1,624 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            深度学习入门实战（二） | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>深度学习入门实战（二）</title>
+    <meta name="description" content="  导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="深度学习入门实战（二） | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x00-概要"><span class="post-toc-number">1.</span> <span class="post-toc-text">0x00 概要</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x01-TensorFlow安装"><span class="post-toc-number">2.</span> <span class="post-toc-text">0x01 TensorFlow安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x02-TensorFlow基本使用"><span class="post-toc-number">3.</span> <span class="post-toc-text">0x02 TensorFlow基本使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-placehoder（占位符）"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1.placehoder（占位符）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-Variable（变量）"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2.Variable（变量）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Constant（常量）"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">3.Constant（常量）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Session（会话）"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">4.Session（会话）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-简单使用"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">5.简单使用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x03-样例"><span class="post-toc-number">4.</span> <span class="post-toc-text">0x03 样例</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                深度学习入门实战（二）
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 28, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=深度学习入门实战（二）&url=http://melonteam.com//2017/03/28/Deep_learning_entry_2/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=深度学习入门实战（二）&url=http://melonteam.com//2017/03/28/Deep_learning_entry_2/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/28/Deep_learning_entry_2/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/28/Deep_learning_entry_2/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <blockquote>
-<p>导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="0x00-概要"><a href="#0x00-概要" class="headerlink" title="0x00 概要"></a>0x00 概要</h2><p>TensorFlow是谷歌爸爸出的一个开源机器学习框架，目前已被广泛应用，谷歌爸爸出品即使性能不是最强的（其实性能也不错），但绝对是用起来最方便的，毕竟谷歌有Jeff Dean坐镇，这波稳。</p>
-<h2 id="0x01-TensorFlow安装"><a href="#0x01-TensorFlow安装" class="headerlink" title="0x01 TensorFlow安装"></a>0x01 TensorFlow安装</h2><p>官方有一个Mac上TensorFlow的安装指南，点<a href="https://www.tensorflow.org/install/install_mac" target="_blank" rel="external">这里</a><br>我们现在就照着这个安装指南操作一把，官方推荐在virtualenv中安装TF，我们就在virtualenv安装吧，大家也可以直接安装。前几天TF发布1.0版了，我们就安装1.0版吧～</p>
-<p>1.先安装下pip和six</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo easy_install --upgrade pip</div><div class="line">$ sudo easy_install --upgrade six</div></pre></td></tr></table></figure>
-<p>2.安装下virtualenv</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install --upgrade virtualenv</div></pre></td></tr></table></figure>
-<p>3.接下来, 建立一个全新的 virtualenv 环境。这里将环境建在 ~/tensorflow目录下, 执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ virtualenv --system-site-packages ~/tensorflow</div><div class="line">$ <span class="built_in">cd</span> ~/tensorflow</div></pre></td></tr></table></figure>
-<p>4.然后, 激活 virtualenv:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">source</span> bin/activate  <span class="comment"># 如果使用 bash</span></div><div class="line">$ <span class="built_in">source</span> bin/activate.csh  <span class="comment"># 如果使用 csh</span></div></pre></td></tr></table></figure>
-<p>(tensorflow)$ # 终端提示符应该发生变化<br>如果要退出虚拟环境可以执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(tensorflow)$ deactivate</div></pre></td></tr></table></figure>
-<p>也可以直接在shell里执行下面的代码激活</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> ~/tensorflow/bin/activate</div></pre></td></tr></table></figure>
-<p>5.在 virtualenv 内, 安装 TensorFlow:<br>因为我用的是Python 2.x所以执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install --upgrade  https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl</div></pre></td></tr></table></figure>
-<p>要是使用Python3可以执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip3 install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py3-none-any.whl</div></pre></td></tr></table></figure>
-<p>当然也可以执行下面这个命令直接安装最新版</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --upgrade tensorflow</div></pre></td></tr></table></figure>
-<p>等命令执行完TF就安装好了</p>
-<p>安装完成后可以在python中执行以下代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import tensorflow as tf</div><div class="line">hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</div><div class="line">sess = tf.Session()</div><div class="line"><span class="built_in">print</span>(sess.run(hello))</div></pre></td></tr></table></figure>
-<p>如果输出<br>Hello, TensorFlow!<br>就说明安装成功啦<br>PS:运行脚本的时候会提示不支持SSE xxx指令集的提示，这是因为我们是通过pip直接安装的编译好的版本导致的，如果想针对机器优化，可以直接从GitHub上的源代码编译安装。但这样会复杂些，而且我觉得其实提升不大，用CPU都很慢。。。不如直接上GPU性能提升快<br>PS2:如果想安装GPU版会复杂些，首先要有一块支持CUDA的N卡，再安装CUDA驱动啥的，各位看官可以谷歌一下查询相关资料。如果不想搜索，也可以看本系列后续文章，以后也会介绍如何在Mac下安装GPU版。</p>
-<h2 id="0x02-TensorFlow基本使用"><a href="#0x02-TensorFlow基本使用" class="headerlink" title="0x02 TensorFlow基本使用"></a>0x02 TensorFlow基本使用</h2><p>在介绍样例之前，我们先介绍一下TensorFlow的一些基本概念</p>
-<h3 id="1-placehoder（占位符）"><a href="#1-placehoder（占位符）" class="headerlink" title="1.placehoder（占位符）"></a>1.placehoder（占位符）</h3><blockquote>
-<p>tf.placeholder(dtype, shape=None, name=None)<br>  Args:<br>    dtype: The type of elements in the tensor to be fed.<br>    shape: The shape of the tensor to be fed (optional). If the shape is not specified, you can feed a tensor of any shape.<br>    name: A name for the operation (optional).</p>
-</blockquote>
-<p>dytpe:占位符的数据类型<br>shape:占位符的纬度，例如[2,2]代表2x2的二维矩阵，None可以代表任意维度，例如[None,2]则代表任意行数，2列的二维矩阵<br>name:占位符的名字</p>
-<p>变量在定义时要初始化，但可能有些变量我们一开始定义的时候并不一定知道该变量的值，只有当真正开始运行程序的时候才由外部输入，比如我们需要训练的数据，所以就用占位符来占个位置，告诉TensorFlow，等到真正运行的时候再通过输入数据赋值。<br>例如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x = tf.placeholder(tf.float32, [<span class="number">2</span>, <span class="number">2</span>])</div></pre></td></tr></table></figure>
-<p>就是生成了一个2x2的二维矩阵，矩阵中每个元素的类型都是tf.float32（也就是浮点型）<br>有时候定义需要训练的参数时候，会定义一个[input_size,output_size]大小的矩阵，其中input_size数输入数据的维度，output_size是输出数据的维度</p>
-<h3 id="2-Variable（变量）"><a href="#2-Variable（变量）" class="headerlink" title="2.Variable（变量）"></a>2.Variable（变量）</h3><p>官方说明 有些长，我就不引用啦，这里介绍一个简单的用法，有一点变量在声明的时候要有一个初始值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x = tf.Variable(tf.zeros([<span class="number">2</span>,<span class="number">2</span>])) <span class="comment"># 声明一个2x2的矩阵，并将矩阵中的所有元素的值赋为0，默认每个元素都是tf.float32类型的数据</span></div><div class="line">y = tf.Variable(<span class="number">1.0</span>, tf.float32) <span class="comment"># 声明一个tf.float32的变量，并将初始值设为1.0</span></div></pre></td></tr></table></figure>
-<p>我们一般还需要运行下global_variables_initializer真正在TensorFlow的Session中初始化所有变量，后面的样例中也会有体现。</p>
-<h3 id="3-Constant（常量）"><a href="#3-Constant（常量）" class="headerlink" title="3.Constant（常量）"></a>3.Constant（常量）</h3><p><a href="https://www.tensorflow.org/api_docs/python/tf/Variable" target="_blank" rel="external">官方说明</a> 同样不引用啦，这里介绍一个简单的用法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x = tf.constant(<span class="number">3.0</span>, tf.float32) <span class="comment"># 定义一个值为3.0的浮点型常量</span></div></pre></td></tr></table></figure>
-<h3 id="4-Session（会话）"><a href="#4-Session（会话）" class="headerlink" title="4.Session（会话）"></a>4.Session（会话）</h3><p>TensorFlow所有的操作都必须在Session中运行，才能真正起作用，可以将Session当作TensorFlow运行的环境，Session运行完需要close～</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#用close()关闭</span></div><div class="line">sess = tf.Session()</div><div class="line">sess.run(...)</div><div class="line">sess.close()</div><div class="line"></div><div class="line"><span class="comment">#使用with..as..语句关闭</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    sess.run(...)</div></pre></td></tr></table></figure>
-<h3 id="5-简单使用"><a href="#5-简单使用" class="headerlink" title="5.简单使用"></a>5.简单使用</h3><p>我们介绍下3+5应该如何在TensorFlow中实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.Variable(<span class="number">3</span>, tf.int16) // 声明一个整型变量<span class="number">3</span></div><div class="line">y = tf.Variable(<span class="number">5</span>, tf.int16) // 声明一个整型变量<span class="number">5</span></div><div class="line">z = tf.add(x,y) // z = x + y</div><div class="line">init = tf.global_variables_initializer() // 初始化变量的操作</div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    sess.run(init)  // 在Session中初始化变量</div><div class="line">    print(sess.run(z)) // 输出计算出的z值</div></pre></td></tr></table></figure>
-<h2 id="0x03-样例"><a href="#0x03-样例" class="headerlink" title="0x03 样例"></a>0x03 样例</h2><p>Github上有一个比较好的<a href="https://github.com/aymericdamien/TensorFlow-Examples" target="_blank" rel="external">Demo合集</a>，有注释有源代码还蛮好的，但今天我们不讲上面的代码，我们讲如何用TF实现线性回归模型<br>所谓线性回归模型就是y = W <em> x + b的形式的表达式拟合的模型。<br>我们如果想通过深度学习拟合一条直线 y = 3 </em> x 应该怎么做呢？咱不讲虚的先展示下代码！然后我们在逐步分析。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.placeholder(tf.float32)</div><div class="line">W = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">b = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y_ = tf.placeholder(tf.float32)</div><div class="line"></div><div class="line">y = W * x + b</div><div class="line"></div><div class="line">lost = tf.reduce_mean(tf.square(y_-y))</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.0000001</span>)</div><div class="line">train_step = optimizer.minimize(lost)</div><div class="line"></div><div class="line">sess = tf.Session()</div><div class="line">init = tf.global_variables_initializer()</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line">steps = <span class="number">1000</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(steps):</div><div class="line">    xs = [i]</div><div class="line">    ys = [<span class="number">3</span> * i]</div><div class="line">    feed = &#123; x: xs, y_: ys &#125;</div><div class="line">    sess.run(train_step, feed_dict=feed)</div><div class="line">    <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span> :</div><div class="line">        print(<span class="string">"After %d iteration:"</span> % i)</div><div class="line">        print(<span class="string">"W: %f"</span> % sess.run(W))</div><div class="line">        print(<span class="string">"b: %f"</span> % sess.run(b))</div><div class="line">        print(<span class="string">"lost: %f"</span> % sess.run(lost, feed_dict=feed))</div></pre></td></tr></table></figure>
-<p>1.先导入需要使用的python库</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div></pre></td></tr></table></figure>
-<p>毕竟是基于TensorFlow的，那我们肯定要导入TensorFlow滴，导入之后取个别名tf，之后用起来方便些。</p>
-<p>2.定义需要的变量，我们看看y = W * x + b中都有哪些变量</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x = tf.placeholder(tf.float32)</div><div class="line">W = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">b = tf.Variable(tf.zeros([<span class="number">1</span>]))</div><div class="line">y_ = tf.placeholder(tf.float32)</div></pre></td></tr></table></figure>
-<p>x：我们训练时需要输入的真实数据x<br>W: 我们需要训练的W，这里我们定义了一个1维的变量（其实吧，就是一个普普通通的数，直接用tf.float32也行）并将其初值赋为0<br>b : 我们需要训练的b，定义一个1维变量，并将其初值赋为0<br>y_ ：我们训练时需要输入的x对应的y</p>
-<p>3.定义线性模型</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = W * x + b</div></pre></td></tr></table></figure>
-<p>4.定义损失函数和优化方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">lost = tf.reduce_mean(tf.square(y_-y))</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.0000001</span>)</div><div class="line">train_step = optimizer.minimize(lost)</div><div class="line">lost = tf.reduce_mean(tf.square(y_- y))</div></pre></td></tr></table></figure>
-<p>损失函数(Lost Function)是用来评估我们预测的值和真实的值之间的差距是多少，损失函数有很多种写法，我们这里使用（y预测-y真实)^2再取平均数来作为我们的损失函数（用这个函数是有原因的，因为我们用的是梯度下降法进行学习）损失函数的值越小越好，有些教程也叫Cost Function</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.0000001</span>)</div></pre></td></tr></table></figure>
-<p>优化函数代表我们要通过什么方式去优化我们需要学习的值，这个例子里指的是W和b，优化函数的种类有很多，大家到<a href="https://www.tensorflow.org/api_guides/python/train" target="_blank" rel="external">官网</a>查阅，<br>平时我们用的比较多的是GradientDescentOptimizer和AdamOptimizer等，这里我们选用最常用也是最最基本的GradientDescentOptimizer（梯度下降），后面传入的值是学习效率。一般是一个小于1的数。越小收敛越慢，但并不是越大收敛越快哈，取值太大甚至可能不收敛了。。。<br>我们简单介绍下什么是梯度下降，梯度顾名思义就是函数某一点的导数，也就是该点的变化率。梯度下降则顾名思义就是沿梯度下降的方向求解极小值。<br>详细解释大家可以自行谷歌一下～当然可以可以看<a href="http://blog.csdn.net/yhao2014/article/details/51554910" target="_blank" rel="external">这篇文章</a>，当然由于性能的原因梯度下降有很多种变种，例如随机梯度下降 (Stochastic Gradient Descent)，小批梯度下降 (Mini-Batch Gradient Descent)。本文样例采用的是SGD，每次只输入一个数据。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train_step = optimizer.minimize(lost)</div></pre></td></tr></table></figure>
-<p>这个代表我们每次训练迭代的目的，本例我们的目的就是尽量减小lost的值，也就是让损失函数的值尽量变小</p>
-<p>5.变量初始化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sess = tf.Session()</div><div class="line">init = tf.global_variables_initializer()</div><div class="line">sess.run(init)</div></pre></td></tr></table></figure>
-<p>这个之前有所介绍了，我们需要在Session中真正运行下global_variables_initializer才会真正初始化变量</p>
-<p>6.开始训练</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">steps = <span class="number">1000</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(steps):</div><div class="line">    xs = [i]</div><div class="line">    ys = [<span class="number">3</span> * i]</div><div class="line">    feed = &#123; x: xs, y_: ys &#125;</div><div class="line">    sess.run(train_step, feed_dict=feed)</div><div class="line">    <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span> :</div><div class="line">        print(<span class="string">"After %d iteration:"</span> % i)</div><div class="line">        print(<span class="string">"W: %f"</span> % sess.run(W))</div><div class="line">        print(<span class="string">"b: %f"</span> % sess.run(b))</div><div class="line">        print(<span class="string">"lost: %f"</span> % sess.run(lost, feed_dict=feed))</div></pre></td></tr></table></figure>
-<p>我们定义一个训练迭代次数1000次<br>这里我们图方便，每次迭代都直接将i作为x，3*i作为y直接当成训练数据。<br>我们所有通过placeholder定义的值，在训练时我们都需要通过feed_dict来传入数据。<br>然后我们每隔100次迭代，输出一次训练结果，看看效果如何～</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">After <span class="number">0</span> iteration:</div><div class="line">W: <span class="number">0.000000</span></div><div class="line">b: <span class="number">0.000000</span></div><div class="line">lost: <span class="number">0.000000</span></div><div class="line">After <span class="number">100</span> iteration:</div><div class="line">W: <span class="number">0.196407</span></div><div class="line">b: <span class="number">0.002951</span></div><div class="line">lost: <span class="number">78599.671875</span></div><div class="line">After <span class="number">200</span> iteration:</div><div class="line">W: <span class="number">1.249361</span></div><div class="line">b: <span class="number">0.009867</span></div><div class="line">lost: <span class="number">122582.625000</span></div><div class="line">After <span class="number">300</span> iteration:</div><div class="line">W: <span class="number">2.513344</span></div><div class="line">b: <span class="number">0.015055</span></div><div class="line">lost: <span class="number">21310.636719</span></div><div class="line">After <span class="number">400</span> iteration:</div><div class="line">W: <span class="number">2.960238</span></div><div class="line">b: <span class="number">0.016392</span></div><div class="line">lost: <span class="number">252.449890</span></div><div class="line">After <span class="number">500</span> iteration:</div><div class="line">W: <span class="number">2.999347</span></div><div class="line">b: <span class="number">0.016484</span></div><div class="line">lost: <span class="number">0.096061</span></div><div class="line">After <span class="number">600</span> iteration:</div><div class="line">W: <span class="number">2.999971</span></div><div class="line">b: <span class="number">0.016485</span></div><div class="line">lost: <span class="number">0.000001</span></div><div class="line">After <span class="number">700</span> iteration:</div><div class="line">W: <span class="number">2.999975</span></div><div class="line">b: <span class="number">0.016485</span></div><div class="line">lost: <span class="number">0.000001</span></div><div class="line">After <span class="number">800</span> iteration:</div><div class="line">W: <span class="number">2.999978</span></div><div class="line">b: <span class="number">0.016485</span></div><div class="line">lost: <span class="number">0.000001</span></div><div class="line">After <span class="number">900</span> iteration:</div><div class="line">W: <span class="number">2.999981</span></div><div class="line">b: <span class="number">0.016485</span></div><div class="line">lost: <span class="number">0.000000</span></div></pre></td></tr></table></figure>
-<p>可以看到在迭代了500次之后效果就很好了，w已经达到2.999347很接近3了，b也达到了0.016484也比较接近0了，因为这里学习率选择的比较小，所以收敛的比较慢，各位也可以尝试调大学习率，看看收敛的速度有何变化。</p>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/28/Deep_learning_entry_1/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>深度学习入门实战（二）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-28
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
+            </div>
+
+            <div class="label-card">
                 
-                About
-            </a>
-        </li>
-        
+            </div>
+
+            <div class="label-card">
+            
+
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
     
+  
 
-    <!-- Article Number  -->
-    
-</ul>
+</span>
 
+            </div>
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
         </div>
-    </a>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#x00-" id="markdown-toc-x00-">0x00 概要</a></li>
+  <li><a href="#x01-tensorflow" id="markdown-toc-x01-tensorflow">0x01 TensorFlow安装</a></li>
+  <li><a href="#x02-tensorflow" id="markdown-toc-x02-tensorflow">0x02 TensorFlow基本使用</a>    <ul>
+      <li><a href="#placehoder" id="markdown-toc-placehoder">1.placehoder（占位符）</a></li>
+      <li><a href="#variable" id="markdown-toc-variable">2.Variable（变量）</a></li>
+      <li><a href="#constant" id="markdown-toc-constant">3.Constant（常量）</a></li>
+      <li><a href="#session" id="markdown-toc-session">4.Session（会话）</a></li>
+      <li><a href="#section" id="markdown-toc-section">5.简单使用</a></li>
+    </ul>
+  </li>
+  <li><a href="#x03-" id="markdown-toc-x03-">0x03 样例</a></li>
+</ul>
+<blockquote>
+  <p>导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～</p>
+</blockquote>
+
+<!--more-->
+
+<h2 id="x00-">0x00 概要</h2>
+
+<p>TensorFlow是谷歌爸爸出的一个开源机器学习框架，目前已被广泛应用，谷歌爸爸出品即使性能不是最强的（其实性能也不错），但绝对是用起来最方便的，毕竟谷歌有Jeff Dean坐镇，这波稳。</p>
+
+<h2 id="x01-tensorflow">0x01 TensorFlow安装</h2>
+
+<p>官方有一个Mac上TensorFlow的安装指南，点<a href="https://www.tensorflow.org/install/install_mac">这里</a><br />
+我们现在就照着这个安装指南操作一把，官方推荐在virtualenv中安装TF，我们就在virtualenv安装吧，大家也可以直接安装。前几天TF发布1.0版了，我们就安装1.0版吧～</p>
+
+<p>1.先安装下pip和six</p>
+
+<pre><code class="language-bash">$ sudo easy_install --upgrade pip
+$ sudo easy_install --upgrade six 
+</code></pre>
+
+<p>2.安装下virtualenv</p>
+
+<pre><code class="language-bash">$ sudo pip install --upgrade virtualenv
+</code></pre>
+
+<p>3.接下来, 建立一个全新的 virtualenv 环境。这里将环境建在 ~/tensorflow目录下, 执行:</p>
+
+<pre><code class="language-bash">$ virtualenv --system-site-packages ~/tensorflow
+$ cd ~/tensorflow
+</code></pre>
+
+<p>4.然后, 激活 virtualenv:</p>
+
+<pre><code class="language-bash">$ source bin/activate  # 如果使用 bash
+$ source bin/activate.csh  # 如果使用 csh
+</code></pre>
+
+<p>(tensorflow)$ # 终端提示符应该发生变化<br />
+如果要退出虚拟环境可以执行</p>
+
+<pre><code class="language-bash">(tensorflow)$ deactivate
+</code></pre>
+
+<p>也可以直接在shell里执行下面的代码激活</p>
+
+<pre><code class="language-bash">source ~/tensorflow/bin/activate
+</code></pre>
+
+<p>5.在 virtualenv 内, 安装 TensorFlow:<br />
+因为我用的是Python 2.x所以执行</p>
+
+<pre><code class="language-bash">$ sudo pip install --upgrade  https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl
+</code></pre>
+
+<p>要是使用Python3可以执行</p>
+
+<pre><code class="language-bash"> $ pip3 install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py3-none-any.whl
+</code></pre>
+
+<p>当然也可以执行下面这个命令直接安装最新版</p>
+
+<pre><code class="language-bash">pip install --upgrade tensorflow
+</code></pre>
+
+<p>等命令执行完TF就安装好了</p>
+
+<p>安装完成后可以在python中执行以下代码</p>
+
+<pre><code class="language-bash">import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print(sess.run(hello))
+</code></pre>
+
+<p>如果输出<br />
+Hello, TensorFlow!<br />
+就说明安装成功啦<br />
+PS:运行脚本的时候会提示不支持SSE xxx指令集的提示，这是因为我们是通过pip直接安装的编译好的版本导致的，如果想针对机器优化，可以直接从GitHub上的源代码编译安装。但这样会复杂些，而且我觉得其实提升不大，用CPU都很慢。。。不如直接上GPU性能提升快<br />
+PS2:如果想安装GPU版会复杂些，首先要有一块支持CUDA的N卡，再安装CUDA驱动啥的，各位看官可以谷歌一下查询相关资料。如果不想搜索，也可以看本系列后续文章，以后也会介绍如何在Mac下安装GPU版。</p>
+
+<h2 id="x02-tensorflow">0x02 TensorFlow基本使用</h2>
+
+<p>在介绍样例之前，我们先介绍一下TensorFlow的一些基本概念</p>
+
+<h3 id="placehoder">1.placehoder（占位符）</h3>
+
+<blockquote>
+  <p>tf.placeholder(dtype, shape=None, name=None)<br />
+  Args:<br />
+    dtype: The type of elements in the tensor to be fed.<br />
+    shape: The shape of the tensor to be fed (optional). If the shape is not specified, you can feed a tensor of any shape.<br />
+    name: A name for the operation (optional).</p>
+</blockquote>
+
+<p>dytpe:占位符的数据类型<br />
+shape:占位符的纬度，例如[2,2]代表2x2的二维矩阵，None可以代表任意维度，例如[None,2]则代表任意行数，2列的二维矩阵<br />
+name:占位符的名字</p>
+
+<p>变量在定义时要初始化，但可能有些变量我们一开始定义的时候并不一定知道该变量的值，只有当真正开始运行程序的时候才由外部输入，比如我们需要训练的数据，所以就用占位符来占个位置，告诉TensorFlow，等到真正运行的时候再通过输入数据赋值。<br />
+例如</p>
+
+<pre><code class="language-python">x = tf.placeholder(tf.float32, [2, 2])
+</code></pre>
+
+<p>就是生成了一个2x2的二维矩阵，矩阵中每个元素的类型都是tf.float32（也就是浮点型）<br />
+有时候定义需要训练的参数时候，会定义一个[input_size,output_size]大小的矩阵，其中input_size数输入数据的维度，output_size是输出数据的维度</p>
+
+<h3 id="variable">2.Variable（变量）</h3>
+
+<p>官方说明 有些长，我就不引用啦，这里介绍一个简单的用法，有一点变量在声明的时候要有一个初始值</p>
+
+<pre><code class="language-python">x = tf.Variable(tf.zeros([2,2])) # 声明一个2x2的矩阵，并将矩阵中的所有元素的值赋为0，默认每个元素都是tf.float32类型的数据
+y = tf.Variable(1.0, tf.float32) # 声明一个tf.float32的变量，并将初始值设为1.0
+</code></pre>
+
+<p>我们一般还需要运行下global_variables_initializer真正在TensorFlow的Session中初始化所有变量，后面的样例中也会有体现。</p>
+
+<h3 id="constant">3.Constant（常量）</h3>
+
+<p><a href="https://www.tensorflow.org/api_docs/python/tf/Variable">官方说明</a> 同样不引用啦，这里介绍一个简单的用法</p>
+
+<pre><code class="language-python">x = tf.constant(3.0, tf.float32) # 定义一个值为3.0的浮点型常量
+</code></pre>
+
+<h3 id="session">4.Session（会话）</h3>
+
+<p>TensorFlow所有的操作都必须在Session中运行，才能真正起作用，可以将Session当作TensorFlow运行的环境，Session运行完需要close～</p>
+
+<pre><code class="language-python">#用close()关闭
+sess = tf.Session()
+sess.run(...)
+sess.close()
+
+#使用with..as..语句关闭
+with tf.Session() as sess:
+    sess.run(...)
+</code></pre>
+
+<h3 id="section">5.简单使用</h3>
+
+<p>我们介绍下3+5应该如何在TensorFlow中实现</p>
+
+<pre><code class="language-python">import tensorflow as tf
+
+x = tf.Variable(3, tf.int16) // 声明一个整型变量3
+y = tf.Variable(5, tf.int16) // 声明一个整型变量5
+z = tf.add(x,y) // z = x + y
+init = tf.global_variables_initializer() // 初始化变量的操作
+with tf.Session() as sess:
+    sess.run(init)  // 在Session中初始化变量
+    print(sess.run(z)) // 输出计算出的z值
+</code></pre>
+
+<h2 id="x03-">0x03 样例</h2>
+
+<p>Github上有一个比较好的<a href="https://github.com/aymericdamien/TensorFlow-Examples">Demo合集</a>，有注释有源代码还蛮好的，但今天我们不讲上面的代码，我们讲如何用TF实现线性回归模型<br />
+所谓线性回归模型就是y = W * x + b的形式的表达式拟合的模型。<br />
+我们如果想通过深度学习拟合一条直线 y = 3 * x 应该怎么做呢？咱不讲虚的先展示下代码！然后我们在逐步分析。</p>
+
+<pre><code class="language-python">#coding=utf-8
+import tensorflow as tf
+
+x = tf.placeholder(tf.float32)
+W = tf.Variable(tf.zeros([1]))
+b = tf.Variable(tf.zeros([1]))
+y_ = tf.placeholder(tf.float32)
+
+y = W * x + b
+
+lost = tf.reduce_mean(tf.square(y_-y))
+optimizer = tf.train.GradientDescentOptimizer(0.0000001)
+train_step = optimizer.minimize(lost)
+
+sess = tf.Session()
+init = tf.global_variables_initializer()
+sess.run(init)
+
+steps = 1000
+for i in range(steps):
+    xs = [i]
+    ys = [3 * i]
+    feed = { x: xs, y_: ys }
+    sess.run(train_step, feed_dict=feed)
+    if i % 100 == 0 :
+        print("After %d iteration:" % i)
+        print("W: %f" % sess.run(W))
+        print("b: %f" % sess.run(b))
+        print("lost: %f" % sess.run(lost, feed_dict=feed))
+</code></pre>
+
+<p>1.先导入需要使用的python库</p>
+
+<pre><code class="language-python">#coding=utf-8
+import tensorflow as tf
+</code></pre>
+
+<p>毕竟是基于TensorFlow的，那我们肯定要导入TensorFlow滴，导入之后取个别名tf，之后用起来方便些。</p>
+
+<p>2.定义需要的变量，我们看看y = W * x + b中都有哪些变量</p>
+
+<pre><code class="language-python">x = tf.placeholder(tf.float32)
+W = tf.Variable(tf.zeros([1]))
+b = tf.Variable(tf.zeros([1]))
+y_ = tf.placeholder(tf.float32)
+</code></pre>
+
+<p>x：我们训练时需要输入的真实数据x<br />
+W: 我们需要训练的W，这里我们定义了一个1维的变量（其实吧，就是一个普普通通的数，直接用tf.float32也行）并将其初值赋为0<br />
+b : 我们需要训练的b，定义一个1维变量，并将其初值赋为0<br />
+y_ ：我们训练时需要输入的x对应的y</p>
+
+<p>3.定义线性模型</p>
+
+<pre><code class="language-python">y = W * x + b
+</code></pre>
+
+<p>4.定义损失函数和优化方法</p>
+
+<pre><code class="language-python">lost = tf.reduce_mean(tf.square(y_-y))
+optimizer = tf.train.GradientDescentOptimizer(0.0000001)
+train_step = optimizer.minimize(lost)
+lost = tf.reduce_mean(tf.square(y_- y))
+</code></pre>
+
+<p>损失函数(Lost Function)是用来评估我们预测的值和真实的值之间的差距是多少，损失函数有很多种写法，我们这里使用（y预测-y真实)^2再取平均数来作为我们的损失函数（用这个函数是有原因的，因为我们用的是梯度下降法进行学习）损失函数的值越小越好，有些教程也叫Cost Function</p>
+
+<pre><code class="language-python">optimizer = tf.train.GradientDescentOptimizer(0.0000001)
+</code></pre>
+
+<p>优化函数代表我们要通过什么方式去优化我们需要学习的值，这个例子里指的是W和b，优化函数的种类有很多，大家到<a href="https://www.tensorflow.org/api_guides/python/train">官网</a>查阅，<br />
+平时我们用的比较多的是GradientDescentOptimizer和AdamOptimizer等，这里我们选用最常用也是最最基本的GradientDescentOptimizer（梯度下降），后面传入的值是学习效率。一般是一个小于1的数。越小收敛越慢，但并不是越大收敛越快哈，取值太大甚至可能不收敛了。。。<br />
+我们简单介绍下什么是梯度下降，梯度顾名思义就是函数某一点的导数，也就是该点的变化率。梯度下降则顾名思义就是沿梯度下降的方向求解极小值。<br />
+详细解释大家可以自行谷歌一下～当然可以可以看<a href="http://blog.csdn.net/yhao2014/article/details/51554910">这篇文章</a>，当然由于性能的原因梯度下降有很多种变种，例如随机梯度下降 (Stochastic Gradient Descent)，小批梯度下降 (Mini-Batch Gradient Descent)。本文样例采用的是SGD，每次只输入一个数据。</p>
+
+<pre><code class="language-python">train_step = optimizer.minimize(lost)
+</code></pre>
+
+<p>这个代表我们每次训练迭代的目的，本例我们的目的就是尽量减小lost的值，也就是让损失函数的值尽量变小</p>
+
+<p>5.变量初始化</p>
+
+<pre><code class="language-python">sess = tf.Session()
+init = tf.global_variables_initializer()
+sess.run(init)
+</code></pre>
+
+<p>这个之前有所介绍了，我们需要在Session中真正运行下global_variables_initializer才会真正初始化变量</p>
+
+<p>6.开始训练</p>
+
+<pre><code class="language-python">steps = 1000
+for i in range(steps):
+    xs = [i]
+    ys = [3 * i]
+    feed = { x: xs, y_: ys }
+    sess.run(train_step, feed_dict=feed)
+    if i % 100 == 0 :
+        print("After %d iteration:" % i)
+        print("W: %f" % sess.run(W))
+        print("b: %f" % sess.run(b))
+        print("lost: %f" % sess.run(lost, feed_dict=feed))
+</code></pre>
+
+<p>我们定义一个训练迭代次数1000次<br />
+这里我们图方便，每次迭代都直接将i作为x，3*i作为y直接当成训练数据。<br />
+我们所有通过placeholder定义的值，在训练时我们都需要通过feed_dict来传入数据。<br />
+然后我们每隔100次迭代，输出一次训练结果，看看效果如何～</p>
+
+<pre><code class="language-python">After 0 iteration:
+W: 0.000000
+b: 0.000000
+lost: 0.000000
+After 100 iteration:
+W: 0.196407
+b: 0.002951
+lost: 78599.671875
+After 200 iteration:
+W: 1.249361
+b: 0.009867
+lost: 122582.625000
+After 300 iteration:
+W: 2.513344
+b: 0.015055
+lost: 21310.636719
+After 400 iteration:
+W: 2.960238
+b: 0.016392
+lost: 252.449890
+After 500 iteration:
+W: 2.999347
+b: 0.016484
+lost: 0.096061
+After 600 iteration:
+W: 2.999971
+b: 0.016485
+lost: 0.000001
+After 700 iteration:
+W: 2.999975
+b: 0.016485
+lost: 0.000001
+After 800 iteration:
+W: 2.999978
+b: 0.016485
+lost: 0.000001
+After 900 iteration:
+W: 2.999981
+b: 0.016485
+lost: 0.000000
+</code></pre>
+
+<p>可以看到在迭代了500次之后效果就很好了，w已经达到2.999347很接近3了，b也达到了0.016484也比较接近0了，因为这里学习率选择的比较小，所以收敛的比较慢，各位也可以尝试调大学习率，看看收敛的速度有何变化。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/28/Deep_learning_entry_1/">深度学习入门实战（一）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
 
 
-<!-- Help & Support -->
-<!--
+        <h2 id="comments">Comments</h2>
+        
 
--->
 
-<!-- Feedback -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- About Theme -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>

@@ -1,892 +1,686 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
+<html>
 
-    <!-- Title -->
-    
-    <title>
-        
-            机器学习入门系列04，Gradient Descent（梯度下降法） | 
-        
-        Melon Team
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Meta & Info -->
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Melon Team">
-    <meta name="description" content="Melon Team">
-    <meta name="keywords" content="null">
 
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <title>机器学习入门系列04，Gradient Descent（梯度下降法）</title>
+    <meta name="description" content="  什么是Gradient Descent（梯度下降法）？          Review: 梯度下降法        引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的C...">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Melon Team">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://melonteam.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="机器学习入门系列04，Gradient Descent（梯度下降法） | Melon Team">
-    <meta property="og:description" content="Melon Team">
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/ML04GradientDescent/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-        }
-    </script>
-
-    
-
-    
-
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+  <body>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么是Gradient-Descent（梯度下降法）？"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是Gradient Descent（梯度下降法）？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Review-梯度下降法"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Review: 梯度下降法</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tip1：调整-learning-rates（学习速率）"><span class="post-toc-number">2.</span> <span class="post-toc-text">Tip1：调整 learning rates（学习速率）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小心翼翼地调整-learning-rate"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">小心翼翼地调整 learning rate</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自适应-learning-rate"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">自适应 learning rate</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Adagrad-算法"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Adagrad 算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adagrad-是什么？"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">Adagrad 是什么？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adagrad举例"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">Adagrad举例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adagrad-存在的矛盾？"><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">Adagrad 存在的矛盾？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多参数下结论不一定成立"><span class="post-toc-number">2.3.4.</span> <span class="post-toc-text">多参数下结论不一定成立</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adagrad-进一步的解释"><span class="post-toc-number">2.3.5.</span> <span class="post-toc-text">Adagrad 进一步的解释</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tip2：Stochastic-Gradient-Descent（随机梯度下降法）"><span class="post-toc-number">3.</span> <span class="post-toc-text">Tip2：Stochastic Gradient Descent（随机梯度下降法）</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tip3：Feature-Scaling（特征缩放）"><span class="post-toc-number">4.</span> <span class="post-toc-text">Tip3：Feature Scaling（特征缩放）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么要这样做？"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">为什么要这样做？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#怎么做-scaling？"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">怎么做 scaling？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#梯度下降的理论基础"><span class="post-toc-number">5.</span> <span class="post-toc-text">梯度下降的理论基础</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数学理论"><span class="post-toc-number">6.</span> <span class="post-toc-text">数学理论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Taylor-Series（泰勒展开式）"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">Taylor Series（泰勒展开式）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义"><span class="post-toc-number">6.1.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多变量泰勒展开式"><span class="post-toc-number">6.1.2.</span> <span class="post-toc-text">多变量泰勒展开式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#利用泰勒展开式简化"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">利用泰勒展开式简化</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#梯度下降的限制"><span class="post-toc-number">7.</span> <span class="post-toc-text">梯度下降的限制</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                机器学习入门系列04，Gradient Descent（梯度下降法）
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Melon Team</strong>
-        <span>3月 27, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-        
-            <!-- Busuanzi Views -->
-            <a class="post_share-link" href="#">
-                <li class="mdl-menu__item">
-                    <span id="busuanzi_container_page_pv">
-                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
-                    </span>
-                </li>
-            </a>
-        
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=机器学习入门系列04，Gradient Descent（梯度下降法）&url=http://melonteam.com//2017/03/27/ML04GradientDescent/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=机器学习入门系列04，Gradient Descent（梯度下降法）&url=http://melonteam.com//2017/03/27/ML04GradientDescent/index.html&via=Melon Team" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://melonteam.com//2017/03/27/ML04GradientDescent/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://melonteam.com//2017/03/27/ML04GradientDescent/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-</div>
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <blockquote>
-<p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html" target="_blank" rel="external">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
-</blockquote>
-<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）</p>
-<blockquote>
-<p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66632699" target="_blank" rel="external">http://blog.csdn.net/zyq522376829/article/details/66632699</a></p>
-</blockquote>
-<h1 id="什么是Gradient-Descent（梯度下降法）？"><a href="#什么是Gradient-Descent（梯度下降法）？" class="headerlink" title="什么是Gradient Descent（梯度下降法）？"></a>什么是Gradient Descent（梯度下降法）？</h1><p>在第二篇文章中有介绍到梯度下降法的做法，传送门：<a href="地址地址地址">机器学习入门系列02，Regression 回归：案例研究</a></p>
-<h2 id="Review-梯度下降法"><a href="#Review-梯度下降法" class="headerlink" title="Review: 梯度下降法"></a>Review: 梯度下降法</h2><a id="more"></a>
-<p>在回归问题的第三步中，需要解决下面的最优化问题：</p>
-<p>$$<br>\theta^{*} = \arg \min_{\theta} L(\theta)<br>$$</p>
-<p>$$<br>L: loss function （损失函数）<br>$$</p>
-<p>$$<br>\theta: parameters （参数）<br>$$</p>
-<blockquote>
-<p>这里的parameters是复数，即 $\theta$ 指代一堆参数，比如上篇说到的 $w$ 和 $b$。</p>
-</blockquote>
-<p>我们要找一组参数 $\theta$ ，让损失函数越小越好，这个问题可以用梯度下降法解决：</p>
-<p>假设 $\theta$ 有里面有两个参数 ${\theta<em>{1}, \theta</em>{2}}$</p>
-<p>随机选取初始值 </p>
-<p>$$<br>\theta^{0} = \left[ \begin{matrix} \theta^{0}<em>{1}\ \theta^{0}</em>{2} \end{matrix} \right]<br>$$</p>
-<p>这里可能某个平台不支持矩阵输入，看下图就好。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0p6ppb7dj20z20ck76o.jpg" alt=""></p>
-<p>然后分别计算初始点处，两个参数对 $L$ 的偏微分，然后 $\theta^{0}$ 减掉 $\eta$ 乘上偏微分的值，得到一组新的参数。同理反复进行这样的计算。黄色部分为简洁的写法，$\nabla L(\theta)$即为<strong>梯度</strong>。</p>
-<blockquote>
-<p>$\eta$叫做Learning rates（学习速率）</p>
-</blockquote>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p768yjij212g0msgps.jpg" alt=""></p>
-<p>上图举例将梯度下降法的计算过程进行可视化。</p>
-<h1 id="Tip1：调整-learning-rates（学习速率）"><a href="#Tip1：调整-learning-rates（学习速率）" class="headerlink" title="Tip1：调整 learning rates（学习速率）"></a>Tip1：调整 learning rates（学习速率）</h1><h2 id="小心翼翼地调整-learning-rate"><a href="#小心翼翼地调整-learning-rate" class="headerlink" title="小心翼翼地调整 learning rate"></a>小心翼翼地调整 learning rate</h2><p>举例：</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p7olqw1j212k0mqjvn.jpg" alt=""></p>
-<p>上图左边黑色为损失函数的曲线，假设从左边最高点开始，如果 learning rate 调整的刚刚好，比如红色的线，就能顺利找到最低点。如果  learning rate 调整的太小，比如蓝色的线，就会走的太慢，虽然这种情况给足够多的时间也可以找到最低点，实际情况可能会等不及出结果。如果  learning rate 调整的有点大，比如绿色的线，就会在上面震荡，走不下去，永远无法到达最低点。还有可能非常大，比如黄色的线，直接就飞出去了，update参数的时候只会发现损失函数越更新越大。</p>
-<p>虽然这样的可视化可以很直观观察，但可视化也只是能在参数是一维或者二维的时候进行，更高维的情况已经无法可视化了。</p>
-<p>解决方法就是上图右边的方案，将参数改变对损失函数的影响进行可视化。比如 learning rate 太小（蓝色的线），损失函数下降的非常慢；learning rate 太大（绿色的线），损失函数下降很快，但马上就卡住不下降了；learning rate特别大（黄色的线），损失函数就飞出去了；红色的就是差不多刚好，可以得到一个好的结果。</p>
-<h2 id="自适应-learning-rate"><a href="#自适应-learning-rate" class="headerlink" title="自适应 learning rate"></a>自适应 learning rate</h2><p>举一个简单的思想：随着次数的增加，通过一些因子来减少 learning rate</p>
-<ul>
-<li>通常刚开始，初始点会距离最低点比较远，所以使用大一点的 learning rate</li>
-<li>update好几次参数之后呢，比较靠近最低点了，此时减少 learning rate</li>
-<li>比如 $\eta^{t} = \eta / \sqrt{t+1}$，$t$ 是次数。随着次数的增加，$\eta^{t}$ 减小</li>
-</ul>
-<p>但 learning rate 不能是 one-size-fits-all ，不同的参数需要不同的 learning rate</p>
-<h2 id="Adagrad-算法"><a href="#Adagrad-算法" class="headerlink" title="Adagrad 算法"></a>Adagrad 算法</h2><h3 id="Adagrad-是什么？"><a href="#Adagrad-是什么？" class="headerlink" title="Adagrad 是什么？"></a>Adagrad 是什么？</h3><p>每个参数的学习率都把它除上之前微分的均方根。解释：</p>
-<p>普通的梯度下降为：</p>
-<p>$$<br>w^{t + 1} \leftarrow w^{t} - \eta^{t} g^{t}<br>$$</p>
-<p>$$<br>\eta^{t} = \frac{\eta}{\sqrt{t+1}}<br>$$</p>
-<p>$w$ 是一个参数</p>
-<p>Adagrad 可以做的更好：</p>
-<p>$$<br>w^{t+1} \leftarrow w^{t} - \frac{\eta^{t}}{\sigma} g^{t}<br>$$</p>
-<p>$$<br>g^{t} = \frac{\partial L(\theta^{t})}{\partial w}<br>$$</p>
-<p>$\sigma^{t}$:之前参数的所有微分的均方根，对于每个参数都是不一样的。</p>
-<h3 id="Adagrad举例"><a href="#Adagrad举例" class="headerlink" title="Adagrad举例"></a>Adagrad举例</h3><p>下图是一个参数的更新过程</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p8iqqphj212a0n241f.jpg" alt=""></p>
-<p>将 Adagrad 的式子进行化简：</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p8x3ggkj20x00hsac3.jpg" alt=""></p>
-<h3 id="Adagrad-存在的矛盾？"><a href="#Adagrad-存在的矛盾？" class="headerlink" title="Adagrad 存在的矛盾？"></a>Adagrad 存在的矛盾？</h3><p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0p9awbcij21080ikmzo.jpg" alt=""></p>
-<p>在 Adagrad 中，当梯度越大的时候，步伐应该越大，但下面分母又导致当梯度越大的时候，步伐会越小。</p>
-<p>下图是一个直观的解释：</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0p9pq9l1j210a0kmmzx.jpg" alt=""></p>
-<p>下面给一个正式的解释：</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pa69l64j212s0ng42l.jpg" alt=""></p>
-<p>比如初始点在 $x<em>{0}$，最低点为 $-\frac{b}{2a}$，最佳的步伐就是 $x</em>{0}$ 到最低点之间的距离 $| x<em>{0} + \frac{b}{2a} |$，也可以写成 $\frac{| 2ax</em>{0} + b|}{2a}$。而刚好 $ |2ax<em>{0} + b|$ 就是方程绝对值在$x</em>{0}$这一点的微分。</p>
-<p>这样可以认为如果算出来的微分越大，则距离最低点越远。而且最好的步伐和微分的大小成正比。所以如果踏出去的步伐和微分成正比，它可能是比较好的。</p>
-<p>结论1-1：梯度越大，就跟最低点的距离越远。</p>
-<p>这个结论在多个参数的时候就不一定成立了。</p>
-<h3 id="多参数下结论不一定成立"><a href="#多参数下结论不一定成立" class="headerlink" title="多参数下结论不一定成立"></a>多参数下结论不一定成立</h3><p><strong>对比不同的参数</strong></p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pakwyxsj213i0kik9e.jpg" alt=""></p>
-<p>上图左边是两个参数的损失函数，颜色代表损失函数的值。如果只考虑参数 $w<em>{1}$，就像图中蓝色的线，得到右边上图结果；如果只考虑参数 $w</em>{2}$，就像图中绿色的线，得到右边下图的结果。确实对于a和b，结论1-1是成立的，同理c和b也成立。但是如果对比a和c，就不成立了，c比a大，但c距离最低点是比较近的。</p>
-<p>所以结论1-1是在没有考虑跨参数对比的情况下，才能成立的。所以还不完善。</p>
-<p>之前说到的最佳距离$\frac{| 2ax_{0} + b|}{2a}$，还有个分母 $2a$ 。对function进行二次微分刚好可以得到：</p>
-<p>$$<br>\frac{\partial^{2}y}{\partial x^{2}} = 2a<br>$$</p>
-<p>所以最好的步伐应该是：</p>
-<p>$$<br>\frac{一次微分}{二次微分}<br>$$</p>
-<p>即不止和一次微分成正比，还和二次微分成反比。最好的step应该考虑到二次微分：</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pb38dvnj212e0lu4d7.jpg" alt=""></p>
-<h3 id="Adagrad-进一步的解释"><a href="#Adagrad-进一步的解释" class="headerlink" title="Adagrad 进一步的解释"></a>Adagrad 进一步的解释</h3><p>再回到之前的 Adagrad</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pbh8oqtj21200s00xi.jpg" alt=""></p>
-<p>对于$\sqrt{\sum^{t}_{i=0} (g^{i})^{2} }$ 就是希望再尽可能不增加过多运算的情况下模拟二次微分。（如果计算二次微分，在实际情况中可能会增加很多的时间消耗）</p>
-<h1 id="Tip2：Stochastic-Gradient-Descent（随机梯度下降法）"><a href="#Tip2：Stochastic-Gradient-Descent（随机梯度下降法）" class="headerlink" title="Tip2：Stochastic Gradient Descent（随机梯度下降法）"></a>Tip2：Stochastic Gradient Descent（随机梯度下降法）</h1><p>之前的梯度下降：</p>
-<p>$$<br>L =\sum<em>{n} \left( \hat{y}^{n} - (b + \sum w</em>{i} x^{n}_{i})   \right)^{2}<br>$$</p>
-<p>$$<br>\theta^{i} = \theta^{i -1} - \eta \nabla L(\theta^{i -1})<br>$$</p>
-<p>而Stochastic Gradient Descent（更快）：</p>
-<p>损失函数不需要处理训练集所有的数据，选取一个例子 $x^{n}$</p>
-<p>$$<br>L^{n} = \left( \hat{y}^{n} - (b + \sum w<em>{i} x^{n}</em>{i}   \right)^{2}<br>$$</p>
-<p>$$<br>\theta^{i} = \theta^{i -1} - \eta \nabla L^{n}(\theta^{i -1})<br>$$</p>
-<p>此时不需要像之前那样对所有的数据进行处理，只需要计算某一个例子的损失函数$L^{n}$，就可以赶紧update 梯度。</p>
-<p>对比：</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pc5kle1j212g0nq48s.jpg" alt=""></p>
-<p>常规梯度下降法走一步要处理到所有二十个examples，但Stochastic 此时已经走了二十步（没处理一个example就更新）</p>
-<h1 id="Tip3：Feature-Scaling（特征缩放）"><a href="#Tip3：Feature-Scaling（特征缩放）" class="headerlink" title="Tip3：Feature Scaling（特征缩放）"></a>Tip3：Feature Scaling（特征缩放）</h1><p>比如有个function：</p>
-<p>$$<br>y = b + w<em>{1}x</em>{1} + w<em>{2}x</em>{2}<br>$$</p>
-<p>两个输入的分布的范围很不一样，建议把他们的范围缩放，使得不同输入的范围是一样的。</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pcmc0lcj20zk0iuq8m.jpg" alt=""></p>
-<h2 id="为什么要这样做？"><a href="#为什么要这样做？" class="headerlink" title="为什么要这样做？"></a>为什么要这样做？</h2><p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pd1h0xtj213c0m00x5.jpg" alt=""></p>
-<p>上图左边是$x<em>{1}$的scale比 $x</em>{2}$要小很多，所以当$w<em>{1}$ 和 $w</em>{2}$做同样的变化时，$w<em>{1}$对y的变化影响是比较小的，$x</em>{2}$对y的变化影响是比较大的。</p>
-<p>坐标系中是两个参数的error surface（现在考虑左边蓝色），因为$w<em>{1}$对y的变化影响比较小，所以$w</em>{1}$对损失函数的影响比较小，$w<em>{1}$对损失函数有比较小的微分，所以$w</em>{1}$方向上是比较平滑的。同理$x<em>{2}$对y的影响比较大，所以$x</em>{2}$对损失函数的影响比较大，所以在$x_{2}$方向有比较尖的峡谷。</p>
-<p>上图右边是两个参数scaling比较接近，右边的绿色图就比较接近圆形。</p>
-<p>对于左边的情况，上面讲过这种狭长的情形不过不用Adagrad的话是比较难处理的，两个方向上需要不同的学习率，同一组学习率会搞不定它。而右边情形更新参数就会变得比较容易。左边的梯度下降并不是向着最低点方向走的，而是顺着等高线切线法线方向走的。但绿色就可以向着圆心（最低点）走，这样做参数更新也是比较有效率。</p>
-<h2 id="怎么做-scaling？"><a href="#怎么做-scaling？" class="headerlink" title="怎么做 scaling？"></a>怎么做 scaling？</h2><p>方法非常多，这里举例一种常见的做法：</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0pdgqdzwj212q0kqn0q.jpg" alt=""></p>
-<p>上图每一列都是一个例子，里面都有一组feature。</p>
-<p>对每一个维度$i$（绿色框）都计算平均数，记做$m<em>{i}$；还要计算标准差，记做$\sigma</em>{i}$。</p>
-<p>然后用第r个例子中的第i个输入，减掉平均数$m<em>{i}$，然后除以标准差$\sigma</em>{i}$，得到的结果是所有的维数都是0，所有的方差都是1</p>
-<h1 id="梯度下降的理论基础"><a href="#梯度下降的理论基础" class="headerlink" title="梯度下降的理论基础"></a>梯度下降的理论基础</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>当用梯度下降解决问题：</p>
-<p>$$<br>\theta^{*} = \arg \min_{\theta} L(\theta)<br>$$</p>
-<p>每次更新参数 $\theta$，都得到一个新的 $\theta$，它都使得损失函数更小。即：</p>
-<p>$$<br>L(\theta^{0}) &gt; L(\theta^{1}) &gt; L(\theta^{2})&gt;\cdots<br>$$</p>
-<p>上述结论正确吗？</p>
-<p>结论是不正确的。。。</p>
-<h1 id="数学理论"><a href="#数学理论" class="headerlink" title="数学理论"></a>数学理论</h1><p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pdwqnqzj212a0mingb.jpg" alt=""></p>
-<p>比如在$\theta^{0}$处，可以在一个小范围的圆圈内找到损失函数细小的$\theta^{1}$，不断的这样去寻找。</p>
-<p>接下来就是如果在小圆圈内快速的找到最小值？</p>
-<h2 id="Taylor-Series（泰勒展开式）"><a href="#Taylor-Series（泰勒展开式）" class="headerlink" title="Taylor Series（泰勒展开式）"></a>Taylor Series（泰勒展开式）</h2><p>先介绍一下泰勒展开式</p>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>若$h(x)$在$x = x_{0}$点的某个领域内有无限阶导数（即无限可微分，infinitely differentiable），那么在此领域内有：</p>
-<p>$$<br>h(x) = \sum^{\infty}<em>{k = 0} \frac{h^{k}(x</em>{0})}{k!} (x - x_{0})^{k}<br>$$</p>
-<p>$$<br>=h(x<em>{0}) + h’(x</em>{0})(x - x<em>{0}) + \frac{h’’(x</em>{0})}{2!}(x - x_{0})^2 + \cdots  \qquad  (1-1)<br>$$</p>
-<p>当$x$很接近$x<em>{0}$时，有$h(x) \approx h(x</em>{0}) + h’(x<em>{0})(x - x</em>{0})$</p>
-<p>式1-1就是函数$h(x)$在$x = x_{0}$点附近关于$x$的幂函数展开式，也叫<strong>泰勒展开式</strong>。</p>
-<p>举例：</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0perzpcgj212g0t0qho.jpg" alt=""></p>
-<p>图中3条蓝色线是把前3项作图，橙色线是 $sin(x)$。</p>
-<h3 id="多变量泰勒展开式"><a href="#多变量泰勒展开式" class="headerlink" title="多变量泰勒展开式"></a>多变量泰勒展开式</h3><p>下面是两个变量的泰勒展开式</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pf85k6hj212s0jsdic.jpg" alt=""></p>
-<h2 id="利用泰勒展开式简化"><a href="#利用泰勒展开式简化" class="headerlink" title="利用泰勒展开式简化"></a>利用泰勒展开式简化</h2><p>回到之前如何快速在圆圈内找到最小值。基于泰勒展开式，在$(a,b)$ 点的红色圆圈范围内，可以将损失函数用泰勒展开式进行简化：</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pfmfsbvj21240j4amj.jpg" alt=""></p>
-<p>将问题进而简化为下图：</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pg12er4j212e0nyk53.jpg" alt=""></p>
-<p>不考虑s的话，可以看出剩下的部分就是两个向量$(\Delta \theta<em>{1}, \Delta \theta</em>{2})$ 和 $(u, v)$的内积，那怎样让它最小，就是和向量 $(u, v)$ 方向相反的向量</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pghquu2j211y0n4wid.jpg" alt=""></p>
-<p>然后将u和v带入。</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pgz0bohj213e0nswjd.jpg" alt=""></p>
-<p>$$<br>L(\theta) \approx s + u(\theta<em>{1} - a) + v(\theta</em>{2} - b)    (1-2)<br>$$</p>
-<p>发现最后的式子就是梯度下降的式子。但这里用这种方法找到这个式子有个前提，泰勒展开式给的损失函数的估算值是要足够精确的，而这需要红色的圈圈足够小（也就是学习率足够小）来保证。所以理论上每次更新参数都想要损失函数减小的话，即保证式1-2 成立的话，就需要学习率足够足够小才可以。</p>
-<p>所以实际中，当更新参数的时候，如果学习率没有设好，是有可能式1-2是不成立的，所以导致做梯度下降的时候，损失函数没有越来越小。</p>
-<blockquote>
-<p>式1-2只考虑了泰勒展开式的一次项，如果考虑到二次项（比如牛顿法），在实际中不是特别好，会涉及到二次微分等，多很多的运算，性价比不好。</p>
-</blockquote>
-<h1 id="梯度下降的限制"><a href="#梯度下降的限制" class="headerlink" title="梯度下降的限制"></a>梯度下降的限制</h1><p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0phhfnifj21200s0qet.jpg" alt=""></p>
-<ul>
-<li>容易陷入局部极值</li>
-<li>还有可能卡在不是极值，但微分值是0的地方</li>
-<li>还有可能实际中只是当微分值小于某一个数值就停下来了，但这里只是比较平缓，并不是极值点</li>
-</ul>
-<blockquote>
-<p>新博客地址：<a href="http://yoferzhang.com/post/20170327ML04GradientDescent" target="_blank" rel="external">http://yoferzhang.com/post/20170327ML04GradientDescent</a></p>
-</blockquote>
-
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/27/ML03BiasAndVariance/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Melon Team's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        vincanyang@tencent.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
                 <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-            
-        </ul>
-    </li>
 
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
                 
-                    <i class="material-icons sidebar-material-icons">home</i>
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
                 
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
                 
-                    <i class="material-icons sidebar-material-icons">inbox</i>
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
                 
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a>
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
-        </li>
-        
-    
+        </nav>
+    </div>
+</header>
 
-    <!-- Categories  -->
-    
 
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/about" title="About">
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>机器学习入门系列04，Gradient Descent（梯度下降法）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+
+            <div class="label-card">
                 
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                About
-            </a>
-        </li>
-        
-    
+            </div>
 
-    <!-- Article Number  -->
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
     
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#gradient-descent" id="markdown-toc-gradient-descent">什么是Gradient Descent（梯度下降法）？</a>    <ul>
+      <li><a href="#review-" id="markdown-toc-review-">Review: 梯度下降法</a></li>
+    </ul>
+  </li>
+  <li><a href="#tip1-learning-rates" id="markdown-toc-tip1-learning-rates">Tip1：调整 learning rates（学习速率）</a>    <ul>
+      <li><a href="#learning-rate" id="markdown-toc-learning-rate">小心翼翼地调整 learning rate</a></li>
+      <li><a href="#learning-rate-1" id="markdown-toc-learning-rate-1">自适应 learning rate</a></li>
+      <li><a href="#adagrad-" id="markdown-toc-adagrad-">Adagrad 算法</a>        <ul>
+          <li><a href="#adagrad--1" id="markdown-toc-adagrad--1">Adagrad 是什么？</a></li>
+          <li><a href="#adagrad" id="markdown-toc-adagrad">Adagrad举例</a></li>
+          <li><a href="#adagrad--2" id="markdown-toc-adagrad--2">Adagrad 存在的矛盾？</a></li>
+          <li><a href="#section" id="markdown-toc-section">多参数下结论不一定成立</a></li>
+          <li><a href="#adagrad--3" id="markdown-toc-adagrad--3">Adagrad 进一步的解释</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#tip2stochastic-gradient-descent" id="markdown-toc-tip2stochastic-gradient-descent">Tip2：Stochastic Gradient Descent（随机梯度下降法）</a></li>
+  <li><a href="#tip3feature-scaling" id="markdown-toc-tip3feature-scaling">Tip3：Feature Scaling（特征缩放）</a>    <ul>
+      <li><a href="#section-1" id="markdown-toc-section-1">为什么要这样做？</a></li>
+      <li><a href="#scaling" id="markdown-toc-scaling">怎么做 scaling？</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-2" id="markdown-toc-section-2">梯度下降的理论基础</a>    <ul>
+      <li><a href="#section-3" id="markdown-toc-section-3">问题</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-4" id="markdown-toc-section-4">数学理论</a>    <ul>
+      <li><a href="#taylor-series" id="markdown-toc-taylor-series">Taylor Series（泰勒展开式）</a>        <ul>
+          <li><a href="#section-5" id="markdown-toc-section-5">定义</a></li>
+          <li><a href="#section-6" id="markdown-toc-section-6">多变量泰勒展开式</a></li>
+        </ul>
+      </li>
+      <li><a href="#section-7" id="markdown-toc-section-7">利用泰勒展开式简化</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-8" id="markdown-toc-section-8">梯度下降的限制</a></li>
+</ul>
+<blockquote>
+  <p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
+</blockquote>
+
+<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）</p>
+
+<blockquote>
+  <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66632699">http://blog.csdn.net/zyq522376829/article/details/66632699</a></p>
+</blockquote>
+
+<h1 id="gradient-descent">什么是Gradient Descent（梯度下降法）？</h1>
+
+<p>在第二篇文章中有介绍到梯度下降法的做法，传送门：<a href="地址地址地址">机器学习入门系列02，Regression 回归：案例研究</a></p>
+
+<h2 id="review-">Review: 梯度下降法</h2>
+
+<!--more-->
+
+<p>在回归问题的第三步中，需要解决下面的最优化问题：</p>
+
+<script type="math/tex; mode=display">\theta^{*} = \arg \min_{\theta} L(\theta)</script>
+
+<script type="math/tex; mode=display">L: loss function （损失函数）</script>
+
+<script type="math/tex; mode=display">\theta: parameters （参数）</script>
+
+<blockquote>
+  <p>这里的parameters是复数，即 $\theta$ 指代一堆参数，比如上篇说到的 $w$ 和 $b$。</p>
+</blockquote>
+
+<p>我们要找一组参数 $\theta$ ，让损失函数越小越好，这个问题可以用梯度下降法解决：</p>
+
+<p>假设 $\theta$ 有里面有两个参数 ${\theta_{1}, \theta_{2}}$</p>
+
+<p>随机选取初始值</p>
+
+<script type="math/tex; mode=display">\theta^{0} = \left[ \begin{matrix} \theta^{0}_{1}\\ \theta^{0}_{2} \end{matrix} \right]</script>
+
+<p>这里可能某个平台不支持矩阵输入，看下图就好。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0p6ppb7dj20z20ck76o.jpg" alt="" /></p>
+
+<p>然后分别计算初始点处，两个参数对 $L$ 的偏微分，然后 $\theta^{0}$ 减掉 $\eta$ 乘上偏微分的值，得到一组新的参数。同理反复进行这样的计算。黄色部分为简洁的写法，$\nabla L(\theta)$即为<strong>梯度</strong>。</p>
+
+<blockquote>
+  <p>$\eta$叫做Learning rates（学习速率）</p>
+</blockquote>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p768yjij212g0msgps.jpg" alt="" /></p>
+
+<p>上图举例将梯度下降法的计算过程进行可视化。</p>
+
+<h1 id="tip1-learning-rates">Tip1：调整 learning rates（学习速率）</h1>
+
+<h2 id="learning-rate">小心翼翼地调整 learning rate</h2>
+
+<p>举例：</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p7olqw1j212k0mqjvn.jpg" alt="" /></p>
+
+<p>上图左边黑色为损失函数的曲线，假设从左边最高点开始，如果 learning rate 调整的刚刚好，比如红色的线，就能顺利找到最低点。如果  learning rate 调整的太小，比如蓝色的线，就会走的太慢，虽然这种情况给足够多的时间也可以找到最低点，实际情况可能会等不及出结果。如果  learning rate 调整的有点大，比如绿色的线，就会在上面震荡，走不下去，永远无法到达最低点。还有可能非常大，比如黄色的线，直接就飞出去了，update参数的时候只会发现损失函数越更新越大。</p>
+
+<p>虽然这样的可视化可以很直观观察，但可视化也只是能在参数是一维或者二维的时候进行，更高维的情况已经无法可视化了。</p>
+
+<p>解决方法就是上图右边的方案，将参数改变对损失函数的影响进行可视化。比如 learning rate 太小（蓝色的线），损失函数下降的非常慢；learning rate 太大（绿色的线），损失函数下降很快，但马上就卡住不下降了；learning rate特别大（黄色的线），损失函数就飞出去了；红色的就是差不多刚好，可以得到一个好的结果。</p>
+
+<h2 id="learning-rate-1">自适应 learning rate</h2>
+
+<p>举一个简单的思想：随着次数的增加，通过一些因子来减少 learning rate</p>
+
+<ul>
+  <li>通常刚开始，初始点会距离最低点比较远，所以使用大一点的 learning rate</li>
+  <li>update好几次参数之后呢，比较靠近最低点了，此时减少 learning rate</li>
+  <li>比如 $\eta^{t} = \eta / \sqrt{t+1}$，$t$ 是次数。随着次数的增加，$\eta^{t}$ 减小</li>
 </ul>
 
+<p>但 learning rate 不能是 one-size-fits-all ，不同的参数需要不同的 learning rate</p>
 
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
+<h2 id="adagrad-">Adagrad 算法</h2>
 
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
+<h3 id="adagrad--1">Adagrad 是什么？</h3>
 
-<!-- Sidebar Divider -->
+<p>每个参数的学习率都把它除上之前微分的均方根。解释：</p>
 
-    <div class="sidebar-divider"></div>
+<p>普通的梯度下降为：</p>
+
+<script type="math/tex; mode=display">w^{t + 1} \leftarrow w^{t} - \eta^{t} g^{t}</script>
+
+<script type="math/tex; mode=display">\eta^{t} = \frac{\eta}{\sqrt{t+1}}</script>
+
+<p>$w$ 是一个参数</p>
+
+<p>Adagrad 可以做的更好：</p>
+
+<script type="math/tex; mode=display">w^{t+1} \leftarrow w^{t} - \frac{\eta^{t}}{\sigma} g^{t}</script>
+
+<script type="math/tex; mode=display">g^{t} = \frac{\partial L(\theta^{t})}{\partial w}</script>
+
+<p>$\sigma^{t}$:之前参数的所有微分的均方根，对于每个参数都是不一样的。</p>
+
+<h3 id="adagrad">Adagrad举例</h3>
+
+<p>下图是一个参数的更新过程</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p8iqqphj212a0n241f.jpg" alt="" /></p>
+
+<p>将 Adagrad 的式子进行化简：</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p8x3ggkj20x00hsac3.jpg" alt="" /></p>
+
+<h3 id="adagrad--2">Adagrad 存在的矛盾？</h3>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0p9awbcij21080ikmzo.jpg" alt="" /></p>
+
+<p>在 Adagrad 中，当梯度越大的时候，步伐应该越大，但下面分母又导致当梯度越大的时候，步伐会越小。</p>
+
+<p>下图是一个直观的解释：</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0p9pq9l1j210a0kmmzx.jpg" alt="" /></p>
+
+<p>下面给一个正式的解释：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pa69l64j212s0ng42l.jpg" alt="" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>比如初始点在 $x_{0}$，最低点为 $-\frac{b}{2a}$，最佳的步伐就是 $x_{0}$ 到最低点之间的距离 $</td>
+      <td>x_{0} + \frac{b}{2a}</td>
+      <td>$，也可以写成 $\frac{</td>
+      <td>2ax_{0} + b</td>
+      <td>}{2a}$。而刚好 $</td>
+      <td>2ax_{0} + b</td>
+      <td>$ 就是方程绝对值在$x_{0}$这一点的微分。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>这样可以认为如果算出来的微分越大，则距离最低点越远。而且最好的步伐和微分的大小成正比。所以如果踏出去的步伐和微分成正比，它可能是比较好的。</p>
+
+<p>结论1-1：梯度越大，就跟最低点的距离越远。</p>
+
+<p>这个结论在多个参数的时候就不一定成立了。</p>
+
+<h3 id="section">多参数下结论不一定成立</h3>
+
+<p><strong>对比不同的参数</strong></p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pakwyxsj213i0kik9e.jpg" alt="" /></p>
+
+<p>上图左边是两个参数的损失函数，颜色代表损失函数的值。如果只考虑参数 $w_{1}$，就像图中蓝色的线，得到右边上图结果；如果只考虑参数 $w_{2}$，就像图中绿色的线，得到右边下图的结果。确实对于a和b，结论1-1是成立的，同理c和b也成立。但是如果对比a和c，就不成立了，c比a大，但c距离最低点是比较近的。</p>
+
+<p>所以结论1-1是在没有考虑跨参数对比的情况下，才能成立的。所以还不完善。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>之前说到的最佳距离$\frac{</td>
+      <td>2ax_{0} + b</td>
+      <td>}{2a}$，还有个分母 $2a$ 。对function进行二次微分刚好可以得到：</td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="math/tex; mode=display">\frac{\partial^{2}y}{\partial x^{2}} = 2a</script>
+
+<p>所以最好的步伐应该是：</p>
+
+<script type="math/tex; mode=display">\frac{一次微分}{二次微分}</script>
+
+<p>即不止和一次微分成正比，还和二次微分成反比。最好的step应该考虑到二次微分：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pb38dvnj212e0lu4d7.jpg" alt="" /></p>
+
+<h3 id="adagrad--3">Adagrad 进一步的解释</h3>
+
+<p>再回到之前的 Adagrad</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pbh8oqtj21200s00xi.jpg" alt="" /></p>
+
+<p>对于$\sqrt{\sum^{t}_{i=0} (g^{i})^{2} }$ 就是希望再尽可能不增加过多运算的情况下模拟二次微分。（如果计算二次微分，在实际情况中可能会增加很多的时间消耗）</p>
+
+<h1 id="tip2stochastic-gradient-descent">Tip2：Stochastic Gradient Descent（随机梯度下降法）</h1>
+
+<p>之前的梯度下降：</p>
+
+<script type="math/tex; mode=display">L =\sum_{n} \left( \hat{y}^{n} - (b + \sum w_{i} x^{n}_{i})   \right)^{2}</script>
+
+<script type="math/tex; mode=display">\theta^{i} = \theta^{i -1} - \eta \nabla L(\theta^{i -1})</script>
+
+<p>而Stochastic Gradient Descent（更快）：</p>
+
+<p>损失函数不需要处理训练集所有的数据，选取一个例子 $x^{n}$</p>
+
+<script type="math/tex; mode=display">L^{n} = \left( \hat{y}^{n} - (b + \sum w_{i} x^{n}_{i}   \right)^{2}</script>
+
+<script type="math/tex; mode=display">\theta^{i} = \theta^{i -1} - \eta \nabla L^{n}(\theta^{i -1})</script>
+
+<p>此时不需要像之前那样对所有的数据进行处理，只需要计算某一个例子的损失函数$L^{n}$，就可以赶紧update 梯度。</p>
+
+<p>对比：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pc5kle1j212g0nq48s.jpg" alt="" /></p>
+
+<p>常规梯度下降法走一步要处理到所有二十个examples，但Stochastic 此时已经走了二十步（没处理一个example就更新）</p>
+
+<h1 id="tip3feature-scaling">Tip3：Feature Scaling（特征缩放）</h1>
+
+<p>比如有个function：</p>
+
+<script type="math/tex; mode=display">y = b + w_{1}x_{1} + w_{2}x_{2}</script>
+
+<p>两个输入的分布的范围很不一样，建议把他们的范围缩放，使得不同输入的范围是一样的。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pcmc0lcj20zk0iuq8m.jpg" alt="" /></p>
+
+<h2 id="section-1">为什么要这样做？</h2>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pd1h0xtj213c0m00x5.jpg" alt="" /></p>
+
+<p>上图左边是$x_{1}$的scale比 $x_{2}$要小很多，所以当$w_{1}$ 和 $w_{2}$做同样的变化时，$w_{1}$对y的变化影响是比较小的，$x_{2}$对y的变化影响是比较大的。</p>
+
+<p>坐标系中是两个参数的error surface（现在考虑左边蓝色），因为$w_{1}$对y的变化影响比较小，所以$w_{1}$对损失函数的影响比较小，$w_{1}$对损失函数有比较小的微分，所以$w_{1}$方向上是比较平滑的。同理$x_{2}$对y的影响比较大，所以$x_{2}$对损失函数的影响比较大，所以在$x_{2}$方向有比较尖的峡谷。</p>
+
+<p>上图右边是两个参数scaling比较接近，右边的绿色图就比较接近圆形。</p>
+
+<p>对于左边的情况，上面讲过这种狭长的情形不过不用Adagrad的话是比较难处理的，两个方向上需要不同的学习率，同一组学习率会搞不定它。而右边情形更新参数就会变得比较容易。左边的梯度下降并不是向着最低点方向走的，而是顺着等高线切线法线方向走的。但绿色就可以向着圆心（最低点）走，这样做参数更新也是比较有效率。</p>
+
+<h2 id="scaling">怎么做 scaling？</h2>
+
+<p>方法非常多，这里举例一种常见的做法：</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0pdgqdzwj212q0kqn0q.jpg" alt="" /></p>
+
+<p>上图每一列都是一个例子，里面都有一组feature。</p>
+
+<p>对每一个维度$i$（绿色框）都计算平均数，记做$m_{i}$；还要计算标准差，记做$\sigma_{i}$。</p>
+
+<p>然后用第r个例子中的第i个输入，减掉平均数$m_{i}$，然后除以标准差$\sigma_{i}$，得到的结果是所有的维数都是0，所有的方差都是1</p>
+
+<h1 id="section-2">梯度下降的理论基础</h1>
+
+<h2 id="section-3">问题</h2>
+
+<p>当用梯度下降解决问题：</p>
+
+<script type="math/tex; mode=display">\theta^{*} = \arg \min_{\theta} L(\theta)</script>
+
+<p>每次更新参数 $\theta$，都得到一个新的 $\theta$，它都使得损失函数更小。即：</p>
+
+<script type="math/tex; mode=display">L(\theta^{0}) > L(\theta^{1}) > L(\theta^{2})>\cdots</script>
+
+<p>上述结论正确吗？</p>
+
+<p>结论是不正确的。。。</p>
+
+<h1 id="section-4">数学理论</h1>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pdwqnqzj212a0mingb.jpg" alt="" /></p>
+
+<p>比如在$\theta^{0}$处，可以在一个小范围的圆圈内找到损失函数细小的$\theta^{1}$，不断的这样去寻找。</p>
+
+<p>接下来就是如果在小圆圈内快速的找到最小值？</p>
+
+<h2 id="taylor-series">Taylor Series（泰勒展开式）</h2>
+
+<p>先介绍一下泰勒展开式</p>
+
+<h3 id="section-5">定义</h3>
+
+<p>若$h(x)$在$x = x_{0}$点的某个领域内有无限阶导数（即无限可微分，infinitely differentiable），那么在此领域内有：</p>
+
+<script type="math/tex; mode=display">h(x) = \sum^{\infty}_{k = 0} \frac{h^{k}(x_{0})}{k!} (x - x_{0})^{k}</script>
+
+<script type="math/tex; mode=display">=h(x_{0}) + h’(x_{0})(x - x_{0}) + \frac{h’’(x_{0})}{2!}(x - x_{0})^2 + \cdots  \qquad  (1-1)</script>
+
+<p>当$x$很接近$x_{0}$时，有$h(x) \approx h(x_{0}) + h’(x_{0})(x - x_{0})$</p>
+
+<p>式1-1就是函数$h(x)$在$x = x_{0}$点附近关于$x$的幂函数展开式，也叫<strong>泰勒展开式</strong>。</p>
+
+<p>举例：</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0perzpcgj212g0t0qho.jpg" alt="" /></p>
+
+<p>图中3条蓝色线是把前3项作图，橙色线是 $sin(x)$。</p>
+
+<h3 id="section-6">多变量泰勒展开式</h3>
+
+<p>下面是两个变量的泰勒展开式</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pf85k6hj212s0jsdic.jpg" alt="" /></p>
+
+<h2 id="section-7">利用泰勒展开式简化</h2>
+
+<p>回到之前如何快速在圆圈内找到最小值。基于泰勒展开式，在$(a,b)$ 点的红色圆圈范围内，可以将损失函数用泰勒展开式进行简化：</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pfmfsbvj21240j4amj.jpg" alt="" /></p>
+
+<p>将问题进而简化为下图：</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pg12er4j212e0nyk53.jpg" alt="" /></p>
+
+<p>不考虑s的话，可以看出剩下的部分就是两个向量$(\Delta \theta_{1}, \Delta \theta_{2})$ 和 $(u, v)$的内积，那怎样让它最小，就是和向量 $(u, v)$ 方向相反的向量</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pghquu2j211y0n4wid.jpg" alt="" /></p>
+
+<p>然后将u和v带入。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pgz0bohj213e0nswjd.jpg" alt="" /></p>
+
+<script type="math/tex; mode=display">L(\theta) \approx s + u(\theta_{1} - a) + v(\theta_{2} - b)    (1-2)</script>
+
+<p>发现最后的式子就是梯度下降的式子。但这里用这种方法找到这个式子有个前提，泰勒展开式给的损失函数的估算值是要足够精确的，而这需要红色的圈圈足够小（也就是学习率足够小）来保证。所以理论上每次更新参数都想要损失函数减小的话，即保证式1-2 成立的话，就需要学习率足够足够小才可以。</p>
+
+<p>所以实际中，当更新参数的时候，如果学习率没有设好，是有可能式1-2是不成立的，所以导致做梯度下降的时候，损失函数没有越来越小。</p>
+
+<blockquote>
+  <p>式1-2只考虑了泰勒展开式的一次项，如果考虑到二次项（比如牛顿法），在实际中不是特别好，会涉及到二次微分等，多很多的运算，性价比不好。</p>
+</blockquote>
+
+<h1 id="section-8">梯度下降的限制</h1>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0phhfnifj21200s0qet.jpg" alt="" /></p>
+
+<ul>
+  <li>容易陷入局部极值</li>
+  <li>还有可能卡在不是极值，但微分值是0的地方</li>
+  <li>还有可能实际中只是当微分值小于某一个数值就停下来了，但这里只是比较平缓，并不是极值点</li>
+</ul>
+
+<blockquote>
+  <p>新博客地址：<a href="http://yoferzhang.com/post/20170327ML04GradientDescent">http://yoferzhang.com/post/20170327ML04GradientDescent</a></p>
+</blockquote>
 
 
-<!-- Theme Material -->
+        </article>
+        <hr>
 
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
+        
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/03/27/ML03BiasAndVariance/">机器学习入门系列03，Error的来源：偏差和方差（bias 和 variance）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">Android短视频边下边播详解</a></p>
+        
+    </div>
+</div>
 
 
-<!-- Help & Support -->
-<!--
+        <h2 id="comments">Comments</h2>
+        
 
--->
 
-<!-- Feedback -->
-<!--
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
--->
+    var disqus_config = function() {
+        this.page.url = 'http://MelonTeam.com/2017/03/27/ML04GradientDescent/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://MelonTeam.com/2017/03/27/ML04GradientDescent/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
 
-<!-- About Theme -->
-<!--
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
 
--->
+        s.src = '//melonteam.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
 
     </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
 
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/MelonTeam" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Melon Team
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
             </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
         </div>
-    
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
 </footer>
 
 
-                    <!-- Import File -->
-<script src="/js/lazyload.min.js"></script>
-<script src="/js/js.min.js"></script>
-<script src="/js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
 
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
 
-
-
-
-    <!-- Busuanzi -->
-    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
-<script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-
-                </main>
-            </div>
-        </body>
-    
 </html>
