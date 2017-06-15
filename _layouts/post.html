@@ -10,23 +10,26 @@ layout: default
             <div class="label-card">
                 <i class="fa fa-calendar"></i>{{ page.date | date: "%F" }}
             </div>
-
+            {% if page.author %}
             <div class="label-card">
-                {% if page.author %}<i class="fa fa-user"></i>{{ page.author }}
-                {% endif %}
+                <i class="fa fa-user"></i>{{ page.author }}
             </div>
-
+            {% endif %}
+            {% if page.meta %}
             <div class="label-card">
-                {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
+                <i class="fa fa-key"></i>{{ page.meta }}  
             </div>
-
+            {% endif %}
+            {% if post.categories != empty %}
             <div class="label-card">
             {% include category.html %}
             </div>
-
+            {% endif %}
+            {% if post.tags != empty %}
             <div class="label-card">
             {% include tag.html %}
             </div>
+            {% endif %}
 
         </div>
         <hr>

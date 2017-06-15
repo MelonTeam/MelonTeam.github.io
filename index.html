@@ -14,21 +14,26 @@ layout: default
                     <div class="label-card">
                         <i class="fa fa-calendar"></i>{{ post.date | date: "%F" }}
                     </div>
+                    {% if post.author %}
                     <div class="label-card">
-                        {% if post.author %}<i class="fa fa-user"></i>{{ post.author }}
-                        {% endif %}
+                        <i class="fa fa-user"></i>{{ post.author }}
                     </div>
+                    {% endif %}
+                    {% if page.meta %}
                     <div class="label-card">
-                        {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
+                        <i class="fa fa-key"></i>{{ page.meta }}  
                     </div>
-
+                    {% endif %}
+                    {% if post.categories != empty %}
                     <div class="label-card">
                     {% include category.html %}
                     </div>
-
+                    {% endif %}
+                    {% if post.tags != empty %}
                     <div class="label-card">
                     {% include tag.html %}
                     </div>
+                    {% endif %}
                 </div>
                 <div class="excerpt">
                     {{post.excerpt}}
@@ -141,15 +146,17 @@ layout: default
                 </div>
             </div>
 
-            <!-- <div class="side">
+            <div class="side">
                 <div>
                     <i class="fa fa-external-link"></i>
-                    Links
+                    友情链接
                 </div>
-                <ul  class="content-ul">
-
+                <ul  class="content-ul" link>
+                    <li>
+                        <a href="http://AlloyTeam.com">腾讯 AlloyTeam</a>
+                    </li>
                 </ul>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
