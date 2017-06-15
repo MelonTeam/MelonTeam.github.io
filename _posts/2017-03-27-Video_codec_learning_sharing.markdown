@@ -3,6 +3,7 @@ layout: post
 title: "视频编解码学习分享"
 date: 2017-03-27 19:04:58
 categories: 视频
+tags: 编解码 视频
 ---
 
 * content

@@ -5,8 +5,8 @@
     <description></description>
     <link>http://MelonTeam.com/</link>
     <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 14 Jun 2017 17:51:21 +0800</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2017 17:51:21 +0800</lastBuildDate>
+    <pubDate>Thu, 15 Jun 2017 16:26:35 +0800</pubDate>
+    <lastBuildDate>Thu, 15 Jun 2017 16:26:35 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -58,6 +58,10 @@
         <link>http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/</link>
         <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/</guid>
         
+        <category>编解码</category>
+        
+        <category>视频</category>
+        
         
         <category>视频</category>
         
@@ -79,6 +83,8 @@
         <link>http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/</link>
         <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/</guid>
         
+        <category>事件</category>
+        
         
         <category>ios</category>
         
@@ -94,6 +100,10 @@
         <pubDate>Mon, 27 Mar 2017 19:04:58 +0800</pubDate>
         <link>http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/</link>
         <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/</guid>
+        
+        <category>边下边播</category>
+        
+        <category>视频</category>
         
         
         <category>android</category>

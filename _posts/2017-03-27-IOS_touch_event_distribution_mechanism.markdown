@@ -3,6 +3,7 @@ layout: post
 title: "IOS触摸事件分发机制详解"
 date: 2017-03-27 12:40:54
 categories: IOS
+tags: 事件
 ---
 
 * content
