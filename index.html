@@ -49,23 +49,37 @@ layout: default
 
 
         <!-- Pagination links -->
-        <div class="pagination">
-          {% if paginator.previous_page %}
-            <a href="/index.html" class="previous"><i class="fa fa-angle-double-left"></i></a>
-            <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="previous"><i class="fa fa-angle-left"></i></a>
-          {% else %}
-            <span class="previous disable"><i class="fa fa-angle-double-left"></i></span>
-            <span class="previous disable"><i class="fa fa-angle-left"></i></span>
-          {% endif %}
-          <span class="page_number ">{{ paginator.page }}/{{ paginator.total_pages }}</span>
-          {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path }}" class="next"><i class="fa fa-angle-right"></i></a>
-            <a href="{{ site.baseurl }}/page{{ paginator.total_pages }}" class="next"><i class="fa fa-angle-double-right"></i></a>
-          {% else %}
-            <span class="next disable"><i class="fa fa-angle-right"></i></span>
-            <span class="next disable"><i class="fa fa-angle-double-right"></i></span>
-          {% endif %}
+        <div class="pagination text-align">
+          <div class="btn-group">
+            {% if paginator.previous_page %}
+              {% if paginator.previous_page == 1 %}
+                  <a href="/" class="btn btn-outline">&laquo;</a>
+              {% else %}
+                  <a href="/page{{paginator.previous_page}}"  class="btn btn-outline">&laquo;</a>
+              {% endif %}
+            {% else %}
+                
+            {% endif %}
+            {% if paginator.page == 1 %}
+                <a href="javascript:;" class="active btn btn-outline">1</a>
+            {% else %}
+                <a href="/"  class="btn btn-outline">1</a>
+            {% endif %}
+            {% for count in (2..paginator.total_pages) %}
+              {% if count == paginator.page %}
+                  <a href="javascript:;"  class="active btn btn-outline">{{count}}</a>
+              {% else %}
+                  <a href="/page{{count}}"  class="btn btn-outline">{{count}}</a>
+              {% endif %}
+            {% endfor %}
+            {% if paginator.next_page %}
+                <a href="/page{{paginator.next_page}}"  class="btn btn-outline">&raquo;</a>
+            {% else %}
+                
+            {% endif %}
+            </div>
         </div>
+
     </div>
     <!-- <button class="anchor"><i class="fa fa-anchor"></i></button> -->
     <div class="right">
