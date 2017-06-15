@@ -1,250 +1,30 @@
+---
+layout: null
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MelonTeam</title>
-    <description></description>
-    <link>http://MelonTeam.com/</link>
-    <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 14 Jun 2017 17:51:21 +0800</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2017 17:51:21 +0800</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
-    
+    <title>{{ site.title | xml_escape }}</title>
+    <description>{{ site.description | xml_escape }}</description>
+    <link>{{ site.url }}{{ site.baseurl }}/</link>
+    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
+    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    <generator>Jekyll v{{ jekyll.version }}</generator>
+    {% for post in site.posts limit:10 %}
       <item>
-        <title>深度学习入门实战（二）</title>
-        <description>&lt;blockquote&gt;
-  导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Tue, 28 Mar 2017 19:04:58 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</guid>
-        
-        
+        <title>{{ post.title | xml_escape }}</title>
+        <description>{{ post.excerpt | remove: '<p>' | remove: '</p>' | xml_escape }}</description>
+        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
+        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
+        {% for tag in post.tags %}
+        <category>{{ tag | xml_escape }}</category>
+        {% endfor %}
+        {% for cat in post.categories %}
+        <category>{{ cat | xml_escape }}</category>
+        {% endfor %}
       </item>
-    
-      <item>
-        <title>深度学习入门实战（一）</title>
-        <description>&lt;blockquote&gt;
-  导语：现在人工智能是个大热点，而人工智能离不开机器学习，机器学习中深度学习又是比较热门的方向，本系列文章就从实战出发，介绍下如何使用MXnet进行深度学习~
-&lt;/blockquote&gt;
-
-既然是实战而且本文是入门级别的我们就不讲那么多大家都听不懂的数学公式啦～
-
-</description>
-        <pubDate>Tue, 28 Mar 2017 17:04:58 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/28/Deep_learning_entry_1/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Deep_learning_entry_1/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>视频编解码学习分享</title>
-        <description>
-&lt;strong&gt;目录&lt;/strong&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;视频为什么要编解码&lt;/li&gt;
-  &lt;li&gt;视频是否可以压缩&lt;/li&gt;
-  &lt;li&gt;编解码实现原理&lt;/li&gt;
-  &lt;li&gt;编解码标准和国际组织&lt;/li&gt;
-  &lt;li&gt;视频文件封装（容器）&lt;/li&gt;
-  &lt;li&gt;视频质量评价体系&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Tue, 28 Mar 2017 03:04:58 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/</guid>
-        
-        
-        <category>视频</category>
-        
-      </item>
-    
-      <item>
-        <title>IOS触摸事件分发机制详解</title>
-        <description>## 前言
-
-很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:
-
-某个点击消息由父视图来处理，子视图怎么把消息传递给父视图&lt;br /&gt;
-这个按钮不灵敏，怎么扩大点击响应区域&lt;br /&gt;
-怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息&lt;br /&gt;
-阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-test view 、人为干预响应者能否对这一事件作出响应最终来控制触摸事件的分发机制。
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 20:40:54 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/IOS_touch_event_distribution_mechanism/</guid>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>Android短视频边下边播详解</title>
-        <description>       短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。&lt;br /&gt;
-&lt;strong&gt;【视频格式】&lt;/strong&gt;&lt;br /&gt;
-       想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 19:04:58 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/</guid>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>机器学习入门系列04，Gradient Descent（梯度下降法）</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#gradient-descent&quot; id=&quot;markdown-toc-gradient-descent&quot;&gt;什么是Gradient Descent（梯度下降法）？&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#review-&quot; id=&quot;markdown-toc-review-&quot;&gt;Review: 梯度下降法&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-  引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&lt;/a&gt;
-&lt;/blockquote&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-  CSDN博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/66632699&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/66632699&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;gradient-descent&quot;&gt;什么是Gradient Descent（梯度下降法）？&lt;/h1&gt;
-
-在第二篇文章中有介绍到梯度下降法的做法，传送门：&lt;a href=&quot;地址地址地址&quot;&gt;机器学习入门系列02，Regression 回归：案例研究&lt;/a&gt;
-
-&lt;h2 id=&quot;review-&quot;&gt;Review: 梯度下降法&lt;/h2&gt;
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 18:04:14 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/ML04GradientDescent/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/ML04GradientDescent/</guid>
-        
-        
-        <category>机器学习</category>
-        
-      </item>
-    
-      <item>
-        <title>机器学习入门系列03，Error的来源：偏差和方差（bias 和 variance）</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;回顾&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-  引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&lt;/a&gt;
-&lt;/blockquote&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-  CSDN博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/66611368&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/66611368&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;section&quot;&gt;回顾&lt;/h1&gt;
-
-第二篇中神奇宝贝的例子：
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 18:03:33 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/ML03BiasAndVariance/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/ML03BiasAndVariance/</guid>
-        
-        
-        <category>机器学习</category>
-        
-      </item>
-    
-      <item>
-        <title>机器学习入门系列02，Regression 回归：案例研究</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;为什么要先进行案例研究？&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#regression-&quot; id=&quot;markdown-toc-regression-&quot;&gt;Regression （回归）&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-  引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&lt;/a&gt;
-&lt;/blockquote&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-  CSDN博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/66577532&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/66577532&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;section&quot;&gt;为什么要先进行案例研究？&lt;/h1&gt;
-
-没有比较好的数学基础，直接接触深度学习会非常抽象，所以这里我们先通过一个预测 Pokemon Go 的 Combat Power (CP) 值的案例，打开深度学习的大门。
-
-&lt;h1 id=&quot;regression-&quot;&gt;Regression （回归）&lt;/h1&gt;
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 18:02:44 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/ML02Regression/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/ML02Regression/</guid>
-        
-        
-        <category>机器学习</category>
-        
-      </item>
-    
-      <item>
-        <title>机器学习入门系列01，Introduction 简介</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;我们将要学习什么东东？&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#section-1&quot; id=&quot;markdown-toc-section-1&quot;&gt;什么是机器学习？&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-  引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html&lt;/a&gt;
-&lt;/blockquote&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-  CSDN博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/66478149&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/66478149&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;section&quot;&gt;我们将要学习什么东东？&lt;/h1&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;什么是机器学习？&lt;/h2&gt;
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 18:01:55 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/ML01Introduction/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/ML01Introduction/</guid>
-        
-        
-        <category>机器学习</category>
-        
-      </item>
-    
-      <item>
-        <title>移动互联网IM之协议设计</title>
-        <description>
-&lt;blockquote&gt;
-  导语：如果想自己动手实现一个移动互联网IM app，要怎么做？第一个要解决的问题就是IM协议的设计。本文将讲述如何从0到1设计一个私有的tcp协议。
-&lt;/blockquote&gt;
-
-       虽然现在市面上已经存在各种各样的消息推送SDK如信鸽，但可能由于各种原因无法全面满足需求，还是想自己实现一个IM或推送功能。那么你需要解决哪些问题呢？首先面临的第一个问题就是如何实现IM协议？
-
-</description>
-        <pubDate>Mon, 27 Mar 2017 14:58:55 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/27/Protocol_design_for_mobile_Internet_IM/</guid>
-        
-        
-        <category>im</category>
-        
-      </item>
-    
+    {% endfor %}
   </channel>
 </rss>

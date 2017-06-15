@@ -1,0 +1,50 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: MelonTeam
+brief-intro: 移动终端前沿技术的探索者
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://MelonTeam.com" # the base hostname & protocol for your site
+
+permalink: /:year/:month/:day/:title/
+
+excerpt_separator: "<!--more-->"
+
+# other links
+twitter_username: 
+facebook_username: 
+github_username:  MelonTeam
+email: 
+weibo_username: 
+zhihu_username: 
+linkedIn_username: 
+dribbble_username:
+
+# comments
+disqus_shortname: melonteam
+
+# statistic analysis 统计代码
+ta_id: 62569168
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# port
+# port: 1234
+
+# url
+category_dir: category/
+tag_dir: tag/
+
+# paginate
+gems: [jekyll-paginate]
+paginate: 6
