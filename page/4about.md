@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 留言板
-permalink: /about/
+permalink: /board/
 icon: pencil
 type: page
 ---
