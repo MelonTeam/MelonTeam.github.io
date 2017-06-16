@@ -3,6 +3,7 @@ layout: post
 title: "机器学习入门系列01，Introduction 简介"
 date: 2017-03-27 10:01:55
 categories: 机器学习
+tags: 机器学习 机器学习入门笔记
 ---
 * content
 {:toc}

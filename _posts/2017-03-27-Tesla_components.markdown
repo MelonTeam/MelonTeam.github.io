@@ -3,6 +3,7 @@ layout: post
 title: "【特斯拉组件】跨线程渲染圆角图片"
 date: 2017-03-27 5:58:54
 categories: IOS
+tags: 圆角 跨线程
 ---
 
 * content

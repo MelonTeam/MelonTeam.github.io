@@ -3,6 +3,7 @@ layout: post
 title: "机器学习入门系列04，Gradient Descent（梯度下降法）"
 date: 2017-03-27 10:04:14
 categories: 机器学习
+tags: 机器学习 机器学习入门笔记
 ---
 * content
 {:toc}

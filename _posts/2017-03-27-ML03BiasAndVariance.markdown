@@ -3,6 +3,7 @@ layout: post
 title: "机器学习入门系列03，Error的来源：偏差和方差（bias 和 variance）"
 date: 2017-03-27 10:03:33
 categories: 机器学习
+tags: 方差 无偏估计
 ---
 * content
 {:toc}

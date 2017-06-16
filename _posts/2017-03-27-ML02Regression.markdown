@@ -3,6 +3,7 @@ layout: post
 title: "机器学习入门系列02，Regression 回归：案例研究"
 date: 2017-03-27 10:02:44
 categories: 机器学习
+tags: 回归 损失函数
 ---
 * content
 {:toc}

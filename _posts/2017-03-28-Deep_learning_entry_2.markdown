@@ -4,7 +4,7 @@ title: "深度学习入门实战（二）"
 date: 2017-03-28 11:04:58
 author: chaodong
 categories: 机器学习
-
+tags: tensorflow 机器学习
 ---
 * content
 {:toc}
