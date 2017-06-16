@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -167,9 +167,9 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#1lrucache" id="markdown-toc-1lrucache">1.lrucache</a></li>
-  <li><a href="#2disklrucache" id="markdown-toc-2disklrucache">2.disklrucache</a></li>
-  <li><a href="#3-缓存策略对比与总结" id="markdown-toc-3-缓存策略对比与总结">3. 缓存策略对比与总结</a></li>
+  <li><a href="#lrucache" id="markdown-toc-lrucache">1.lrucache</a></li>
+  <li><a href="#disklrucache" id="markdown-toc-disklrucache">2.disklrucache</a></li>
+  <li><a href="#section" id="markdown-toc-section">3. 缓存策略对比与总结</a></li>
 </ul>
 
 <p>      不论是android还是ios设备，流量对于用户而言都是宝贵的。在没有wifi的场景下，如果加载批量的图片消耗用户过多流量，被其知晓，又要被念叨一波~ <img src="/image/android_bitmap_de_huan_cun_ce_lve/0e7533339eb300c1948b6eab511c562d45eedfa01d50ddd17e5ffad5c2b79709" border="0" /> 如何避免消耗过多的流量呢？当程序第一次从网络加载图片后，就将其缓存到移动设备上，这样再次使用这个图片时，就不用再次从网络上下载为用户节省了流量。</p>
@@ -178,7 +178,7 @@
 
 <p>       目前常用的一种缓存算法是<strong>lru</strong>（least recently used），它的核心思想是当缓存满了，会优先淘汰近期最少使用的缓存对象。采用lru算法的缓存有两种：lrucache和disklrucache，lrucache主要用于实现内存缓存，disklrucache则用于存储设备缓存。</p>
 
-<h2 id="1lrucache">1.lrucache</h2>
+<h2 id="lrucache">1.lrucache</h2>
 
 <p>     lrucache是api level 12提供的一个泛型类，它内部采用一个linkedhashmap以强引用的方式存储外界的缓存对象，提供了get和put方法来完成缓存的获取和添加操作，当缓存满了，lrucache会remove掉较早使用的缓存对象，然后再添加新的对象。</p>
 
@@ -188,7 +188,7 @@
 
 <p>      根据lru的算法思想，我们需要一种数据结构来快速定位哪个对象是最近访问的，哪个对象是最长时间未访问的，lrucache选择的是linkedhashmap这个数据结构，它是一个双向循环链表。来瞅一眼linkedhashmap的构造函数：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>/** 初始化linkedhashmap
+<pre><code>/** 初始化linkedhashmap
 
      * 第一个参数：initialcapacity，初始大小
 
@@ -206,13 +206,12 @@
 
     }
 </code></pre>
-</div>
 
 <p>       所以在lrucache中应该选择accessorder = true，当我们调用put、get方法时，linkedhashmap内部会将这个item移动到链表的尾部，即在链表尾部是最近刚刚使用的item，链表头部就是最近最少使用的item。当缓存空间不足时，可以remove头部结点释放缓存空间。</p>
 
 <p><strong>下面举例lrucache的典型使用姿势</strong>：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>int maxmemory = (int) (runtime.getruntime().maxmemory() / 1024);
+<pre><code>int maxmemory = (int) (runtime.getruntime().maxmemory() / 1024);
 
 int cachesize = maxmemory / 8;
 
@@ -250,13 +249,12 @@ private bitmap getbitmapfrommemcache(string key) {
 
 }&lt;/string&gt;
 </code></pre>
-</div>
 
 <p>     上述示例代码中，总容量的大小是当前进程的可用内存的八分之一（官方推荐是八分之一哈，你们可以自己视情况定），sizeof（）方法计算了bitmap的大小，sizeof方法默认返回的是你缓存item数目，源码中直接return 1（这里的源码比较简单，可以自己看看~）。</p>
 
 <p>     如果你需要cache中某个值释放，可以重写entryremoved（）方法，这个方法会在元素被put或者remove的时候调用，源码默认是空实现。<strong>重写entryremoved（）方法还可以实现二级内存缓存，进一步提高性能</strong>。思路如下：重写entryremoved（），把删除掉的item，再次存入另一个linkedhashmap中。这个数据结构当做二级缓存，每次获得图片的时候，按照一级缓存 、二级缓存、sdcard、网络的顺序查找，找到就停止。</p>
 
-<h2 id="2disklrucache">2.disklrucache</h2>
+<h2 id="disklrucache">2.disklrucache</h2>
 
 <p>       当我们需要存大量图片的时候，我们指定的缓存空间可能很快就用完了，lrucache会频繁地进行trimtosize操作将最近最少使用的数据remove掉，但是hold不住过会又要用这个数据，又从网络download一遍，为此有了disklrucache，它可以保存这些已经下载过的图片。当然，从磁盘读取图片的时候要比内存慢得多，并且应该在非ui线程中载入磁盘图片。disklrucache顾名思义，实现存储设备缓存，即磁盘缓存，它通过将缓存对象写入文件系统从而实现缓存效果。</p>
 
@@ -270,7 +268,7 @@ private bitmap getbitmapfrommemcache(string key) {
 
 <p>下面是disklrucache的创建过程：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>private static final long disk_cache_size = 1024 * 1024 * 50; //50mb 
+<pre><code>private static final long disk_cache_size = 1024 * 1024 * 50; //50mb 
 
     
 
@@ -300,7 +298,6 @@ private bitmap getbitmapfrommemcache(string key) {
 
     }
 </code></pre>
-</div>
 
 <p>       瞅了一眼，可以知道重点在open（）函数，其中第一个参数表示文件的存储路径，缓存路径可以是sd卡上的缓存目录，具体是指/sdcard/android/data/package_name/cache，package_name表示当前应用的包名，当应用被卸载后， 此目录会一并删除掉。如果你希望应用卸载后，这些缓存文件不被删除，可以指定sd卡上其他目录。第二个参数表示应用的版本号，一般设为1即可。第三个参数表示单个结点所对应数据的个数，一般设为1。第四个参数表示缓存的总大小，比如50mb，当缓存大小超过这个设定值后，disklrucache会清除一些缓存保证总大小不会超过设定值。</p>
 
@@ -308,7 +305,7 @@ private bitmap getbitmapfrommemcache(string key) {
 
 <p>数据缓存操作是借助disklrucache.editor类完成的，editor表示一个缓存对象的编辑对象。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>new thread(new runnable() {  
+<pre><code>new thread(new runnable() {  
 
     @override  
 
@@ -350,13 +347,12 @@ private bitmap getbitmapfrommemcache(string key) {
 
 }).start();
 </code></pre>
-</div>
 
 <p>     上述示例代码中，每次调用edit（）方法时，会返回一个新的editor对象，通过它可以得到一个文件输出流；调用commit（）方法将图片写入到文件系统中，如果失败，通过abort（）方法进行回退。</p>
 
 <p>     而获取缓存和缓存的添加过程类似，将url转换为key，然后通过disklrucache的get方法得到一个snapshot对象，接着通过snapshot对象得到缓存的文件输入流。有了文件输入流，bitmap就get到了。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    bitmap bitmap = null;
+<pre><code>    bitmap bitmap = null;
 
     string key = hashkeyformurl(url);
 
@@ -376,13 +372,12 @@ private bitmap getbitmapfrommemcache(string key) {
 
     }
 </code></pre>
-</div>
 
 <p><strong>disklrucache优化思考：</strong></p>
 
 <p>       disklrucache是基于日志文件的，每次对缓存文件操作都需要进行日志记录，我们可以不用日志文件，在第一次构造disklrucache时，直接从程序访问缓存目录下的文件，并将每个缓存文件的访问时间作为初始值记录在map中的value值，每次访问或保存缓存都更新相应key对应的缓存文件的访问时间，避免了频繁地io操作。</p>
 
-<h2 id="3-缓存策略对比与总结">3. 缓存策略对比与总结</h2>
+<h2 id="section">3. 缓存策略对比与总结</h2>
 <ul>
   <li>
     <p>lrucache是android中已经封装好的类，disklrucache需要导入相应的包才可以使用。</p>
@@ -446,7 +441,7 @@ private bitmap getbitmapfrommemcache(string key) {
                 
                     
                         
-                        <h2 id="similar_posts">Similar Posts</h2>
+                        <h2 id="similar_posts">相关文章</h2>
                         <ul>
                         
                         <li class="relatedPost">
@@ -578,9 +573,9 @@ private bitmap getbitmapfrommemcache(string key) {
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/' 
+     'url':'http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -603,7 +598,7 @@ var uyan_config = {
                 </div>
                 <ul id="content-side" class="content-ul">
                     
-                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <li><a href="#similar_posts">相关文章</a></li>
                     
                     <li><a href="#comments">说一说</a></li>
                 </ul>

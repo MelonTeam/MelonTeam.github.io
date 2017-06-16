@@ -3,34 +3,32 @@
   <channel>
     <title>MelonTeam</title>
     <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 16 Jun 2017 10:25:05 +0800</pubDate>
-    <lastBuildDate>Fri, 16 Jun 2017 10:25:05 +0800</lastBuildDate>
-    <generator>Jekyll v3.4.3</generator>
+    <link>http://MelonTeam.com/</link>
+    <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 16 Jun 2017 11:04:57 +0800</pubDate>
+    <lastBuildDate>Fri, 16 Jun 2017 11:04:57 +0800</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>make wechat great again</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#工欲善其事必先利其器&quot; id=&quot;markdown-toc-工欲善其事必先利其器&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#a-name-classreference-link&quot; id=&quot;markdown-toc-a-name-classreference-link&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;strong&gt;手机无需越狱&lt;/strong&gt;，项目 github 地址: &lt;a href=&quot;https://github.com/yulingtianxia/fishchat&quot;&gt;fishchat&lt;/a&gt;，make wechat great again！
 
-&lt;h2 id=&quot;工欲善其事必先利其器&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/h2&gt;
+&lt;h2 id=&quot;a-name-classreference-link&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/h2&gt;
 
-因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 &lt;code class=&quot;highlighter-rouge&quot;&gt;captainhook&lt;/code&gt; 工程编译出的 dylib 注入到已砸壳 app 的二进制文件中。同样因为没有越狱机，所以砸壳的文件只能从 某 p 助手下载了。
+因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 &lt;code&gt;captainhook&lt;/code&gt; 工程编译出的 dylib 注入到已砸壳 app 的二进制文件中。同样因为没有越狱机，所以砸壳的文件只能从 某 p 助手下载了。
 
-我写了一个 shell 脚本 &lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 帮我完成一些重复性的任务：
-&lt;ol&gt;
-  &lt;li&gt;查找可用的 iphone 开发者证书1. 解压 ipa 文件1. 拷贝 mobileprovision 文件和要注入的 dylib 文件到 app 文件夹中1. 向 app 中可执行文件的 &lt;code class=&quot;highlighter-rouge&quot;&gt;load commands&lt;/code&gt; 段中加入一条加载 dylib 的指令1. 对 app 中所有的 app，appx，framework，dylib 文件用第 1 步获取的证书进行重签名1. 打包签名好的 ipa 文件1. 删除上述过程中产生的中间文件1. 通过 usb 线安装 ipa 文件手机上
-&lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 需要传入的三个参数分别为：已砸壳的 ipa 文件，没过期的 mobileprovision 文件，要注入的 dylib 文件。&lt;/li&gt;
-&lt;/ol&gt;
+我写了一个 shell 脚本 &lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 帮我完成一些重复性的任务：&lt;br /&gt;
+1. 查找可用的 iphone 开发者证书1. 解压 ipa 文件1. 拷贝 mobileprovision 文件和要注入的 dylib 文件到 app 文件夹中1. 向 app 中可执行文件的 &lt;code&gt;load commands&lt;/code&gt; 段中加入一条加载 dylib 的指令1. 对 app 中所有的 app，appx，framework，dylib 文件用第 1 步获取的证书进行重签名1. 打包签名好的 ipa 文件1. 删除上述过程中产生的中间文件1. 通过 usb 线安装 ipa 文件手机上&lt;br /&gt;
+&lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 需要传入的三个参数分别为：已砸壳的 ipa 文件，没过期的 mobileprovision 文件，要注入的 dylib 文件。
 
 </description>
         <pubDate>Thu, 25 May 2017 20:23:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/25/make_wechat_great_again/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/25/make_wechat_great_again/</guid>
+        <link>http://MelonTeam.com/2017/05/25/make_wechat_great_again/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/05/25/make_wechat_great_again/</guid>
         
         <category>微信</category>
         
@@ -48,8 +46,8 @@
 
 </description>
         <pubDate>Sun, 21 May 2017 23:40:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/21/runloop_jie_du/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/21/runloop_jie_du/</guid>
+        <link>http://MelonTeam.com/2017/05/21/runloop_jie_du/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/05/21/runloop_jie_du/</guid>
         
         <category>ios</category>
         
@@ -67,8 +65,8 @@
 
 </description>
         <pubDate>Fri, 28 Apr 2017 20:39:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</guid>
+        <link>http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</guid>
         
         <category>android</category>
         
@@ -88,8 +86,8 @@
 
 </description>
         <pubDate>Wed, 26 Apr 2017 21:36:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/</guid>
+        <link>http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/</guid>
         
         <category>抠图</category>
         
@@ -103,10 +101,10 @@
       <item>
         <title>ndk代码支持断点调试</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#背景&quot; id=&quot;markdown-toc-背景&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#fontfont&quot; id=&quot;markdown-toc-fontfont&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;背景&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/h1&gt;
+&lt;h1 id=&quot;fontfont&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/h1&gt;
 
 android的ndk代码编写一直被认为是很痛苦的一件事情，除了android程序员对c++的陌生外，还有一个主要原因是无法断点调试。无法断点调试很难发现和排查问题，大大影响开发效率。实际上android studio从2.2开始就完全支持ndk开发，并且可以进行断点调试。
 
@@ -116,8 +114,8 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
 
 </description>
         <pubDate>Tue, 25 Apr 2017 18:40:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</guid>
+        <link>http://MelonTeam.com/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</guid>
         
         <category>android</category>
         
@@ -131,10 +129,10 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
       <item>
         <title>老司机用神经网络带您安全驾驶</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#0-概述&quot; id=&quot;markdown-toc-0-概述&quot;&gt;0 概述&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;0 概述&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;0-概述&quot;&gt;0 概述&lt;/h1&gt;
+&lt;h1 id=&quot;section&quot;&gt;0 概述&lt;/h1&gt;
 
 &lt;blockquote&gt;
 
@@ -144,8 +142,8 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
 
 </description>
         <pubDate>Tue, 25 Apr 2017 00:06:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</guid>
+        <link>http://MelonTeam.com/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</guid>
         
         <category>深度学习</category>
         
@@ -175,8 +173,8 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
 
 </description>
         <pubDate>Mon, 10 Apr 2017 17:25:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</guid>
+        <link>http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</guid>
         
         <category>判别方法</category>
         
@@ -194,8 +192,8 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
 
 </description>
         <pubDate>Thu, 06 Apr 2017 17:56:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</guid>
+        <link>http://MelonTeam.com/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</guid>
         
         <category>深度学习</category>
         
@@ -225,8 +223,8 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
 
 </description>
         <pubDate>Wed, 05 Apr 2017 06:24:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</guid>
+        <link>http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</guid>
         
         <category>后验概率</category>
         
@@ -245,8 +243,8 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
 
 </description>
         <pubDate>Tue, 28 Mar 2017 19:04:58 +0800</pubDate>
-        <link>http://localhost:4000/2017/03/28/Deep_learning_entry_2/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/03/28/Deep_learning_entry_2/</guid>
+        <link>http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</guid>
         
         
         <category>机器学习</category>

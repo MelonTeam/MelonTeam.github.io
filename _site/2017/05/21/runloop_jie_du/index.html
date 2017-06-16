@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/05/21/runloop_jie_du/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/05/21/runloop_jie_du/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -167,19 +167,19 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#runloop的基本构造" id="markdown-toc-runloop的基本构造"><strong>runloop的基本构造</strong></a>    <ul>
-      <li><a href="#1cfrunloopsourceref事件来源包含两种" id="markdown-toc-1cfrunloopsourceref事件来源包含两种">1.cfrunloopsourceref：事件来源，包含两种：</a></li>
-      <li><a href="#2-cfrunlooptimerref-时间触发器" id="markdown-toc-2-cfrunlooptimerref-时间触发器"> 2. cfrunlooptimerref  时间触发器</a></li>
-      <li><a href="#3cfrunloopobserverref-监听runloop状态接收回调信息" id="markdown-toc-3cfrunloopobserverref-监听runloop状态接收回调信息">3. cfrunloopobserverref  监听runloop状态，接收回调信息</a></li>
+  <li><a href="#strongrunloopstrong" id="markdown-toc-strongrunloopstrong"><strong>runloop的基本构造</strong></a>    <ul>
+      <li><a href="#cfrunloopsourceref" id="markdown-toc-cfrunloopsourceref">1.cfrunloopsourceref：事件来源，包含两种：</a></li>
+      <li><a href="#cfrunlooptimerref-" id="markdown-toc-cfrunlooptimerref-"> 2. cfrunlooptimerref  时间触发器</a></li>
+      <li><a href="#cfrunloopobserverref-runloop" id="markdown-toc-cfrunloopobserverref-runloop">3. cfrunloopobserverref  监听runloop状态，接收回调信息</a></li>
     </ul>
   </li>
-  <li><a href="#runloop的运行逻辑" id="markdown-toc-runloop的运行逻辑"><font color="#2f2f2f">runloop的运行逻辑</font></a></li>
-  <li><a href="#runloop相关的一些应用场景" id="markdown-toc-runloop相关的一些应用场景">runloop相关的一些应用场景</a>    <ul>
+  <li><a href="#font-color2f2f2frunloopfont" id="markdown-toc-font-color2f2f2frunloopfont"><font color="#2f2f2f">runloop的运行逻辑</font></a></li>
+  <li><a href="#runloop" id="markdown-toc-runloop">runloop相关的一些应用场景</a>    <ul>
       <li><a href="#autoreleasepool" id="markdown-toc-autoreleasepool">autoreleasepool</a></li>
-      <li><a href="#事件响应" id="markdown-toc-事件响应">事件响应</a></li>
-      <li><a href="#界面更新" id="markdown-toc-界面更新">界面更新</a></li>
+      <li><a href="#section" id="markdown-toc-section">事件响应</a></li>
+      <li><a href="#section-1" id="markdown-toc-section-1">界面更新</a></li>
       <li><a href="#performselecter" id="markdown-toc-performselecter">performselecter</a></li>
-      <li><a href="#关于gcd" id="markdown-toc-关于gcd">关于gcd</a></li>
+      <li><a href="#gcd" id="markdown-toc-gcd">关于gcd</a></li>
     </ul>
   </li>
 </ul>
@@ -200,17 +200,16 @@
 
 <p>下面将会从<strong>runloop的基本构造</strong>，<strong>runloop的运行逻辑</strong> 以及 <strong>与runloop相关的一些应用场景</strong> 三个方面介绍runloop。</p>
 
-<h2 id="runloop的基本构造"><strong>runloop的基本构造</strong></h2>
+<h2 id="strongrunloopstrong"><strong>runloop的基本构造</strong></h2>
 
 <p><img src="/image/runloop_jie_du/ea054caf23d725dee731e4a33d10a1c3d02d3d1159198fa3d510cb4ba381a1e1" width="422" height="325" /></p>
 
 <p>一个runloop包含至少一个mode，每个mode由source/observer/timer的集合构成。每次runloop运行在其中一种模式(mode)下，如果想切换另一种模式，必须退出当前runloop，再重新进入，也就是说mode与mode之间是相互隔离的。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>// 添加mode
+<pre><code>// 添加mode
 
 cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 </code></pre>
-</div>
 
 <p>当添加一个新的mode时，系统就自动帮我们创建该mode。但是，mode 只能添加不能删除。</p>
 
@@ -220,7 +219,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>而 source/observe/timer 统称mode item。一个mode必须有mode item，runloop才能在该mode下运行。下面介绍下这三种mode item：</p>
 
-<h3 id="1cfrunloopsourceref事件来源包含两种">1.cfrunloopsourceref：事件来源，包含两种：</h3>
+<h3 id="cfrunloopsourceref">1.cfrunloopsourceref：事件来源，包含两种：</h3>
 
 <p>  1) source0:   cfrunloopsource {order =…, {callout =… }} //order:优先级；callout：回调函数</p>
 
@@ -230,7 +229,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>  包含mach_port和callout回调，可以通过内核和其他线程进程通信，使用时能主动唤醒runloop。</p>
 
-<h3 id="2-cfrunlooptimerref-时间触发器"> 2. cfrunlooptimerref  时间触发器</h3>
+<h3 id="cfrunlooptimerref-"> 2. cfrunlooptimerref  时间触发器</h3>
 
 <p>  cfrunlooptimer {firing =…, interval = …,tolerance = …,next fire date = …,callout = …}</p>
 
@@ -240,7 +239,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p><img src="/image/runloop_jie_du/7b980e0457516c16e1401ae3b2511fecf0c4d75fa6a6f946d5d363147fa827c6" /></p>
 
-<h3 id="3cfrunloopobserverref-监听runloop状态接收回调信息">3. cfrunloopobserverref  监听runloop状态，接收回调信息</h3>
+<h3 id="cfrunloopobserverref-runloop">3. cfrunloopobserverref  监听runloop状态，接收回调信息</h3>
 
 <p>  cfrunloopobserver {order = …, activities = …, callout = …}  // order(优先级)，ativity(监听状态)，callout(回调函数) </p>
 
@@ -269,7 +268,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <font color="#2f2f2f">如果想在滑动的过程中也监听timer的回调，可以将这个 timer 分别加入这两个 mode；或者 将 timer 加入到顶层的 runloop 的 "commonmodeitems" 中。"commonmodeitems" 被 runloop 自动更新到所有具有"common"属性的 mode 里去。</font>
 
-<h2 id="runloop的运行逻辑"><font color="#2f2f2f">runloop的运行逻辑</font></h2>
+<h2 id="font-color2f2f2frunloopfont"><font color="#2f2f2f">runloop的运行逻辑</font></h2>
 
 <font color="#2f2f2f">了解了runloop 的基本构造后，我们来看下runloop 内部的运行逻辑。cfrunloop.c 的源码可以在这里[https://opensource.apple.com/source/cf/cf-855.17/cfrunloop.c.auto.html](https://opensource.apple.com/source/cf/cf-855.17/cfrunloop.c.auto.html)看到，下面是关键部分的</font>
 <font color="#2f2f2f">源代码:</font>
@@ -304,7 +303,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>当程序在断点处暂停时，我们可以从调用栈中看到，是从底层那个回调中触发的。</p>
 
-<h2 id="runloop相关的一些应用场景">runloop相关的一些应用场景</h2>
+<h2 id="runloop">runloop相关的一些应用场景</h2>
 
 <p>在知道了runloop的基本构造以及运行流程之后，我们来了解下与runloop相关的一些场景：<br /><br /></p>
 
@@ -318,7 +317,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>在主线程执行的代码，通常是写在诸如事件回调、timer回调内的。这些回调会被 runloop 创建好的 autoreleasepool 环绕着，所以不会出现内存泄漏，开发者也不必显示创建 pool 了。</p>
 
-<h3 id="事件响应">事件响应</h3>
+<h3 id="section">事件响应</h3>
 
 <p>苹果注册了一个source1事件源 来接收系统事件，其回调函数为 __iohideventsystemclientqueuecallback()。</p>
 
@@ -326,7 +325,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>_uiapplicationhandleeventqueue()会把 iohidevent 处理并包装成 uievent 进行处理或分发，其中包括识别 uigesture/处理屏幕旋转/发送给 uiwindow 等。通常事件比如 uibutton 点击、touchesbegin/move/end/cancel 事件都是在这个回调中完成的。</p>
 
-<h3 id="界面更新">界面更新</h3>
+<h3 id="section-1">界面更新</h3>
 
 <p>当在操作 ui 时，比如改变了 frame、更新了 uiview/calayer 的层次时，或者手动调用了 uiview/calayer 的 setneedslayout/setneedsdisplay方法后，这个 uiview/calayer 就被标记为待处理，并被提交到一个全局的容器去。</p>
 
@@ -340,7 +339,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 
 <p>当只是调用 performselecter：时，内部创建的是一个block，并添加到当前线程的runloop中。也就是上面源码多处出现的__cfrunloopdoblocks(runloop, currentmode)。</p>
 
-<h3 id="关于gcd">关于gcd</h3>
+<h3 id="gcd">关于gcd</h3>
 
 <p>当调用 dispatch_async(dispatch_get_main_queue(), block) 时，libdispatch 会向主线程的 runloop 发送消息，runloop会被唤醒，并从消息中取得这个 block，然后在回调里执行。runloop只处理主线程的block，dispatch 到其他线程仍然是由 libdispatch 处理的。</p>
 
@@ -364,7 +363,7 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
                 
                     
                         
-                        <h2 id="similar_posts">Similar Posts</h2>
+                        <h2 id="similar_posts">相关文章</h2>
                         <ul>
                         
                         <li class="relatedPost">
@@ -517,9 +516,9 @@ cfrunloopaddcommonmode(cfrunloopref runloop, cfstringref modename);
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/05/21/runloop_jie_du/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/05/21/runloop_jie_du/' 
+     'url':'http://MelonTeam.com/2017/05/21/runloop_jie_du/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/05/21/runloop_jie_du/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -542,7 +541,7 @@ var uyan_config = {
                 </div>
                 <ul id="content-side" class="content-ul">
                     
-                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <li><a href="#similar_posts">相关文章</a></li>
                     
                     <li><a href="#comments">说一说</a></li>
                 </ul>
