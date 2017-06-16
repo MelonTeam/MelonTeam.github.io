@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 15 Jun 2017 18:45:43 +0800</pubDate>
-    <lastBuildDate>Thu, 15 Jun 2017 18:45:43 +0800</lastBuildDate>
+    <pubDate>Fri, 16 Jun 2017 10:25:05 +0800</pubDate>
+    <lastBuildDate>Fri, 16 Jun 2017 10:25:05 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -32,7 +32,9 @@
         <link>http://localhost:4000/2017/05/25/make_wechat_great_again/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/05/25/make_wechat_great_again/</guid>
         
-        <category>微信 ios</category>
+        <category>微信</category>
+        
+        <category>ios</category>
         
         
         <category>ios</category>
@@ -49,7 +51,9 @@
         <link>http://localhost:4000/2017/05/21/runloop_jie_du/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/05/21/runloop_jie_du/</guid>
         
-        <category>ios runloop</category>
+        <category>ios</category>
+        
+        <category>runloop</category>
         
         
         <category>ios</category>
@@ -66,7 +70,9 @@
         <link>http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</guid>
         
-        <category>android bitmap</category>
+        <category>android</category>
+        
+        <category>bitmap</category>
         
         
         <category>android</category>
@@ -85,7 +91,9 @@
         <link>http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/</guid>
         
-        <category>抠图 android</category>
+        <category>抠图</category>
+        
+        <category>android</category>
         
         
         <category>android</category>
@@ -111,7 +119,9 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
         <link>http://localhost:4000/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</guid>
         
-        <category>android ndk</category>
+        <category>android</category>
+        
+        <category>ndk</category>
         
         
         <category>android</category>
@@ -137,7 +147,9 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
         <link>http://localhost:4000/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</guid>
         
-        <category>深度学习 神经网络</category>
+        <category>深度学习</category>
+        
+        <category>神经网络</category>
         
         
         <category>android</category>
@@ -166,7 +178,9 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
         <link>http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</guid>
         
-        <category>判别方法 交叉熵</category>
+        <category>判别方法</category>
+        
+        <category>交叉熵</category>
         
         
         <category>ios</category>
@@ -183,7 +197,9 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
         <link>http://localhost:4000/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</guid>
         
-        <category>深度学习 逻辑回归</category>
+        <category>深度学习</category>
+        
+        <category>逻辑回归</category>
         
         
         <category>ios</category>
@@ -212,7 +228,9 @@ csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/arti
         <link>http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</guid>
         
-        <category>后验概率 最大似然...</category>
+        <category>后验概率</category>
+        
+        <category>最大似然...</category>
         
         
         <category>ios</category>
