@@ -1,3 +1,5 @@
+{% if post.categories != empty %}
+
 {% capture categories %}
   {% if post %}
     {% for category in post.categories %}
@@ -17,3 +19,5 @@
   <!-- <span class="point">•</span> -->
 </span>
 {% endunless %}
+
+{% endif %}
