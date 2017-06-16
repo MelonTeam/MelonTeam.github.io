@@ -4,7 +4,7 @@ title: "机器学习入门系列05，classification: probabilistic generative mo
 date: 2017-04-04 22:24:00
 categories: ios
 author: yoferzhang
-tag: 后验概率 最大似然...
+tags: 后验概率 最大似然...
 ---
 
 * content

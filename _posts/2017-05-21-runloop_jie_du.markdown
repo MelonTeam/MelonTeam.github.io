@@ -4,7 +4,7 @@ title: "runloop解读"
 date: 2017-05-21 15:40:00
 categories: ios
 author: jackzkzhang
-tag: ios runloop
+tags: ios runloop
 ---
 
 * content

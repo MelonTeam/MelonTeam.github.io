@@ -4,7 +4,7 @@ title: "老司机用神经网络带您安全驾驶"
 date: 2017-04-24 16:06:00
 categories: android
 author: richardcliu
-tag: 深度学习 神经网络
+tags: 深度学习 神经网络
 ---
 
 * content

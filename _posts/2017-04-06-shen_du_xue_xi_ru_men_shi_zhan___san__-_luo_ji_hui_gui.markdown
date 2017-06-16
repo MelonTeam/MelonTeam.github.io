@@ -4,7 +4,7 @@ title: "深度学习入门实战（三）-逻辑回归"
 date: 2017-04-06 09:56:00
 categories: ios
 author: chaodong
-tag: 深度学习 逻辑回归
+tags: 深度学习 逻辑回归
 ---
 
 * content

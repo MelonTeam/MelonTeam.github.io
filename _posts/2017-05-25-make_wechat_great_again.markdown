@@ -4,7 +4,7 @@ title: "make wechat great again"
 date: 2017-05-25 12:23:00
 categories: ios
 author: rebootyang
-tag: 微信 ios
+tags: 微信 ios
 ---
 
 * content

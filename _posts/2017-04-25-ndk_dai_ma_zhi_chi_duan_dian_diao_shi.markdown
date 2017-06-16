@@ -4,7 +4,7 @@ title: "ndk代码支持断点调试"
 date: 2017-04-25 10:40:00
 categories: android
 author: parrzhang
-tag: android ndk
+tags: android ndk
 ---
 
 * content

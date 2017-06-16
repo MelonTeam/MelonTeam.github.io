@@ -4,7 +4,7 @@ title: "抠图技术初探"
 date: 2017-04-26 13:36:00
 categories: android
 author: zijianlu
-tag: 抠图 android
+tags: 抠图 android
 ---
 
 * content

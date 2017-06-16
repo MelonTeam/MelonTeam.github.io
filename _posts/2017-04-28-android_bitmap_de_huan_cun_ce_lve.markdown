@@ -4,7 +4,7 @@ title: "android bitmap的缓存策略"
 date: 2017-04-28 12:39:00
 categories: android
 author: kueeniechen
-tag: android bitmap
+tags: android bitmap
 ---
 
 * content

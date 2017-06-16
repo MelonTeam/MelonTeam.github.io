@@ -4,7 +4,7 @@ title: "机器学习入门系列06，logistic regression逻辑回归"
 date: 2017-04-10 09:25:00
 categories: ios
 author: yoferzhang
-tag: 判别方法 交叉熵
+tags: 判别方法 交叉熵
 ---
 
 * content
