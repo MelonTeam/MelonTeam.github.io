@@ -166,9 +166,11 @@ layout: default
                     友情链接
                 </div>
                 <ul  class="content-ul" link>
+                    {% for link in site.data.links %}
                     <li>
-                        <a href="http://AlloyTeam.com">腾讯 AlloyTeam</a>
+                        <a href="{{ link.url }}">{{ link.name }}</a>
                     </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
