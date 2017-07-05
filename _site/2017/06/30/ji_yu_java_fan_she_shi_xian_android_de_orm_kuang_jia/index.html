@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>基于java反射实现android的orm框架</title>
+    <meta name="description" content="  1. 框架设计| 导语java反射机制是一个很好用的东西。反射机制可以帮我们做那些重复的有规则的事情，所以现在很多的自动生成代码的软件就是运用反射机制来完成的。这里重复造个轮子看看。1. 框架设计">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>基于java反射实现android的orm框架</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-06-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>andyqtchen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#orm" title="Tag: orm" rel="tag">orm</a-->
+        <a href="/tag/#orm" title="Tag: orm" rel="tag">orm</a>&nbsp;
+    
+        <!--a href="/tag/#android" title="Tag: android" rel="tag">android</a-->
+        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1-框架设计" id="markdown-toc-1-框架设计">1. 框架设计</a>    <ul>
+      <li><a href="#11-总体流程" id="markdown-toc-11-总体流程">1.1. 总体流程</a></li>
+      <li><a href="#12-orm内部实现流程" id="markdown-toc-12-orm内部实现流程">1.2. orm内部实现流程</a></li>
+      <li><a href="#13-java数据类型与sqlite数据类型映射表" id="markdown-toc-13-java数据类型与sqlite数据类型映射表">1.3. java数据类型与sqlite数据类型映射表</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-内部实现的几个重要实现规则" id="markdown-toc-2-内部实现的几个重要实现规则">2. 内部实现的几个重要实现规则</a>    <ul>
+      <li><a href="#1-对于sqlite表字段与java对象字段映射规则" id="markdown-toc-1-对于sqlite表字段与java对象字段映射规则">1. 对于sqlite表字段与java对象字段映射规则：</a></li>
+      <li><a href="#2-保存数据类型规则" id="markdown-toc-2-保存数据类型规则">2. 保存数据类型规则：</a></li>
+      <li><a href="#3-表名称生成规则" id="markdown-toc-3-表名称生成规则">3. 表名称生成规则：</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-代码实现" id="markdown-toc-3-代码实现">3. 代码实现</a>    <ul>
+      <li><a href="#31-sqlbuildersql语句构建器" id="markdown-toc-31-sqlbuildersql语句构建器">3.1 sqlbuilder：sql语句构建器</a>        <ul>
+          <li><a href="#这里以创建表的sql为例" id="markdown-toc-这里以创建表的sql为例">这里以创建表的sql为例</a></li>
+        </ul>
+      </li>
+      <li><a href="#32-sqlitedbexecutorsql语句执行器" id="markdown-toc-32-sqlitedbexecutorsql语句执行器">3.2 sqlitedbexecutor：sql语句执行器</a></li>
+      <li><a href="#33-lazydborm入口的主类" id="markdown-toc-33-lazydborm入口的主类">3.3 lazydb：orm入口的主类</a></li>
+      <li><a href="#4-源码与例子的地址" id="markdown-toc-4-源码与例子的地址">4. 源码与例子的地址</a></li>
+      <li><a href="#5-java反射优化方案" id="markdown-toc-5-java反射优化方案">5. java反射优化方案</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语
+java反射机制是一个很好用的东西。反射机制可以帮我们做那些重复的有规则的事情，所以现在很多的自动生成代码的软件就是运用反射机制来完成的。这里重复造个轮子看看。</p>
+
+<h1 id="1-框架设计">1. 框架设计</h1>
+
+<!--more-->
+<h2 id="11-总体流程">1.1. 总体流程</h2>
+
+<p><img src="/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/65d745851b21df0033d471c5711a9250c21d1764455fab9d4a507932978fa721" alt="" /></p>
+
+<blockquote>
+  <ol>
+    <li>对于数据库的“增删改”操作，将对象输入，通过orm框架处理，构建sql语句，然后写入数据库，如图1所示；</li>
+  </ol>
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>对于查询数据库的操作，输入要输出对象的class，通过orm框架处理，构建sql语句，查询数据库，返回后构建成object输出，如图2所示；</li>
+  </ol>
+</blockquote>
+
+<blockquote>
+
+</blockquote>
+
+<h2 id="12-orm内部实现流程">1.2. orm内部实现流程</h2>
+
+<p><img src="/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/6feb82d370385ce74029dc2663bd3bf95a6d54cec65665ef39b4e0d292abf3b2" alt="" /></p>
+
+<blockquote>
+  <p>构建sql语句的原理：通过java反射机制，获取class的字段和object字段值，通过字符串拼接构建sql。</p>
+</blockquote>
+
+<h2 id="13-java数据类型与sqlite数据类型映射表">1.3. java数据类型与sqlite数据类型映射表</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>java数据类型</th>
+      <th>sqlite数据类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>int、integer、byte、byte、short、short、long、long、boolean、boolean</td>
+      <td>integer</td>
+    </tr>
+    <tr>
+      <td>float、float、double、double</td>
+      <td>real</td>
+    </tr>
+    <tr>
+      <td>date</td>
+      <td>date</td>
+    </tr>
+    <tr>
+      <td>string</td>
+      <td>text</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>ps：这里简单起见，将所有的字符串都用text；整数都用integer；</p>
+</blockquote>
+
+<h1 id="2-内部实现的几个重要实现规则">2. 内部实现的几个重要实现规则</h1>
+
+<h4 id="1-对于sqlite表字段与java对象字段映射规则">1. 对于sqlite表字段与java对象字段映射规则：</h4>
+
+<p>（1）只映射非<code class="highlighter-rouge">final</code>和非<code class="highlighter-rouge">static</code>的java字段；<br />
+（2）java的字段名即sqlite表的字段名；<br />
+（3）主键取java对象中的名字为id（不区分大小写）或者加了<code class="highlighter-rouge">[@id](https://github.com/id "@id"
+)</code>注解的字段，优先查找注解；</p>
+
+<h4 id="2-保存数据类型规则">2. 保存数据类型规则：</h4>
+
+<p>（1）以java基本数据类型以及其包装类为主，还有<code class="highlighter-rouge">date</code>；对于其他类不做处理；</p>
+
+<h4 id="3-表名称生成规则">3. 表名称生成规则：</h4>
+
+<p>（1）以java类的完全限定名来命名（<code class="highlighter-rouge">.</code>替换为<code class="highlighter-rouge">_</code>），例如：<code class="highlighter-rouge">com.andy.person</code>的代表的表名为<code class="highlighter-rouge">com_andy_person</code>，保证了表名的唯一性；</p>
+
+<h1 id="3-代码实现">3. 代码实现</h1>
+
+<p>介绍一下几个重要的类<br />
+（1） 用于构造sql语句的类<code class="highlighter-rouge">sqlbuilder</code>（主要用了java反射机制）<br />
+（2） 用于执行sql语句的类<code class="highlighter-rouge">sqlitedbexecutor</code><br />
+（3） 提供给外部使用的orm主类<code class="highlighter-rouge">lazydb</code></p>
+
+<h2 id="31-sqlbuildersql语句构建器">3.1 sqlbuilder：sql语句构建器</h2>
+
+<blockquote>
+  <p>该class的主要作用是，将外部传进来的object（对象）或者class（类），通过java反射机制，构建成sql语句。</p>
+</blockquote>
+
+<h4 id="这里以创建表的sql为例">这里以创建表的sql为例</h4>
+
+<blockquote>
+  <p>代码步骤分解：<br />
+（1）取出class中所有field，即field数组；<br />
+（2）遍历field数组，找出主键的field，拼到sql的字符串里；<br />
+（3）再次遍历field数组，过滤掉主键的field、final、static，拼到sql的字符串里；</p>
+</blockquote>
+
+<p>具体代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    // sqlbuilder类
+    /**
+     * 构建创建数据库表的sql语句
+     *
+     * @param clazz 类
+     * @return 创建表的sql语句
+     */
+    public static string buildcreatetablesql(class&gt; clazz) {
+        stringbuilder sb = new stringbuilder();
+
+        field[] fields = reflectutil.getdeclaredfields(clazz);
+        if (fields == null || fields.length == 0) {
+            throw new illegalstateexception("class'fields can not be empty");
+        }
+
+        // 开头
+        sb.append("create table ")
+                .append(tableutil.gettablename(clazz)) // tablename
+                .append("(");
+        // 找到主键
+        field idfield = idutil.getidfield(fields);
+        if (idfield != null) {
+            string idcolumn = idfield.getname();
+            id id = idfield.getannotation(id.class);
+            // 判断是有没有注解的
+            if (id != null &amp;&amp; !"".equals(id.column())) {
+                idcolumn = id.column();
+            }
+            datatype datatype = tableutil.getdatatype(idfield.gettype());
+            sb.append(idcolumn)
+                    .append(" ")
+                    .append(datatype.tostring())
+                    .append(" primary key")
+                    .append(",");
+        }
+        for (field field : fields) {
+            if (modifier.isstatic(field.getmodifiers()) || modifier.isfinal(field.getmodifiers())) {// 移除是final和static的字段
+                continue;
+            }
+            // 让不是id的field进来
+            if (field != idfield) {
+                sb.append(field.getname())
+                        .append(" ")
+                        .append(tableutil.getdatatype(field.gettype()))
+                        .append(",");
+            }
+        }
+        // 除去最后一个逗号
+        if (sb.charat(sb.length() - 1) == ',') {
+            sb.deletecharat(sb.length() - 1);
+        }
+        sb.append(")");
+        string sql = sb.tostring();
+        // debug log
+        debuglogger.d("createtablesql", sql);
+        return sql;
+    }
+</code></pre>
+</div>
+
+<p><strong>上面代码中用到了几个工具类：</strong><br />
+<code class="highlighter-rouge">reflectutil</code>：用于java反射的工具类，将所有反射调用的方法都放到这里来，统一管理，方便优化处理；<br />
+<code class="highlighter-rouge">idutil</code>：用于主键field查找的工具类；<br />
+<code class="highlighter-rouge">tableutil</code>：用于数据库表字段数据与java数据类型转换、表名生成等；</p>
+
+<h2 id="32-sqlitedbexecutorsql语句执行器">3.2 sqlitedbexecutor：sql语句执行器</h2>
+
+<blockquote>
+  <p>该class的主要作用是，用于执行sql语句，或者通过<code class="highlighter-rouge">sqliteopenhelper</code>执行一些数据库操作，反正所有数据库操作都在这里面。</p>
+</blockquote>
+
+<p>（1）数据库非查询操作</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    // sqlitedbexecutor类
+    /**
+     * 执行非查询操作事物
+     *
+     * @param operation 非查询操作
+     */
+    public void executetransaction(noqueryoperation operation) throws exception {
+        sqlitedatabase db = helper.getwritabledatabase();
+        try {
+            db.begintransaction();
+            debuglogger.d("noquery", "begintransaction");
+            if (operation != null) {
+                operation.onoperation(db);
+            }
+            db.settransactionsuccessful();
+            debuglogger.d("noquery", "transactionsuccessful");
+        } finally {
+            db.endtransaction();
+            debuglogger.d("noquery", "endtransaction");
+        }
+    }
+
+    public interface noqueryoperation {
+        void onoperation(sqlitedatabase db) throws exception;
+    }
+
+    /**
+     * 执行sql，非查询操作
+     * @param sql sql语句
+     * @throws exception
+     */
+    public void execsql(final string sql) throws exception {
+        executetransaction(new noqueryoperation() {
+            @override
+            public void onoperation(sqlitedatabase db) throws exception {
+                db.execsql(sql);
+            }
+        });
+    }
+</code></pre>
+</div>
+
+<p>（2）数据库查询操作</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    // sqlitedbexecutor类
+    public cursor rawquery(string sql, string[] selectionargs) {
+        sqlitedatabase db = helper.getreadabledatabase();
+        return db.rawquery(sql, null);
+    }
+</code></pre>
+</div>
+
+<p>然后看一段比较好看的查询代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        list entities = lazydb
+                .query(entity.class)
+                .selectall()
+                .where("id=? and name=? and age=? and birthday=? and sex=? and money=?",
+                        entity.getid(),
+                        entity.getname(),
+                        entity.getage() + "",
+                        dateutil.date2string(entity.getbirthday()),
+                        entity.issex() ? "1" : "0",
+                        double.tostring(entity.getmoney())
+                )
+                .findall();
+</code></pre>
+</div>
+
+<blockquote>
+  <p>个人比较钟意这种构建器模式下的代码；看下查询代码，基于builder模式的实现。</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class selectbuilder&lt;t&gt; {
+    private final sqlitedbexecutor executor;
+
+    final class objectclass;
+    string[] columns;
+    string wheresection;
+    string[] whereargs;
+
+    string having;
+    string orderby;
+    string groupby;
+    string limit;
+
+    public selectbuilder(sqlitedbexecutor executor, class clazz) {
+        this.objectclass = clazz;
+        this.executor = executor;
+    }
+
+    public selectbuilder selectall() {
+        return this;
+    }
+
+    public selectbuilder select(string... columns) {
+        this.columns = columns;
+        return this;
+    }
+
+    public selectbuilder where(string wheresection, string... whereargs) {
+        this.wheresection = wheresection;
+        this.whereargs = whereargs;
+        return this;
+    }
+
+    public selectbuilder having(string having) {
+        this.having = having;
+        return this;
+    }
+
+    public selectbuilder orderby(string orderby) {
+        this.orderby = orderby;
+        return this;
+    }
+
+    public selectbuilder groupby(string groupby) {
+        this.groupby = groupby;
+        return this;
+    }
+
+    public selectbuilder limit(string limit) {
+        this.limit = limit;
+        return this;
+    }
+    ......
+}
+</code></pre>
+</div>
+
+<blockquote>
+  <p>提供了类似写sql查询语句的字符串构建器；<br />
+最后，执行查询；</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class selectbuilder&lt;t&gt; {
+    ......
+
+    /**
+     * 执行查询操作，获取查询结果集
+     *
+     * @return 数据库游标 cursor
+     */
+    public cursor executenative() {
+        // 查询表是否存在
+        string sql = sqlbuilder.buildquerytableisexistsql(objectclass);
+        cursor cursor = executor.rawquery(sql, null);
+        if (cursor != null) {
+            try {
+                if (cursor.movetonext()) {
+                    if (cursor.getint(0) == 0) {
+                        return null;
+                    }
+                }
+            } finally {
+                cursor.close();
+            }
+        } else {
+            return null;
+        }
+
+        //string sql = sqlbuilder.buildquerysql(tableutil.gettablename(objectclass), columns, wheresection, whereargs, groupby, having, orderby, limit);
+        //cursor cursor = db.rawquery(sql, null);
+        // 执行查询
+        return executor.query(this);
+    }
+
+    /**
+     * 执行查询操作，获取查询结果集
+     *
+     * @return 查询结果集，空集则查询不到
+     * @throws instantiationexception
+     * @throws illegalaccessexception
+     * @throws nosuchfieldexception
+     * @throws parseexception
+     */
+    public list findall() throws instantiationexception, illegalaccessexception, nosuchfieldexception, parseexception {
+        list results = new arraylist&lt;&gt;();
+
+        // 执行查询
+        cursor cursor = executenative();
+        if (cursor != null) {
+            try {
+                while (cursor.movetonext()) {
+                    t object = objectutil.buildobject(objectclass, cursor);
+                    results.add(object);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 执行查询操作，获取查询结果集的第一个
+     *
+     * @return 查询结果集的第一个，null则查询不到
+     * @throws instantiationexception
+     * @throws illegalaccessexception
+     * @throws nosuchfieldexception
+     * @throws parseexception
+     */
+    public t findfirst() throws instantiationexception, illegalaccessexception, nosuchfieldexception, parseexception {
+        t result = null;
+
+        // 执行查询
+        cursor cursor = executenative();
+        if (cursor != null) {
+            try {
+                if (cursor.movetonext()) {
+                    result = objectutil.buildobject(objectclass, cursor);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+</div>
+
+<blockquote>
+  <p>ps：objectutil用于通过java反射实例化对象，然后对对象进行赋值；</p>
+</blockquote>
+
+<h2 id="33-lazydborm入口的主类">3.3 lazydb：orm入口的主类</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public final class lazydb {
+    /**
+     * 阻止通过new来实例化lazydb
+     * 应该使用create方法来创建lazydb
+     */
+    private lazydb() {
+    }
+
+    private sqlitedbexecutor executor;
+
+    /**
+     * 创建默认配置的数据库
+     *
+     * @param context 上下文
+     */
+    public static lazydb create(context context)  {}
+
+ ......
+
+    /**
+     * 创建表
+     *
+     * @param clazz 类
+     */
+    public void createtable(class&gt; clazz) throws exception  {}
+
+    /**
+     * 创建表
+     *
+     * @param tablename       表名
+     * @param idcolumn        id
+     * @param iddatatype      id的类型
+     * @param isautoincrement 是否自动增长
+     * @param columns         其他列名，不包括id
+     */
+    public void createtable(string tablename, string idcolumn, string iddatatype, boolean isautoincrement, string... columns) throws exception  {}
+
+    /**
+     * 删除表
+     *
+     * @param clazz 类
+     */
+    public void droptable(final class&gt; clazz) throws exception  {}
+
+    /**
+     * 删除数据库中所有的表
+     */
+    public void dropalltables() throws exception  {}
+
+    /**
+     * 查询所有表名
+     *
+     * @return 所有表名的集合；若没有表，则是空集合
+     */
+    public list queryalltablenames()  {}
+
+    /**
+     * 从表中查找出所有字段名
+     *
+     * @param clazz class
+     * @return 字段列表
+     * @throws nosuchfieldexception
+     * @throws instantiationexception
+     * @throws parseexception
+     * @throws illegalaccessexception
+     */
+    public list queryallcolumnsfromtable(class&gt; clazz) throws nosuchfieldexception, instantiationexception, parseexception, illegalaccessexception {}
+
+    /**
+     * 表是否存在
+     *
+     * @param clazz 类
+     * @return true 表存在，false 表不存在
+     */
+    public boolean istableexist(class&gt; clazz)  {}
+
+    /**
+     * 判断对象是否存在数据库中
+     *
+     * @param object 对象
+     * @return true 存在，false 不存在
+     * @throws illegalaccessexception
+     */
+    public boolean isobjectexist(object object) throws illegalaccessexception  {}
+
+    /**
+     * 插入对象
+     *
+     * @param object 对象
+     */
+    public void insert(@nonnull object object) throws exception  {}
+
+    /**
+     * 插入多个对象数据
+     *
+     * @param objectlist 对象集合
+     * @throws illegalaccessexception
+     */
+    public void insert(@nonnull final list objectlist) throws exception  {}
+
+    /**
+     * 更新对象
+     *
+     * @param object 对象
+     * @throws illegalaccessexception
+     */
+    public void update(@nonnull final object object) throws exception {}
+
+    /**
+     * 插入或更新对象
+     *
+     * @param object 对象
+     * @throws illegalaccessexception
+     */
+    public void insertorupdate(@nonnull object object) throws exception  {}
+
+    /**
+     * 删除对象
+     *
+     * @param object 对象
+     * @throws illegalaccessexception
+     */
+    public void delete(@nonnull final object object) throws exception  {}
+
+    /**
+     * 删除多个object集合
+     *
+     * @param objectlist object集合
+     * @throws illegalaccessexception
+     */
+    public void delete(@nonnull final list objectlist) throws exception  {}
+
+    /**
+     * 删除数据
+     *
+     * @param clazz       类
+     * @param whereclause 例如：id=?
+     * @param whereargs   ?的值
+     */
+    public void delete(final class&gt; clazz, final string whereclause, final string[] whereargs) throws exception  {}
+
+    /**
+     * 执行查询操作
+     *
+     * @param clazz 类
+     * @return select操作的构建器
+     */
+    public  selectbuilder query(class clazz)  {}
+
+    /**
+     * 通过id查询
+     *
+     * @param clazz   类
+     * @param idvalue idvalue
+     * @return object
+     * @throws nosuchfieldexception
+     * @throws instantiationexception
+     * @throws parseexception
+     * @throws illegalaccessexception
+     */
+    public  t querybyid(class clazz, object idvalue) throws exception {}
+</code></pre>
+</div>
+
+<h2 id="4-源码与例子的地址">4. 源码与例子的地址</h2>
+
+<p><a href="https://github.com/claymantwinkle/lazydb">https://github.com/claymantwinkle/lazydb</a></p>
+
+<h2 id="5-java反射优化方案">5. java反射优化方案</h2>
+
+<p>java反射机制虽然好用，但是为此会牺牲性能，这里有个优化点，可以在取反射时，加一层内存缓存，先查缓存，找不到再取反射。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/">浅析android中的threadlocal
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">opengl es读书笔记（一）—初始庐山真面目
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/06/29/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/">android旁门左道之动态替换系统view类</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/06/30/shen_du_xue_xi_ji_chu_gai_nian_bi_ji/">深度学习基础概念笔记</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

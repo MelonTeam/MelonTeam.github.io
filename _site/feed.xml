@@ -3,76 +3,79 @@
   <channel>
     <title>MelonTeam</title>
     <description></description>
-    <link>http://MelonTeam.com/</link>
-    <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 16 Jun 2017 11:31:42 +0800</pubDate>
-    <lastBuildDate>Fri, 16 Jun 2017 11:31:42 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 05 Jul 2017 18:46:13 +0800</pubDate>
+    <lastBuildDate>Wed, 05 Jul 2017 18:46:13 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>make wechat great again</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#工欲善其事必先利其器&quot; id=&quot;markdown-toc-工欲善其事必先利其器&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/a&gt;&lt;/li&gt;
+        <title>浅析android中的threadlocal</title>
+        <description>
+threadlocal第一眼很容易让人误以为这是一个thread，其实并不是，它是在jdk
+1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个threadlocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是android中的threadlocal呢，原因是android中的threadlocal和jdk的threadlocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。
+
+</description>
+        <pubDate>Sat, 01 Jul 2017 06:49:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/qian_xi_android_zhong_de_threadlocal/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/qian_xi_android_zhong_de_threadlocal/</guid>
+        
+        <category>threadlo...</category>
+        
+        <category>android</category>
+        
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>日迹中视频编辑滤镜效果实现方法</title>
+        <description>
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 本文简要分析，日迹视频解码流程以及视频滤镜的实现原理&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+需求背景：日迹需要的编辑滤镜效果预览图
+
+&lt;img src=&quot;/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807&quot; alt=&quot;&quot; /&gt;
+
+</description>
+        <pubDate>Sat, 01 Jul 2017 06:10:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
+        
+        <category>滤镜实现</category>
+        
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>opengl es读书笔记（一）—初始庐山真面目</title>
+        <description>
+&lt;ul&gt;
+  &lt;li&gt;1. opengl es简介
+    &lt;ul&gt;
+      &lt;li&gt;1.1 顶点着色器&lt;/li&gt;
+      &lt;li&gt;1.2 片段着色器&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;strong&gt;手机无需越狱&lt;/strong&gt;，项目 github 地址: &lt;a href=&quot;https://github.com/yulingtianxia/fishchat&quot;&gt;fishchat&lt;/a&gt;，make wechat great again！
-
-&lt;h2 id=&quot;工欲善其事必先利其器&quot;&gt;&lt;a name=&quot;工欲善其事必先利其器&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;工欲善其事必先利其器&lt;/h2&gt;
-
-因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 &lt;code class=&quot;highlighter-rouge&quot;&gt;captainhook&lt;/code&gt; 工程编译出的 dylib 注入到已砸壳 app 的二进制文件中。同样因为没有越狱机，所以砸壳的文件只能从 某 p 助手下载了。
-
-我写了一个 shell 脚本 &lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 帮我完成一些重复性的任务：
-&lt;ol&gt;
-  &lt;li&gt;查找可用的 iphone 开发者证书1. 解压 ipa 文件1. 拷贝 mobileprovision 文件和要注入的 dylib 文件到 app 文件夹中1. 向 app 中可执行文件的 &lt;code class=&quot;highlighter-rouge&quot;&gt;load commands&lt;/code&gt; 段中加入一条加载 dylib 的指令1. 对 app 中所有的 app，appx，framework，dylib 文件用第 1 步获取的证书进行重签名1. 打包签名好的 ipa 文件1. 删除上述过程中产生的中间文件1. 通过 usb 线安装 ipa 文件手机上
-&lt;a href=&quot;https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh&quot;&gt;autoswimfi.sh&lt;/a&gt; 需要传入的三个参数分别为：已砸壳的 ipa 文件，没过期的 mobileprovision 文件，要注入的 dylib 文件。&lt;/li&gt;
-&lt;/ol&gt;
-
 </description>
-        <pubDate>Thu, 25 May 2017 20:23:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/05/25/make_wechat_great_again/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/05/25/make_wechat_great_again/</guid>
-        
-        <category>微信</category>
-        
-        <category>ios</category>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>runloop解读</title>
-        <description>
-    runloop 是ios/osx 应用程序运行的基础，它使我们的程序能够不断处在一个循环中，有效地接受事件并处理事件，可以说，它为整个程序的运行搭建了一个框架。不过，在平时上层的开发中，nsrunloop/cfrunloopref 暴露的接口使用的并不多，使得我们忽略了对它原理和机制的探究，而这篇文章的目的就是对runloop机制进行一次解读，加深了解。
-
-</description>
-        <pubDate>Sun, 21 May 2017 23:40:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/05/21/runloop_jie_du/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/05/21/runloop_jie_du/</guid>
-        
-        <category>ios</category>
-        
-        <category>runloop</category>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>android bitmap的缓存策略</title>
-        <description>
-      不论是android还是ios设备，流量对于用户而言都是宝贵的。在没有wifi的场景下，如果加载批量的图片消耗用户过多流量，被其知晓，又要被念叨一波~ &lt;img src=&quot;/image/android_bitmap_de_huan_cun_ce_lve/0e7533339eb300c1948b6eab511c562d45eedfa01d50ddd17e5ffad5c2b79709&quot; border=&quot;0&quot; /&gt; 如何避免消耗过多的流量呢？当程序第一次从网络加载图片后，就将其缓存到移动设备上，这样再次使用这个图片时，就不用再次从网络上下载为用户节省了流量。
-
-</description>
-        <pubDate>Fri, 28 Apr 2017 20:39:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/28/android_bitmap_de_huan_cun_ce_lve/</guid>
+        <pubDate>Sat, 01 Jul 2017 05:37:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
         
         <category>android</category>
         
-        <category>bitmap</category>
+        <category>opengl</category>
         
         
         <category>android</category>
@@ -80,48 +83,21 @@
       </item>
     
       <item>
-        <title>抠图技术初探</title>
-        <description>
-图像抠图英文名叫 image matting，顾名思义就是将目标图像从背景中分离出来的一种图像处理技术。根据图像背景的复杂程度，一般分为纯色背景抠图（“绿幕”或者“蓝幕”）和自然图像抠图。
-
-&lt;strong&gt;“绿幕”抠图&lt;/strong&gt;&lt;br /&gt; 这项技术主要被用在电影工业中。比如有时看到电影拍摄的场景中周围全是绿色的背景，甚至里面的工作人员也穿着绿色的衣服。这些绿色的背景在后期的处理中会用抠图技术去除，替换上电影中的背景，制作出各种宏大的场景或者特效，比如：
-
-</description>
-        <pubDate>Wed, 26 Apr 2017 21:36:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/</guid>
-        
-        <category>抠图</category>
-        
-        <category>android</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>ndk代码支持断点调试</title>
+        <title>教你自己动手写http服务器</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#背景&quot; id=&quot;markdown-toc-背景&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#网络io模型选择&quot; id=&quot;markdown-toc-网络io模型选择&quot;&gt;网络io模型选择&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;背景&quot;&gt;&lt;font&gt;背景&lt;/font&gt;&lt;/h1&gt;
+谈到http服务器，立马就能联想到apache、nginx等大名鼎鼎的开源组件。如果需要一个本地代理http服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在android上手动编写一个轻量的http服务器，通过阅读本文，笔者即将为你揭开http服务器的面纱，收获一个五脏俱全的轻量http服务器组件tinyhttpd。
 
-android的ndk代码编写一直被认为是很痛苦的一件事情，除了android程序员对c++的陌生外，还有一个主要原因是无法断点调试。无法断点调试很难发现和排查问题，大大影响开发效率。实际上android studio从2.2开始就完全支持ndk开发，并且可以进行断点调试。
-
-实际应用中发现，真正使用新版studio构建c/c++工程的项目极少。&lt;strong&gt;这里有个误区是android studio其实是支持ndk-build和cmake两种构建方式的&lt;/strong&gt;，但是几乎所有的博客在给教程的时候都是用的官方推荐的cmake构建方式。老项目使用ndk-build构建，工程大的mk文件也很复杂，迁移和学习成本都很大。ndk-build和cmake只是编译方式的不同，两者均可以利用lldb进行断点调试，对于其它功能支持也是一样的。
-
-从大的方向上来看，使用cmake构建很美好，cmake作为通用跨平台编译方案，以后肯定有更好的前景。但是对于android本身来说，大家相对都更熟悉ndk-build方案，而如果都能支持相同的功能，显然直接把ndk-build方案迁移过去成本最小。
+&lt;h2 id=&quot;网络io模型选择&quot;&gt;网络io模型选择&lt;/h2&gt;
 
 </description>
-        <pubDate>Tue, 25 Apr 2017 18:40:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/</guid>
+        <pubDate>Sat, 01 Jul 2017 04:40:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
         
-        <category>android</category>
-        
-        <category>ndk</category>
+        <category>轻量http...</category>
         
         
         <category>android</category>
@@ -129,27 +105,21 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
       </item>
     
       <item>
-        <title>老司机用神经网络带您安全驾驶</title>
+        <title>fresco 4.x和5.x内存分析</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#0-概述&quot; id=&quot;markdown-toc-0-概述&quot;&gt;0 概述&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#4x系统的fresco&quot; id=&quot;markdown-toc-4x系统的fresco&quot;&gt;4.x系统的fresco&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;0-概述&quot;&gt;0 概述&lt;/h1&gt;
+两年前部落项目接入fresco的时候，那时候主流机型还是4.x。fresco在4.x的机器的内存性能很好，bitmap存在ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。
 
-&lt;blockquote&gt;
-
-&lt;/blockquote&gt;
-
-随着今年深度学习的热潮的来临，神经网络已经被应用在越来越多的应用中。而在印象中对于神经网络进行训练的往往需要借助大量的计算资源与数据。其实通过一定的方法，配合预训练好的网络，我们完全可以在自己的pc上训练出一个准确率较高、实用性也非常不错的网络。下面我就以kaggle上的一个竞赛为例，带领各位司机训练一个对&lt;strong&gt;驾驶行为&lt;/strong&gt;进行分类的网络。
+&lt;h2 id=&quot;4x系统的fresco&quot;&gt;4.x系统的fresco&lt;/h2&gt;
 
 </description>
-        <pubDate>Tue, 25 Apr 2017 00:06:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/</guid>
+        <pubDate>Sat, 01 Jul 2017 04:36:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
         
-        <category>深度学习</category>
-        
-        <category>神经网络</category>
+        <category>fresco</category>
         
         
         <category>android</category>
@@ -157,103 +127,114 @@ android的ndk代码编写一直被认为是很痛苦的一件事情，除了andr
       </item>
     
       <item>
-        <title>机器学习入门系列06，logistic regression逻辑回归</title>
+        <title>fork/join 框架</title>
         <description>
-&lt;blockquote&gt;
-
-&lt;/blockquote&gt;
-
-引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html&lt;/a&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的csdn上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-
-&lt;/blockquote&gt;
-
-csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/69941886&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/69941886&lt;/a&gt;
+&lt;strong&gt;1. 简介&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.1 什么是fork/join框架&lt;/strong&gt;&lt;br /&gt;
+        java 5 引入了 executor 和 executorservice 接口，使得 java在并发支持上得到了进一步的提升。 java
 
 </description>
-        <pubDate>Mon, 10 Apr 2017 17:25:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/</guid>
+        <pubDate>Sat, 01 Jul 2017 02:35:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/fork_join_kuang_jia/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/fork_join_kuang_jia/</guid>
         
-        <category>判别方法</category>
+        <category>并发</category>
         
-        <category>交叉熵</category>
+        <category>java</category>
         
         
-        <category>ios</category>
+        <category>android</category>
         
       </item>
     
       <item>
-        <title>深度学习入门实战（三）-逻辑回归</title>
+        <title>页面结构化在android上的尝试</title>
         <description>
-在本文的开始前，强烈推荐两个深度学习相关的视频集&lt;br /&gt;1.台湾李宏毅教授的ml 2016，清晰明了，很多晦涩的原理能让你看了也能明白：&lt;a href=&quot;https://www.youtube.com/watch?v=fegaeph9uaa&amp;amp;list=pljv_el3uvtspy9ocry30obpnlco89yu49&quot;&gt;https://www.youtube.com/watch?v=fegaeph9uaa&amp;amp;list=pljv_el3uvtspy9ocry30obpnlco89yu49&lt;/a&gt;&lt;br /&gt;2.周莫烦的tensorflow教程，同样清晰明了：&lt;a href=&quot;https://www.youtube.com/watch?v=rsrkp8vaavq&amp;amp;index=1&amp;amp;list=plxo45tsb95cki5ailf5txxfpzb-0zevz8&quot;&gt;https://www.youtube.com/watch?v=rsrkp8vaavq&amp;amp;index=1&amp;amp;list=plxo45tsb95cki5ailf5txxfpzb-0zevz8&lt;/a&gt;
+| 导语
+mvp开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手q项目并不很适合。参考之前web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲lego在android上一次小小尝试
+
+&lt;strong&gt;一，mvp简介&lt;/strong&gt;
 
 </description>
-        <pubDate>Thu, 06 Apr 2017 17:56:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/</guid>
+        <pubDate>Sat, 01 Jul 2017 00:38:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
         
-        <category>深度学习</category>
+        <category>lego</category>
         
-        <category>逻辑回归</category>
+        <category>页面结构...</category>
         
         
-        <category>ios</category>
+        <category>android</category>
         
       </item>
     
       <item>
-        <title>机器学习入门系列05，classification: probabilistic generative model（分类：概率生成模型）</title>
+        <title>[译]android instant apps简介</title>
         <description>
-&lt;blockquote&gt;
+| 导语 google最近发布了instant apps，可以帮助开发者进一步的增强android的原生app体验。instant
+apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生app体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。
 
-&lt;/blockquote&gt;
-
-引用课程：&lt;a href=&quot;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html&quot;&gt;http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html&lt;/a&gt;
-
-先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的csdn上查看，传送门：（无奈脸）
-
-&lt;blockquote&gt;
-
-&lt;/blockquote&gt;
-
-csdn博客文章地址：&lt;a href=&quot;http://blog.csdn.net/zyq522376829/article/details/69216876&quot;&gt;http://blog.csdn.net/zyq522376829/article/details/69216876&lt;/a&gt;
+android instant apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。instant
+apps由url触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，nfc和其他应用程序甚至其他的instant
 
 </description>
-        <pubDate>Wed, 05 Apr 2017 06:24:00 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/</guid>
+        <pubDate>Sat, 01 Jul 2017 00:09:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/_yi_android_instant_apps_jian_jie/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/_yi_android_instant_apps_jian_jie/</guid>
         
-        <category>后验概率</category>
+        <category>app</category>
         
-        <category>最大似然...</category>
+        <category>instant</category>
         
         
-        <category>ios</category>
+        <category>android</category>
         
       </item>
     
       <item>
-        <title>深度学习入门实战（二）</title>
-        <description>&lt;blockquote&gt;
-  导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～
-&lt;/blockquote&gt;
+        <title>android scrollview设置初始position的方法</title>
+        <description>
+最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。
+
+刚听到这个需求的时候，觉得这个很简单，直接设置scrollview的初始滚动值即可。然而，当真正实现的时候却发现，android压根没有方法可以设置scrollview的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
 
 </description>
-        <pubDate>Tue, 28 Mar 2017 19:04:58 +0800</pubDate>
-        <link>http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/2017/03/28/Deep_learning_entry_2/</guid>
+        <pubDate>Sat, 01 Jul 2017 00:03:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/01/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/01/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
         
-        <category>tensorflow</category>
+        <category>反射</category>
         
-        <category>机器学习</category>
+        <category>初始位置</category>
         
         
-        <category>机器学习</category>
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>kotlin 初体验: 用 kotlin 写命令行工具</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#工具需求&quot; id=&quot;markdown-toc-工具需求&quot;&gt;工具需求&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+| 导语 可喜可贺, kotlin 在今年的 google i/o 大会上, 成为 google android 平台的新一门官方语言,
+偶尔有了个写工具的机会试着用它来替代原来常用的 python
+
+&lt;h2 id=&quot;工具需求&quot;&gt;工具需求&lt;/h2&gt;
+
+</description>
+        <pubDate>Fri, 30 Jun 2017 06:56:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/30/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/30/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
+        
+        <category>java</category>
+        
+        <category>kotlin</category>
+        
+        
+        <category>android</category>
         
       </item>
     

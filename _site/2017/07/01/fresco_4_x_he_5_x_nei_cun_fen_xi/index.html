@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>fresco 4.x和5.x内存分析</title>
+    <meta name="description" content="  4.x系统的fresco两年前部落项目接入fresco的时候，那时候主流机型还是4.x。fresco在4.x的机器的内存性能很好，bitmap存在ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。4.x系统的fresco">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>fresco 4.x和5.x内存分析</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-01
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>siriushe
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#fresco" title="Tag: fresco" rel="tag">fresco</a-->
+        <a href="/tag/#fresco" title="Tag: fresco" rel="tag">fresco</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#4x系统的fresco" id="markdown-toc-4x系统的fresco">4.x系统的fresco</a></li>
+  <li><a href="#5x以上系统的fresco" id="markdown-toc-5x以上系统的fresco">5.x以上系统的fresco</a></li>
+</ul>
+
+<p>两年前部落项目接入fresco的时候，那时候主流机型还是4.x。fresco在4.x的机器的内存性能很好，bitmap存在ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。</p>
+
+<h2 id="4x系统的fresco">4.x系统的fresco</h2>
+<!--more-->
+
+<p><img src="/image/fresco_4_x_he_5_x_nei_cun_fen_xi/a4d7236838155ee5bbca33914aa21364c5b4e8a743c3452c791bde4c914b750b" alt="" /></p>
+
+<p>安卓系统的ashmem层这里不做过多介绍，我们来看下缓存到ashmem最后一个java函数。通过注释发现，只有purgeable
+bitmap才能生效，我们来看下purgeable bitmap究竟是什么。</p>
+
+<p><img src="/image/fresco_4_x_he_5_x_nei_cun_fen_xi/6f0d5100aaef5bc5de643e60e6c07598eb2d92d567a4345306213cd203fbbf1f" alt="" /></p>
+
+<p>inpurgeable这个属性标识这个bitmap是否是可清除的，设置为true之后，该系统会自动把bitmap存储在ashmem中，
+当系统存储不足的时候会被回收，等到需要的时候，会在主线程重新进行解码，然而这种解码是会造成主线程卡顿的。</p>
+
+<p>为了解决这种卡顿，fresco调用androidbitmap_lockpixels这个native方法锁住这块内存，锁住这块内存之后gc便不会对该内存生效，因此就不会有在主线程重编码的卡顿问题了。fresco需要自己进行这块内存的管理。fresco里面只使用了pin方法，unpin操作通过bitmap的recycle的操作来完成，如果bitmap最后没有释放，那么会造成内存泄漏，影响系统的运行状况。所幸的是，fresco的引用计数方式已经很完善，并且当simpledraweeview
+ondetachwindow的时候也会做释放操作，在这种情况下内存交给fresco还是挺令人放心的。</p>
+
+<h2 id="5x以上系统的fresco">5.x以上系统的fresco</h2>
+
+<p>然而purgeable
+bitmap引起主线程卡顿的这一缺陷最终使得谷歌在5.0以上的系统废弃了它，所以fresco在5.0以上系统再也没法使用ashmem层了，bitmap的内存压力重新回到了java
+heap中。随着主流操作系统逐渐趋向于5.0，6.0，fresco导致的oom问题也趋于严重。</p>
+
+<p>经过对fresco内存缓存系统的分析，我们可以看到countingmemorycache这个内存缓存类里面实际上是包含两块内存区域的。</p>
+
+<p><img src="/image/fresco_4_x_he_5_x_nei_cun_fen_xi/5bde7de985f03b908ac501b757df049df78f76063dd1e464475cea64782351df" alt="" /></p>
+
+<p>mexclusiveentries和mcacheentries都是基础lru策略进行存储管理，mexclusiveentries这块存储是用来缓存没有被使用等待回收的bitmap内存的，也就是说，如果一个bitmap的引用计数为0，他会进入到mexclusiveentries中，被mexclusiveentries
+lru淘汰的bitmap才会被真正的释放。</p>
+
+<p><img src="/image/fresco_4_x_he_5_x_nei_cun_fen_xi/9c423d4793f93ede2186fb9196972426279cbe746f9b214c0b91dcb9316c70fb" alt="" /></p>
+
+<p>然而，坑爹的是，默认配置中对这块缓存的大小和数量限制简直可以说是没有，之前代码内限制都是integer.max_value，在defaultbitmapmemorycacheparamssupplier这个类里面对这块内存的配置项进行限制，对5.0以上fresco的内存优化效果巨大，目前我这里的限制是（150，17m），mcacheentries还是保持原配置，这里需要结合具体业务进行设置。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/07/01/fork_join_kuang_jia/">fork/join 框架</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/">教你自己动手写http服务器</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>不该缺少的error体系</title>
+    <meta name="description" content="  前言| 导语几乎所有app在开发过程中都会遇到错误，一些错误是在控制之外，例如磁盘空间不足或网络连接失败。而一些错误是可以预料得到的，例如视频正在处理中无法播放、传入的参数非法等。而这些错误的信息如果友好的告诉业务方或者用户呢？前言">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>不该缺少的error体系</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-27
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>kylewu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#nserror" title="Tag: nserror" rel="tag">nserror</a-->
+        <a href="/tag/#nserror" title="Tag: nserror" rel="tag">nserror</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#前言" id="markdown-toc-前言">前言</a></li>
+  <li><a href="#nserror包括什么" id="markdown-toc-nserror包括什么">nserror包括什么</a>    <ul>
+      <li><a href="#domain" id="markdown-toc-domain">domain</a></li>
+      <li><a href="#code" id="markdown-toc-code">code</a></li>
+      <li><a href="#user-info-dictionary" id="markdown-toc-user-info-dictionary">user info dictionary</a></li>
+    </ul>
+  </li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+
+<p>| 导语
+几乎所有app在开发过程中都会遇到错误，一些错误是在控制之外，例如磁盘空间不足或网络连接失败。而一些错误是可以预料得到的，例如视频正在处理中无法播放、传入的参数非法等。而这些错误的信息如果友好的告诉业务方或者用户呢？</p>
+
+<h2 id="前言">前言</h2>
+
+<!--more-->
+<p>几乎所有app在开发过程中都会遇到错误，一些错误是在控制之外，例如磁盘空间不足或网络连接失败。而一些错误是可以预料得到的，例如视频正在处理中无法播放、传入的参数非法等。而这些错误的信息如果友好的告诉业务方或者用户呢？</p>
+
+<p>在ios开发中最常见的方式之一是使用<code class="highlighter-rouge">nserror</code>，比如使用很广的<code class="highlighter-rouge">afnetworking</code>，它就会常常返回一些错误信息告诉用户。而在手q或者兴趣部落的项目中都没有一套整齐的<code class="highlighter-rouge">error</code>体系，所以我们得需要进一步了解<code class="highlighter-rouge">nserror</code>是什么东西才能制定出我们想要的东西。</p>
+
+<h2 id="nserror包括什么">nserror包括什么</h2>
+
+<p>在整个error体系中主要包括三块内容，如下：</p>
+
+<ul>
+  <li>error domain</li>
+  <li>error code</li>
+  <li>the user info dictionary</li>
+</ul>
+
+<h3 id="domain">domain</h3>
+
+<p>error domain是指区域，它是由一个字符串组成的。比如os
+x系统<code class="highlighter-rouge">carbon</code>框架的<code class="highlighter-rouge">domain</code>为<code class="highlighter-rouge">（nsosstatuserrordomain）</code>，<code class="highlighter-rouge">posix</code>框架为<code class="highlighter-rouge">（nsposixerrordomain）</code>，除此之外不同的<code class="highlighter-rouge">framework</code>也定义了自己的domain，比如对于<code class="highlighter-rouge">web
+kit framework</code>，定义了<code class="highlighter-rouge">webkiterrordomain</code>。</p>
+
+<p>而我们也应该在自己的项目中定义属于自己error区域，官方推荐的命名规则如下：<br />
+com.company.xxx.errordomain</p>
+
+<h3 id="code">code</h3>
+
+<p>而<code class="highlighter-rouge">code</code>就是我们俗称的错误码了，比如访问文件资源时返回的<code class="highlighter-rouge">nsfilenosuchfileerror（4）</code>等的错误码。<br />
+oc开发时使用到的系统库对应的各个<code class="highlighter-rouge">error code</code>可以到相应的地方查，他们所在的位置都有一个相应规范：</p>
+
+<ul>
+  <li>foundation/foundationerrors.h - generic foundation error codes</li>
+  <li>coredata/coredataerrors.h - core data error codes</li>
+  <li>foundation/nsurlerror.h - url error codes</li>
+</ul>
+
+<p>那么在自己的项目中也应该按照这样的规范来定义：xxxerrors.h</p>
+
+<h3 id="user-info-dictionary">user info dictionary</h3>
+
+<p>user info可以包含很多自定义信息，系统给定义好了一些键名：</p>
+
+<p>键名作用 | 键名定义 | 获取值方法<br />
+—|—|—<br />
+通用键 | nsunderlyingerrorkey |<br />
+详细描述键 | nslocalizeddescriptionkey | - (nsstring *)localizeddescription;<br />
+失败原因键 | nslocalizedfailurereasonerrorkey | - (nsstring
+*)localizedfailurereason;<br />
+恢复建议键 | nslocalizedrecoverysuggestionerrorkey | - (nsstring
+*)localizedrecoverysuggestion;<br />
+恢复选项键 | nslocalizedrecoveryoptionserrorkey | - (nsarray
+*)localizedrecoveryoptions;<br />
+其他键 | nsrecoveryattemptererrorkey |<br />
+其他键 | nshelpanchorerrorkey |<br />
+其他键 | nsstringencodingerrorkey |<br />
+其他键 | nsurlerrorkey |<br />
+其他键 | nsfilepatherrorkey |</p>
+
+<p>基础用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nsdictionary *userinfo ＝ [nsdictionary dictionarywithobjectsandkeys:@"这是错误详细的描述信息", nslocalizeddescriptionkey, error, nsunderlyingerrorkey, nil]];
+</code></pre>
+</div>
+
+<p>nserror主要的初始化方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (id)initwithdomain:(nsstring *)domain code:(nsinteger)code userinfo:(nsdictionary *)dict;
++ (id)errorwithdomain:(nsstring *)domain code:(nsinteger)code userinfo:(nsdictionary *)dict;
+</code></pre>
+</div>
+
+<h2 id="总结">总结</h2>
+
+<p>在了解到nserror的强大之后，我们的项目也应该有一套error体系，为了能在开发期就能定位问题，那么在项目中就需要做到以下几点：</p>
+
+<ol>
+  <li>建立属于项目的错误码表 <code class="highlighter-rouge">xxxerrors.h</code></li>
+  <li>定义属于项目的错误区域 <code class="highlighter-rouge">com.company.xxx.errordomain</code></li>
+  <li>在一些数据接口或者更底层的一些接口都应该提供<code class="highlighter-rouge">nserror</code>的结果返回参数，以便业务层能更快定位问题</li>
+</ol>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/05/27/qian_xi_associated_object/">浅析associated object</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/05/27/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/">开发中容易忽略和挖坑的场景总结</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

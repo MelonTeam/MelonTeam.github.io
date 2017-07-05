@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -102,6 +102,18 @@
                 
                     
                 
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -114,15 +126,15 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/05/25/make_wechat_great_again/">make wechat great again</a>
+                  <a class="post-link" href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/">浅析android中的threadlocal</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-05-25
+                        <i class="fa fa-calendar"></i>2017-07-01
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>rebootyang
+                        <i class="fa fa-user"></i>limingzhang
                     </div>
                     
                     
@@ -138,7 +150,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
     
   
 
@@ -159,9 +171,239 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#微信" title="Tag: 微信" rel="tag">微信</a>&nbsp;
+        <a href="/tag/#threadlo..." title="Tag: threadlo..." rel="tag">threadlo...</a>&nbsp;
     
-        <a href="/tag/#ios" title="Tag: ios" rel="tag">ios</a>
+        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt">
+                    
+<p>threadlocal第一眼很容易让人误以为这是一个thread，其实并不是，它是在jdk
+1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个threadlocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是android中的threadlocal呢，原因是android中的threadlocal和jdk的threadlocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">日迹中视频编辑滤镜效果实现方法</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-07-01
+                    </div>
+                    
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>berylzhao
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#滤镜实现" title="Tag: 滤镜实现" rel="tag">滤镜实现</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt">
+                    
+<table>
+  <tbody>
+    <tr>
+      <td>导语 本文简要分析，日迹视频解码流程以及视频滤镜的实现原理</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>需求背景：日迹需要的编辑滤镜效果预览图</p>
+
+<p><img src="/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807" alt="" /></p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">opengl es读书笔记（一）—初始庐山真面目</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-07-01
+                    </div>
+                    
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>vianhuang
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>&nbsp;
+    
+        <a href="/tag/#opengl" title="Tag: opengl" rel="tag">opengl</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt">
+                    
+<ul>
+  <li>1. opengl es简介
+    <ul>
+      <li>1.1 顶点着色器</li>
+      <li>1.2 片段着色器</li>
+    </ul>
+  </li>
+</ul>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/">教你自己动手写http服务器</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-07-01
+                    </div>
+                    
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>vincanyang
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#轻量http..." title="Tag: 轻量http..." rel="tag">轻量http...</a>
     
   
 
@@ -174,40 +416,32 @@
                 </div>
                 <div class="excerpt">
                     <ul id="markdown-toc">
-  <li><a href="#工欲善其事必先利其器" id="markdown-toc-工欲善其事必先利其器"><a name="工欲善其事必先利其器" class="reference-link"></a>工欲善其事必先利其器</a></li>
+  <li><a href="#网络io模型选择" id="markdown-toc-网络io模型选择">网络io模型选择</a></li>
 </ul>
 
-<p><strong>手机无需越狱</strong>，项目 github 地址: <a href="https://github.com/yulingtianxia/fishchat">fishchat</a>，make wechat great again！</p>
+<p>谈到http服务器，立马就能联想到apache、nginx等大名鼎鼎的开源组件。如果需要一个本地代理http服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在android上手动编写一个轻量的http服务器，通过阅读本文，笔者即将为你揭开http服务器的面纱，收获一个五脏俱全的轻量http服务器组件tinyhttpd。</p>
 
-<h2 id="工欲善其事必先利其器"><a name="工欲善其事必先利其器" class="reference-link"></a>工欲善其事必先利其器</h2>
-
-<p>因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 <code class="highlighter-rouge">captainhook</code> 工程编译出的 dylib 注入到已砸壳 app 的二进制文件中。同样因为没有越狱机，所以砸壳的文件只能从 某 p 助手下载了。</p>
-
-<p>我写了一个 shell 脚本 <a href="https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh">autoswimfi.sh</a> 帮我完成一些重复性的任务：</p>
-<ol>
-  <li>查找可用的 iphone 开发者证书1. 解压 ipa 文件1. 拷贝 mobileprovision 文件和要注入的 dylib 文件到 app 文件夹中1. 向 app 中可执行文件的 <code class="highlighter-rouge">load commands</code> 段中加入一条加载 dylib 的指令1. 对 app 中所有的 app，appx，framework，dylib 文件用第 1 步获取的证书进行重签名1. 打包签名好的 ipa 文件1. 删除上述过程中产生的中间文件1. 通过 usb 线安装 ipa 文件手机上
-<a href="https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh">autoswimfi.sh</a> 需要传入的三个参数分别为：已砸壳的 ipa 文件，没过期的 mobileprovision 文件，要注入的 dylib 文件。</li>
-</ol>
+<h2 id="网络io模型选择">网络io模型选择</h2>
 
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/05/25/make_wechat_great_again/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/05/21/runloop_jie_du/">runloop解读</a>
+                  <a class="post-link" href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/">fresco 4.x和5.x内存分析</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-05-21
+                        <i class="fa fa-calendar"></i>2017-07-01
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>jackzkzhang
+                        <i class="fa fa-user"></i>siriushe
                     </div>
                     
                     
@@ -223,7 +457,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
     
   
 
@@ -244,9 +478,7 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#ios" title="Tag: ios" rel="tag">ios</a>&nbsp;
-    
-        <a href="/tag/#runloop" title="Tag: runloop" rel="tag">runloop</a>
+        <a href="/tag/#fresco" title="Tag: fresco" rel="tag">fresco</a>
     
   
 
@@ -258,24 +490,29 @@
                     
                 </div>
                 <div class="excerpt">
-                    
-<p>    runloop 是ios/osx 应用程序运行的基础，它使我们的程序能够不断处在一个循环中，有效地接受事件并处理事件，可以说，它为整个程序的运行搭建了一个框架。不过，在平时上层的开发中，nsrunloop/cfrunloopref 暴露的接口使用的并不多，使得我们忽略了对它原理和机制的探究，而这篇文章的目的就是对runloop机制进行一次解读，加深了解。</p>
+                    <ul id="markdown-toc">
+  <li><a href="#4x系统的fresco" id="markdown-toc-4x系统的fresco">4.x系统的fresco</a></li>
+</ul>
+
+<p>两年前部落项目接入fresco的时候，那时候主流机型还是4.x。fresco在4.x的机器的内存性能很好，bitmap存在ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。</p>
+
+<h2 id="4x系统的fresco">4.x系统的fresco</h2>
 
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/05/21/runloop_jie_du/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/04/28/android_bitmap_de_huan_cun_ce_lve/">android bitmap的缓存策略</a>
+                  <a class="post-link" href="/2017/07/01/fork_join_kuang_jia/">fork/join 框架</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-04-28
+                        <i class="fa fa-calendar"></i>2017-07-01
                     </div>
                     
                     <div class="label-card">
@@ -316,81 +553,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>&nbsp;
+        <a href="/tag/#并发" title="Tag: 并发" rel="tag">并发</a>&nbsp;
     
-        <a href="/tag/#bitmap" title="Tag: bitmap" rel="tag">bitmap</a>
-    
-  
-
-</span>
-
-
-
-                    </div>
-                    
-                </div>
-                <div class="excerpt">
-                    
-<p>      不论是android还是ios设备，流量对于用户而言都是宝贵的。在没有wifi的场景下，如果加载批量的图片消耗用户过多流量，被其知晓，又要被念叨一波~ <img src="/image/android_bitmap_de_huan_cun_ce_lve/0e7533339eb300c1948b6eab511c562d45eedfa01d50ddd17e5ffad5c2b79709" border="0" /> 如何避免消耗过多的流量呢？当程序第一次从网络加载图片后，就将其缓存到移动设备上，这样再次使用这个图片时，就不用再次从网络上下载为用户节省了流量。</p>
-
-
-                </div>
-                <div class="read-all">
-                    <a  href="/2017/04/28/android_bitmap_de_huan_cun_ce_lve/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2017/04/26/kou_tu_ji_shu_chu_tan/">抠图技术初探</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-04-26
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>zijianlu
-                    </div>
-                    
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-
-                    </div>
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#抠图" title="Tag: 抠图" rel="tag">抠图</a>&nbsp;
-    
-        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>
+        <a href="/tag/#java" title="Tag: java" rel="tag">java</a>
     
   
 
@@ -403,176 +568,14 @@
                 </div>
                 <div class="excerpt">
                     
-<p>图像抠图英文名叫 image matting，顾名思义就是将目标图像从背景中分离出来的一种图像处理技术。根据图像背景的复杂程度，一般分为纯色背景抠图（“绿幕”或者“蓝幕”）和自然图像抠图。</p>
-
-<p><strong>“绿幕”抠图</strong><br /> 这项技术主要被用在电影工业中。比如有时看到电影拍摄的场景中周围全是绿色的背景，甚至里面的工作人员也穿着绿色的衣服。这些绿色的背景在后期的处理中会用抠图技术去除，替换上电影中的背景，制作出各种宏大的场景或者特效，比如：</p>
-
-
-                </div>
-                <div class="read-all">
-                    <a  href="/2017/04/26/kou_tu_ji_shu_chu_tan/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/">ndk代码支持断点调试</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-04-25
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>parrzhang
-                    </div>
-                    
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-
-                    </div>
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>&nbsp;
-    
-        <a href="/tag/#ndk" title="Tag: ndk" rel="tag">ndk</a>
-    
-  
-
-</span>
-
-
-
-                    </div>
-                    
-                </div>
-                <div class="excerpt">
-                    <ul id="markdown-toc">
-  <li><a href="#背景" id="markdown-toc-背景"><font>背景</font></a></li>
-</ul>
-
-<h1 id="背景"><font>背景</font></h1>
-
-<p>android的ndk代码编写一直被认为是很痛苦的一件事情，除了android程序员对c++的陌生外，还有一个主要原因是无法断点调试。无法断点调试很难发现和排查问题，大大影响开发效率。实际上android studio从2.2开始就完全支持ndk开发，并且可以进行断点调试。</p>
-
-<p>实际应用中发现，真正使用新版studio构建c/c++工程的项目极少。<strong>这里有个误区是android studio其实是支持ndk-build和cmake两种构建方式的</strong>，但是几乎所有的博客在给教程的时候都是用的官方推荐的cmake构建方式。老项目使用ndk-build构建，工程大的mk文件也很复杂，迁移和学习成本都很大。ndk-build和cmake只是编译方式的不同，两者均可以利用lldb进行断点调试，对于其它功能支持也是一样的。</p>
-
-<p>从大的方向上来看，使用cmake构建很美好，cmake作为通用跨平台编译方案，以后肯定有更好的前景。但是对于android本身来说，大家相对都更熟悉ndk-build方案，而如果都能支持相同的功能，显然直接把ndk-build方案迁移过去成本最小。</p>
+<p><strong>1. 简介</strong><br />
+<strong>1.1 什么是fork/join框架</strong><br />
+        java 5 引入了 executor 和 executorservice 接口，使得 java在并发支持上得到了进一步的提升。 java</p>
 
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/">老司机用神经网络带您安全驾驶</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-04-25
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>richardcliu
-                    </div>
-                    
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-
-                    </div>
-                    
-                    
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#深度学习" title="Tag: 深度学习" rel="tag">深度学习</a>&nbsp;
-    
-        <a href="/tag/#神经网络" title="Tag: 神经网络" rel="tag">神经网络</a>
-    
-  
-
-</span>
-
-
-
-                    </div>
-                    
-                </div>
-                <div class="excerpt">
-                    <ul id="markdown-toc">
-  <li><a href="#0-概述" id="markdown-toc-0-概述">0 概述</a></li>
-</ul>
-
-<h1 id="0-概述">0 概述</h1>
-
-<blockquote>
-
-</blockquote>
-
-<p>随着今年深度学习的热潮的来临，神经网络已经被应用在越来越多的应用中。而在印象中对于神经网络进行训练的往往需要借助大量的计算资源与数据。其实通过一定的方法，配合预训练好的网络，我们完全可以在自己的pc上训练出一个准确率较高、实用性也非常不错的网络。下面我就以kaggle上的一个竞赛为例，带领各位司机训练一个对<strong>驾驶行为</strong>进行分类的网络。</p>
-
-
-                </div>
-                <div class="read-all">
-                    <a  href="/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/07/01/fork_join_kuang_jia/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -603,6 +606,30 @@
                   <a href="/page4"  class="btn btn-outline">4</a>
               
             
+              
+                  <a href="/page5"  class="btn btn-outline">5</a>
+              
+            
+              
+                  <a href="/page6"  class="btn btn-outline">6</a>
+              
+            
+              
+                  <a href="/page7"  class="btn btn-outline">7</a>
+              
+            
+              
+                  <a href="/page8"  class="btn btn-outline">8</a>
+              
+            
+              
+                  <a href="/page9"  class="btn btn-outline">9</a>
+              
+            
+              
+                  <a href="/page10"  class="btn btn-outline">10</a>
+              
+            
             
                 <a href="/page2"  class="btn btn-outline">&raquo;</a>
             
@@ -620,25 +647,25 @@
                 </div>
                 <ul class="content-ul" recent>
                     
-                        <li><a href="/2017/05/25/make_wechat_great_again/">make wechat great again</a></li>
+                        <li><a href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/">浅析android中的threadlocal</a></li>
                     
-                        <li><a href="/2017/05/21/runloop_jie_du/">runloop解读</a></li>
+                        <li><a href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">日迹中视频编辑滤镜效果实现方法</a></li>
                     
-                        <li><a href="/2017/04/28/android_bitmap_de_huan_cun_ce_lve/">android bitmap的缓存策略</a></li>
+                        <li><a href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">opengl es读书笔记（一）—初始庐山真面目</a></li>
                     
-                        <li><a href="/2017/04/26/kou_tu_ji_shu_chu_tan/">抠图技术初探</a></li>
+                        <li><a href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/">教你自己动手写http服务器</a></li>
                     
-                        <li><a href="/2017/04/25/ndk_dai_ma_zhi_chi_duan_dian_diao_shi/">ndk代码支持断点调试</a></li>
+                        <li><a href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/">fresco 4.x和5.x内存分析</a></li>
                     
-                        <li><a href="/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/">老司机用神经网络带您安全驾驶</a></li>
+                        <li><a href="/2017/07/01/fork_join_kuang_jia/">fork/join 框架</a></li>
                     
-                        <li><a href="/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/">机器学习入门系列06，logistic regression逻辑回归</a></li>
+                        <li><a href="/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/">页面结构化在android上的尝试</a></li>
                     
-                        <li><a href="/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/">深度学习入门实战（三）-逻辑回归</a></li>
+                        <li><a href="/2017/07/01/_yi_android_instant_apps_jian_jie/">[译]android instant apps简介</a></li>
                     
-                        <li><a href="/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/">机器学习入门系列05，classification: probabilistic generative model（分类：概率生成模型）</a></li>
+                        <li><a href="/2017/07/01/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">android scrollview设置初始position的方法</a></li>
                     
-                        <li><a href="/2017/03/28/Deep_learning_entry_2/">深度学习入门实战（二）</a></li>
+                        <li><a href="/2017/06/30/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/">kotlin 初体验: 用 kotlin 写命令行工具</a></li>
                     
                 </ul>
             </div>
@@ -701,7 +728,7 @@
                             <span class="name">
                                 ios
                             </span>
-                            <span class="badge">5</span>
+                            <span class="badge">20</span>
                         </a>
                     </li>
                     
@@ -710,7 +737,25 @@
                             <span class="name">
                                 android
                             </span>
-                            <span class="badge">4</span>
+                            <span class="badge">24</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#其他" class="categories-list-item" cate="其他">
+                            <span class="name">
+                                其他
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#ai" class="categories-list-item" cate="ai">
+                            <span class="name">
+                                ai
+                            </span>
+                            <span class="badge">1</span>
                         </a>
                     </li>
                     
@@ -764,14 +809,14 @@
                       
                       
                       
-                      <a href="/tag/#机器学习" style="font-size: 18pt; color: #000;">机器学习</a>
+                      <a href="/tag/#机器学习" style="font-size: 13pt; color: #555;">机器学习</a>
                     
                       
                       
                       
                       
                       
-                      <a href="/tag/#机器学习入门笔记" style="font-size: 12pt; color: #666;">机器学习入门笔记</a>
+                      <a href="/tag/#机器学习入门笔记" style="font-size: 10.5pt; color: #888;">机器学习入门笔记</a>
                     
                       
                       
@@ -813,7 +858,7 @@
                       
                       
                       
-                      <a href="/tag/#视频" style="font-size: 12pt; color: #666;">视频</a>
+                      <a href="/tag/#视频" style="font-size: 10.5pt; color: #888;">视频</a>
                     
                       
                       
@@ -862,7 +907,7 @@
                       
                       
                       
-                      <a href="/tag/#深度学习" style="font-size: 12pt; color: #666;">深度学习</a>
+                      <a href="/tag/#深度学习" style="font-size: 13pt; color: #555;">深度学习</a>
                     
                       
                       
@@ -890,14 +935,14 @@
                       
                       
                       
-                      <a href="/tag/#神经网络" style="font-size: 9pt; color: #999;">神经网络</a>
+                      <a href="/tag/#神经网络" style="font-size: 10.5pt; color: #888;">神经网络</a>
                     
                       
                       
                       
                       
                       
-                      <a href="/tag/#android" style="font-size: 15pt; color: #333;">android</a>
+                      <a href="/tag/#android" style="font-size: 18pt; color: #000;">android</a>
                     
                       
                       
@@ -925,14 +970,35 @@
                       
                       
                       
-                      <a href="/tag/#ios" style="font-size: 12pt; color: #666;">ios</a>
+                      <a href="/tag/#进程保活" style="font-size: 9pt; color: #999;">进程保活</a>
                     
                       
                       
                       
                       
                       
-                      <a href="/tag/#runloop" style="font-size: 9pt; color: #999;">runloop</a>
+                      <a href="/tag/#ios" style="font-size: 14pt; color: #444;">ios</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#runloop" style="font-size: 11.5pt; color: #666;">runloop</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#python" style="font-size: 9pt; color: #999;">python</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#拓展知识..." style="font-size: 9pt; color: #999;">拓展知识...</a>
                     
                       
                       
@@ -940,6 +1006,321 @@
                       
                       
                       <a href="/tag/#微信" style="font-size: 9pt; color: #999;">微信</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#associat..." style="font-size: 9pt; color: #999;">associat...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#nserror" style="font-size: 9pt; color: #999;">nserror</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#坑系列" style="font-size: 9pt; color: #999;">坑系列</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#涂鸦粒子..." style="font-size: 9pt; color: #999;">涂鸦粒子...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#滤镜" style="font-size: 9pt; color: #999;">滤镜</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#autolayo..." style="font-size: 9pt; color: #999;">autolayo...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#masonry" style="font-size: 9pt; color: #999;">masonry</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#reactnat..." style="font-size: 9pt; color: #999;">reactnat...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#运行时" style="font-size: 9pt; color: #999;">运行时</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#弹幕实现" style="font-size: 9pt; color: #999;">弹幕实现</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#线程" style="font-size: 9pt; color: #999;">线程</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#ios事件" style="font-size: 9pt; color: #999;">ios事件</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#网络训练..." style="font-size: 9pt; color: #999;">网络训练...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#layout_w..." style="font-size: 9pt; color: #999;">layout_w...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#linearla..." style="font-size: 9pt; color: #999;">linearla...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#图像" style="font-size: 9pt; color: #999;">图像</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#下载" style="font-size: 9pt; color: #999;">下载</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#优先级" style="font-size: 9pt; color: #999;">优先级</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#coreml" style="font-size: 9pt; color: #999;">coreml</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#arkit" style="font-size: 9pt; color: #999;">arkit</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#jni堆栈" style="font-size: 9pt; color: #999;">jni堆栈</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#ndk-stac..." style="font-size: 9pt; color: #999;">ndk-stac...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#调试" style="font-size: 9pt; color: #999;">调试</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#小技巧" style="font-size: 9pt; color: #999;">小技巧</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#图像处理" style="font-size: 9pt; color: #999;">图像处理</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#opencv" style="font-size: 9pt; color: #999;">opencv</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#布局" style="font-size: 9pt; color: #999;">布局</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#kotlin" style="font-size: 10.5pt; color: #888;">kotlin</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#旁门左道" style="font-size: 9pt; color: #999;">旁门左道</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#orm" style="font-size: 9pt; color: #999;">orm</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#viewpage..." style="font-size: 9pt; color: #999;">viewpage...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#fragment" style="font-size: 9pt; color: #999;">fragment</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#java" style="font-size: 10.5pt; color: #888;">java</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#反射" style="font-size: 9pt; color: #999;">反射</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#初始位置" style="font-size: 9pt; color: #999;">初始位置</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#app" style="font-size: 9pt; color: #999;">app</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#instant" style="font-size: 9pt; color: #999;">instant</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#lego" style="font-size: 9pt; color: #999;">lego</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#页面结构..." style="font-size: 9pt; color: #999;">页面结构...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#并发" style="font-size: 9pt; color: #999;">并发</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#fresco" style="font-size: 9pt; color: #999;">fresco</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#轻量http..." style="font-size: 9pt; color: #999;">轻量http...</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#opengl" style="font-size: 9pt; color: #999;">opengl</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#滤镜实现" style="font-size: 9pt; color: #999;">滤镜实现</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#threadlo..." style="font-size: 9pt; color: #999;">threadlo...</a>
                     
                 </div>
             </div>

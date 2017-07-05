@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>图像处理之漫水填充算法（flood fill algorithm）</title>
+    <meta name="description" content="            导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，opencv中floodfill函数的使用方法。      基本思想漫水填充算法，顾名思义就像洪水漫过一样，把一块连通的区域填满，当然水要能漫过需要满足一定的条件，可以理解为满足条件的地方就...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/29/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>图像处理之漫水填充算法（flood fill algorithm）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-06-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>zijianlu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86" title="Tag: 图像处理" rel="tag">图像处理</a-->
+        <a href="/tag/#图像处理" title="Tag: 图像处理" rel="tag">图像处理</a>&nbsp;
+    
+        <!--a href="/tag/#opencv" title="Tag: opencv" rel="tag">opencv</a-->
+        <a href="/tag/#opencv" title="Tag: opencv" rel="tag">opencv</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，opencv中floodfill函数的使用方法。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>基本思想</strong></p>
+
+<p>漫水填充算法，顾名思义就像洪水漫过一样，把一块连通的区域填满，当然水要能漫过需要满足一定的条件，可以理解为满足条件的地方就是低洼的地方，水才能流过去。在图像处理中就是给定一个种子点作为起始点，向附近相邻的像素点扩散，把颜色相同或者相近的所有点都找出来，并填充上新的颜色，这些点形成一个连通的区域。
+<!--more-->
+漫水填充算法可以用来标记或者分离图像的一部分，可实现类似windows 画图油漆桶功能，或者ps里面的魔棒选择功能。</p>
+
+<p><strong>算法实现</strong></p>
+
+<p>漫水填充算法实现最常见有<strong>四邻域</strong>像素填充法，<strong>八邻域</strong> 像素填充法，基于<strong>扫描线</strong>的填充方法。根据代码实现方式又可以分为递归与非递归。</p>
+
+<p>四领域的递归实现：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/19e57951b16dca65d793d56826756d589dc3579954237e1f65f63bdee36d0ec6" alt="" /></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//recursive 4-way floodfill, crashes if recursion stack is full
+public void floodfill4(int x, int y, int newcolor, int oldcolor)  
+{  
+    if(x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; height   
+         &amp;&amp; getpixel(x, y) == oldcolor &amp;&amp; getpixel(x, y) != newcolor)   
+    {   
+        setpixel(x, y, newcolor); //set color before starting recursion  
+        floodfill4(x + 1, y, newcolor, oldcolor);  
+        floodfill4(x - 1, y, newcolor, oldcolor);  
+        floodfill4(x, y + 1, newcolor, oldcolor);  
+        floodfill4(x, y - 1, newcolor, oldcolor);  
+    }     
+}
+</code></pre>
+</div>
+
+<p>八领域的递归实现：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/3be24eb4141d9913934796bc058becdcbfc08b12777c4b0f7a2d55b4ad96636c" alt="" /></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public void floodfill8(int x, int y, int newcolor, int oldcolor)  
+{  
+    if(x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; height &amp;&amp;   
+            getpixel(x, y) == oldcolor &amp;&amp; getpixel(x, y) != newcolor)   
+    {   
+        setpixel(x, y, newcolor); //set color before starting recursion  
+        floodfill8(x + 1, y, newcolor, oldcolor);  
+        floodfill8(x - 1, y, newcolor, oldcolor);  
+        floodfill8(x, y + 1, newcolor, oldcolor);  
+        floodfill8(x, y - 1, newcolor, oldcolor);  
+        floodfill8(x + 1, y + 1, newcolor, oldcolor);  
+        floodfill8(x - 1, y - 1, newcolor, oldcolor);  
+        floodfill8(x - 1, y + 1, newcolor, oldcolor);  
+        floodfill8(x + 1, y - 1, newcolor, oldcolor);  
+    }     
+} 
+</code></pre>
+</div>
+
+<p>扫描线算法：<br />
+先扫描一行或者一列内的连通像素，然后再上下行或者左右列扫描，可以减少递归栈的深度。</p>
+
+<p>递归实现算法好理解，但当连通的区域很大时，很可能会导致<strong>栈溢出</strong>。关于扫描线算法和这些算法的非递归实现可以参见这里的介绍
+<a href="http://lodev.org/cgtutor/floodfill.html">http://lodev.org/cgtutor/floodfill.html</a></p>
+
+<p><strong>opencv 的 floodfill 函数</strong></p>
+
+<p>在opencv中，漫水填充算法由floodfill函数实现，可以从指定的种子点开始填充一个连通域。连通性由像素值的接近程度来衡量。opencv2.x
+有两个c++重载的floodfill函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/* fills the semi-uniform image region starting from the specified seed point*/
+cv_exports int floodfill( inputoutputarray image,
+                          point seedpoint, 
+                          scalar newval, 
+                          cv_out rect* rect=0,
+                          scalar lodiff=scalar(), 
+                          scalar updiff=scalar(),
+                          int flags=4 );
+
+/* fills the semi-uniform image region and/or the mask starting from the
+   specified seed point*/
+cv_exports int floodfill( inputoutputarray image,
+                          inputoutputarray mask,
+                          point seedpoint, 
+                          scalar newval, 
+                          cv_out rect* rect=0,
+                          scalar lodiff=scalar(), 
+                          scalar updiff=scalar(),
+                          int flags=4 );
+</code></pre>
+</div>
+
+<p><strong>• image</strong><br />
+要处理的图片，既是入参也是出参，接受单通道或3通道，8位或浮点类型的图片。如果提供了mask而且设置了 floodfill_mask_only
+的flag，输入图像才不会被修改，否则调用本方法填充的结果会修改到输入图像中。</p>
+
+<p><strong>• mask</strong><br />
+掩码图像，既是入参也是出参，接受单通道8位的图片，要求比要处理的图片宽和高各大两个像素。mask要先初始化好，填充算法不能漫过mask中非0的区域。比如可以用边缘检测的结果来做为mask，以防止边缘被填充。做为输出参数，mask对应图片中被填充的像素会被置为1或者下面参数指定的值。因此当多次调用floodfill方法，使用同一个mask时，可以避免填充区域叠加和重复计算。
+因为 mask比image大，所以image中的点 p(x,y)，对应mask中的点 p(x+1, y+1)</p>
+
+<p><strong>• seedpoint</strong> 填充算法的种子点，即起始点<br />
+<strong>• newval</strong> 填充的颜色<br />
+<strong>• lodiff</strong> 最小的亮度或颜色的差值<br />
+<strong>• updiff</strong> 最大的亮度者颜色的差值<br />
+<strong>• rect</strong> 可选的输出参数，返回一个最小的矩形，可以刚好把填充的连通域包起来。</p>
+
+<p><strong>• flags</strong><br />
+   - 低八位[0-7]表示连通性，默认值4表示四领域填充，8表示八领域填充。<br />
+   - [8-15]位表示用来填充mask的颜色值[1-255]默认是1<br />
+   - 比如flag值(4|(255«8)) 表示使用四领域填充，mask填充色值是255。</p>
+
+<p>   - 剩余的位有两个值可以单独设置或者用（|）同时设置：<br />
+<strong>     floodfill_mask_only</strong> 表示不修改原始输入图像，只把结果输出到mask图中，在mask中将填充区域标上前面flag中指定的值。newval的参数值将被忽略。</p>
+
+<p><strong>     floodfill_fixed_range</strong> 表示待填充像素只和种子点比较。如果不设置这个标记，表示待   填充的像素是和相邻的像素比较（相当于差值范围是浮动的），这种情况下填充区域的像素可能      会和种子点相差越来越大。</p>
+
+<p><strong>未知点的判断</strong></p>
+
+<p>通过下面未知点是否应该填充的判断条件，可以更好的理解上述参数的含义。</p>
+
+<p>灰度图固定范围时(flag中设置了 floodfill_fixed_range )，未知点的判断，只跟种子点比较：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/babf45ce1bc8424f7a043f44ed54e7fbdf2b389b7e78fd2ff7b23eb25dbff868" alt="" /></p>
+
+<p>灰度图浮动范围时，未知点的判断，跟相邻的已经填充的点比较：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/e1cc1d9ae1c70014ab18ae4b3db75edbf916ce0d00a5f83329205e449f3b43c0" alt="" /></p>
+
+<p>同理彩色图固定范围时的判断：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/afc40f5999c9d1552ad3f245825b20bcff20fa8ecf4755115c31bd42142a5714" alt="" /></p>
+
+<p>彩色图浮动范围时的判断：</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/947a8e774729353301d72bb678a96992af95d8113e544a7c67e449784a6adc4c" alt="" /></p>
+
+<p>eg：通过多次选择背景种子点和调用 floodfill，可以把背景和前景分离开，黑白图是mask图。</p>
+
+<p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/1967569a1fd069345e86869115f835ef2cf687bb94ea87d81d9b818e3cc1a8a9" alt="" /></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/">xcode lldb调试小技巧</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/">使用anko layouts来开发android(翻译)</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/06/29/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/29/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

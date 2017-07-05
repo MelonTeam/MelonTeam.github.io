@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>关于gpuimage</title>
+    <meta name="description" content="本文内容参考自以下文章：km文章一张图教你看懂gpuimage、ios图像处理系列 -gpuimage源码解读（一），博文gpuimage文集。文中不再详细标注引用来源。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/05/28/guan_yu_gpuimage/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>关于gpuimage</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-28
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>doreencao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%BB%A4%E9%95%9C" title="Tag: 滤镜" rel="tag">滤镜</a-->
+        <a href="/tag/#滤镜" title="Tag: 滤镜" rel="tag">滤镜</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#" id="markdown-toc-"><em>**</em></a>    <ul>
+      <li><a href="#关于gpuimage" id="markdown-toc-关于gpuimage">关于gpuimage</a></li>
+      <li><a href="#gpuimage框架" id="markdown-toc-gpuimage框架">gpuimage框架</a></li>
+      <li><a href="#录制滤镜视频" id="markdown-toc-录制滤镜视频">录制滤镜视频</a></li>
+    </ul>
+  </li>
+  <li><a href="#-1" id="markdown-toc--1">#</a></li>
+</ul>
+
+<p>本文内容参考自以下文章：km文章<a href="http://km.oa.com/group/22128/articles/show/272905?kmref=search&amp;from_page=1&amp;no=1">一张图教你看懂gpuimage</a>、<a href="http://km.oa.com/group/29501/articles/show/284686?kmref=author_post">ios
+图像处理系列 -
+gpuimage源码解读（一）</a>，博文<a href="http://www.jianshu.com/nb/4268718">gpuimage文集</a>。文中不再详细标注引用来源。
+<!--more--></p>
+
+<h1><em>**</em></h1>
+
+<h2 id="关于gpuimage">关于gpuimage</h2>
+
+<p>gpuimage框架是一个开源ios类库，基于opengl进行图像和视频处理，借助gpu加速实现各种滤镜效果，并支持摄像头拍摄实时渲染。</p>
+
+<p>它具有以下特性：</p>
+
+<p>·             对opengl资源创建和滤镜做统一封装，接口简单易用，内置cache模块进行framebuffer管理。</p>
+
+<p>·             框架设计灵活，支持上下级滤镜的串联、并联，以实现复杂的滤镜响应链。</p>
+
+<p>·             有丰富的输入、输出组件及封装好的内置滤镜，可满足大多数场景的应用。</p>
+
+<p>·             可继承gpuimagefilter实现自定义滤镜效果，扩展非常方便。</p>
+
+<h2 id="gpuimage框架">gpuimage框架</h2>
+
+<p>gpuimage功能的实现依赖四个部分：资源管理、sources、filters、outputs。核心架构用下图概括：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/c8ea0275608836eb3387c2965cb05c96510a9ab57fc47d0a12c789d6f0853774" alt="" /></strong></p>
+
+<p><strong>1.     **</strong>资源管理**</p>
+
+<p><strong>      <img src="/image/guan_yu_gpuimage/5f3a90fe2b66fa08a16e62fbc9bde6dc18c3de82aab39c04749bd4220ca34daa" alt="" /></strong></p>
+
+<p>glprogram是gpuimage对opengl
+es中的program的封装，可用vertexshader和fragmentshader创建glprogram对象，实现自定义滤镜效果。</p>
+
+<p>gpuimagecontext是gpuimage对opengl
+es上下文的封装，并添加gpuimge相关的上下文，如上下文队列(contextqueue，解决openglcontext不是多线程安全的问题)、cv纹理缓存(corevideotextturecache)、framebuffer缓存、program使用的缓存等。</p>
+
+<p>gpuimageframebuffer是管理纹理缓存格式、帧缓存的buffer，完成缓存创建、指定渲染目标、调整视口、解锁等。其中，newcgimagefromframebuffercontents函数从缓存中获取图像数据，创建cgimageref并返回。</p>
+
+<p>gpuimageframebuffercache是gpuimageframebuffer的管理类。</p>
+
+<p><strong>2.     **</strong>sources**</p>
+
+<p><strong>      <img src="/image/guan_yu_gpuimage/8056ee83b90903e331566f2b229eac4d805b378918401c85c76762c42ce3b46a" alt="" /></strong></p>
+
+<p>sources目录结构如上图所示。gpuimageoutput是其他输入源的基类，输入组件将图像或视频帧数据转换成opengl纹理传递给滤镜组件。下面以滤镜视频拍摄这一场景下使用的gpuimagevideocamera为例进行介绍。</p>
+
+<p>gupimagvideocamera利用avcapturesession从av输入设备采集数据。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/c8f82220908cfbb1fa1621b1e049fbf13114186fd789d2db0dd58bd989feff62" alt="" /></strong></p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/ba311537f13d9dce5b4513052a9aafa5951bb12ce797885bfbb6fd57215834d8" alt="" /></strong></p>
+
+<p>      流程概述如下：</p>
+
+<p>1)
+找到摄像头设备_inoutcamera、麦克风_microphone，创建摄像头输入videoinput和麦克风输入audioinput，设置为_capturesession的输入。</p>
+
+<p>2)
+创建摄像头输出videooutput和麦克风输出audiooutput，设置为_capturesession的输出，设置二者的输出delegate。</p>
+
+<p>3)     调用[_capturesessionstartrunning]开始获取音视频数据。</p>
+
+<p>4)      音频数据到达后发送给设置的audioencordingtarget处理。</p>
+
+<p>5)     视频数据到达后利用下面的函数处理回调：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/9a60edb80c1a2f374fe49e48ec620edb9db5f16b32a202676d7be81108fcd4f8" alt="" /></strong></p>
+
+<p>摄像头默认采样格式为yuv420，y通道数据和uv通道数据分别存放在两个plane中，processvideosamplebuffer:函数将两个plane的数据取出，处理后在convertyuvtorgboutput函数中通过颜色转换的shader，得到了rgb格式的gpu纹理提供给下一级滤镜组件，完成数据输入工作。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/8381c98223f110b43ed6177c1c810f0981362cddaac3ed807c533ef23046fa86" alt="" /></strong></p>
+
+<p><strong>3.     **</strong>filters**</p>
+
+<p><strong>      <img src="/image/guan_yu_gpuimage/b3dde7cc9e3e7a94cc8b9e514c874cff7f11c1096425aec4d4d70f7f70d20489" alt="" /></strong></p>
+
+<p>gpuimagefilter是各滤镜类的基类。它实现了gpuimageinput协议，可以作为输出对象。gpuimageinput定义了组件作为响应链中的target(上一级组件的输出对象)需要实现的接口。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/78e60c622c1f03a9fff09a0427dc9d4bab84e99f25cbef519f4335346b3b1506" alt="" /></strong></p>
+
+<p>另一方面gpuimagefilter继承自sources中的gpuimageoutput，因此一个滤镜组件也可以作为输入对象。基于这种设计，输入组件、滤镜组件、输出组件可以链式串联起来，推动输入数据的处理与传递。</p>
+
+<p>gpuimagefilter及子类接受一个或多个输入，调用关联的glprogram进行渲染，将结果输出到targets属性保存的对象列表中的每一个对象。输入、输出的纹理由gpuimageframebuffer管理。</p>
+
+<p>输入数据通过setinputframebuffer:接口传入，由响应链中的上一级组件调用。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/a81b1956b2a23503dd574ceaedcb3319b4bbf6b82e932f98850f6d9f84dfcfa4" alt="" /></strong></p>
+
+<p>读入输入数据后，下图接口实现了渲染和数据向下级组件的传递。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/5fd475627e83e96aae5dd1b60706ea57748966f4a3b40f45f9b9ed65b1b156f4" alt="" /></strong></p>
+
+<p>其中，rendertotexturewithvertices:函数实现滤镜渲染，将渲染结果输出到outputframebuffer指定的缓存。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/be20f959ec6dfe987ea119df757b16075a0d57a009584b3df579fc1e6092fc89" alt="" /></strong></p>
+
+<p>informtargetsaboutnewframeattime:将自己获得的渲染结果数据传递给下一级组件，并推动其处理数据。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/7a45f6f1c2cabf1b90a3342a5a777d2638ff5e3481a9a5675237d8e3d988eab5" alt="" /></strong></p>
+
+<p><strong>4.     **</strong>outputs**</p>
+
+<p>      <strong><img src="/image/guan_yu_gpuimage/bd3ab902f9a309202566bea33885394e2f4ad378061df55a81c37df98e11b812" alt="" /></strong></p>
+
+<p>outputs组件是响应链的终点，负责将处理结果输出。这组组件同样实现gpuimageinput协议，处理上一级组件的输出结果。gpuimageview是uiview的子类，用于实时将滤波结果显示在屏幕上，gpuimagemoviewriter将滤镜视频保存在本地，gpuimagetextureoutput输出gpu纹理，gpuimagerawdataoutput提供输出完成的delegate回调和读区像素数据的接口。录制滤镜视频时需要用到gpuimageview和gpuimagemoviewriter。</p>
+
+<p>gpuimagemoviewriter将视频输出到磁盘，通过设置、使用avassetwriter，在newframereadyattime:中实现功能。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/9471d357ca2ed47b97a0b947eb91753643b3f68381ea05365961c1689ec1c9f2" alt="" /></strong></p>
+
+<p>gpuimageview内部将自己的calayer申明为caeaglayer，在初始化后调用createdisplayframebuffer方法：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/67628b1e8e9cee0494aa37e1f8d15b1e77d46ad8298d20b07187c46490e040a2" alt="" /></strong></p>
+
+<p>将renderbuffer和calayer关联，newframereadyattime:渲染后图像会输出至calayer上。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/a07c4d718ee9adc3feb43a7bef1d9052617307be0ab3af0e0e762415a695b5ed" alt="" /></strong></p>
+
+<h2 id="录制滤镜视频">录制滤镜视频</h2>
+
+<p>下面的例子利用gpuimage录制视频、实现实时的滤镜效果渲染并将视频文件保存到本地。</p>
+
+<p>通过gpuimagevideocamera采集视频和音频数据，音频直接传递至gpuimagemoviewriter；视频传入滤镜链，经过滤镜处理后，输出的渲染结果传递给gpuimagemoviewriter准备写入本地文件，并通过gpuimageview显示在屏幕上。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/18c7c342dc4a39ba245d86a634e0b193e2f7edd234a26ba2f683f1abc9094063" alt="" /></strong></p>
+
+<p>下图是视频录制页面，使用内置滤镜gpuimageswirlfilter，屏幕下方滑动条可以调整滤波核参数，实时的改变滤镜渲染的效果(本例表现为螺旋形的角度)。点击左上方按钮启动/结束录制，结束录制后视频文件保存在本地相册。</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/8a9dbd303def459c253263de67db282f8609ab0f296bfd5347d4acdbfba9f120" alt="" /></strong></p>
+
+<p>录制界面</p>
+
+<p>设置响应链：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/1671843d6cf2c36399d33792a635214e0988303bd3dead6ad7f859f440991ab9" alt="" /></strong></p>
+
+<p>点击录制按钮开始录制视频，用nsurl及尺寸初始化_moviewriter：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/1233b5fd1eb748beaa2955db5f3dabfeda453d82a5a525ff691fe5162aaef024" alt="" /></strong></p>
+
+<p>结束录制：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/c4b902377ecfb2589b1b4c8735c53da518bdba2d9c2c878e7cf50b83cf9aff38" alt="" /></strong></p>
+
+<p>其他滤镜效果：</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/e7b599863b6a5c014d823deb120d97b39b533f16d3ea52549648b007a8bf545d" alt="" /></strong>    <strong><img src="/image/guan_yu_gpuimage/bef686b06f6a0e0d7bd8038f6081ea9a3e877451dc2803d29fdbb9ede0f48741" alt="" /></strong></p>
+
+<p>玻璃球                                       阴影边框</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/0cd89b4d678e393b979733fb98d4615accea2f5e662e163e8d1b1d05ed11b0c2" alt="" /></strong>    <strong><img src="/image/guan_yu_gpuimage/94afb797cfde4d0c9d714e8b9b22b6b4dfddf9b8a84a15ba85150c284591a03c" alt="" /></strong></p>
+
+<p>                         泊松图像融合                            左图中的水印原图</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/303b1951fa8bd4825fdc84027b11e65f9bdae9fa3138a250aed9a435b630c0f3" alt="" /></strong>    <strong><img src="/image/guan_yu_gpuimage/48bdadec4faf0e9b5c4b19875370e28fd7e7273390fac1b98a181388ead429cc" alt="" /></strong></p>
+
+<p>  形态学开运算                               形态学闭运算</p>
+
+<p><strong><img src="/image/guan_yu_gpuimage/bcff472568eebe2cbd4cf68b8d08b17027aef5b77218225a39a343f025b4c66f" alt="" /></strong>    <strong><img src="/image/guan_yu_gpuimage/eed52fbc401bd958c1641a65731bcf208c24e40ab5b0386b2ea36deeac3fefa6" alt="" /></strong></p>
+
+<p>                        风格化之素描画                                卡通</p>
+
+<p>__</p>
+
+<h1 id="-1">#</h1>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/05/27/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">flipagram 涂鸦特效逆向分析</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/05/28/zou_jin_masonry/">走进 masonry</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/05/28/guan_yu_gpuimage/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/05/28/guan_yu_gpuimage/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>使用anko layouts来开发android(翻译)</title>
+    <meta name="description" content="  为什么需要anko layouts| 导语 kotlin现在已成为android的另一官方语言。jetbrains针对android开发者也推出了一些有用的库和工具。ankolayouts是使用kotlin针对android布局写的一个dsl，很多方面体现了kotlin这个语言的一些特性，也确实能简化开发工作...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/opensource/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>归档
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>使用anko layouts来开发android(翻译)</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-06-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>baobaowang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%B8%83%E5%B1%80" title="Tag: 布局" rel="tag">布局</a-->
+        <a href="/tag/#布局" title="Tag: 布局" rel="tag">布局</a>&nbsp;
+    
+        <!--a href="/tag/#kotlin" title="Tag: kotlin" rel="tag">kotlin</a-->
+        <a href="/tag/#kotlin" title="Tag: kotlin" rel="tag">kotlin</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#为什么需要anko-layouts" id="markdown-toc-为什么需要anko-layouts">为什么需要anko layouts</a></li>
+  <li><a href="#兼容已经存在的代码" id="markdown-toc-兼容已经存在的代码">兼容已经存在的代码</a></li>
+  <li><a href="#anko是怎么工作的" id="markdown-toc-anko是怎么工作的">anko是怎么工作的</a></li>
+  <li><a href="#anko是可扩展的吗" id="markdown-toc-anko是可扩展的吗">anko是可扩展的吗</a></li>
+  <li><a href="#理解anko" id="markdown-toc-理解anko">理解anko</a>    <ul>
+      <li><a href="#基本知识" id="markdown-toc-基本知识">基本知识</a></li>
+      <li><a href="#ankocomponent" id="markdown-toc-ankocomponent">ankocomponent</a></li>
+      <li><a href="#辅助代码块" id="markdown-toc-辅助代码块">辅助代码块</a></li>
+      <li><a href="#带主题的块" id="markdown-toc-带主题的块">带主题的块</a></li>
+      <li><a href="#layouts和layoutparams" id="markdown-toc-layouts和layoutparams">layouts和layoutparams</a></li>
+      <li><a href="#监听器" id="markdown-toc-监听器">监听器</a></li>
+      <li><a href="#自定义协程上下文" id="markdown-toc-自定义协程上下文">自定义协程上下文</a></li>
+      <li><a href="#使用资源标识符" id="markdown-toc-使用资源标识符">使用资源标识符</a></li>
+      <li><a href="#实例的速记符号" id="markdown-toc-实例的速记符号">实例的速记符号</a></li>
+      <li><a href="#include-tag" id="markdown-toc-include-tag">include tag</a></li>
+    </ul>
+  </li>
+  <li><a href="#anko-support-plugin" id="markdown-toc-anko-support-plugin">anko support plugin</a>    <ul>
+      <li><a href="#使用这个插件" id="markdown-toc-使用这个插件">使用这个插件</a></li>
+      <li><a href="#xml到dsl的转换器" id="markdown-toc-xml到dsl的转换器">xml到dsl的转换器</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语 kotlin现在已成为android的另一官方语言。jetbrains针对android开发者也推出了一些有用的库和工具。anko
+layouts是使用kotlin针对android布局写的一个dsl，很多方面体现了kotlin这个语言的一些特性，也确实能简化开发工作，使用时有眼前一亮的感觉。因此这里翻译了一下anko这个库布局部分。</p>
+
+<h2 id="为什么需要anko-layouts">为什么需要anko layouts</h2>
+
+<!--more-->
+<p>默认情况下，android里的ui是用xml来写的。它有几个不方便的点：</p>
+
+<ul>
+  <li>不是类型安全的</li>
+  <li>不是空安全的</li>
+  <li>它强迫你在每个布局中写几乎一样的代码</li>
+  <li>xml需要解析，这会浪费cpu和电池</li>
+  <li>最重要的是不能代码复用</li>
+</ul>
+
+<p>当然你可以使用动态代码来生成ui，但是一般来说很难，因为这些代码不仅难看而且难维护。这里有一个kotlin的版本(如果用java的话代码更长):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>val act = this
+val layout = linearlayout(act)
+layout.orientation = linearlayout.vertical
+val name = edittext(act)
+val button = button(act)
+button.text = "say hello"
+button.setonclicklistener {
+    toast.maketext(act, "hello, ${name.text}!", toast.length_short).show()
+}
+layout.addview(name)
+layout.addview(button)
+</code></pre>
+</div>
+
+<p>dsl能够使同样的逻辑更加易读易写，并且没有额外的运行时开锁:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>verticallayout {
+    val name = edittext()
+    button("say hello") {
+        onclick { toast("hello, ${name.text}!") }
+    }
+}
+</code></pre>
+</div>
+
+<p> 注意，onclick()支持协程（接受可suspending lambda表达式)，所以可以直接写异步代码，而不需要通过显示的async(ui)调用。</p>
+
+<h2 id="兼容已经存在的代码">兼容已经存在的代码</h2>
+
+<p>不一定要使用anko来重写所有的ui。你可以保持现有的java写好的类。当然，如果你仍然想要写kotlin风格的 activity类，并且inflate
+xml布局，可以使用view属性，这样可以更简单:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// same as findviewbyid() but simpler to use
+val name = find(r.id.name)
+name.hint = "enter your name"
+name.onclick { /*do something*/ }
+</code></pre>
+</div>
+
+<p> 如果使用kotlin android extensions，还可以使代码更简洁。</p>
+
+<p>注：kotlin android extensions是个插件，使用后可以这样写代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import kotlinx.android.synthetic.main.activity_main.*
+
+class myactivity : activity() {
+    override fun oncreate(savedinstancestate: bundle?) {
+        super.oncreate(savedinstancestate)
+        setcontentview(r.layout.activity_main)
+        textview.settext("hello, world!")
+        // instead of findviewbyid(r.id.textview) as textview
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="anko是怎么工作的">anko是怎么工作的</h2>
+
+<p>这里没有魔法。anko由一些类型安全的kotlin扩展函数和属性构成。 因为手写这些扩展比较乏味，所以他们是用android.jar文件自动生成的。</p>
+
+<h2 id="anko是可扩展的吗">anko是可扩展的吗</h2>
+
+<p>答案是yes。</p>
+
+<p>比如你想在dsl中使用mapview，只要在任意kotlin文件中写下面的代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>inline fun viewmanager.mapview() = mapview(theme = 0) {}
+
+inline fun viewmanager.mapview(init: mapview.() -&gt; unit): mapview {
+    return ankoview({ mapview(it) }, theme = 0, init)
+}
+</code></pre>
+</div>
+
+<p> { mapview(it) } 是个你自定义view的工厂方法，它接收一个context实例，现在你可以这样用它：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>framelayout {
+    val mapview = mapview().lparams(width = matchparent)
+}
+</code></pre>
+</div>
+
+<p> 如果想要用户能够应用一种自定义的主题，可以这么写：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>inline fun viewmanager.mapview(theme: int = 0) = mapview(theme) {}
+
+inline fun viewmanager.mapview(theme: int = 0, init: mapview.() -&gt; unit): mapview {
+    return ankoview({ mapview(it) }, theme, init)
+}
+</code></pre>
+</div>
+
+<p> 在项目中使用anko layouts</p>
+
+<p>需要包括下面的库依赖：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dependencies {
+    // anko layouts
+    compile "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+
+    // coroutine listeners for anko layouts
+    compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+}
+</code></pre>
+</div>
+
+<h1 id="理解anko">理解anko</h1>
+
+<h2 id="基本知识">基本知识</h2>
+
+<p>在anko中，不须要继承任何特殊的类，直接用标准的activity，fragment,fragmentactivity或者别的你想用的。</p>
+
+<p>使用的时候，先要在类中引入org.jetbrains.anko.*</p>
+
+<p>然后在oncreate()中,dsl就可以用了:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>override fun oncreate(savedinstancestate: bundle?) {
+    super.oncreate(savedinstancestate)
+
+    verticallayout {
+        padding = dip(30)
+        edittext {
+            hint = "name"
+            textsize = 24f
+        }
+        edittext {
+            hint = "password"
+            textsize = 24f
+        }
+        button("login") {
+            textsize = 26f
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p>note:不需要显示的调用setcontentview(r.layout.something),anko会自动的给activities调用这个方法。</p>
+
+<p>hint 和 textsize都是javabean风格的getters和setters
+扩展属性，padding是从anko扩展的扩展属性。这些属性可以让你使用text = “some text”来代替settext(“some
+text”)的写法。</p>
+
+<p>verticallayout(一个linearlayout，但是已经有了linearlayout.vertical方向属性),edittext和button都是扩展函数，用来构建新的
+view实例并且将它们添加到parent。我们将以块的方式来引用这些方法。</p>
+
+<p>在android
+framework中，块在几乎所有view中都存在，它们可以工作在activities,fragments甚至是context。例如，如果你有一个ankocontext实例，就可以写出下面的块:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>val name: edittext = with(ankocontext) {
+    edittext {
+        hint = "name"
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="ankocomponent">ankocomponent</h2>
+
+<p>尽管你可以在不创建任何额外类的情况下使用dsl，但如果在分开的类中使用会更方便。如果使用提供的ankocomponent界面，还可以免费获得dsl布局预览功能。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class myactivity : appcompatactivity() {
+    override fun oncreate(savedinstancestate: bundle?, persistentstate: persistablebundle?) {
+        super.oncreate(savedinstancestate, persistentstate)
+        myactivityui().setcontentview(this)
+    }
+}
+
+class myactivityui : ankocomponent&lt;myactivity&gt; {
+    override fun createview(ui: ankocontext&lt;myactivity&gt;) = with(ui) {
+        verticallayout {
+            val name = edittext()
+            button("say hello") {
+                onclick { ctx.toast("hello, ${name.text}!") }
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="辅助代码块">辅助代码块</h2>
+
+<p>你应该早注意到了,在前面的节中，button()方法接受一个string参数。在频繁使用的view中，比如textview,edittext,button或者imageview中，这种代码块经常存在。</p>
+
+<p>如果不需要设置别的一些属性，可以直接忽略 {}，写button(“ok”)甚至只写button()都可以:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>verticallayout {
+    button("ok")
+    button(r.string.cancel)
+}
+</code></pre>
+</div>
+
+<h2 id="带主题的块">带主题的块</h2>
+
+<p>anko也提供 可以设置主题的块:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>verticallayout {
+    themedbutton("ok", theme = r.style.mytheme)
+}
+</code></pre>
+</div>
+
+<h2 id="layouts和layoutparams">layouts和layoutparams</h2>
+
+<p>在平常开发中我们可以使用layoutparams来调整组件在父容器中的位置。使用xml来实现的时候是这样的：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;imageview 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginleft="5dip"
+    android:layout_margintop="10dip"
+    android:src="@drawable/something" /&gt;
+</code></pre>
+</div>
+
+<p>在anko中，你可以在描述好了view之后使用lparams()来指定view的layoutparams</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>linearlayout {
+    button("login") {
+        textsize = 26f
+    }.lparams(width = wrapcontent) {
+        horizontalmargin = dip(5)
+        topmargin = dip(10)
+    }
+}
+</code></pre>
+</div>
+
+<p>如果你指定了lparams, 但是忽略了width和(或者)height,这时候会有默认值wrapcontent。</p>
+
+<p>其他一些要关注的很方便的辅助属性:</p>
+
+<ul>
+  <li>horizontalmargin 设置左右margin</li>
+  <li>verticalmargin 设置上下margin</li>
+  <li>margin 同时设置所有margin</li>
+</ul>
+
+<p>要注意，lparams()在不同的布局中有不同的用法。比如relativelayout:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>val id_ok = 1
+
+relativelayout {
+    button("ok") {
+        id = id_ok
+    }.lparams { alignparenttop() }
+
+    button("cancel").lparams { below(id_ok) }
+}
+</code></pre>
+</div>
+
+<h2 id="监听器">监听器</h2>
+
+<p>anko的监听器辅助可以无缝支持协程。你可以在监听器中直接写异步代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>button("login") {
+    onclick {
+        val user = myretrofitservice.getuser().await()
+        showuser(user)
+    }
+}
+</code></pre>
+</div>
+
+<p>这段代码和下这个功能一样：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>button.setonclicklistener(object : onclicklistener {
+    override fun onclick(v: view) {
+        launch(ui) {
+            val user = myretrofitservice.getuser().await()
+            showuser(user)
+        }
+    }
+})
+</code></pre>
+</div>
+
+<p>如果监听器中有许多的方法，anko在这种情况下会很有帮助。考虑下下面的没使用anko的代码:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>seekbar.setonseekbarchangelistener(object : onseekbarchangelistener {
+    override fun onprogresschanged(seekbar: seekbar, progress: int, fromuser: boolean) {
+        // something
+    }
+    override fun onstarttrackingtouch(seekbar: seekbar?) {
+        // just an empty method
+    }
+    override fun onstoptrackingtouch(seekbar: seekbar) {
+        // another empty method
+    }
+})
+</code></pre>
+</div>
+
+<p>如果使用anko:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>seekbar {
+    onseekbarchangelistener {
+        onprogresschanged { seekbar, progress, fromuser -&gt;
+            // something
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p>如果你在同一个view中设置了两个不同的监听，一个实现了onprogresschanged，一个实现了onstarttrackingtouch，那这两个listener会被合并。如果两个listener实现了同一方法，最后的那个会生效。</p>
+
+<h2 id="自定义协程上下文">自定义协程上下文</h2>
+
+<p>你可以传递一个自定义的协程上下文到监听器中:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>button("login") {
+    onclick(yourcontext) {
+        val user = myretrofitservice.getuser().await()
+        showuser(user)
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="使用资源标识符">使用资源标识符</h2>
+
+<p>前面的所有章节中使用原始的java
+strings，但是这很难说是最佳实践。典型的情况，你把所有string数据放在res/values/目录中，通过运行时调用来访问它们。比如，getstring(r.string.login)。</p>
+
+<p>幸运的是，在anko中，你可以传递资源标识符到辅助块(button(r.string.login))和扩展属性中(button{textresource =
+r.string.login })</p>
+
+<p>这里注意属性名是不一样的:不是text,hint,image，而是要使用textresource,hintresource ,和imageresource</p>
+
+<h2 id="实例的速记符号">实例的速记符号</h2>
+
+<p>有时候我们需要从activity代码中传递一个context实例到一些android
+sdk方法中。通常情况下，可以直接用this,但如果你是在一个内部类中呢？可能你在java中会用someactivity.this，或是在kotlin中用this@someactivity。</p>
+
+<p>使用anko的话你可以直接使用ctx。它是一个扩展属性，可以在activity,service甚至是fragment(实际使用getactivity()实现)中使用。还可以通过act扩展属性来得到一个activity实例。</p>
+
+<h2 id="include-tag">include tag</h2>
+
+<p>想在dsl中插入一个xml布局很简单，使用include()方法就行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>include(r.layout.something) {
+    backgroundcolor = color.red
+}.lparams(width = matchparent) { margin = dip(12) }
+</code></pre>
+</div>
+
+<p>你可以照样使用lparams()。如果提供了一个特殊的类型，你可以在{}块中使用这个类型：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>include(r.layout.textfield) {
+    text = "hello, world!"
+}
+</code></pre>
+</div>
+
+<h1 id="anko-support-plugin">anko support plugin</h1>
+
+<p>anko support plugin在idea和android
+studio中都可以使用。使用这个插件可以直接在工具窗口中预览使用anko写的ankocomponent类。</p>
+
+<h2 id="使用这个插件">使用这个插件</h2>
+
+<p>假设使用anko写好了下面的类:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class myactivity : appcompatactivity() {
+    override fun oncreate(savedinstancestate: bundle?, persistentstate: persistablebundle?) {
+        super.oncreate(savedinstancestate, persistentstate)
+        myactivityui().setcontentview(this)
+    }
+}
+
+class myactivityui : ankocomponent&lt;myactivity&gt; {
+    override fun createview(ui: ankocontext&lt;myactivity&gt;) = ui.apply {
+        verticallayout {
+            val name = edittext()
+            button("say hello") {
+                onclick { ctx.toast("hello, ${name.text}!") }
+            }
+        }
+    }.view
+}
+</code></pre>
+</div>
+
+<p>将鼠标放到myactivityui声明处，点菜单栏中的view -&gt; tool windows -&gt; anko layout
+preview，点击刷新。</p>
+
+<p>这需要构建工程，所以真正展示前需要花点时间。</p>
+
+<h2 id="xml到dsl的转换器">xml到dsl的转换器</h2>
+
+<p>这个插件也支持xml布局转换成anko布局代码。打开xml文件选择 code -&gt; convert to anko layouts
+dsl。可以同时转换多个xml布局文件。</p>
+
+<p>原链接：<a href="https://github.com/kotlin/anko/wiki/anko-layouts">https://github.com/kotlin/anko/wiki/anko-layouts</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2017/06/30/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/">kotlin 初体验: 用 kotlin 写命令行工具
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/06/29/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/">图像处理之漫水填充算法（flood fill algorithm）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/06/29/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/">android旁门左道之动态替换系统view类</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://localhost:4000/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
+            
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
