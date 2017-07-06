@@ -45,6 +45,7 @@ tags: android bitmap
        this.accessorder = accessorder;
 
     }
+
 ```
 
        所以在lrucache中应该选择accessorder = true，当我们调用put、get方法时，linkedhashmap内部会将这个item移动到链表的尾部，即在链表尾部是最近刚刚使用的item，链表头部就是最近最少使用的item。当缓存空间不足时，可以remove头部结点释放缓存空间。

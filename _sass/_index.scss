@@ -6,6 +6,17 @@
             color: #223253;
         }
     }
+    .preview-image{
+        width: 200px;
+        max-height: 200px;
+        margin: 5px 15px 10px 0;
+        border: 3px solid #fff;
+        float: left;
+        overflow: hidden;
+        img{
+            max-width: 100%;
+        }
+    }
     .left {
         >ul {
             padding: 0;

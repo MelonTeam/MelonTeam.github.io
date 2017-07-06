@@ -35,8 +35,9 @@ layout: default
                     </div>
                     {% endif %}
                 </div>
-                <div class="excerpt">
-                    {{post.excerpt}}
+                <div class="excerpt clearfix">
+                    {{post.content|first_image|preview_image}}
+                    {{post.excerpt|strip_html|trim_newlines|newline_to_br}}
                 </div>
                 <div class="read-all">
                     <a  href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-newspaper-o"></i>Read All</a>

@@ -119,7 +119,6 @@ echo "installing app to your ios device"
 
 mobiledevice install_app extracted.ipa
 
-
 ```
 
 想要让 [autoswimfi.sh](https://github.com/yulingtianxia/fishchat/blob/master/shell/autoswimfi.sh) 一气呵成执行下去，需要依赖以下几项：
