@@ -3,10 +3,10 @@
   <channel>
     <title>MelonTeam</title>
     <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Jul 2017 18:17:10 +0800</pubDate>
-    <lastBuildDate>Thu, 06 Jul 2017 18:17:10 +0800</lastBuildDate>
+    <link>http://MelonTeam.com/</link>
+    <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 06 Jul 2017 18:23:33 +0800</pubDate>
+    <lastBuildDate>Thu, 06 Jul 2017 18:23:33 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -17,8 +17,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 22:49:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/qian_xi_android_zhong_de_threadlocal/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/qian_xi_android_zhong_de_threadlocal/</guid>
+        <link>http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</guid>
         
         <category>ThreadLocal</category>
         
@@ -46,8 +46,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 22:10:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
+        <link>http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
         
         <category>滤镜实现</category>
         
@@ -70,8 +70,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 21:37:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
+        <link>http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
         
         <category>Android</category>
         
@@ -94,8 +94,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 20:40:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
+        <link>http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
         
         <category>轻量HTTP服务器组件</category>
         
@@ -116,8 +116,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 20:36:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
+        <link>http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
         
         <category>fresco</category>
         
@@ -135,8 +135,8 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 
 </description>
         <pubDate>Fri, 30 Jun 2017 18:35:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/fork_join_kuang_jia/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/fork_join_kuang_jia/</guid>
+        <link>http://MelonTeam.com/posts/fork_join_kuang_jia/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/fork_join_kuang_jia/</guid>
         
         <category>并发</category>
         
@@ -157,8 +157,8 @@ MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加�
 
 </description>
         <pubDate>Fri, 30 Jun 2017 16:38:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
+        <link>http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
         
         <category>LEGO</category>
         
@@ -180,8 +180,8 @@ Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索�
 
 </description>
         <pubDate>Fri, 30 Jun 2017 16:09:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/yi_android_instant_apps_jian_jie/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/yi_android_instant_apps_jian_jie/</guid>
+        <link>http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</guid>
         
         <category>App</category>
         
@@ -201,8 +201,8 @@ Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索�
 
 </description>
         <pubDate>Fri, 30 Jun 2017 16:03:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
+        <link>http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
         
         <category>反射</category>
         
@@ -226,8 +226,8 @@ Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索�
 
 </description>
         <pubDate>Thu, 29 Jun 2017 22:56:00 +0800</pubDate>
-        <link>http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
+        <link>http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
         
         <category>java</category>
         
