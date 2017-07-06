@@ -3,24 +3,24 @@
   <channel>
     <title>MelonTeam</title>
     <description></description>
-    <link>http://MelonTeam.com/</link>
-    <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Jul 2017 16:43:57 +0800</pubDate>
-    <lastBuildDate>Thu, 06 Jul 2017 16:43:57 +0800</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 06 Jul 2017 18:08:17 +0800</pubDate>
+    <lastBuildDate>Thu, 06 Jul 2017 18:08:17 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
     
       <item>
         <title>浅析Android中的ThreadLocal</title>
         <description>
-ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK&lt;br /&gt;
+ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK
 1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 06:49:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</guid>
+        <pubDate>Fri, 30 Jun 2017 22:49:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/qian_xi_android_zhong_de_threadlocal/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/qian_xi_android_zhong_de_threadlocal/</guid>
         
-        <category>ThreadLo...</category>
+        <category>ThreadLocal</category>
         
         <category>Android</category>
         
@@ -45,9 +45,9 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 &lt;img src=&quot;/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807&quot; alt=&quot;&quot; /&gt;
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 06:10:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
+        <pubDate>Fri, 30 Jun 2017 22:10:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
         
         <category>滤镜实现</category>
         
@@ -69,9 +69,9 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
 &lt;/ul&gt;
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 05:37:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
+        <pubDate>Fri, 30 Jun 2017 21:37:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
         
         <category>Android</category>
         
@@ -85,19 +85,19 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
       <item>
         <title>教你自己动手写HTTP服务器</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#io&quot; id=&quot;markdown-toc-io&quot;&gt;网络IO模型选择&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#网络io模型选择&quot; id=&quot;markdown-toc-网络io模型选择&quot;&gt;网络IO模型选择&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 谈到HTTP服务器，立马就能联想到Apache、Nginx等大名鼎鼎的开源组件。如果需要一个本地代理HTTP服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在Android上手动编写一个轻量的HTTP服务器，通过阅读本文，笔者即将为你揭开HTTP服务器的面纱，收获一个五脏俱全的轻量HTTP服务器组件TinyHttpd。
 
-&lt;h2 id=&quot;io&quot;&gt;网络IO模型选择&lt;/h2&gt;
+&lt;h2 id=&quot;网络io模型选择&quot;&gt;网络IO模型选择&lt;/h2&gt;
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 04:40:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
+        <pubDate>Fri, 30 Jun 2017 20:40:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
         
-        <category>轻量HTTP...</category>
+        <category>轻量HTTP服务器组件</category>
         
         
         <category>android</category>
@@ -107,17 +107,17 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
       <item>
         <title>Fresco 4.X和5.X内存分析</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#xfresco&quot; id=&quot;markdown-toc-xfresco&quot;&gt;4.X系统的Fresco&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#4x系统的fresco&quot; id=&quot;markdown-toc-4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 两年前部落项目接入Fresco的时候，那时候主流机型还是4.X。Fresco在4.X的机器的内存性能很好，Bitmap存在Ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。
 
-&lt;h2 id=&quot;xfresco&quot;&gt;4.X系统的Fresco&lt;/h2&gt;
+&lt;h2 id=&quot;4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/h2&gt;
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 04:36:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
+        <pubDate>Fri, 30 Jun 2017 20:36:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
         
         <category>fresco</category>
         
@@ -129,14 +129,14 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
       <item>
         <title>Fork/Join 框架</title>
         <description>
-&lt;strong&gt;1. 简介&lt;/strong&gt;  &lt;br /&gt;
-&lt;strong&gt;1.1 什么是Fork/Join框架&lt;/strong&gt;  &lt;br /&gt;
+&lt;strong&gt;1. 简介&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.1 什么是Fork/Join框架&lt;/strong&gt;&lt;br /&gt;
         Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 02:35:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/fork_join_kuang_jia/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/fork_join_kuang_jia/</guid>
+        <pubDate>Fri, 30 Jun 2017 18:35:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/fork_join_kuang_jia/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/fork_join_kuang_jia/</guid>
         
         <category>并发</category>
         
@@ -150,19 +150,19 @@ ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是
       <item>
         <title>页面结构化在Android上的尝试</title>
         <description>
-| 导语&lt;br /&gt;
+| 导语
 MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手Q项目并不很适合。参考之前Web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲Lego在Android上一次小小尝试
 
 &lt;strong&gt;一，MVP简介&lt;/strong&gt;
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 00:38:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
+        <pubDate>Fri, 30 Jun 2017 16:38:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
         
         <category>LEGO</category>
         
-        <category>页面结构...</category>
+        <category>页面结构化</category>
         
         
         <category>android</category>
@@ -172,16 +172,16 @@ MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加�
       <item>
         <title>[译]Android Instant Apps简介</title>
         <description>
-| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。Instant&lt;br /&gt;
+| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。Instant
 Apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生App体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。
 
-Android Instant Apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。Instant&lt;br /&gt;
+Android Instant Apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。Instant
 Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，NFC和其他应用程序甚至其他的Instant
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 00:09:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</guid>
+        <pubDate>Fri, 30 Jun 2017 16:09:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/yi_android_instant_apps_jian_jie/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/yi_android_instant_apps_jian_jie/</guid>
         
         <category>App</category>
         
@@ -200,9 +200,9 @@ Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索�
 刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
 
 </description>
-        <pubDate>Sat, 01 Jul 2017 00:03:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
+        <pubDate>Fri, 30 Jun 2017 16:03:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
         
         <category>反射</category>
         
@@ -216,18 +216,18 @@ Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索�
       <item>
         <title>Kotlin 初体验: 用 Kotlin 写命令行工具</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#section&quot; id=&quot;markdown-toc-section&quot;&gt;工具需求&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#工具需求&quot; id=&quot;markdown-toc-工具需求&quot;&gt;工具需求&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,&lt;br /&gt;
+| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,
 偶尔有了个写工具的机会试着用它来替代原来常用的 python
 
-&lt;h2 id=&quot;section&quot;&gt;工具需求&lt;/h2&gt;
+&lt;h2 id=&quot;工具需求&quot;&gt;工具需求&lt;/h2&gt;
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 06:56:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
+        <pubDate>Thu, 29 Jun 2017 22:56:00 +0800</pubDate>
+        <link>http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
         
         <category>java</category>
         

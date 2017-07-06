@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -120,7 +120,7 @@
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2017-06-30
+                <i class="fa fa-calendar"></i>2017-06-29
             </div>
             
             <div class="label-card">
@@ -180,57 +180,57 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">工具需求</a>    <ul>
-      <li><a href="#section-1" id="markdown-toc-section-1">工具执行大概示例如图</a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2">文件处理流程</a></li>
+  <li><a href="#工具需求" id="markdown-toc-工具需求">工具需求</a>    <ul>
+      <li><a href="#工具执行大概示例如图" id="markdown-toc-工具执行大概示例如图">工具执行大概示例如图</a></li>
+      <li><a href="#文件处理流程" id="markdown-toc-文件处理流程">文件处理流程</a></li>
     </ul>
   </li>
-  <li><a href="#section-3" id="markdown-toc-section-3">代码流水账</a>    <ul>
-      <li><a href="#section-4" id="markdown-toc-section-4">1. 线程池初始化</a></li>
-      <li><a href="#section-5" id="markdown-toc-section-5">2. 参数解析</a></li>
-      <li><a href="#section-6" id="markdown-toc-section-6">3. 解析参数, 根据目标文件夹, 创建目录结构</a></li>
-      <li><a href="#reactivescheduler" id="markdown-toc-reactivescheduler">4. 给reactive库创建几个线程切换的scheduler</a></li>
-      <li><a href="#reactive-" id="markdown-toc-reactive-">5. 执行图示的那一坨 reactive 流程</a>        <ul>
-          <li><a href="#section-7" id="markdown-toc-section-7">多线程过滤部分:</a></li>
-          <li><a href="#section-8" id="markdown-toc-section-8">读取文件部分:</a></li>
-          <li><a href="#section-9" id="markdown-toc-section-9">写文件部分:</a></li>
-          <li><a href="#section-10" id="markdown-toc-section-10">计数统计部分</a></li>
+  <li><a href="#代码流水账" id="markdown-toc-代码流水账">代码流水账</a>    <ul>
+      <li><a href="#1-线程池初始化" id="markdown-toc-1-线程池初始化">1. 线程池初始化</a></li>
+      <li><a href="#2-参数解析" id="markdown-toc-2-参数解析">2. 参数解析</a></li>
+      <li><a href="#3-解析参数-根据目标文件夹-创建目录结构" id="markdown-toc-3-解析参数-根据目标文件夹-创建目录结构">3. 解析参数, 根据目标文件夹, 创建目录结构</a></li>
+      <li><a href="#4-给reactive库创建几个线程切换的scheduler" id="markdown-toc-4-给reactive库创建几个线程切换的scheduler">4. 给reactive库创建几个线程切换的scheduler</a></li>
+      <li><a href="#5-执行图示的那一坨-reactive-流程" id="markdown-toc-5-执行图示的那一坨-reactive-流程">5. 执行图示的那一坨 reactive 流程</a>        <ul>
+          <li><a href="#多线程过滤部分" id="markdown-toc-多线程过滤部分">多线程过滤部分:</a></li>
+          <li><a href="#读取文件部分" id="markdown-toc-读取文件部分">读取文件部分:</a></li>
+          <li><a href="#写文件部分" id="markdown-toc-写文件部分">写文件部分:</a></li>
+          <li><a href="#计数统计部分" id="markdown-toc-计数统计部分">计数统计部分</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#section-11" id="markdown-toc-section-11">其他:</a>    <ul>
-      <li><a href="#section-12" id="markdown-toc-section-12">替换的实现在哪里呀?</a></li>
-      <li><a href="#jar" id="markdown-toc-jar">写完了怎么编jar包?</a></li>
-      <li><a href="#kotlin" id="markdown-toc-kotlin">我看kotlin</a>        <ul>
-          <li><a href="#section-13" id="markdown-toc-section-13">喜欢的点</a></li>
-          <li><a href="#section-14" id="markdown-toc-section-14">不喜欢的点</a></li>
+  <li><a href="#其他" id="markdown-toc-其他">其他:</a>    <ul>
+      <li><a href="#替换的实现在哪里呀" id="markdown-toc-替换的实现在哪里呀">替换的实现在哪里呀?</a></li>
+      <li><a href="#写完了怎么编jar包" id="markdown-toc-写完了怎么编jar包">写完了怎么编jar包?</a></li>
+      <li><a href="#我看kotlin" id="markdown-toc-我看kotlin">我看kotlin</a>        <ul>
+          <li><a href="#喜欢的点" id="markdown-toc-喜欢的点">喜欢的点</a></li>
+          <li><a href="#不喜欢的点" id="markdown-toc-不喜欢的点">不喜欢的点</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#section-15" id="markdown-toc-section-15">参考资料:</a></li>
+  <li><a href="#参考资料" id="markdown-toc-参考资料">参考资料:</a></li>
 </ul>
 
-<p>| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,<br />
+<p>| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,
 偶尔有了个写工具的机会试着用它来替代原来常用的 python</p>
 
-<h2 id="section">工具需求</h2>
+<h2 id="工具需求">工具需求</h2>
 
 <!--more-->
 <p>工具需求很简单: 批量处理 proj 工程代码, 对符合条件的代码做后续的字符串替换, 然后存储到目标路径</p>
 
-<p>按理说用批处理加 find/sed 工具也能搞定, python 撸脚本工具也一样高效, 但我想体验一下 kotlin, 所以就用它上了, 结果一晚上,<br />
+<p>按理说用批处理加 find/sed 工具也能搞定, python 撸脚本工具也一样高效, 但我想体验一下 kotlin, 所以就用它上了, 结果一晚上,
 百行代码解决问题</p>
 
-<h3 id="section-1">工具执行大概示例如图</h3>
+<h3 id="工具执行大概示例如图">工具执行大概示例如图</h3>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/561e340954b438b6cc388aa0dd20c0d9e58b864cc4133e1a0f8b6836406dd5d2" alt="" />  <br />
-如图, root 下边 N 层目录, M 个文件  <br />
-找到关心的文件(示例中为 *.java )  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/561e340954b438b6cc388aa0dd20c0d9e58b864cc4133e1a0f8b6836406dd5d2" alt="" /><br />
+如图, root 下边 N 层目录, M 个文件<br />
+找到关心的文件(示例中为 *.java )<br />
 根据规则替换文件内容, 重新把替换内容写入目标位置</p>
 
-<h3 id="section-2">文件处理流程</h3>
+<h3 id="文件处理流程">文件处理流程</h3>
 
 <p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/129521323c8e14695a0d7dee37389c31b42db93dd8b607153ceccb79a0ec5a58" alt="" /></p>
 
@@ -240,97 +240,97 @@
 
 <p>so, 就是用reactive.io对应的kotlin库, 实现这套功能</p>
 
-<h2 id="section-3">代码流水账</h2>
+<h2 id="代码流水账">代码流水账</h2>
 
-<h3 id="section-4">1. 线程池初始化</h3>
+<h3 id="1-线程池初始化">1. 线程池初始化</h3>
 
-<p>获取机器核数, 自定义线程池:  <br />
-自定义线程池代码, 因为要指定线程名称, 所以实现了匿名 ThreadFactory 实现类, kotlin 代码相对比较简单  <br />
+<p>获取机器核数, 自定义线程池:<br />
+自定义线程池代码, 因为要指定线程名称, 所以实现了匿名 ThreadFactory 实现类, kotlin 代码相对比较简单<br />
 <img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/43826b407a6e951472eb9a84fcd3476c5249f1c06c0311dba1e8a2e5dbfe4986" alt="" /></p>
 
-<h3 id="section-5">2. 参数解析</h3>
+<h3 id="2-参数解析">2. 参数解析</h3>
 
-<p>命令行工具当然需要读入参数了  <br />
-我这里定义 src, dst 参数  <br />
-使用 joptsimple.OptionParser 轻松实现:  <br />
+<p>命令行工具当然需要读入参数了<br />
+我这里定义 src, dst 参数<br />
+使用 joptsimple.OptionParser 轻松实现:<br />
 <img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/705a8609e2bae5b8eed8f86a1167c54e9a196425fe70783d1586b68ecc2136e1" alt="" /></p>
 
-<h3 id="section-6">3. 解析参数, 根据目标文件夹, 创建目录结构</h3>
+<h3 id="3-解析参数-根据目标文件夹-创建目录结构">3. 解析参数, 根据目标文件夹, 创建目录结构</h3>
 
 <p>工具中如果指定了 dst, 那么会镜像创建 src 的所有文件夹, 实现如下</p>
 
 <p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/adeac795e2c6bea573fd2180d47e380c7c06b29a257eb60037ba7ce82d1d8797" alt="" /></p>
 
-<p>kotlin 中的类型转换用 as 这个关键字, 其中 as String, 表示会将结果转换为 String, 如果结果为 null,<br />
-那么这里直接会发生运行时异常  <br />
-第二句, 先转换成 String? 类型, 即可为空的String类型, 接下来 ?: srcPath, 表示如果为null, 那么使用 srcPath  <br />
-后边的判断, 如果srcPath和dstPath不等, 那么按照srcPath创建目录结构  <br />
-这里String的判等, 用两个=号, 判断值类相等, 用三个=号, 判断引用相等  <br />
+<p>kotlin 中的类型转换用 as 这个关键字, 其中 as String, 表示会将结果转换为 String, 如果结果为 null,
+那么这里直接会发生运行时异常<br />
+第二句, 先转换成 String? 类型, 即可为空的String类型, 接下来 ?: srcPath, 表示如果为null, 那么使用 srcPath<br />
+后边的判断, 如果srcPath和dstPath不等, 那么按照srcPath创建目录结构<br />
+这里String的判等, 用两个=号, 判断值类相等, 用三个=号, 判断引用相等<br />
 kotlin的文件遍历有一个函数式的扩展: walk(), 用起来也是函数式的感觉, 一气呵成</p>
 
-<h3 id="reactivescheduler">4. 给reactive库创建几个线程切换的scheduler</h3>
+<h3 id="4-给reactive库创建几个线程切换的scheduler">4. 给reactive库创建几个线程切换的scheduler</h3>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/7d0b7b1dcdb400a9a73063595e8461d6c554025eac191fa9a68f338c6e05f291" alt="" />  <br />
-可以看到 readScheduler/writeScheduler, ThreadFactory 没有显式的写匿名对象, 因为 kotlin 支持这种<br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/7d0b7b1dcdb400a9a73063595e8461d6c554025eac191fa9a68f338c6e05f291" alt="" /><br />
+可以看到 readScheduler/writeScheduler, ThreadFactory 没有显式的写匿名对象, 因为 kotlin 支持这种
 lambda 式的语法糖, 来实现一个单函数接口(比如 Runnable / Callable), 后边还会看到</p>
 
-<h3 id="reactive-">5. 执行图示的那一坨 reactive 流程</h3>
+<h3 id="5-执行图示的那一坨-reactive-流程">5. 执行图示的那一坨 reactive 流程</h3>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/578e2d6f672d817b3e340f88130bd3c48310358994c1ea20bad298e6ac91d390" alt="" />  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/578e2d6f672d817b3e340f88130bd3c48310358994c1ea20bad298e6ac91d390" alt="" /><br />
 完成, 就是这么简单</p>
 
 <p>rxkotlin的扩展, 简化了各种常用类型创建Observable对象的写法:</p>
 
-<h4 id="section-7">多线程过滤部分:</h4>
+<h4 id="多线程过滤部分">多线程过滤部分:</h4>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/d07ca50ddd41c440cec0ffbb8d7495994792a7433df48a08e749e21dd68b529a" alt="" />  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/d07ca50ddd41c440cec0ffbb8d7495994792a7433df48a08e749e21dd68b529a" alt="" /><br />
 可以看到 filter和flatmap 里边又是一个 lambda 实现了一个接口 (java8中也是类似的, x -&gt; {})</p>
 
-<h4 id="section-8">读取文件部分:</h4>
+<h4 id="读取文件部分">读取文件部分:</h4>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/94f1bb2bca04c9d7272b3a558ff3252d65b374c3c08b3b3095f14105286543e4" alt="" />  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/94f1bb2bca04c9d7272b3a558ff3252d65b374c3c08b3b3095f14105286543e4" alt="" /><br />
 读取文件这里之所以用flatMap, 是因为需要每次读完文件后, 下一步切换到多线程 scheduler</p>
 
-<h4 id="section-9">写文件部分:</h4>
+<h4 id="写文件部分">写文件部分:</h4>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/2dc9a44c8115d84ff006c0088a4ce1a834fed10d9c352c64b1dff595dfae5f00" alt="" />  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/2dc9a44c8115d84ff006c0088a4ce1a834fed10d9c352c64b1dff595dfae5f00" alt="" /><br />
 kotlin没有 java 的 X ? y : z 的三目运算语法, 只能写成if else, 有点类似python.</p>
 
-<h4 id="section-10">计数统计部分</h4>
+<h4 id="计数统计部分">计数统计部分</h4>
 
-<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/1b80a61cc1bb296c00dc96d994f90ad44701262417c04c06b823b30a24fe52da" alt="" />  <br />
+<p><img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/1b80a61cc1bb296c00dc96d994f90ad44701262417c04c06b823b30a24fe52da" alt="" /><br />
 count().blockingGet()返回的便是最后写了多少个文件的个数了.</p>
 
-<h2 id="section-11">其他:</h2>
+<h2 id="其他">其他:</h2>
 
-<h3 id="section-12">替换的实现在哪里呀?</h3>
+<h3 id="替换的实现在哪里呀">替换的实现在哪里呀?</h3>
 
-<p>其实就在这里  <br />
-<img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/398215288b0f1894726f6d056fac32f1a2332f4a42b17f9555f343473d6722bf" alt="" />  <br />
-就是这一句 .compose(processStrategy)  <br />
-processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即可  <br />
-比如这个实现:  <br />
-<img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/ba5d7d66c45d21c2d7253cef58d9857803c20095eeda7727c7a31fa48694c6d8" alt="" />  <br />
-在文本中找TODO的注释, 然后替换成””, 不想再骗自己了, 注意到这里用flatMap顺带做了filter的效果, 如果没有找到匹配,<br />
+<p>其实就在这里<br />
+<img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/398215288b0f1894726f6d056fac32f1a2332f4a42b17f9555f343473d6722bf" alt="" /><br />
+就是这一句 .compose(processStrategy)<br />
+processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即可<br />
+比如这个实现:<br />
+<img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/ba5d7d66c45d21c2d7253cef58d9857803c20095eeda7727c7a31fa48694c6d8" alt="" /><br />
+在文本中找TODO的注释, 然后替换成””, 不想再骗自己了, 注意到这里用flatMap顺带做了filter的效果, 如果没有找到匹配,
 相当于就在这一步被过滤掉, 不会进行下一步写文件.</p>
 
-<h3 id="jar">写完了怎么编jar包?</h3>
+<h3 id="写完了怎么编jar包">写完了怎么编jar包?</h3>
 
-<p>我这里使用的是gradle + kotlin插件, 可以继承一个jar的任务来生成fatjar, 我的整个build.gradle如下:  <br />
+<p>我这里使用的是gradle + kotlin插件, 可以继承一个jar的任务来生成fatjar, 我的整个build.gradle如下:<br />
 <img src="/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/6080e358601a2e1b63fcfd1353a3216aaccef66ca9899709e7abc4e013b9fc3d" alt="" /></p>
 
-<h3 id="kotlin">我看kotlin</h3>
+<h3 id="我看kotlin">我看kotlin</h3>
 
-<p>kotlin 值得一玩了, 如果用在生产环境, 也需要团队的统一规范, 以及琢磨一下最好的实践. 自己并没有深入学习 kotlin, 只是了解了些皮毛,<br />
+<p>kotlin 值得一玩了, 如果用在生产环境, 也需要团队的统一规范, 以及琢磨一下最好的实践. 自己并没有深入学习 kotlin, 只是了解了些皮毛,
 会写像 C 一样的 Java, 会写像 Java 一样的 Kotlin…</p>
 
-<p>看到有同事写的 &lt; 为什么我不喜欢Kotlin &gt; :<br />
-<a href="http://km.oa.com/group/18297/articles/show/305773">http://km.oa.com/group/18297/articles/show/305773</a>, 说到了代码复杂度的增加, 理解的困难, 说的没错,<br />
+<p>看到有同事写的 &lt; 为什么我不喜欢Kotlin &gt; :
+<a href="http://km.oa.com/group/18297/articles/show/305773">http://km.oa.com/group/18297/articles/show/305773</a>, 说到了代码复杂度的增加, 理解的困难, 说的没错,
 毕竟工具是死的人是活的.</p>
 
 <p>因为没有深入理解, 也没有搞过 kotlin 的大型项目, 不敢吹捧:), 但这次的初体验, 总的感觉还不错.</p>
 
-<h4 id="section-13">喜欢的点</h4>
+<h4 id="喜欢的点">喜欢的点</h4>
 
 <ol>
   <li>常量特性 val, 对 <a href="https://github.com/NonNull" title="@NonNull">@NonNull</a> 这种修饰的原生支持</li>
@@ -341,7 +341,7 @@ processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即�
   <li>待补充</li>
 </ol>
 
-<h4 id="section-14">不喜欢的点</h4>
+<h4 id="不喜欢的点">不喜欢的点</h4>
 
 <ol>
   <li>X..Y 这样的 range 表示有点蛋疼. 因为定式思维, X..Y 的第一直觉会让我觉得是 [X, Y) 这样的开闭区间.</li>
@@ -349,9 +349,9 @@ processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即�
   <li>待补充… 也许要多用才会躺坑, 发现新的点 :)</li>
 </ol>
 
-<h2 id="section-15">参考资料:</h2>
+<h2 id="参考资料">参考资料:</h2>
 
-<p>Introduction to Kotlin (Google I/O ‘17) -<br />
+<p>Introduction to Kotlin (Google I/O ‘17) -
 <a href="https://www.youtube.com/watch?v=X1RVYt2QKQE">https://www.youtube.com/watch?v=X1RVYt2QKQE</a></p>
 
 
@@ -530,9 +530,9 @@ processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/' 
+     'url':'http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

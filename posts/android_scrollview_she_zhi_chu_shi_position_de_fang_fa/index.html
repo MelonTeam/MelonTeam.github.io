@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -120,7 +120,7 @@
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2017-07-01
+                <i class="fa fa-calendar"></i>2017-06-30
             </div>
             
             <div class="label-card">
@@ -180,12 +180,12 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section"><strong>总结</strong></a></li>
+  <li><a href="#总结" id="markdown-toc-总结"><strong>总结</strong></a></li>
 </ul>
 
 <p>最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。</p>
 
-<p>刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。<br />
+<p>刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
 <!--more--></p>
 
 <p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/3a5832dc8e74b645359271cf53e31801f71136f1666c5db5b34f161eaf55e843" alt="" /></p>
@@ -228,7 +228,7 @@
 
 <p>编包后自测OK。</p>
 
-<h3 id="section"><strong>总结</strong></h3>
+<h3 id="总结"><strong>总结</strong></h3>
 
 <p>一个小小的需求，暴露了自己对View的成员的不够了解，记录一下，提醒自己也方便大家。</p>
 
@@ -394,9 +394,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/' 
+     'url':'http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

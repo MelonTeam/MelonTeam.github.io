@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Fork/Join 框架</title>
-    <meta name="description" content="1. 简介  1.1 什么是Fork/Join框架          Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java">
+    <meta name="description" content="1. 简介1.1 什么是Fork/Join框架        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/fork_join_kuang_jia/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/fork_join_kuang_jia/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -120,7 +120,7 @@
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2017-07-01
+                <i class="fa fa-calendar"></i>2017-06-30
             </div>
             
             <div class="label-card">
@@ -180,17 +180,17 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         
-<p><strong>1. 简介</strong>  <br />
-<strong>1.1 什么是Fork/Join框架</strong>  <br />
-        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java<br />
-<!--more--><br />
-7 更进了一步，Fork/Join框架是<br />
+<p><strong>1. 简介</strong><br />
+<strong>1.1 什么是Fork/Join框架</strong><br />
+        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java
+<!--more-->
+7 更进了一步，Fork/Join框架是
 ExecutorService接口的一个实现，用来解决可以通过分治法将问题拆分成小任务的问题。在一个任务中，先检查将要解决的问题大小，如果大于一个设定的大小，那就将问题拆分成可以通过框架来执行的小任务，否则直接在任务里解决这个问题，然后根据需要返回任务的结果。下面的图形总结了这个原理：</p>
 
-<p><img src="/image/fork_join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3" alt="" />  <br />
-<strong>1.2 工作窃取算法</strong>  <br />
-            Fork/Join框架和 Executor Framework主要的区别在于工作窃取算法（Work-Stealing<br />
-Algorithm）。假设我们有一个大任务，把任务分成互不依赖的子任务，为了减少线程间的竞争，就把这些子任务放到不同队列中，并为每个队列创建一个单独的线程来执行队列里的任务。但是有的线程干活干得快，与其等着不如去帮其他线程完成任务，通过这种方式，这些线程在运行时拥有所有的优点，进而提升应用程序的性能。  <br />
+<p><img src="/image/fork_join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3" alt="" /><br />
+<strong>1.2 工作窃取算法</strong><br />
+            Fork/Join框架和 Executor Framework主要的区别在于工作窃取算法（Work-Stealing
+Algorithm）。假设我们有一个大任务，把任务分成互不依赖的子任务，为了减少线程间的竞争，就把这些子任务放到不同队列中，并为每个队列创建一个单独的线程来执行队列里的任务。但是有的线程干活干得快，与其等着不如去帮其他线程完成任务，通过这种方式，这些线程在运行时拥有所有的优点，进而提升应用程序的性能。<br />
 为了达到这个目标，通过Fork/Join框架执行的任务有以下<strong>限制</strong>：</p>
 
 <ul>
@@ -199,7 +199,7 @@ Algorithm）。假设我们有一个大任务，把任务分成互不依赖的�
   <li>任务不能抛出非运行时异常，必须在代码中处理掉这些异常。</li>
 </ul>
 
-<p><strong>1.3 Fork/Join框架的核心类</strong>  <br />
+<p><strong>1.3 Fork/Join框架的核心类</strong><br />
 ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它管理工作者线程，并提供任务的状态信息，以及任务的执行信息。</p>
 
 <p>ForkJoinTask：这个类是一个将在ForkJoinPool中执行的任务的基类。框架中提供了两个子类：</p>
@@ -220,7 +220,7 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
 
 <p>所有这些任务将返回文档或行中所出现这个词的次数。</p>
 
-<pre><code>public class DocumentMock {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class DocumentMock {
 
     private String words[]={"the","hello","goodbye","packet","java","thread","pool","random","class","main"};
 
@@ -242,10 +242,11 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
     }
 }
 </code></pre>
+</div>
 
 <p>DocumentTask类：这个类的任务需要处理由start和end属性决定的文档行，如果行数小于10，那么就每行创建一个LineTask对象，然后在任务执行后结束，合计返回的结果，并返回总数。如果任务要处理的行数大于10，那么将任务拆分成两组，并创建DocumentTask来处理这两组对象。当这些任务执行结束后，合计返回结果。</p>
 
-<pre><code>public class DocumentTask extends RecursiveTask&lt;Integer&gt; {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class DocumentTask extends RecursiveTask&lt;Integer&gt; {
 
     private String document[][];
     private int start, end;
@@ -302,10 +303,11 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
     }
 }
 </code></pre>
+</div>
 
 <p>LineTask这个类需要处理文档中一行的某一组词。如果一组词的个数小于100，那么任务将直接在这一组词里搜索特定词，然后返回查找词在这一组词中出现的次数。否则，将任务拆分成两组，并创建两个LineTask对象来处理。当结果执行结束后，返回合并结果。</p>
 
-<pre><code>public class LineTask extends RecursiveTask&lt;Integer&gt; {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class LineTask extends RecursiveTask&lt;Integer&gt; {
     private String line[];
     private int start, end;
     private String word;
@@ -356,10 +358,11 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
     }
 }
 </code></pre>
+</div>
 
 <p>Main函数，通过默认构造器创建了ForkJoinPool对象，然后执行DocumentTask类，来出来一共100行，每行1000字的文档，这个任务将问题拆分成DocumentTask对象和LineTask对象，然后当所有的任务执行完成后，使用原始的任务来获取整个文档中所要查找的词出现的次数，由于任务继承了RecursiveTask类，因此能够返回结果。</p>
 
-<pre><code>public class Main {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class Main {
     public static void main(String[] args) {
         DocumentMock mock = new DocumentMock();
         String[][] document = mock.generateDocument(100, 1000, "the");
@@ -396,6 +399,7 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
     }
 }
 </code></pre>
+</div>
 
 <p> 执行结果：</p>
 
@@ -577,9 +581,9 @@ ForkJoinPool:这个类实现了ExecutorService接口和工作窃取算法，它�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/fork_join_kuang_jia/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/fork_join_kuang_jia/' 
+     'url':'http://localhost:4000/posts/fork_join_kuang_jia/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/fork_join_kuang_jia/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

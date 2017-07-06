@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/qian_xi_associated_object/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/qian_xi_associated_object/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -161,8 +161,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#Associat..." title="Tag: Associat..." rel="tag">Associat...</a-->
-        <a href="/tag/#Associat..." title="Tag: Associat..." rel="tag">Associat...</a>
+        <!--a href="/tag/#AssociatedObject" title="Tag: AssociatedObject" rel="tag">AssociatedObject</a-->
+        <a href="/tag/#AssociatedObject" title="Tag: AssociatedObject" rel="tag">AssociatedObject</a>
     
   
 
@@ -177,50 +177,51 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#associated-objects-" id="markdown-toc-associated-objects-">Associated Objects 介绍</a></li>
-  <li><a href="#associated-objects--1" id="markdown-toc-associated-objects--1">Associated Objects 源码浅析</a></li>
+  <li><a href="#associated-objects-介绍" id="markdown-toc-associated-objects-介绍">Associated Objects 介绍</a></li>
+  <li><a href="#associated-objects-源码浅析" id="markdown-toc-associated-objects-源码浅析">Associated Objects 源码浅析</a></li>
 </ul>
 
-<p>Category是Objective<br />
+<p>Category是Objective
 C为程序员提供的一个强大的动态机制，它们允许程序员为已有的对象添加新的方法，即便是在没有该对象的源代码的情况下。通过它可以很方便的为已有的类来添加函数。但是Category不允许为已有的类添加新的属性或者成员变量。</p>
 
 <!--more-->
-<p>通过运行时的数据结构我们可以看到，objc_class结构体中维护着objc_ivar_list的指针，这个指针指向的是类中定义的实例变量的列表。  <br />
+<p>通过运行时的数据结构我们可以看到，objc_class结构体中维护着objc_ivar_list的指针，这个指针指向的是类中定义的实例变量的列表。<br />
 <img src="/image/qian_xi_associated_object/0a675e25ebe30d1726eeda81891321a0a75c4b9fcbf9b97548bca101646dbc9b" alt="" /></p>
 
-<p>再看看<code>objc_category</code>的结构体中，只有类别名，类名，实例方法，类方法和遵循的协议表，由此可以看出category类中是不能够添加成员变量的。  <br />
+<p>再看看<code class="highlighter-rouge">objc_category</code>的结构体中，只有类别名，类名，实例方法，类方法和遵循的协议表，由此可以看出category类中是不能够添加成员变量的。<br />
 <img src="/image/qian_xi_associated_object/daa53763fbef4e9bebc7e6551e9b65239e4466a91fdcc159e3edb67931055123" alt="" /></p>
 
-<p>可以发现，苹果的category设计明显是不允许在category中添加新的成员变量。但是在项目中，这明显不能满足我们的需求，不过值得庆幸的是，我们可以通过Associated<br />
+<p>可以发现，苹果的category设计明显是不允许在category中添加新的成员变量。但是在项目中，这明显不能满足我们的需求，不过值得庆幸的是，我们可以通过Associated
 Objects来弥补这一不足。</p>
 
-<h2 id="associated-objects-">Associated Objects 介绍</h2>
+<h2 id="associated-objects-介绍">Associated Objects 介绍</h2>
 
 <p>与 Associated Objects 相关的函数主要有三个，我们可以在 runtime.h 文件中找到它们的声明：</p>
 
 <p><img src="/image/qian_xi_associated_object/f4a65711bcc394116f1870e352e16f93dc9727545db1e7df8cd49e50ed181a12" alt="" /></p>
 
-<pre><code>1. void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
+<div class="highlighter-rouge"><pre class="highlight"><code>1. void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
 2. id objc_getAssociatedObject(id object, const void *key)
 3. void objc_removeAssociatedObjects(id object)
 </code></pre>
+</div>
 
-<p><code>Object</code>：传入关联对象的所属对象，也就是增加成员的实例对象，一般来说传入self。  <br />
-<code>key</code>：一个唯一标记。在官方文档中推荐使用static<br />
-char，当然更推荐是指针。为了便捷，一般使用selector，这样在后面getter中，我们就可以利用_cmd来方便的取出selector。  <br />
-<code>value</code>：传入关联对象。  <br />
-<code>policy</code>：objc_AssociationPolicy是一个ObjC枚举类型，也代表关联策略。</p>
+<p><code class="highlighter-rouge">Object</code>：传入关联对象的所属对象，也就是增加成员的实例对象，一般来说传入self。<br />
+<code class="highlighter-rouge">key</code>：一个唯一标记。在官方文档中推荐使用static
+char，当然更推荐是指针。为了便捷，一般使用selector，这样在后面getter中，我们就可以利用_cmd来方便的取出selector。<br />
+<code class="highlighter-rouge">value</code>：传入关联对象。<br />
+<code class="highlighter-rouge">policy</code>：objc_AssociationPolicy是一个ObjC枚举类型，也代表关联策略。</p>
 
-<h2 id="associated-objects--1">Associated Objects 源码浅析</h2>
+<h2 id="associated-objects-源码浅析">Associated Objects 源码浅析</h2>
 
-<p>那究竟关联对象是如何存储的呢？透过源码，我们看到关联对象是通过一个叫做<code>AssociationsManager</code>的对象来进行管理的。  <br />
+<p>那究竟关联对象是如何存储的呢？透过源码，我们看到关联对象是通过一个叫做<code class="highlighter-rouge">AssociationsManager</code>的对象来进行管理的。<br />
 <img src="/image/qian_xi_associated_object/4a665f77259c67de69f3d02883fef577dc4343e5e4bc1d246f0f6fff7b0b6445" alt="" /></p>
 
-<p>在AssociationsManager中，有一个<code>spinlock_t</code>锁和一个<code>AssociationsHashMap</code>的哈希表。</p>
+<p>在AssociationsManager中，有一个<code class="highlighter-rouge">spinlock_t</code>锁和一个<code class="highlighter-rouge">AssociationsHashMap</code>的哈希表。</p>
 
 <p><img src="/image/qian_xi_associated_object/c855ee4f73bc0ef3c797fa95868c1f4b05567d1e0e98419ee3adf775d74921ae" alt="" /></p>
 
-<p>然后再看<code>objc_setAssociatedObject</code>的源码，我们可以看懂啊<code>AssociationsHashMap</code>中的键为<code>disguised_ptr_t</code>，在得到这个指针的时候，源码中执行了<code>DISGUISE</code>方法，通过这个方法能够获得指向self地址的指针，即为指向对象地址的指针。然后其对应的value，便是一个存放关联对象的子哈希表。</p>
+<p>然后再看<code class="highlighter-rouge">objc_setAssociatedObject</code>的源码，我们可以看懂啊<code class="highlighter-rouge">AssociationsHashMap</code>中的键为<code class="highlighter-rouge">disguised_ptr_t</code>，在得到这个指针的时候，源码中执行了<code class="highlighter-rouge">DISGUISE</code>方法，通过这个方法能够获得指向self地址的指针，即为指向对象地址的指针。然后其对应的value，便是一个存放关联对象的子哈希表。</p>
 
 
         </article>
@@ -350,9 +351,9 @@ char，当然更推荐是指针。为了便捷，一般使用selector，这样�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/qian_xi_associated_object/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/qian_xi_associated_object/' 
+     'url':'http://localhost:4000/posts/qian_xi_associated_object/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/qian_xi_associated_object/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

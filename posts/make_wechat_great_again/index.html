@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/make_wechat_great_again/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/make_wechat_great_again/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,53 +180,53 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">工欲善其事必先利其器</a></li>
-  <li><a href="#hook" id="markdown-toc-hook">之后就是不停地 Hook</a>    <ul>
-      <li><a href="#section-1" id="markdown-toc-section-1">关闭『发现』页面的各种入口 - 清君侧</a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2">修改微信运动步数 - 装逼党的自我修养</a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3">小红点消除计划 - 我想静静</a></li>
-      <li><a href="#section-4" id="markdown-toc-section-4">夜间模式 - 辣眼睛</a></li>
-      <li><a href="#section-5" id="markdown-toc-section-5">阻止撤回消息 - 知道真相的我眼泪掉下来</a></li>
-      <li><a href="#section-6" id="markdown-toc-section-6">要屏蔽 - 不要免打扰</a></li>
+  <li><a href="#工欲善其事必先利其器" id="markdown-toc-工欲善其事必先利其器">工欲善其事必先利其器</a></li>
+  <li><a href="#之后就是不停地-hook" id="markdown-toc-之后就是不停地-hook">之后就是不停地 Hook</a>    <ul>
+      <li><a href="#关闭发现页面的各种入口---清君侧" id="markdown-toc-关闭发现页面的各种入口---清君侧">关闭『发现』页面的各种入口 - 清君侧</a></li>
+      <li><a href="#修改微信运动步数---装逼党的自我修养" id="markdown-toc-修改微信运动步数---装逼党的自我修养">修改微信运动步数 - 装逼党的自我修养</a></li>
+      <li><a href="#小红点消除计划---我想静静" id="markdown-toc-小红点消除计划---我想静静">小红点消除计划 - 我想静静</a></li>
+      <li><a href="#夜间模式---辣眼睛" id="markdown-toc-夜间模式---辣眼睛">夜间模式 - 辣眼睛</a></li>
+      <li><a href="#阻止撤回消息---知道真相的我眼泪掉下来" id="markdown-toc-阻止撤回消息---知道真相的我眼泪掉下来">阻止撤回消息 - 知道真相的我眼泪掉下来</a></li>
+      <li><a href="#要屏蔽---不要免打扰" id="markdown-toc-要屏蔽---不要免打扰">要屏蔽 - 不要免打扰</a></li>
     </ul>
   </li>
-  <li><a href="#section-7" id="markdown-toc-section-7">后记</a></li>
+  <li><a href="#后记" id="markdown-toc-后记">后记</a></li>
 </ul>
 
-<p>| 导语<br />
-关闭朋友圈有一年多了，突然有一天微信的策略变了，在关闭朋友圈的同时也不让别人查看自己的朋友圈了。有妹子表示看不到我朋友圈很不爽，于是我决定对微信进行一番改造！初步实现效果：<br />
-1. 关闭『发现』页面的『朋友圈』、『购物』和『游戏』入口 2. 修改微信运动步数 3. 去除各种小红点提示 4. 设置夜间模式 5.<br />
+<p>| 导语
+关闭朋友圈有一年多了，突然有一天微信的策略变了，在关闭朋友圈的同时也不让别人查看自己的朋友圈了。有妹子表示看不到我朋友圈很不爽，于是我决定对微信进行一番改造！初步实现效果：
+1. 关闭『发现』页面的『朋友圈』、『购物』和『游戏』入口 2. 修改微信运动步数 3. 去除各种小红点提示 4. 设置夜间模式 5.
 阻止撤回消息 6. 屏蔽群&amp;好友消息</p>
 
 <!--more-->
 <p><strong>手机无需越狱</strong>，项目 GitHub 地址: <a href="https://github.com/yulingtianxia/FishChat">FishChat</a>，Make WeChat Great Again！</p>
 
-<h2 id="section">工欲善其事必先利其器</h2>
+<h2 id="工欲善其事必先利其器">工欲善其事必先利其器</h2>
 
-<p>因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 <code>CaptainHook</code> 工程编译出的 dylib 注入到已砸壳 app<br />
+<p>因为没有越狱手机，所以不是直接写 tweak 放手机里，而是需要将 <code class="highlighter-rouge">CaptainHook</code> 工程编译出的 dylib 注入到已砸壳 app
 的二进制文件中。同样因为没有越狱机，所以砸壳的文件只能从 某 P 助手下载了。</p>
 
-<p>我写了一个 Shell 脚本<br />
-<a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a><br />
+<p>我写了一个 Shell 脚本
+<a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a>
 帮我完成一些重复性的任务：</p>
 
 <ol>
   <li>查找可用的 iPhone 开发者证书</li>
   <li>解压 ipa 文件</li>
   <li>拷贝 mobileprovision 文件和要注入的 dylib 文件到 app 文件夹中</li>
-  <li>向 app 中可执行文件的 <code>Load Commands</code> 段中加入一条加载 dylib 的指令</li>
+  <li>向 app 中可执行文件的 <code class="highlighter-rouge">Load Commands</code> 段中加入一条加载 dylib 的指令</li>
   <li>对 app 中所有的 app，appx，framework，dylib 文件用第 1 步获取的证书进行重签名</li>
   <li>打包签名好的 ipa 文件</li>
   <li>删除上述过程中产生的中间文件</li>
   <li>通过 USB 线安装 ipa 文件手机上</li>
 </ol>
 
-<p><a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a><br />
+<p><a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a>
 需要传入的三个参数分别为：已砸壳的 ipa 文件，没过期的 mobileprovision 文件，要注入的 dylib 文件。</p>
 
 <p>犹豫了很久，还是贴上脚本代码，壮气势充篇幅吧。</p>
 
-<pre><code># !/bin/bash
+<div class="highlighter-rouge"><pre class="highlight"><code># !/bin/bash
 SOURCEIPA="$1"
 MOBILEPROV="$2"
 DYLIB="$3"
@@ -273,32 +273,33 @@ rm t_entitlements_full.plist
 echo "Installing APP to your iOS Device"
 mobiledevice install_app extracted.ipa
 </code></pre>
+</div>
 
-<p>想要让<br />
-<a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a><br />
+<p>想要让
+<a href="https://github.com/yulingtianxia/FishChat/blob/master/Shell/autoswimfi.sh">autoswimfi.sh</a>
 一气呵成执行下去，需要依赖以下几项：</p>
 
 <ol>
   <li>Mac 上需要有唯一可用的 iPhone 开发者证书，如果有多个，默认选最后一个</li>
-  <li><code>yololib</code> 工具用于注入 dylib 文件到二进制文件中</li>
-  <li><code>mobiledevice</code> 可以将 ipa 安装到 USB 连接到 Mac 上的手机中</li>
+  <li><code class="highlighter-rouge">yololib</code> 工具用于注入 dylib 文件到二进制文件中</li>
+  <li><code class="highlighter-rouge">mobiledevice</code> 可以将 ipa 安装到 USB 连接到 Mac 上的手机中</li>
   <li>一个可用的 mobileprovision 文件，十分关键，可以新建个工程在自己手机 Run 一下，新生成的 app 里面就有 mobileprovision 文件。</li>
 </ol>
 
 <p>在这里多再说几句：</p>
 
 <ol>
-  <li>一年多前我尝试安装 <code>iOSOpenDev</code> 很多次，一直失败，就当前辈们劝我还是用 <code>theos</code> 稳妥的时候，我觉得还是再试一次吧，果然还是失败了。不过新建 Xcode 项目选择 template 时却出现了 <code>iOSOpenDev</code> 哈哈哈哈！</li>
-  <li>一开始用 <code>insert_dylib</code> 注入 dylib 后 crash，后来用 <code>yololib</code> 就好了！不过 <code>yololib</code> 有个 bug 是对 dylib 的版本号有要求。这里可以直接改源码，把 <code>DYLIB_CURRENT_VER</code> 和 <code>DYLIB_COMPATIBILITY_VERSION</code> 的宏定义都改成 <code>0x0000</code>。懒人直接用我上传的 <a href="https://github.com/yulingtianxia/FishChat/blob/master/yololib">yololib</a>。</li>
-  <li>如果要查看 Mach-O 文件完整信息，建议用 MachOView。<code>otool -l</code> 打印所有的 <code>Load Commands</code>，建议搭配 <code>grep</code> 进行正则过滤。<code>otool -L</code> 可以查看使用的库文件。</li>
+  <li>一年多前我尝试安装 <code class="highlighter-rouge">iOSOpenDev</code> 很多次，一直失败，就当前辈们劝我还是用 <code class="highlighter-rouge">theos</code> 稳妥的时候，我觉得还是再试一次吧，果然还是失败了。不过新建 Xcode 项目选择 template 时却出现了 <code class="highlighter-rouge">iOSOpenDev</code> 哈哈哈哈！</li>
+  <li>一开始用 <code class="highlighter-rouge">insert_dylib</code> 注入 dylib 后 crash，后来用 <code class="highlighter-rouge">yololib</code> 就好了！不过 <code class="highlighter-rouge">yololib</code> 有个 bug 是对 dylib 的版本号有要求。这里可以直接改源码，把 <code class="highlighter-rouge">DYLIB_CURRENT_VER</code> 和 <code class="highlighter-rouge">DYLIB_COMPATIBILITY_VERSION</code> 的宏定义都改成 <code class="highlighter-rouge">0x0000</code>。懒人直接用我上传的 <a href="https://github.com/yulingtianxia/FishChat/blob/master/yololib">yololib</a>。</li>
+  <li>如果要查看 Mach-O 文件完整信息，建议用 MachOView。<code class="highlighter-rouge">otool -l</code> 打印所有的 <code class="highlighter-rouge">Load Commands</code>，建议搭配 <code class="highlighter-rouge">grep</code> 进行正则过滤。<code class="highlighter-rouge">otool -L</code> 可以查看使用的库文件。</li>
   <li>网上一些重签名工具没有将插件拓展或 Watch 中的 dylib 重签名，导致签名失败等问题。微信的 Apple Watch 客户端用 Swift 写的，因为还没有 ABI 稳定，所以只好把大量 dylib 打包进去。</li>
-  <li>可以使用 <code>Cycript</code> 来完成一些调试工作，这样就不用一次次打 Log 了。同样也可以打印出视图层级，不过建议有条件的同学用 Reveal 2，已经支持 USB 调试了。<code>Cycript</code> 只支持在同网段下连接到手机 IP 的 <code>8888</code> 端口，cy 脚本还是跟 <code>lldb</code> 命令有一些差别的。如果 <code>Cycript</code> 官网的 sdk 不好用，那就用用我上传的吧：<a href="https://github.com/yulingtianxia/FishChat/tree/master/Cycript.framework"><code>Cycript.framework</code></a></li>
-  <li>找到视图对应的类之后，就需要在 <code>class-dump</code> 得到的头文件寻找蛛丝马迹了。Dump 出的文件：<a href="https://github.com/yulingtianxia/FishChat/tree/master/WeChat-Headers">WeChat-Headers</a></li>
+  <li>可以使用 <code class="highlighter-rouge">Cycript</code> 来完成一些调试工作，这样就不用一次次打 Log 了。同样也可以打印出视图层级，不过建议有条件的同学用 Reveal 2，已经支持 USB 调试了。<code class="highlighter-rouge">Cycript</code> 只支持在同网段下连接到手机 IP 的 <code class="highlighter-rouge">8888</code> 端口，cy 脚本还是跟 <code class="highlighter-rouge">lldb</code> 命令有一些差别的。如果 <code class="highlighter-rouge">Cycript</code> 官网的 sdk 不好用，那就用用我上传的吧：<a href="https://github.com/yulingtianxia/FishChat/tree/master/Cycript.framework"><code class="highlighter-rouge">Cycript.framework</code></a></li>
+  <li>找到视图对应的类之后，就需要在 <code class="highlighter-rouge">class-dump</code> 得到的头文件寻找蛛丝马迹了。Dump 出的文件：<a href="https://github.com/yulingtianxia/FishChat/tree/master/WeChat-Headers">WeChat-Headers</a></li>
   <li>查看设备 Log 最简单的方式当然是从 Xcode-&gt;Devices-&gt;你的设备。</li>
-  <li>安装时如果遇到 <code>AMDeviceSecureInstallApplication</code> 安装失败，可以将工程 Clean 和 Clean Build Folder 后重新编译，再跑一次我的脚本。如果还不行，尝试用 iTools 等软件安装 ipa 到手机上。</li>
+  <li>安装时如果遇到 <code class="highlighter-rouge">AMDeviceSecureInstallApplication</code> 安装失败，可以将工程 Clean 和 Clean Build Folder 后重新编译，再跑一次我的脚本。如果还不行，尝试用 iTools 等软件安装 ipa 到手机上。</li>
 </ol>
 
-<h2 id="hook">之后就是不停地 Hook</h2>
+<h2 id="之后就是不停地-hook">之后就是不停地 Hook</h2>
 
 <p>我曾经在『<a href="http://yulingtianxia.com/blog/2016/05/06/Let-your-WeChat-
 for-Mac-never-revoke-messages/">让你的微信不再被人撤回消息</a>』这篇文章中说过：</p>
@@ -308,18 +309,18 @@ for-Mac-never-revoke-messages/">让你的微信不再被人撤回消息</a>』�
   <p>之前看的一些逆向的教程里，感觉前期工作都是装软件配环境，噼里啪啦命令一顿敲，整的挺玄乎，其实都是用人家现成儿的工具做些事情，美其名曰『站在巨人的肩膀上』，这里不再赘述。在我看来第一个真正意义上有难度的事情就是一个字儿：『猜』！</p>
 </blockquote>
 
-<p>是啊，头文件有了，UI 层级有了，该猜了！那么检验是否猜对需要做啥？Hook 呗！<code>CaptainHook</code><br />
+<p>是啊，头文件有了，UI 层级有了，该猜了！那么检验是否猜对需要做啥？Hook 呗！<code class="highlighter-rouge">CaptainHook</code>
 的用法很简单，新建工程的模板注释里面已经写得很详细了，就不赘述了。</p>
 
 <blockquote>
-  <p>Mac 上需要安装 <code>iOSOpenDev</code> 或 <code>theos</code>，本项目新建工程时使用 <code>iOSOpenDev</code> 的 <code>CaptainHook</code><br />
+  <p>Mac 上需要安装 <code class="highlighter-rouge">iOSOpenDev</code> 或 <code class="highlighter-rouge">theos</code>，本项目新建工程时使用 <code class="highlighter-rouge">iOSOpenDev</code> 的 <code class="highlighter-rouge">CaptainHook</code>
 模板。编译的时候要选自己的手机，不要选模拟器。</p>
 </blockquote>
 
-<h3 id="section-1">关闭『发现』页面的各种入口 - 清君侧</h3>
+<h3 id="关闭发现页面的各种入口---清君侧">关闭『发现』页面的各种入口 - 清君侧</h3>
 
-<p>在关掉各种乱码七糟的功能之后，发现页面仍留下几个无法关闭的入口。本次逆向微信的动机也由此引发：我只想关闭朋友圈入口，并没想关闭自己朋友圈内容，不过微信的这项策略也是很符合一些人的需求的。很多人真的想关闭自己朋友圈不让别人看，不过将这个需求跟旧的『关闭朋友圈入口』功能强绑定在一起，就有些绑架用户的味道了，鱼和熊掌不可兼得啊！不过关闭朋友圈后，别人依然能看到自己在<br />
-TimeLine 上新发的内容，但是一旦点击头像进入主页后就提示『该朋友暂未开启朋友圈』，奇怪的是回到自己的 TimeLine<br />
+<p>在关掉各种乱码七糟的功能之后，发现页面仍留下几个无法关闭的入口。本次逆向微信的动机也由此引发：我只想关闭朋友圈入口，并没想关闭自己朋友圈内容，不过微信的这项策略也是很符合一些人的需求的。很多人真的想关闭自己朋友圈不让别人看，不过将这个需求跟旧的『关闭朋友圈入口』功能强绑定在一起，就有些绑架用户的味道了，鱼和熊掌不可兼得啊！不过关闭朋友圈后，别人依然能看到自己在
+TimeLine 上新发的内容，但是一旦点击头像进入主页后就提示『该朋友暂未开启朋友圈』，奇怪的是回到自己的 TimeLine
 上后，以前那条新发的内容就消失了。我觉得这不是 bug，而是产品策略。微信在努力保持用户粘性，不得不在用户需求和产品数据之间权衡。好吧，扯远了。。。</p>
 
 <p>我只保留了这俩『活儿好不粘人』的工具类入口：</p>
@@ -328,11 +329,11 @@ TimeLine 上新发的内容，但是一旦点击头像进入主页后就提示�
 
 <p>其实扫一扫页面可以通过右上角加号更快进入，也可以去掉。小程序其实平时也基本不用，偶尔用的时候现搜，鸡肋入口。不能再干掉了，否则还不如索性干掉整个发现页面。</p>
 
-<p>删入口有两种思路，一种是删数据源，另一种是 hook <code>UITableViewDelegate</code> 和<br />
-<code>UITableViewDataSource</code>。发现页面的 VC 是<br />
-<code>FindFriendEntryViewController</code>，发现数据源数组包含的结构体需要花功夫猜下含义，索性简单粗暴 Plan B。</p>
+<p>删入口有两种思路，一种是删数据源，另一种是 hook <code class="highlighter-rouge">UITableViewDelegate</code> 和
+<code class="highlighter-rouge">UITableViewDataSource</code>。发现页面的 VC 是
+<code class="highlighter-rouge">FindFriendEntryViewController</code>，发现数据源数组包含的结构体需要花功夫猜下含义，索性简单粗暴 Plan B。</p>
 
-<pre><code>// 关闭朋友圈入口
+<div class="highlighter-rouge"><pre class="highlight"><code>// 关闭朋友圈入口
 CHOptimizedMethod2(self, CGFloat, FindFriendEntryViewController, tableView, UITableView *, tableView, heightForRowAtIndexPath, NSIndexPath *, indexPath)
 {
     NSIndexPath *timelineIndexPath = [self valueForKeyPath:@"m_WCTimeLineIndexPath"];
@@ -357,20 +358,22 @@ CHOptimizedMethod2(self, UITableViewCell *, FindFriendEntryViewController, table
     return cell;
 }
 </code></pre>
+</div>
 
-<p>简单粗暴地将想要隐藏的入口 Cell 高度设为 <code>0</code> 后发现 <code>subview</code> 被挤出来了，我日，只好再干掉这些<br />
-<code>subview</code>。最后记得在页面出现时刷新下 table 数据：</p>
+<p>简单粗暴地将想要隐藏的入口 Cell 高度设为 <code class="highlighter-rouge">0</code> 后发现 <code class="highlighter-rouge">subview</code> 被挤出来了，我日，只好再干掉这些
+<code class="highlighter-rouge">subview</code>。最后记得在页面出现时刷新下 table 数据：</p>
 
-<pre><code>CHOptimizedMethod1(self, void, FindFriendEntryViewController, viewDidAppear, BOOL, animated)
+<div class="highlighter-rouge"><pre class="highlight"><code>CHOptimizedMethod1(self, void, FindFriendEntryViewController, viewDidAppear, BOOL, animated)
 {
     CHSuper1(FindFriendEntryViewController, viewDidAppear, animated);
     [self performSelector:@selector(reloadData)];
 }
 </code></pre>
+</div>
 
-<h3 id="section-2">修改微信运动步数 - 装逼党的自我修养</h3>
+<h3 id="修改微信运动步数---装逼党的自我修养">修改微信运动步数 - 装逼党的自我修养</h3>
 
-<p>修改微信运动步数的方法网上一搜就有好多文章，就是 hook <code>WCDeviceStepObject</code> 的 <code>m7StepCount</code><br />
+<p>修改微信运动步数的方法网上一搜就有好多文章，就是 hook <code class="highlighter-rouge">WCDeviceStepObject</code> 的 <code class="highlighter-rouge">m7StepCount</code>
 方法罢了。我在这里为了更方便地装逼，当然不能 hook 时把步数写死了，随机数也不够屌，要装逼就装到位：</p>
 
 <p>先到设置页面：</p>
@@ -389,14 +392,14 @@ CHOptimizedMethod2(self, UITableViewCell *, FindFriendEntryViewController, table
   <p><strong>==我就问你怕不怕==</strong></p>
 </blockquote>
 
-<p>微信的一些列表页面是由数据来驱动 UI 的。table 对应 <code>MMTableViewInfo</code>，section 对应<br />
-<code>MMTableViewSectionInfo</code>，cell 对应<br />
-<code>MMTableViewCellInfo</code>。以前做项目时也见到过类似的框架，理解起来不难。但是这种过度的封装完全改变了原有系统<br />
-API，使用者碰到问题需要深入到框架去调试，又因为是内部框架，网上也搜不到方案。所以要求框架作者规范的编码习惯和较强的能力。又扯远了，我是用<br />
-<code>FishConfigurationCenter</code> 这个单例类来保存状态值的，目前还没在持久层写入磁盘。可以在 <code>MMTableViewCellInfo</code><br />
+<p>微信的一些列表页面是由数据来驱动 UI 的。table 对应 <code class="highlighter-rouge">MMTableViewInfo</code>，section 对应
+<code class="highlighter-rouge">MMTableViewSectionInfo</code>，cell 对应
+<code class="highlighter-rouge">MMTableViewCellInfo</code>。以前做项目时也见到过类似的框架，理解起来不难。但是这种过度的封装完全改变了原有系统
+API，使用者碰到问题需要深入到框架去调试，又因为是内部框架，网上也搜不到方案。所以要求框架作者规范的编码习惯和较强的能力。又扯远了，我是用
+<code class="highlighter-rouge">FishConfigurationCenter</code> 这个单例类来保存状态值的，目前还没在持久层写入磁盘。可以在 <code class="highlighter-rouge">MMTableViewCellInfo</code>
 头文件看到微信中常用的 cell 是封装好的，这里直接获取个带文本框的就行了。我顺便还加了个夜间模式的开关 cell：</p>
 
-<pre><code>CHDeclareMethod0(void, NewSettingViewController, reloadTableData)
+<div class="highlighter-rouge"><pre class="highlight"><code>CHDeclareMethod0(void, NewSettingViewController, reloadTableData)
 {
     CHSuper0(NewSettingViewController, reloadTableData);
     MMTableViewInfo *tableInfo = [self valueForKeyPath:@"m_tableViewInfo"];
@@ -410,10 +413,11 @@ API，使用者碰到问题需要深入到框架去调试，又因为是内部�
     [tableView reloadData];
 }
 </code></pre>
+</div>
 
 <p>然后获取步数的时候从单例里取值就可以啦：</p>
 
-<pre><code>// 微信运动步数
+<div class="highlighter-rouge"><pre class="highlight"><code>// 微信运动步数
 CHOptimizedMethod0(self, unsigned int, WCDeviceStepObject, m7StepCount)
 {
     if ([FishConfigurationCenter sharedInstance].stepCount == 0) {
@@ -422,19 +426,20 @@ CHOptimizedMethod0(self, unsigned int, WCDeviceStepObject, m7StepCount)
     return [FishConfigurationCenter sharedInstance].stepCount;
 }
 </code></pre>
+</div>
 
-<h3 id="section-3">小红点消除计划 - 我想静静</h3>
+<h3 id="小红点消除计划---我想静静">小红点消除计划 - 我想静静</h3>
 
-<p>微信真的是越来越臃肿，大有追赶 QQ 的架势，连小红点也是越来越多。『发现』页面撸的挺干净了，我就不信扫一扫入口还能有小红点（flag 已立）。『我』Tab<br />
+<p>微信真的是越来越臃肿，大有追赶 QQ 的架势，连小红点也是越来越多。『发现』页面撸的挺干净了，我就不信扫一扫入口还能有小红点（flag 已立）。『我』Tab
 页里什么钱包啊卡包啊老有小红点，真烦人，老得点进去。</p>
 
-<p>通过查看视图层级发现小红点来源有两种，一种是 TabBar 上的小红点，另一种是 cell 上的小红点。前者是系统 API 带的，后者是微信的<br />
-<code>MMBadgeView</code> 类实现的。</p>
+<p>通过查看视图层级发现小红点来源有两种，一种是 TabBar 上的小红点，另一种是 cell 上的小红点。前者是系统 API 带的，后者是微信的
+<code class="highlighter-rouge">MMBadgeView</code> 类实现的。</p>
 
-<p>微信的 <code>MMTabBarController</code> 继承于 <code>UITabBarController</code>，它提供了几个设置小红点的快捷方法，统统 hook<br />
+<p>微信的 <code class="highlighter-rouge">MMTabBarController</code> 继承于 <code class="highlighter-rouge">UITabBarController</code>，它提供了几个设置小红点的快捷方法，统统 hook
 掉，屏蔽后两个『发现』和『我』上的小红点：</p>
 
-<pre><code>CHOptimizedMethod2(self, void, MMTabBarController, setTabBarBadgeImage, id, arg1, forIndex, unsigned int, arg2)
+<div class="highlighter-rouge"><pre class="highlight"><code>CHOptimizedMethod2(self, void, MMTabBarController, setTabBarBadgeImage, id, arg1, forIndex, unsigned int, arg2)
 {
     if (arg2 != 2 &amp;&amp; arg2 != 3) {
         CHSuper2(MMTabBarController, setTabBarBadgeImage, arg1, forIndex, arg2);
@@ -455,44 +460,46 @@ CHOptimizedMethod2(self, void, MMTabBarController, setTabBarBadgeValue, id, arg1
     }
 }
 </code></pre>
+</div>
 
-<p>去除 <code>MMBadgeView</code> 就更简单了，直接隐藏掉就好了。不直接 remove<br />
-的好处是可以保留聊天页面的小红点提醒，而其他页面的小红点被隐藏了。我猜原因是聊天页面的小红点在添加上去后会设置下 <code>hidden = NO</code>，因为 cell<br />
+<p>去除 <code class="highlighter-rouge">MMBadgeView</code> 就更简单了，直接隐藏掉就好了。不直接 remove
+的好处是可以保留聊天页面的小红点提醒，而其他页面的小红点被隐藏了。我猜原因是聊天页面的小红点在添加上去后会设置下 <code class="highlighter-rouge">hidden = NO</code>，因为 cell
 是重用的。</p>
 
-<pre><code>CHOptimizedMethod1(self, void, UIView, didAddSubview, UIView *, subview)
+<div class="highlighter-rouge"><pre class="highlight"><code>CHOptimizedMethod1(self, void, UIView, didAddSubview, UIView *, subview)
 {
     if ([subview isKindOfClass:NSClassFromString(@"MMBadgeView")]) {
         subview.hidden = YES;
     }
 }
 </code></pre>
+</div>
 
-<h3 id="section-4">夜间模式 - 辣眼睛</h3>
+<h3 id="夜间模式---辣眼睛">夜间模式 - 辣眼睛</h3>
 
 <blockquote>
   <p>她说睡了，其实是躺在被窝里继续玩手机罢了。</p>
 </blockquote>
 
-<p>夜间模式其实也就是主题适配，这个手机 QQ 玩的是最 6<br />
+<p>夜间模式其实也就是主题适配，这个手机 QQ 玩的是最 6
 的了，无人能敌。要想做一个完美的皮肤引擎是很庞大的工作，不仅是多套色值方案的存储和切换问题，还有多套图片资源的适配问题。这里由于时间仓促，只做了个很辣眼睛的夜间模式，而且切换回来需要杀进程重新进：</p>
 
 <p><img src="/image/make_wechat_great_again/acf2e5d3185b9e35b70a877b45ada0105b4e10e59989195d157eacd87faf9780" alt="" /></p>
 
 <p>这么辣眼睛的审美会被狂吐槽，就不贴代码了，有兴趣的去项目里查看哈哈。</p>
 
-<h3 id="section-5">阻止撤回消息 - 知道真相的我眼泪掉下来</h3>
+<h3 id="阻止撤回消息---知道真相的我眼泪掉下来">阻止撤回消息 - 知道真相的我眼泪掉下来</h3>
 
 <p>有时候被撤回的消息看到了会后悔的，但这依然阻止不了我的好奇心+强迫症。</p>
 
 <p>在 『<a href="http://yulingtianxia.com/blog/2016/05/06/Let-your-WeChat-
-for-Mac-never-revoke-messages/">让你的微信不再被人撤回消息</a>』 里我介绍过用 Hopper 逆向的方法。直接看汇编代码来的不那么直接，还是 hook OC<br />
+for-Mac-never-revoke-messages/">让你的微信不再被人撤回消息</a>』 里我介绍过用 Hopper 逆向的方法。直接看汇编代码来的不那么直接，还是 hook OC
 代码稳一些。</p>
 
-<p>撤回消息时会先调用 <code>-[CMessageMgr onRevokeMsg:]</code> 方法，然后调用 <code>-[CMessageMgr DelMsg:MsgList:
+<p>撤回消息时会先调用 <code class="highlighter-rouge">-[CMessageMgr onRevokeMsg:]</code> 方法，然后调用 <code class="highlighter-rouge">-[CMessageMgr DelMsg:MsgList:
 DelAll:]</code> 方法删除消息。随意在撤回的时候记录下标志位就好，不影响删除消息功能。</p>
 
-<pre><code>// 阻止撤回消息
+<div class="highlighter-rouge"><pre class="highlight"><code>// 阻止撤回消息
 CHOptimizedMethod1(self, void, CMessageMgr, onRevokeMsg, id, msg)
 {
     [FishConfigurationCenter sharedInstance].revokeMsg = YES;
@@ -509,16 +516,17 @@ CHDeclareMethod3(void, CMessageMgr, DelMsg, id, arg1, MsgList, id, arg2, DelAll,
     }
 }
 </code></pre>
+</div>
 
-<h3 id="section-6">要屏蔽 - 不要免打扰</h3>
+<h3 id="要屏蔽---不要免打扰">要屏蔽 - 不要免打扰</h3>
 
 <p>详细内容请见：<a href="http://yulingtianxia.com/blog/2017/03/06/How-to-hook-the-
-correct-method-in-reverse-engineering">如何在逆向工程中 Hook 得更准 -<br />
+correct-method-in-reverse-engineering">如何在逆向工程中 Hook 得更准 -
 微信屏蔽好友&amp;群消息实战</a></p>
 
-<h2 id="section-7">后记</h2>
+<h2 id="后记">后记</h2>
 
-<p>若不是时间匆忙，或许还可以让微信变得更伟大。比如加个『彻底清理缓存』按钮。平时使用微信确实有很多不爽的地方，尤其是群功能太弱太弱了。我还想加个功能就是如果对方发了超过<br />
+<p>若不是时间匆忙，或许还可以让微信变得更伟大。比如加个『彻底清理缓存』按钮。平时使用微信确实有很多不爽的地方，尤其是群功能太弱太弱了。我还想加个功能就是如果对方发了超过
 30s 的语音，并且对方不是妹子也不是老板不是亲戚，此时自动回复 #&amp;*DF@$@(M!…..我没太听清，请你重新再发一遍？</p>
 
 <p>此项目仅用于逆向工程交流学习，黑产死开！</p>
@@ -685,9 +693,9 @@ correct-method-in-reverse-engineering">如何在逆向工程中 Hook 得更准 -
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/make_wechat_great_again/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/make_wechat_great_again/' 
+     'url':'http://localhost:4000/posts/make_wechat_great_again/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/make_wechat_great_again/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

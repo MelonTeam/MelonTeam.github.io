@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,10 +180,10 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#imageview" id="markdown-toc-imageview">一，ImageView抛来一个异常</a></li>
-  <li><a href="#section" id="markdown-toc-section">二、寻求解决思路</a></li>
-  <li><a href="#layoutinflater" id="markdown-toc-layoutinflater">三、往LayoutInflater下手</a></li>
-  <li><a href="#section-1" id="markdown-toc-section-1">四、调试代码协助定位问题</a></li>
+  <li><a href="#一imageview抛来一个异常" id="markdown-toc-一imageview抛来一个异常">一，ImageView抛来一个异常</a></li>
+  <li><a href="#二寻求解决思路" id="markdown-toc-二寻求解决思路">二、寻求解决思路</a></li>
+  <li><a href="#三往layoutinflater下手" id="markdown-toc-三往layoutinflater下手">三、往LayoutInflater下手</a></li>
+  <li><a href="#四调试代码协助定位问题" id="markdown-toc-四调试代码协助定位问题">四、调试代码协助定位问题</a></li>
 </ul>
 
 <table>
@@ -196,13 +196,13 @@
 
 <p>作者： yarkeyzhang  2017.6.29</p>
 
-<h2 id="imageview">一，ImageView抛来一个异常</h2>
+<h2 id="一imageview抛来一个异常">一，ImageView抛来一个异常</h2>
 <!--more-->
 
-<p>应用程序Crash是Android<br />
+<p>应用程序Crash是Android
 App开发习以为常的问题，大部分Crash我们通过日志找到调用栈可以很快定位到出错的代码。然而有一些Crash却显得没那么直接，比如下面这个由Android系统抛(throw)出来的异常。</p>
 
-<pre><code>17-06-06 11:36:20|1496720179572[20047]1|E|StatisticCollector|  
+<div class="highlighter-rouge"><pre class="highlight"><code>17-06-06 11:36:20|1496720179572[20047]1|E|StatisticCollector|  
 getCrashExtraMessage...
 isNativeCrashed: false 
 crashType=java.lang.RuntimeException 
@@ -249,12 +249,13 @@ android.os.Handler.dispatchMessage(Handler.java:95)
 android.os.Looper.loop(Looper.java:148)
 android.app.ActivityThread.main(ActivityThread.java:5648)
 </code></pre>
+</div>
 
 <p>我们看看日志，ViewRootImpl.doTraversal()是遍历Window所有View刷新界面的过程，这个过程由系统触发，我们在调用栈中找不到任何的App客户代码。过程中，ImageView在执行onDraw()的时候出现了异常。这是某部手机在开启多窗口模式时必现Crash。怎么办？</p>
 
 <hr />
 
-<h2 id="section">二、寻求解决思路</h2>
+<h2 id="二寻求解决思路">二、寻求解决思路</h2>
 
 <p>这个问题出现在一个编辑图片的页面，页面中含有很多的ImageView（大约20个）实例，单单靠调用栈我们无法定位具体哪个ImageView出现了问题。</p>
 
@@ -270,36 +271,36 @@ android.app.ActivityThread.main(ActivityThread.java:5648)
 
 <hr />
 
-<h2 id="layoutinflater">三、往LayoutInflater下手</h2>
+<h2 id="三往layoutinflater下手">三、往LayoutInflater下手</h2>
 
 <p>重写ImageView.onDraw()方法实际上等于我们需要替换ImageView类，把所有的xml布局文件中的ImageView换成我们新定义的CatchExceptionImageView？这个显然不太好办。最后我在LayoutInflater类中找到了方法。</p>
 
 <p><img src="/image/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/ad947170e91ba0b5e64f376019da94b3552102cf14d1ac876cbced9cbb5c6873" alt="" /></p>
 
-<p>每个Activity拥有一个LayoutInflater 对象，它负责解析Android xml 布局文件然后实例化View或者View子类对象。核心函数是<br />
-LayoutInflater.createViewFromTag(View parent, String name, AttributeSet<br />
-attrs)，它通过xml标签指定的类名字，实例化出View对象。在这里做手脚，我们可以将xml中所有的标签实例化成<br />
+<p>每个Activity拥有一个LayoutInflater 对象，它负责解析Android xml 布局文件然后实例化View或者View子类对象。核心函数是
+LayoutInflater.createViewFromTag(View parent, String name, AttributeSet
+attrs)，它通过xml标签指定的类名字，实例化出View对象。在这里做手脚，我们可以将xml中所有的标签实例化成
 CatchExceptionImageView。</p>
 
 <p><img src="/image/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/950108b9e6717511666023bd26ec644fc640244f5123b63164ee9dbe12059260" alt="" /></p>
 
-<p>查看createViewFromTag()源码我们可以发现， LayoutInflater其实支持外部提供工厂类来自定义View的创建机制，对应的方法是<br />
+<p>查看createViewFromTag()源码我们可以发现， LayoutInflater其实支持外部提供工厂类来自定义View的创建机制，对应的方法是
 setFactory() 和 setFactory2()。</p>
 
 <p>如果大家有用过android.support.v7.app.AppCompatActivity，那么你会发现，xml布局中的Button标签实际上创建了android.support.v7.widget.AppCompatButton对象，TextView标签实际上创建了android.support.v7.widget.AppCompatTextView对象，这是通过LayoutInflater.Factory来影响View的创建实现的。</p>
 
-<p>所以，我们调用 setFactory()或者setFactory2()方法有可能会遇到失败：“A factory has already been set<br />
+<p>所以，我们调用 setFactory()或者setFactory2()方法有可能会遇到失败：“A factory has already been set
 on this LayoutInflater”。最后，我通过反射把我定义的Factory对象安全地注入到了LayoutInflater对象中。</p>
 
 <p>具体代码请详见微码：<a href="http://code.oa.com/v2/weima/detail/96896">http://code.oa.com/v2/weima/detail/96896</a></p>
 
 <hr />
 
-<h2 id="section-1">四、调试代码协助定位问题</h2>
+<h2 id="四调试代码协助定位问题">四、调试代码协助定位问题</h2>
 
 <p>为了捕捉到抛出异常的ImageView，我大概写了下面这样的代码：</p>
 
-<pre><code>    public static class CatchExceptionImageView extends ImageView {
+<div class="highlighter-rouge"><pre class="highlight"><code>    public static class CatchExceptionImageView extends ImageView {
         public CatchExceptionImageView(Context context) {
             super(context);
         }
@@ -330,6 +331,7 @@ on this LayoutInflater”。最后，我通过反射把我定义的Factory对�
         setContentView(R.layout.activity_main);
     }
 </code></pre>
+</div>
 
 <p>我构建了新的包发送给远方的优测测试人员，帮我复现了问题并抓了日志，最后找到了Crash的ImageView信息，通过view id便可以找到了出错的点。</p>
 
@@ -524,9 +526,9 @@ on this LayoutInflater”。最后，我通过反射把我定义的Factory对�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/' 
+     'url':'http://localhost:4000/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
