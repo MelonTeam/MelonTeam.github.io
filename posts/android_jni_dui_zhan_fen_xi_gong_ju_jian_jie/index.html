@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,21 +180,21 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#一jni堆栈" id="markdown-toc-一jni堆栈">一、JNI堆栈</a></li>
-  <li><a href="#从jni堆栈分析代码对应的调用栈" id="markdown-toc-从jni堆栈分析代码对应的调用栈">从JNI堆栈分析代码对应的调用栈</a>    <ul>
-      <li><a href="#二获取汇编代码" id="markdown-toc-二获取汇编代码">二、获取汇编代码</a></li>
-      <li><a href="#obj目录下so-dump结果" id="markdown-toc-obj目录下so-dump结果">obj目录下so dump结果</a></li>
-      <li><a href="#libs目录下的so-dump结果" id="markdown-toc-libs目录下的so-dump结果">libs目录下的so dump结果</a></li>
-      <li><a href="#三ndk-stack工具" id="markdown-toc-三ndk-stack工具">三、ndk-stack工具</a></li>
+  <li><a href="#jni" id="markdown-toc-jni">一、JNI堆栈</a></li>
+  <li><a href="#jni-1" id="markdown-toc-jni-1">从JNI堆栈分析代码对应的调用栈</a>    <ul>
+      <li><a href="#section" id="markdown-toc-section">二、获取汇编代码</a></li>
+      <li><a href="#objso-dump" id="markdown-toc-objso-dump">obj目录下so dump结果</a></li>
+      <li><a href="#libsso-dump" id="markdown-toc-libsso-dump">libs目录下的so dump结果</a></li>
+      <li><a href="#ndk-stack" id="markdown-toc-ndk-stack">三、ndk-stack工具</a></li>
     </ul>
   </li>
 </ul>
 
-<p>| 导语
-从事Android开发的同事如果在碰到JNI的bug一般都是比较头疼的，因为JNI出错的日志信息比较少，不像Java层的堆栈那样，可以直接看到出错的信息（异常信息）以及出错的类和行数。最近有在分析项目中一个JNI
+<p>| 导语<br />
+从事Android开发的同事如果在碰到JNI的bug一般都是比较头疼的，因为JNI出错的日志信息比较少，不像Java层的堆栈那样，可以直接看到出错的信息（异常信息）以及出错的类和行数。最近有在分析项目中一个JNI<br />
 crash，查了一些JNI堆栈分析的方法，涉及到ndk的几个工具的使用，跟大家分享一下。</p>
 
-<h2 id="一jni堆栈">一、JNI堆栈</h2>
+<h2 id="jni">一、JNI堆栈</h2>
 <!--more-->
 
 <p>为了查看JNI的异常堆栈，我这里模拟了一个出错的代码：</p>
@@ -203,7 +203,7 @@ crash，查了一些JNI堆栈分析的方法，涉及到ndk的几个工具的使
 
 <p>这段代码在testException的13行会有空指针的问题，我们实际运行的时候会碰到这样的堆栈异常：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1. 06-23 15:02:26.772: W/(299): stopped -- fatal signal, send SIGSTOP to process, request.pid:14173
+<pre><code>1. 06-23 15:02:26.772: W/(299): stopped -- fatal signal, send SIGSTOP to process, request.pid:14173
 2. 06-23 15:02:26.772: I/DEBUG(299): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 3. 06-23 15:02:26.772: I/DEBUG(299): Build fingerprint: 'OPPO/A33m/A33:5.1.1/LMY47V/1390465867:user/release-keys'
 4. 06-23 15:02:26.772: I/DEBUG(299): Revision: '0'
@@ -219,20 +219,18 @@ crash，查了一些JNI堆栈分析的方法，涉及到ndk的几个工具的使
 14. 06-23 15:02:26.782: I/DEBUG(299):     #01 pc 00000bfd  /data/app/com.example.hellojni-1/lib/arm/libhello-jni.so (Java_com_example_hellojni_HelloJni_stringFromJNI+4)
 15. 06-23 15:02:26.782: I/DEBUG(299):     #02 pc 000001df  /data/dalvik-cache/arm/data@app@com.example.hellojni-1@base.apk@classes.dex
 </code></pre>
-</div>
 
 <p>这样一堆东西我们是看不出是哪里发生了错误，注意到这里：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#00 pc 00000bf4  /data/app/com.example.hellojni-1/lib/arm/libhello-jni.so (testException+3)
+<pre><code>#00 pc 00000bf4  /data/app/com.example.hellojni-1/lib/arm/libhello-jni.so (testException+3)
 #01 pc 00000bfd  /data/app/com.example.hellojni-1/lib/arm/libhello-jni.so (Java_com_example_hellojni_HelloJni_stringFromJNI+4)
 #02 pc 000001df  /data/dalvik-cache/arm/data@app@com.example.hellojni-1@base.apk@classes.dex
 </code></pre>
-</div>
 
-<p>从上面的片段中我们能看到arm汇编代码调用命令的地址，头两行是我们自己的so文件相关的（libhello-
+<p>从上面的片段中我们能看到arm汇编代码调用命令的地址，头两行是我们自己的so文件相关的（libhello-<br />
 jni.so），分别是0bfd-&gt;0bf4，出错的地方是0bf4，能通过这些调用信息找到对应的代码行数吗？答案肯定是可以的，当然前提是我们有Native的源码，以下的工具都是我们有源码的前提。</p>
 
-<h1 id="从jni堆栈分析代码对应的调用栈">从JNI堆栈分析代码对应的调用栈</h1>
+<h1 id="jni-1">从JNI堆栈分析代码对应的调用栈</h1>
 
 <p>NDK提供了一个工具帮助我们定位汇编命令对应的代码文件以及行数：arm-linux-androideabi-addr2line,工具的位置如下：</p>
 
@@ -240,11 +238,10 @@ jni.so），分别是0bfd-&gt;0bf4，出错的地方是0bf4，能通过这些调
 
 <p>输入如下命令：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arm-linux-androideabi-addr2line -e F:\hello-jni\obj\local\armeabi\libhello-jni.so 0bf4 0bfd
+<pre><code>arm-linux-androideabi-addr2line -e F:\hello-jni\obj\local\armeabi\libhello-jni.so 0bf4 0bfd
 </code></pre>
-</div>
 
-<p>-e是jni编译过程中obj目录下的中间so文件，这里要注意下，不能用libs目录下的so文件。<br />
+<p>-e是jni编译过程中obj目录下的中间so文件，这里要注意下，不能用libs目录下的so文件。  <br />
 后面跟上地址信息，这里需要知道两个地址对应的行数，所以就有两个，如果堆栈比较深，可以跟多个地址信息；</p>
 
 <p>结果如下：</p>
@@ -253,46 +250,43 @@ jni.so），分别是0bfd-&gt;0bf4，出错的地方是0bf4，能通过这些调
 
 <p>从结果我们可以看到，出错的地方是hello-jni.cpp的第13行，确实就是我们出现空指针的地方；</p>
 
-<h2 id="二获取汇编代码">二、获取汇编代码</h2>
+<h2 id="section">二、获取汇编代码</h2>
 
 <p>上面的例子中，我们在日志中看到了出错的汇编代码位置，但是我们是不知道对应的汇编代码，以及函数的，下面的一个工具能够帮助我们反编译so获取汇编代码：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arm-linux-androideabi-objdump -S -D F:\hello-jni\libs\armeabi\libhello-jni.so &gt; C:\Users\stevcao\Desktop\jni2.txt
+<pre><code>arm-linux-androideabi-objdump -S -D F:\hello-jni\libs\armeabi\libhello-jni.so &gt; C:\Users\stevcao\Desktop\jni2.txt
 </code></pre>
-</div>
 
 <p>这里的so文件可以libs目录下的，也可以是obj目录下的；生成的反编译文件会有所不一样，obj目录的信息会详细点，包括源文件的代码对应的汇编代码以及注释都会有；libs目录下的so文件会只有汇编代码。下面分别贴出：</p>
 
-<h2 id="obj目录下so-dump结果">obj目录下so dump结果</h2>
+<h2 id="objso-dump">obj目录下so dump结果</h2>
 
 <p><img src="/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/6f51d93716c1657e517a2db9fdedeef8df10a166438cf510df3131cd47b585a4" alt="" /></p>
 
-<h2 id="libs目录下的so-dump结果">libs目录下的so dump结果</h2>
+<h2 id="libsso-dump">libs目录下的so dump结果</h2>
 
 <p><img src="/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/904e438c134fc2f2a907d2df5734db44b7ef31534f5bac5e6b894d4fca66adf4" alt="" /></p>
 
-<h2 id="三ndk-stack工具">三、ndk-stack工具</h2>
+<h2 id="ndk-stack">三、ndk-stack工具</h2>
 
-<p>工具位置：<br />
+<p>工具位置：  <br />
 <img src="/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/58a78ae83cf89a27a288cabaa2698b84b238f18cc1d225a384e11bacc5ed4813" alt="" /></p>
 
 <p>ndk-stack可以直接从日志中分析出堆栈的错误信息，能够直接帮助我们定位到错误的位置，一步到位；</p>
 
 <p>我们可以直接把logcat中的错误信息输入给ndk-stack，也可以使用ndk-stack来分析crash的日志（比如平台上报的crash数据）；</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>ndk-stack -sym F:\hello-jni\obj\local\armeabi\
+<pre><code>ndk-stack -sym F:\hello-jni\obj\local\armeabi\
 </code></pre>
-</div>
 
 <p>或者：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>ndk-stack -sym F:\hello-jni\obj\local\armeabi\ -dump crash.log
+<pre><code>ndk-stack -sym F:\hello-jni\obj\local\armeabi\ -dump crash.log
 </code></pre>
-</div>
 
 <p>用ndk-stack对本文中出现的日志分析，输入如下信息，和用addr2line工具得到的结果是一样的：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>********** Crash dump: **********
+<pre><code>********** Crash dump: **********
 Build fingerprint: 'OPPO/A33m/A33:5.1.1/LMY47V/1390465867:user/release-keys'
 pid: 14173, tid: 14173, name: xample.hellojni  &gt;&gt;&gt; com.example.hellojni &lt;&lt;&lt;
 signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
@@ -300,7 +294,6 @@ Stack frame 06-23 15:02:26.782: I/DEBUG(299):     #00 pc 00000bf4  /data/app/com
 Stack frame 06-23 15:02:26.782: I/DEBUG(299):     #01 pc 00000bfd  /data/app/com.example.hellojni-1/lib/arm/libhello-jni.so (Java_com_example_hellojni_HelloJni_stringFromJNI+4): Routine Java_com_example_hellojni_HelloJni_stringFromJNI at F:/hello-jni//jni/hello-jni.cpp:20
 Stack frame 06-23 15:02:26.782: I/DEBUG(299):     #02 pc 000001df  /data/dalvik-cache/arm/data@app@com.example.hellojni-1@base.apk@classes.dex
 </code></pre>
-</div>
 
 
         </article>
@@ -464,9 +457,9 @@ Stack frame 06-23 15:02:26.782: I/DEBUG(299):     #02 pc 000001df  /data/dalvik-
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/' 
+     'url':'http://MelonTeam.com/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

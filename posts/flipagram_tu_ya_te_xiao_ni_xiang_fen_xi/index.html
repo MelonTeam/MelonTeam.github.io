@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -177,26 +177,26 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
-  <li><a href="#flipagram特效" id="markdown-toc-flipagram特效">Flipagram特效</a></li>
-  <li><a href="#仿涂鸦特效" id="markdown-toc-仿涂鸦特效">仿涂鸦特效</a>    <ul>
-      <li><a href="#ios粒子效果" id="markdown-toc-ios粒子效果">IOS粒子效果</a></li>
-      <li><a href="#flipagram特效参数分析" id="markdown-toc-flipagram特效参数分析">Flipagram特效参数分析</a></li>
+  <li><a href="#section" id="markdown-toc-section">背景</a></li>
+  <li><a href="#flipagram" id="markdown-toc-flipagram">Flipagram特效</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">仿涂鸦特效</a>    <ul>
+      <li><a href="#ios" id="markdown-toc-ios">IOS粒子效果</a></li>
+      <li><a href="#flipagram-1" id="markdown-toc-flipagram-1">Flipagram特效参数分析</a></li>
     </ul>
   </li>
-  <li><a href="#逆向分析" id="markdown-toc-逆向分析">逆向分析</a>    <ul>
-      <li><a href="#ui层级分析" id="markdown-toc-ui层级分析">UI层级分析</a></li>
-      <li><a href="#相关类" id="markdown-toc-相关类">相关类</a></li>
-      <li><a href="#小结" id="markdown-toc-小结">小结</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">逆向分析</a>    <ul>
+      <li><a href="#ui" id="markdown-toc-ui">UI层级分析</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">相关类</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">小结</a></li>
     </ul>
   </li>
-  <li><a href="#后续工作" id="markdown-toc-后续工作">后续工作</a></li>
+  <li><a href="#section-5" id="markdown-toc-section-5">后续工作</a></li>
 </ul>
 
 <ul>
   <li>背景</li>
   <li>Flipagram特效</li>
-  <li>仿涂鸦特效
+  <li>仿涂鸦特效<br />
 <!--more-->
     <ul>
       <li>IOS粒子效果</li>
@@ -213,25 +213,25 @@
   <li>后续工作</li>
 </ul>
 
-<h2 id="背景">背景</h2>
+<h2 id="section">背景</h2>
 
 <p>Flipagram是美国一款非常火爆的短视频应用，一度登顶美国appstore榜首。前段时间又被今日头条重金收购，被当做今日头条发展海外短视频、提升国际影响力的发力点。本着好奇的心情体验了一下这款APP，印象最深的是视频编辑能力比较强，特别是动态涂鸦效果感觉非常惊艳，打算好好研究一下，优化改进一下手Q现有的涂鸦效果。</p>
 
-<h2 id="flipagram特效">Flipagram特效</h2>
+<h2 id="flipagram">Flipagram特效</h2>
 
 <p><img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/a658c5552ff00982a62844332c5ebb83852d4e45677ad42d5f984767987e6e2f" alt="Untitled" /></p>
 
-<h2 id="仿涂鸦特效">仿涂鸦特效</h2>
+<h2 id="section-1">仿涂鸦特效</h2>
 
 <p>初步推测：系统自带的粒子效果+手势，在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。</p>
 
-<h3 id="ios粒子效果">IOS粒子效果</h3>
+<h3 id="ios">IOS粒子效果</h3>
 
-<p>系统自带的粒子效果实现主要的类是：<code class="highlighter-rouge">CAEmitterBehavior</code>、<code class="highlighter-rouge">CAEmitterLayer</code>、<code class="highlighter-rouge">CAEmitterCell</code>他们的作用分别是，定义粒子发射机的行为、设置发射机的特征、设置粒子的具体特效。</p>
+<p>系统自带的粒子效果实现主要的类是：<code>CAEmitterBehavior</code>、<code>CAEmitterLayer</code>、<code>CAEmitterCell</code>他们的作用分别是，定义粒子发射机的行为、设置发射机的特征、设置粒子的具体特效。</p>
 
 <p>使用比较简单：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    //Create the root layer
+<pre><code>    //Create the root layer
     rootLayer = [CALayer layer];
 
     //Set the root layer's attributes
@@ -338,57 +338,56 @@
     //Force the view to update
     [theView setNeedsDisplay:YES];
 </code></pre>
-</div>
 
-<p>具体效果：<br />
+<p>具体效果：  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/92e77db926e37e4048d8d52e9e340ea5f0a840b874a371e2b016a5f53ef85ba9" alt="Untitled1" /></p>
 
-<h3 id="flipagram特效参数分析">Flipagram特效参数分析</h3>
+<h3 id="flipagram-1">Flipagram特效参数分析</h3>
 
-<p>粒子效果的参数非常多，要实现和Flipagram一样的效果，设置参数是一件非常繁琐的事情，借用粒子效果的工具分析了一种类似效果的具体参数，主要包含4个方面的参数：发射机、粒子、色彩、纹理<br />
-16个发射机参数(截取部分显示)：<br />
+<p>粒子效果的参数非常多，要实现和Flipagram一样的效果，设置参数是一件非常繁琐的事情，借用粒子效果的工具分析了一种类似效果的具体参数，主要包含4个方面的参数：发射机、粒子、色彩、纹理  <br />
+16个发射机参数(截取部分显示)：  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/2fe6c2862e10ae1f4c1a9eebfbbe85db8fb321bd2dfbf6c7534c0a22e2f58f9d" alt="屏幕快照 2017-04-28
 下午2.05.28" /></p>
 
-<p>10个粒子参数(截取部分显示)：<br />
+<p>10个粒子参数(截取部分显示)：  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/472680555b4c18e282bdb26fe5458ee6b8836c878ebcb5314ba5bd47b8b2be01" alt="屏幕快照 2017-04-28
 下午2.05.39" /></p>
 
-<p>12个色彩参数(截取部分显示)：<br />
+<p>12个色彩参数(截取部分显示)：  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/b8008c75a6fc39919a88daac1a678a9b06281c5000babb29abaa26429f2754a9" alt="屏幕快照 2017-04-28
 下午2.05.46" /></p>
 
-<p>纹理设置：<br />
+<p>纹理设置：  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/d65415b4f3fa5a956b979931f29259456344a9383c027e54dbf816daa55e6e40" alt="屏幕快照 2017-04-28
 下午2.05.53" /></p>
 
 <p><strong>小结：通过类似粒子效果的参数分析，发现系统接口的参数比较少，根本实现不了这种稍微复杂一点的效果。</strong></p>
 
-<h2 id="逆向分析">逆向分析</h2>
+<h2 id="section-2">逆向分析</h2>
 
-<h3 id="ui层级分析">UI层级分析</h3>
+<h3 id="ui">UI层级分析</h3>
 
-<p>通过分析Flipagram的涂鸦页面的UI层级，发现和涂鸦渲染层的类是<code class="highlighter-rouge">FGDrawControlsView</code><br />
+<p>通过分析Flipagram的涂鸦页面的UI层级，发现和涂鸦渲染层的类是<code>FGDrawControlsView</code>  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/39a67b431717fbf92b7b7f943c689f422eb6f782eeedb2c5ad7b23f955c3b6bc" alt="708FF504-D266-4C76-A31A-
 E75094AAE585" /></p>
 
-<h3 id="相关类">相关类</h3>
+<h3 id="section-3">相关类</h3>
 
-<p>通过反汇编分析了和渲染层<code class="highlighter-rouge">FGDrawControlsView</code>相关的主要类：<code class="highlighter-rouge">FGDrawEnginePathFactory</code>、<code class="highlighter-rouge">FGDrawEnginePath</code>、<code class="highlighter-rouge">FGDrawEngine</code><br />
+<p>通过反汇编分析了和渲染层<code>FGDrawControlsView</code>相关的主要类：<code>FGDrawEnginePathFactory</code>、<code>FGDrawEnginePath</code>、<code>FGDrawEngine</code>  <br />
 <img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/c59271ab58e5f8f9934b2b7a817602d27e87ee1c8ddd2a65eab9a973c6251f1d" alt="056C8FF2-D711-4FAA-BA7F-
 8451A4C8966D" /></p>
 
-<p><code class="highlighter-rouge">FGDrawEnginePathFactory</code>是一个负责创建具体特效路径的工厂类，比如：烟花效果的路径、不同画刷的路径、表情效果的路径、沙子效果的路径等等。
-<code class="highlighter-rouge">FGDrawEnginePath</code>设置粒子发射机的特性和粒子特效参数，比如：颜色、画刷参数、弧度等，同时维护了一条路径的矢量点阵信息。
-<code class="highlighter-rouge">FGDrawEngine</code>内部利用了OpenGL把发射机参数、粒子效果参数、色彩参数、纹理参数的具体效果渲染出来。</p>
+<p><code>FGDrawEnginePathFactory</code>是一个负责创建具体特效路径的工厂类，比如：烟花效果的路径、不同画刷的路径、表情效果的路径、沙子效果的路径等等。<br />
+<code>FGDrawEnginePath</code>设置粒子发射机的特性和粒子特效参数，比如：颜色、画刷参数、弧度等，同时维护了一条路径的矢量点阵信息。<br />
+<code>FGDrawEngine</code>内部利用了OpenGL把发射机参数、粒子效果参数、色彩参数、纹理参数的具体效果渲染出来。</p>
 
-<h3 id="小结">小结</h3>
+<h3 id="section-4">小结</h3>
 
-<p><code class="highlighter-rouge">IOS</code>自带的粒子效果使用比较简单，但是效果也比较单一，很难实现酷炫的效果。<code class="highlighter-rouge">Flipagram</code>的涂鸦特效实现是在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。其中<code class="highlighter-rouge">FGDrawEnginePath</code>主要负责管理路径和特效信息，<code class="highlighter-rouge">FGDrawEngine</code>负责渲染具体的效果。</p>
+<p><code>IOS</code>自带的粒子效果使用比较简单，但是效果也比较单一，很难实现酷炫的效果。<code>Flipagram</code>的涂鸦特效实现是在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。其中<code>FGDrawEnginePath</code>主要负责管理路径和特效信息，<code>FGDrawEngine</code>负责渲染具体的效果。</p>
 
-<h2 id="后续工作">后续工作</h2>
+<h2 id="section-5">后续工作</h2>
 
-<p>继续分析<code class="highlighter-rouge">FGDrawEngine</code>的内部接口，利用<code class="highlighter-rouge">OpenGL</code>实现一个粒子特效引擎，最终实现<code class="highlighter-rouge">Flipagram</code>的涂鸦特效。</p>
+<p>继续分析<code>FGDrawEngine</code>的内部接口，利用<code>OpenGL</code>实现一个粒子特效引擎，最终实现<code>Flipagram</code>的涂鸦特效。</p>
 
 
         </article>
@@ -518,9 +517,9 @@ E75094AAE585" /></p>
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/' 
+     'url':'http://MelonTeam.com/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

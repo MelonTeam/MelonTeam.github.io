@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,7 +180,7 @@
   <li><a href="#model" id="markdown-toc-model">Model</a></li>
   <li><a href="#view" id="markdown-toc-view">View</a></li>
   <li><a href="#controller" id="markdown-toc-controller">Controller</a></li>
-  <li><a href="#性能" id="markdown-toc-性能">性能</a></li>
+  <li><a href="#section" id="markdown-toc-section">性能</a></li>
 </ul>
 
 <table>
@@ -195,7 +195,7 @@
 
 <!--more-->
 
-<div class="highlighter-rouge"><pre class="highlight"><code>设计协议时，没有考虑数据无更新的场景，不考虑seq存在的必要性
+<pre><code>设计协议时，没有考虑数据无更新的场景，不考虑seq存在的必要性
 写发送请求代码时，没有考虑频率限制，重入问题
 对于高频场景，没有考虑做数据缓存
 对于列表数据没有去重逻辑
@@ -205,11 +205,10 @@
 数据量大时，没有考虑分页拉取
 数据异步返回时，没有考虑账号已经切换的场景
 </code></pre>
-</div>
 
 <h3 id="view">View</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>动不动就reload整个tableview
+<pre><code>动不动就reload整个tableview
 把数据请求代码写到view里面
     这里不是不可以，而是不好，因为view的生命周期系统提供相应的回调，所以很多同学都把数据请求写到view的init方法里，这不仅仅引起代码耦合问题，一些性能问题也难以规避
     没考虑点击的频率限制
@@ -219,11 +218,10 @@
 随处可见的魔法数字
 随处可见的重复布局代码
 </code></pre>
-</div>
 
 <h3 id="controller">Controller</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>动不动就继承系统的VC
+<pre><code>动不动就继承系统的VC
     请多组合，少继承
 willAppear/didAppear 一定要考虑重入问题
 如果一个函数能改成静态的，说明这个函数与VC无关，请放到VC外面去，即使只有一行代码
@@ -232,17 +230,15 @@ willAppear/didAppear 一定要考虑重入问题
 
 尽量把上报放到功能实现类的外面
 </code></pre>
-</div>
 
-<h3 id="性能">性能</h3>
+<h3 id="section">性能</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>tableview里设置了Cornerradio，boundtomask等属性，生成圆角图片
+<pre><code>tableview里设置了Cornerradio，boundtomask等属性，生成圆角图片
 tableview上的label使用sizetofit方法
 这方法有严重的性能问题，请异步使用coretext里的接口来计算size，以免阻塞主线程
 上传队列里如果有很多的UIImage，请考虑先存到本地，到真正上传时再从io读进来
 上传队列每个task都应嵌套在autoreleasepool中
 </code></pre>
-</div>
 
 
         </article>
@@ -372,9 +368,9 @@ tableview上的label使用sizetofit方法
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/' 
+     'url':'http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/posts/ML03BiasAndVariance/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ML03BiasAndVariance/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -176,32 +176,32 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#回顾" id="markdown-toc-回顾">回顾</a></li>
-  <li><a href="#估测" id="markdown-toc-估测">估测</a>    <ul>
-      <li><a href="#估测bias-和-variance" id="markdown-toc-估测bias-和-variance">估测bias 和 variance</a>        <ul>
-          <li><a href="#估测变量-x-的平均值" id="markdown-toc-估测变量-x-的平均值">估测变量 $x$ 的平均值</a></li>
-          <li><a href="#估测变量-x-的方差" id="markdown-toc-估测变量-x-的方差">估测变量 $x$ 的方差</a></li>
+  <li><a href="#section" id="markdown-toc-section">回顾</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">估测</a>    <ul>
+      <li><a href="#bias--variance" id="markdown-toc-bias--variance">估测bias 和 variance</a>        <ul>
+          <li><a href="#x-" id="markdown-toc-x-">估测变量 $x$ 的平均值</a></li>
+          <li><a href="#x--1" id="markdown-toc-x--1">估测变量 $x$ 的方差</a></li>
         </ul>
       </li>
-      <li><a href="#为什么会有很多的-f" id="markdown-toc-为什么会有很多的-f">为什么会有很多的 $f^{*}$?</a>        <ul>
-          <li><a href="#考虑不同model的variance" id="markdown-toc-考虑不同model的variance">考虑不同model的variance</a></li>
-          <li><a href="#考虑不同model的-bias" id="markdown-toc-考虑不同model的-bias">考虑不同model的 bias</a></li>
+      <li><a href="#f" id="markdown-toc-f">为什么会有很多的 $f^{*}$?</a>        <ul>
+          <li><a href="#modelvariance" id="markdown-toc-modelvariance">考虑不同model的variance</a></li>
+          <li><a href="#model-bias" id="markdown-toc-model-bias">考虑不同model的 bias</a></li>
           <li><a href="#bias-vs-variance" id="markdown-toc-bias-vs-variance">bias v.s. variance</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#怎么判断" id="markdown-toc-怎么判断">怎么判断？</a>    <ul>
-      <li><a href="#分析" id="markdown-toc-分析">分析</a>        <ul>
-          <li><a href="#bias大underfitting" id="markdown-toc-bias大underfitting">bias大，Underfitting</a></li>
-          <li><a href="#variance大overfitting" id="markdown-toc-variance大overfitting">variance大，Overfitting</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">怎么判断？</a>    <ul>
+      <li><a href="#section-3" id="markdown-toc-section-3">分析</a>        <ul>
+          <li><a href="#biasunderfitting" id="markdown-toc-biasunderfitting">bias大，Underfitting</a></li>
+          <li><a href="#varianceoverfitting" id="markdown-toc-varianceoverfitting">variance大，Overfitting</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#选择model" id="markdown-toc-选择model">选择model</a>    <ul>
-      <li><a href="#cross-validation交叉验证" id="markdown-toc-cross-validation交叉验证">Cross Validation（交叉验证）</a></li>
-      <li><a href="#n-fold-cross-validationn-折交叉验证" id="markdown-toc-n-fold-cross-validationn-折交叉验证">N-fold Cross Validation（N-折交叉验证）</a></li>
+  <li><a href="#model" id="markdown-toc-model">选择model</a>    <ul>
+      <li><a href="#cross-validation" id="markdown-toc-cross-validation">Cross Validation（交叉验证）</a></li>
+      <li><a href="#n-fold-cross-validationn-" id="markdown-toc-n-fold-cross-validationn-">N-fold Cross Validation（N-折交叉验证）</a></li>
     </ul>
   </li>
 </ul>
@@ -215,7 +215,7 @@
   <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66611368">http://blog.csdn.net/zyq522376829/article/details/66611368</a></p>
 </blockquote>
 
-<h1 id="回顾">回顾</h1>
+<h1 id="section">回顾</h1>
 
 <p>第二篇中神奇宝贝的例子：</p>
 
@@ -229,15 +229,15 @@
 
 <p>error主要的来源有两个，bias（偏差） 和 variance（方差）</p>
 
-<h1 id="估测">估测</h1>
+<h1 id="section-1">估测</h1>
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0ofvddt0j20gi07uabz.jpg" alt="" /></p>
 
 <p>假设上图为神奇宝贝cp值的真正方程，当然这只有Niantic（制作《Pokemon Go》的游戏公司）知道。从训练集中可以找到真实方程$\hat{f}$ 的近似方程 $f^{*}$。</p>
 
-<h2 id="估测bias-和-variance">估测bias 和 variance</h2>
+<h2 id="bias--variance">估测bias 和 variance</h2>
 
-<h3 id="估测变量-x-的平均值">估测变量 $x$ 的平均值</h3>
+<h3 id="x-">估测变量 $x$ 的平均值</h3>
 
 <ul>
   <li>假设$x$的平均值为 $\mu$，方差为 $\sigma^{2}$</li>
@@ -266,7 +266,7 @@
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0ogsfqagj20d80kswf4.jpg" alt="" /></p>
 
-<h3 id="估测变量-x-的方差">估测变量 $x$ 的方差</h3>
+<h3 id="x--1">估测变量 $x$ 的方差</h3>
 
 <p>首先用刚才的方法估测m，</p>
 
@@ -296,7 +296,7 @@
 
 <p>bias就是射击时瞄准的误差，本来应该是瞄准靶心，但bias就造成瞄准准心的误差；而variance就是虽然瞄准在 $\bar{f}$，但是射不准，总是射在 $\bar{f}$ 的周围。</p>
 
-<h2 id="为什么会有很多的-f">为什么会有很多的 $f^{*}$?</h2>
+<h2 id="f">为什么会有很多的 $f^{*}$?</h2>
 
 <p>讨论系列02中的案例：这里假设是在平行宇宙中，抓了不同的神奇宝贝</p>
 
@@ -319,7 +319,7 @@
   </tbody>
 </table>
 
-<h3 id="考虑不同model的variance">考虑不同model的variance</h3>
+<h3 id="modelvariance">考虑不同model的variance</h3>
 
 <p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ojgrieaj212s0q6qem.jpg" alt="" /></p>
 
@@ -329,7 +329,7 @@
 
 <p>这也是因为简单的model受到不同训练集的影响是比较小的。</p>
 
-<h3 id="考虑不同model的-bias">考虑不同model的 bias</h3>
+<h3 id="model-bias">考虑不同model的 bias</h3>
 
 <p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0ojw3h0aj210o0pytgs.jpg" alt="" /></p>
 
@@ -351,9 +351,9 @@
 
 <p>将系列02中的误差拆分为bias何variance。简单model（左边）是bias比较大造成的error，这种情况叫做 <strong>Underfitting（欠拟合）</strong>，而复杂model（右边）是variance过大造成的error，这种情况叫做<strong>Overfitting（过拟合）</strong>。</p>
 
-<h1 id="怎么判断">怎么判断？</h1>
+<h1 id="section-2">怎么判断？</h1>
 
-<h2 id="分析">分析</h2>
+<h2 id="section-3">分析</h2>
 
 <p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0om3bqn7j20g00aaaax.jpg" alt="" /></p>
 
@@ -364,7 +364,7 @@
 
 <p>对于Underfitting和Overfitting，是用不同的方式来处理的</p>
 
-<h3 id="bias大underfitting">bias大，Underfitting</h3>
+<h3 id="biasunderfitting">bias大，Underfitting</h3>
 
 <p>此时应该重新设计model。因为之前的函数集里面可能根本没有包含$\hat{f}$。可以：</p>
 
@@ -375,7 +375,7 @@
 
 <p>如果此时强行再收集更多的data去训练，这是没有什么帮助的，因为设计的函数集本身就不好，再找更多的训练集也不会更好。</p>
 
-<h3 id="variance大overfitting">variance大，Overfitting</h3>
+<h3 id="varianceoverfitting">variance大，Overfitting</h3>
 
 <p>简单粗暴的方法：More data</p>
 
@@ -383,7 +383,7 @@
 
 <p>但是很多时候不一定能做到收集更多的data。可以针对对问题的理解对数据集做调整（Regularization）。比如识别手写数字的时候，偏转角度的数据集不够，那就将正常的数据集左转15度，右转15度，类似这样的处理。</p>
 
-<h1 id="选择model">选择model</h1>
+<h1 id="model">选择model</h1>
 
 <ul>
   <li>现在在bias和variance之间就需要一个权衡</li>
@@ -395,7 +395,7 @@
 
 <p>用训练集训练不同的model，然后在测试集上比较error，model3的error比较小，就认为model3好。但实际上这只是你手上的测试集，真正完整的测试集并没有。比如在已有的测试集上error是0.5，但有条件收集到更多的测试集后通常得到的error都是大于0.5的。</p>
 
-<h2 id="cross-validation交叉验证">Cross Validation（交叉验证）</h2>
+<h2 id="cross-validation">Cross Validation（交叉验证）</h2>
 
 <p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0ondk0y0j21260l6q69.jpg" alt="" /></p>
 
@@ -403,7 +403,7 @@
 
 <p>上述方法可能会担心将训练集拆分的时候分的效果比较差怎么办，可以用下面的方法。</p>
 
-<h2 id="n-fold-cross-validationn-折交叉验证">N-fold Cross Validation（N-折交叉验证）</h2>
+<h2 id="n-fold-cross-validationn-">N-fold Cross Validation（N-折交叉验证）</h2>
 
 <p>将训练集分成N份，比如分成3份。</p>
 
@@ -577,9 +577,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/posts/ML03BiasAndVariance/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/posts/ML03BiasAndVariance/' 
+     'url':'http://MelonTeam.com/posts/ML03BiasAndVariance/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ML03BiasAndVariance/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

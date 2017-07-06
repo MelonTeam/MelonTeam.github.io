@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/posts/Deep_learning_entry_2/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/Deep_learning_entry_2/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,17 +180,17 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#0x00-概要" id="markdown-toc-0x00-概要">0x00 概要</a></li>
-  <li><a href="#0x01-tensorflow安装" id="markdown-toc-0x01-tensorflow安装">0x01 TensorFlow安装</a></li>
-  <li><a href="#0x02-tensorflow基本使用" id="markdown-toc-0x02-tensorflow基本使用">0x02 TensorFlow基本使用</a>    <ul>
-      <li><a href="#1placehoder占位符" id="markdown-toc-1placehoder占位符">1.placehoder（占位符）</a></li>
-      <li><a href="#2variable变量" id="markdown-toc-2variable变量">2.Variable（变量）</a></li>
-      <li><a href="#3constant常量" id="markdown-toc-3constant常量">3.Constant（常量）</a></li>
-      <li><a href="#4session会话" id="markdown-toc-4session会话">4.Session（会话）</a></li>
-      <li><a href="#5简单使用" id="markdown-toc-5简单使用">5.简单使用</a></li>
+  <li><a href="#x00-" id="markdown-toc-x00-">0x00 概要</a></li>
+  <li><a href="#x01-tensorflow" id="markdown-toc-x01-tensorflow">0x01 TensorFlow安装</a></li>
+  <li><a href="#x02-tensorflow" id="markdown-toc-x02-tensorflow">0x02 TensorFlow基本使用</a>    <ul>
+      <li><a href="#placehoder" id="markdown-toc-placehoder">1.placehoder（占位符）</a></li>
+      <li><a href="#variable" id="markdown-toc-variable">2.Variable（变量）</a></li>
+      <li><a href="#constant" id="markdown-toc-constant">3.Constant（常量）</a></li>
+      <li><a href="#session" id="markdown-toc-session">4.Session（会话）</a></li>
+      <li><a href="#section" id="markdown-toc-section">5.简单使用</a></li>
     </ul>
   </li>
-  <li><a href="#0x03-样例" id="markdown-toc-0x03-样例">0x03 样例</a></li>
+  <li><a href="#x03-" id="markdown-toc-x03-">0x03 样例</a></li>
 </ul>
 <blockquote>
   <p>导语：上一篇文章我们介绍了MxNet的安装，但MxNet有个缺点，那就是文档不太全，用起来可能是要看源代码才能理解某个方法的含义，所以今天我们就介绍一下TensorFlow，这个由谷歌爸爸出品的深度学习框架，文档比较全～以后的我们也都使用这个框架～</p>
@@ -198,335 +198,310 @@
 
 <!--more-->
 
-<h2 id="0x00-概要">0x00 概要</h2>
+<h2 id="x00-">0x00 概要</h2>
 
 <p>TensorFlow是谷歌爸爸出的一个开源机器学习框架，目前已被广泛应用，谷歌爸爸出品即使性能不是最强的（其实性能也不错），但绝对是用起来最方便的，毕竟谷歌有Jeff Dean坐镇，这波稳。</p>
 
-<h2 id="0x01-tensorflow安装">0x01 TensorFlow安装</h2>
+<h2 id="x01-tensorflow">0x01 TensorFlow安装</h2>
 
-<p>官方有一个Mac上TensorFlow的安装指南，点<a href="https://www.tensorflow.org/install/install_mac">这里</a>
+<p>官方有一个Mac上TensorFlow的安装指南，点<a href="https://www.tensorflow.org/install/install_mac">这里</a><br />
 我们现在就照着这个安装指南操作一把，官方推荐在virtualenv中安装TF，我们就在virtualenv安装吧，大家也可以直接安装。前几天TF发布1.0版了，我们就安装1.0版吧～</p>
 
 <p>1.先安装下pip和six</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo easy_install --upgrade pip
-<span class="gp">$ </span>sudo easy_install --upgrade six 
+<pre><code class="language-bash">$ sudo easy_install --upgrade pip
+$ sudo easy_install --upgrade six 
 </code></pre>
-</div>
 
 <p>2.安装下virtualenv</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo pip install --upgrade virtualenv
+<pre><code class="language-bash">$ sudo pip install --upgrade virtualenv
 </code></pre>
-</div>
 
 <p>3.接下来, 建立一个全新的 virtualenv 环境。这里将环境建在 ~/tensorflow目录下, 执行:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv --system-site-packages ~/tensorflow
-<span class="gp">$ </span><span class="nb">cd</span> ~/tensorflow
+<pre><code class="language-bash">$ virtualenv --system-site-packages ~/tensorflow
+$ cd ~/tensorflow
 </code></pre>
-</div>
 
 <p>4.然后, 激活 virtualenv:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">source </span>bin/activate  <span class="c"># 如果使用 bash</span>
-<span class="gp">$ </span><span class="nb">source </span>bin/activate.csh  <span class="c"># 如果使用 csh</span>
+<pre><code class="language-bash">$ source bin/activate  # 如果使用 bash
+$ source bin/activate.csh  # 如果使用 csh
 </code></pre>
-</div>
 
-<p>(tensorflow)$ # 终端提示符应该发生变化
+<p>(tensorflow)$ # 终端提示符应该发生变化<br />
 如果要退出虚拟环境可以执行</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">(tensorflow)$ </span>deactivate
+<pre><code class="language-bash">(tensorflow)$ deactivate
 </code></pre>
-</div>
 
 <p>也可以直接在shell里执行下面的代码激活</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/tensorflow/bin/activate
+<pre><code class="language-bash">source ~/tensorflow/bin/activate
 </code></pre>
-</div>
 
-<p>5.在 virtualenv 内, 安装 TensorFlow:
+<p>5.在 virtualenv 内, 安装 TensorFlow:<br />
 因为我用的是Python 2.x所以执行</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo pip install --upgrade  https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl
+<pre><code class="language-bash">$ sudo pip install --upgrade  https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl
 </code></pre>
-</div>
 
 <p>要是使用Python3可以执行</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code> <span class="nv">$ </span>pip3 install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py3-none-any.whl
+<pre><code class="language-bash"> $ pip3 install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py3-none-any.whl
 </code></pre>
-</div>
 
 <p>当然也可以执行下面这个命令直接安装最新版</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>pip install --upgrade tensorflow
+<pre><code class="language-bash">pip install --upgrade tensorflow
 </code></pre>
-</div>
 
 <p>等命令执行完TF就安装好了</p>
 
 <p>安装完成后可以在python中执行以下代码</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>import tensorflow as tf
-hello <span class="o">=</span> tf.constant<span class="o">(</span><span class="s1">'Hello, TensorFlow!'</span><span class="o">)</span>
-sess <span class="o">=</span> tf.Session<span class="o">()</span>
-print<span class="o">(</span>sess.run<span class="o">(</span>hello<span class="o">))</span>
+<pre><code class="language-bash">import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print(sess.run(hello))
 </code></pre>
-</div>
 
-<p>如果输出
-Hello, TensorFlow!
-就说明安装成功啦
-PS:运行脚本的时候会提示不支持SSE xxx指令集的提示，这是因为我们是通过pip直接安装的编译好的版本导致的，如果想针对机器优化，可以直接从GitHub上的源代码编译安装。但这样会复杂些，而且我觉得其实提升不大，用CPU都很慢。。。不如直接上GPU性能提升快
+<p>如果输出<br />
+Hello, TensorFlow!<br />
+就说明安装成功啦<br />
+PS:运行脚本的时候会提示不支持SSE xxx指令集的提示，这是因为我们是通过pip直接安装的编译好的版本导致的，如果想针对机器优化，可以直接从GitHub上的源代码编译安装。但这样会复杂些，而且我觉得其实提升不大，用CPU都很慢。。。不如直接上GPU性能提升快<br />
 PS2:如果想安装GPU版会复杂些，首先要有一块支持CUDA的N卡，再安装CUDA驱动啥的，各位看官可以谷歌一下查询相关资料。如果不想搜索，也可以看本系列后续文章，以后也会介绍如何在Mac下安装GPU版。</p>
 
-<h2 id="0x02-tensorflow基本使用">0x02 TensorFlow基本使用</h2>
+<h2 id="x02-tensorflow">0x02 TensorFlow基本使用</h2>
 
 <p>在介绍样例之前，我们先介绍一下TensorFlow的一些基本概念</p>
 
-<h3 id="1placehoder占位符">1.placehoder（占位符）</h3>
+<h3 id="placehoder">1.placehoder（占位符）</h3>
 
 <blockquote>
-  <p>tf.placeholder(dtype, shape=None, name=None)
-  Args:
-    dtype: The type of elements in the tensor to be fed.
-    shape: The shape of the tensor to be fed (optional). If the shape is not specified, you can feed a tensor of any shape.
+  <p>tf.placeholder(dtype, shape=None, name=None)<br />
+  Args:<br />
+    dtype: The type of elements in the tensor to be fed.<br />
+    shape: The shape of the tensor to be fed (optional). If the shape is not specified, you can feed a tensor of any shape.<br />
     name: A name for the operation (optional).</p>
 </blockquote>
 
-<p>dytpe:占位符的数据类型
-shape:占位符的纬度，例如[2,2]代表2x2的二维矩阵，None可以代表任意维度，例如[None,2]则代表任意行数，2列的二维矩阵
+<p>dytpe:占位符的数据类型<br />
+shape:占位符的纬度，例如[2,2]代表2x2的二维矩阵，None可以代表任意维度，例如[None,2]则代表任意行数，2列的二维矩阵<br />
 name:占位符的名字</p>
 
-<p>变量在定义时要初始化，但可能有些变量我们一开始定义的时候并不一定知道该变量的值，只有当真正开始运行程序的时候才由外部输入，比如我们需要训练的数据，所以就用占位符来占个位置，告诉TensorFlow，等到真正运行的时候再通过输入数据赋值。
+<p>变量在定义时要初始化，但可能有些变量我们一开始定义的时候并不一定知道该变量的值，只有当真正开始运行程序的时候才由外部输入，比如我们需要训练的数据，所以就用占位符来占个位置，告诉TensorFlow，等到真正运行的时候再通过输入数据赋值。<br />
 例如</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<pre><code class="language-python">x = tf.placeholder(tf.float32, [2, 2])
 </code></pre>
-</div>
 
-<p>就是生成了一个2x2的二维矩阵，矩阵中每个元素的类型都是tf.float32（也就是浮点型）
+<p>就是生成了一个2x2的二维矩阵，矩阵中每个元素的类型都是tf.float32（也就是浮点型）<br />
 有时候定义需要训练的参数时候，会定义一个[input_size,output_size]大小的矩阵，其中input_size数输入数据的维度，output_size是输出数据的维度</p>
 
-<h3 id="2variable变量">2.Variable（变量）</h3>
+<h3 id="variable">2.Variable（变量）</h3>
 
 <p>官方说明 有些长，我就不引用啦，这里介绍一个简单的用法，有一点变量在声明的时候要有一个初始值</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span> <span class="c"># 声明一个2x2的矩阵，并将矩阵中的所有元素的值赋为0，默认每个元素都是tf.float32类型的数据</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c"># 声明一个tf.float32的变量，并将初始值设为1.0</span>
+<pre><code class="language-python">x = tf.Variable(tf.zeros([2,2])) # 声明一个2x2的矩阵，并将矩阵中的所有元素的值赋为0，默认每个元素都是tf.float32类型的数据
+y = tf.Variable(1.0, tf.float32) # 声明一个tf.float32的变量，并将初始值设为1.0
 </code></pre>
-</div>
 
 <p>我们一般还需要运行下global_variables_initializer真正在TensorFlow的Session中初始化所有变量，后面的样例中也会有体现。</p>
 
-<h3 id="3constant常量">3.Constant（常量）</h3>
+<h3 id="constant">3.Constant（常量）</h3>
 
 <p><a href="https://www.tensorflow.org/api_docs/python/tf/Variable">官方说明</a> 同样不引用啦，这里介绍一个简单的用法</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c"># 定义一个值为3.0的浮点型常量</span>
+<pre><code class="language-python">x = tf.constant(3.0, tf.float32) # 定义一个值为3.0的浮点型常量
 </code></pre>
-</div>
 
-<h3 id="4session会话">4.Session（会话）</h3>
+<h3 id="session">4.Session（会话）</h3>
 
 <p>TensorFlow所有的操作都必须在Session中运行，才能真正起作用，可以将Session当作TensorFlow运行的环境，Session运行完需要close～</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#用close()关闭</span>
-<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">sess</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<pre><code class="language-python">#用close()关闭
+sess = tf.Session()
+sess.run(...)
+sess.close()
 
-<span class="c">#使用with..as..语句关闭</span>
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-<span class="err">    </span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+#使用with..as..语句关闭
+with tf.Session() as sess:
+    sess.run(...)
 </code></pre>
-</div>
 
-<h3 id="5简单使用">5.简单使用</h3>
+<h3 id="section">5.简单使用</h3>
 
 <p>我们介绍下3+5应该如何在TensorFlow中实现</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span> <span class="o">//</span> <span class="err">声明一个整型变量</span><span class="mi">3</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span> <span class="o">//</span> <span class="err">声明一个整型变量</span><span class="mi">5</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">//</span> <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-<span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span> <span class="o">//</span> <span class="err">初始化变量的操作</span>
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>  <span class="o">//</span> <span class="err">在</span><span class="n">Session</span><span class="err">中初始化变量</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="o">//</span> <span class="err">输出计算出的</span><span class="n">z</span><span class="err">值</span>
+x = tf.Variable(3, tf.int16) // 声明一个整型变量3
+y = tf.Variable(5, tf.int16) // 声明一个整型变量5
+z = tf.add(x,y) // z = x + y
+init = tf.global_variables_initializer() // 初始化变量的操作
+with tf.Session() as sess:
+    sess.run(init)  // 在Session中初始化变量
+    print(sess.run(z)) // 输出计算出的z值
 </code></pre>
-</div>
 
-<h2 id="0x03-样例">0x03 样例</h2>
+<h2 id="x03-">0x03 样例</h2>
 
-<p>Github上有一个比较好的<a href="https://github.com/aymericdamien/TensorFlow-Examples">Demo合集</a>，有注释有源代码还蛮好的，但今天我们不讲上面的代码，我们讲如何用TF实现线性回归模型
-所谓线性回归模型就是y = W * x + b的形式的表达式拟合的模型。
+<p>Github上有一个比较好的<a href="https://github.com/aymericdamien/TensorFlow-Examples">Demo合集</a>，有注释有源代码还蛮好的，但今天我们不讲上面的代码，我们讲如何用TF实现线性回归模型<br />
+所谓线性回归模型就是y = W * x + b的形式的表达式拟合的模型。<br />
 我们如果想通过深度学习拟合一条直线 y = 3 * x 应该怎么做呢？咱不讲虚的先展示下代码！然后我们在逐步分析。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#coding=utf-8</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">#coding=utf-8
+import tensorflow as tf
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+x = tf.placeholder(tf.float32)
+W = tf.Variable(tf.zeros([1]))
+b = tf.Variable(tf.zeros([1]))
+y_ = tf.placeholder(tf.float32)
 
-<span class="n">y</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+y = W * x + b
 
-<span class="n">lost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="mf">0.0000001</span><span class="p">)</span>
-<span class="n">train_step</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">lost</span><span class="p">)</span>
+lost = tf.reduce_mean(tf.square(y_-y))
+optimizer = tf.train.GradientDescentOptimizer(0.0000001)
+train_step = optimizer.minimize(lost)
 
-<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
-<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+sess = tf.Session()
+init = tf.global_variables_initializer()
+sess.run(init)
 
-<span class="n">steps</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span>
-    <span class="n">feed</span> <span class="o">=</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">xs</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">ys</span> <span class="p">}</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_step</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"After </span><span class="si">%</span><span class="s">d iteration:"</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"W: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">W</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"b: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"lost: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">lost</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed</span><span class="p">))</span>
+steps = 1000
+for i in range(steps):
+    xs = [i]
+    ys = [3 * i]
+    feed = { x: xs, y_: ys }
+    sess.run(train_step, feed_dict=feed)
+    if i % 100 == 0 :
+        print("After %d iteration:" % i)
+        print("W: %f" % sess.run(W))
+        print("b: %f" % sess.run(b))
+        print("lost: %f" % sess.run(lost, feed_dict=feed))
 </code></pre>
-</div>
 
 <p>1.先导入需要使用的python库</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#coding=utf-8</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">#coding=utf-8
+import tensorflow as tf
 </code></pre>
-</div>
 
 <p>毕竟是基于TensorFlow的，那我们肯定要导入TensorFlow滴，导入之后取个别名tf，之后用起来方便些。</p>
 
 <p>2.定义需要的变量，我们看看y = W * x + b中都有哪些变量</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<pre><code class="language-python">x = tf.placeholder(tf.float32)
+W = tf.Variable(tf.zeros([1]))
+b = tf.Variable(tf.zeros([1]))
+y_ = tf.placeholder(tf.float32)
 </code></pre>
-</div>
 
-<p>x：我们训练时需要输入的真实数据x
-W: 我们需要训练的W，这里我们定义了一个1维的变量（其实吧，就是一个普普通通的数，直接用tf.float32也行）并将其初值赋为0
-b : 我们需要训练的b，定义一个1维变量，并将其初值赋为0
+<p>x：我们训练时需要输入的真实数据x<br />
+W: 我们需要训练的W，这里我们定义了一个1维的变量（其实吧，就是一个普普通通的数，直接用tf.float32也行）并将其初值赋为0<br />
+b : 我们需要训练的b，定义一个1维变量，并将其初值赋为0<br />
 y_ ：我们训练时需要输入的x对应的y</p>
 
 <p>3.定义线性模型</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">y</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+<pre><code class="language-python">y = W * x + b
 </code></pre>
-</div>
 
 <p>4.定义损失函数和优化方法</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">lost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span><span class="o">-</span><span class="n">y</span><span class="p">))</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="mf">0.0000001</span><span class="p">)</span>
-<span class="n">train_step</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">lost</span><span class="p">)</span>
-<span class="n">lost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span><span class="o">-</span> <span class="n">y</span><span class="p">))</span>
+<pre><code class="language-python">lost = tf.reduce_mean(tf.square(y_-y))
+optimizer = tf.train.GradientDescentOptimizer(0.0000001)
+train_step = optimizer.minimize(lost)
+lost = tf.reduce_mean(tf.square(y_- y))
 </code></pre>
-</div>
 
 <p>损失函数(Lost Function)是用来评估我们预测的值和真实的值之间的差距是多少，损失函数有很多种写法，我们这里使用（y预测-y真实)^2再取平均数来作为我们的损失函数（用这个函数是有原因的，因为我们用的是梯度下降法进行学习）损失函数的值越小越好，有些教程也叫Cost Function</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="mf">0.0000001</span><span class="p">)</span>
+<pre><code class="language-python">optimizer = tf.train.GradientDescentOptimizer(0.0000001)
 </code></pre>
-</div>
 
-<p>优化函数代表我们要通过什么方式去优化我们需要学习的值，这个例子里指的是W和b，优化函数的种类有很多，大家到<a href="https://www.tensorflow.org/api_guides/python/train">官网</a>查阅，
-平时我们用的比较多的是GradientDescentOptimizer和AdamOptimizer等，这里我们选用最常用也是最最基本的GradientDescentOptimizer（梯度下降），后面传入的值是学习效率。一般是一个小于1的数。越小收敛越慢，但并不是越大收敛越快哈，取值太大甚至可能不收敛了。。。
-我们简单介绍下什么是梯度下降，梯度顾名思义就是函数某一点的导数，也就是该点的变化率。梯度下降则顾名思义就是沿梯度下降的方向求解极小值。
+<p>优化函数代表我们要通过什么方式去优化我们需要学习的值，这个例子里指的是W和b，优化函数的种类有很多，大家到<a href="https://www.tensorflow.org/api_guides/python/train">官网</a>查阅，<br />
+平时我们用的比较多的是GradientDescentOptimizer和AdamOptimizer等，这里我们选用最常用也是最最基本的GradientDescentOptimizer（梯度下降），后面传入的值是学习效率。一般是一个小于1的数。越小收敛越慢，但并不是越大收敛越快哈，取值太大甚至可能不收敛了。。。<br />
+我们简单介绍下什么是梯度下降，梯度顾名思义就是函数某一点的导数，也就是该点的变化率。梯度下降则顾名思义就是沿梯度下降的方向求解极小值。<br />
 详细解释大家可以自行谷歌一下～当然可以可以看<a href="http://blog.csdn.net/yhao2014/article/details/51554910">这篇文章</a>，当然由于性能的原因梯度下降有很多种变种，例如随机梯度下降 (Stochastic Gradient Descent)，小批梯度下降 (Mini-Batch Gradient Descent)。本文样例采用的是SGD，每次只输入一个数据。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_step</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">lost</span><span class="p">)</span>
+<pre><code class="language-python">train_step = optimizer.minimize(lost)
 </code></pre>
-</div>
 
 <p>这个代表我们每次训练迭代的目的，本例我们的目的就是尽量减小lost的值，也就是让损失函数的值尽量变小</p>
 
 <p>5.变量初始化</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
-<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+<pre><code class="language-python">sess = tf.Session()
+init = tf.global_variables_initializer()
+sess.run(init)
 </code></pre>
-</div>
 
 <p>这个之前有所介绍了，我们需要在Session中真正运行下global_variables_initializer才会真正初始化变量</p>
 
 <p>6.开始训练</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">steps</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span>
-    <span class="n">feed</span> <span class="o">=</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">xs</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">ys</span> <span class="p">}</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_step</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"After </span><span class="si">%</span><span class="s">d iteration:"</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"W: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">W</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"b: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"lost: </span><span class="si">%</span><span class="s">f"</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">lost</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed</span><span class="p">))</span>
+<pre><code class="language-python">steps = 1000
+for i in range(steps):
+    xs = [i]
+    ys = [3 * i]
+    feed = { x: xs, y_: ys }
+    sess.run(train_step, feed_dict=feed)
+    if i % 100 == 0 :
+        print("After %d iteration:" % i)
+        print("W: %f" % sess.run(W))
+        print("b: %f" % sess.run(b))
+        print("lost: %f" % sess.run(lost, feed_dict=feed))
 </code></pre>
-</div>
 
-<p>我们定义一个训练迭代次数1000次
-这里我们图方便，每次迭代都直接将i作为x，3*i作为y直接当成训练数据。
-我们所有通过placeholder定义的值，在训练时我们都需要通过feed_dict来传入数据。
+<p>我们定义一个训练迭代次数1000次<br />
+这里我们图方便，每次迭代都直接将i作为x，3*i作为y直接当成训练数据。<br />
+我们所有通过placeholder定义的值，在训练时我们都需要通过feed_dict来传入数据。<br />
 然后我们每隔100次迭代，输出一次训练结果，看看效果如何～</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">After</span> <span class="mi">0</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">0.000000</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.000000</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.000000</span>
-<span class="n">After</span> <span class="mi">100</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">0.196407</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.002951</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">78599.671875</span>
-<span class="n">After</span> <span class="mi">200</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">1.249361</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.009867</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">122582.625000</span>
-<span class="n">After</span> <span class="mi">300</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.513344</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.015055</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">21310.636719</span>
-<span class="n">After</span> <span class="mi">400</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.960238</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016392</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">252.449890</span>
-<span class="n">After</span> <span class="mi">500</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.999347</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016484</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.096061</span>
-<span class="n">After</span> <span class="mi">600</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.999971</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016485</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.000001</span>
-<span class="n">After</span> <span class="mi">700</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.999975</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016485</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.000001</span>
-<span class="n">After</span> <span class="mi">800</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.999978</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016485</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.000001</span>
-<span class="n">After</span> <span class="mi">900</span> <span class="n">iteration</span><span class="p">:</span>
-<span class="n">W</span><span class="p">:</span> <span class="mf">2.999981</span>
-<span class="n">b</span><span class="p">:</span> <span class="mf">0.016485</span>
-<span class="n">lost</span><span class="p">:</span> <span class="mf">0.000000</span>
+<pre><code class="language-python">After 0 iteration:
+W: 0.000000
+b: 0.000000
+lost: 0.000000
+After 100 iteration:
+W: 0.196407
+b: 0.002951
+lost: 78599.671875
+After 200 iteration:
+W: 1.249361
+b: 0.009867
+lost: 122582.625000
+After 300 iteration:
+W: 2.513344
+b: 0.015055
+lost: 21310.636719
+After 400 iteration:
+W: 2.960238
+b: 0.016392
+lost: 252.449890
+After 500 iteration:
+W: 2.999347
+b: 0.016484
+lost: 0.096061
+After 600 iteration:
+W: 2.999971
+b: 0.016485
+lost: 0.000001
+After 700 iteration:
+W: 2.999975
+b: 0.016485
+lost: 0.000001
+After 800 iteration:
+W: 2.999978
+b: 0.016485
+lost: 0.000001
+After 900 iteration:
+W: 2.999981
+b: 0.016485
+lost: 0.000000
 </code></pre>
-</div>
 
 <p>可以看到在迭代了500次之后效果就很好了，w已经达到2.999347很接近3了，b也达到了0.016484也比较接近0了，因为这里学习率选择的比较小，所以收敛的比较慢，各位也可以尝试调大学习率，看看收敛的速度有何变化。</p>
 
@@ -691,9 +666,9 @@ y_ ：我们训练时需要输入的x对应的y</p>
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/posts/Deep_learning_entry_2/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/posts/Deep_learning_entry_2/' 
+     'url':'http://MelonTeam.com/posts/Deep_learning_entry_2/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/Deep_learning_entry_2/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
