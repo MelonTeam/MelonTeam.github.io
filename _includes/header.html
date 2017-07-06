@@ -11,12 +11,12 @@
                         {% else %}
                     <a href="{{site.baseurl}}/">
                     {% endif %}
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
                 {% for my_page in site.pages %}
-                    {% if my_page.type == 'page' %}
+                    {% if my_page.nav == true %}
                     <li>
                         {% if my_page.url == page.url %}
                         <a class="active" href="{{ my_page.url | prepend: site.baseurl }}">

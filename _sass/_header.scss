@@ -18,6 +18,12 @@ header {
         line-height: 52px;
         .brand {
             font-size: 18px;
+
+            text-indent: -99999em;
+            display: inline-block;
+            background: url(/image/MelonTeam-Logo-100.png) no-repeat center;
+            width: 100px;
+            background-size: contain;
         }
         small {
             margin-left: 26px;
