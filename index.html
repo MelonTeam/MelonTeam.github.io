@@ -36,7 +36,6 @@ layout: default
                     {% endif %}
                 </div>
                 <div class="excerpt clearfix">
-                    {{post.content|first_image|preview_image}}
                     {{post.excerpt|strip_html|trim_newlines|newline_to_br}}
                 </div>
                 <div class="read-all">
