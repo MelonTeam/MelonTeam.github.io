@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "走进 Masonry"
-date: 2017-05-27 19:58:00
+date: 2017-05-27 19:58:00 +0800
 categories: ios
 author: pikachuqiu
-tags: autolayo... masonry
+tags: autolayout masonry
 ---
 
 * content

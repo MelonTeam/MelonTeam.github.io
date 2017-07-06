@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "Android JNI堆栈分析工具简介"
-date: 2017-06-23 17:01:00
+date: 2017-06-23 17:01:00 +0800
 categories: android
 author: stevcao
-tags: JNI堆栈 ndk-stac...
+tags: JNI堆栈 ndk-stack
 ---
 
 * content

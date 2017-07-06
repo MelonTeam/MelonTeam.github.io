@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "WWDC2017小结"
-date: 2017-06-23 16:01:00
+date: 2017-06-23 16:01:00 +0800
 categories: ios
 author: maxsezhang
 tags: COREML ARKit

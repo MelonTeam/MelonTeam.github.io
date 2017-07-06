@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "OpenGL ES读书笔记（一）—初始庐山真面目"
-date: 2017-06-30 21:37:00
+date: 2017-06-30 21:37:00 +0800
 categories: android
 author: vianhuang
 tags: Android OpenGL

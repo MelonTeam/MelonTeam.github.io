@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "基于Java反射实现Android的ORM框架"
-date: 2017-06-29 18:22:00
+date: 2017-06-29 18:22:00 +0800
 categories: android
 author: andyqtchen
 tags: ORM Android

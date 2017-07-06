@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "深度学习基础概念笔记"
-date: 2017-06-29 20:10:00
+date: 2017-06-29 20:10:00 +0800
 categories: ai
 author: parrzhang
 tags: 深度学习 神经网络

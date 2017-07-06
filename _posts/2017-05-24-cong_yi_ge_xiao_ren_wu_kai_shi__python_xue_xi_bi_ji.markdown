@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "从一个小任务开始——Python学习笔记"
-date: 2017-05-24 00:21:00
+date: 2017-05-24 00:21:00 +0800
 categories: ios
 author: jakchen
-tags: Python 拓展知识...
+tags: Python 拓展知识类
 ---
 
 * content

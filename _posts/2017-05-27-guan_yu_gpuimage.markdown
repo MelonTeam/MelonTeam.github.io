@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "关于GPUImage"
-date: 2017-05-27 17:55:00
+date: 2017-05-27 17:55:00 +0800
 categories: ios
 author: doreencao
 tags: 滤镜

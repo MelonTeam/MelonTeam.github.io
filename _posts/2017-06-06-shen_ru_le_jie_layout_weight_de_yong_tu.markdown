@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "深入了解layout_weight的用途"
-date: 2017-06-06 19:46:00
+date: 2017-06-06 19:46:00 +0800
 categories: android
 author: kylepeng
-tags: layout_w... LinearLa...
+tags: layout_weight LinearLayout
 ---
 
 * content

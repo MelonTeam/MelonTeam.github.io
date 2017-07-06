@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Make WeChat Great Again"
-date: 2017-05-25 12:23:00
+date: 2017-05-25 12:23:00 +0800
 categories: ios
 author: rebootyang
 tags: 微信 iOS

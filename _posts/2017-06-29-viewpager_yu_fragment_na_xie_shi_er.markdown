@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "ViewPager与Fragment那些事儿"
-date: 2017-06-29 21:03:00
+date: 2017-06-29 21:03:00 +0800
 categories: android
 author: arendgxma
-tags: ViewPage... fragment
+tags: ViewPager fragment
 ---
 
 * content

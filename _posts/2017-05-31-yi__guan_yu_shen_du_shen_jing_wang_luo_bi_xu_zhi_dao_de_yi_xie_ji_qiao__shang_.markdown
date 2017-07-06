@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "【译】关于深度神经网络必须知道的一些技巧（上）"
-date: 2017-05-31 22:50:00
+date: 2017-05-31 22:50:00 +0800
 categories: 其他
 author: cirolong
-tags: 深度学习 网络训练...
+tags: 深度学习 网络训练技巧
 ---
 
 * content

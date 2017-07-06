@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[译]Android Instant Apps简介"
-date: 2017-06-30 16:09:00
+date: 2017-06-30 16:09:00 +0800
 categories: android
 author: jennyxia
 tags: App Instant

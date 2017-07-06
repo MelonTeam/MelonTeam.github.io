@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "图像处理之漫水填充算法（flood fill algorithm）"
-date: 2017-06-28 19:54:00
+date: 2017-06-28 19:54:00 +0800
 categories: android
 author: zijianlu
 tags: 图像处理 OpenCV

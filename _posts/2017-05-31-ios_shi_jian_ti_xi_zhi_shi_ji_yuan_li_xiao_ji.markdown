@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "iOS 事件体系知识及原理小记"
-date: 2017-05-31 22:39:00
+date: 2017-05-31 22:39:00 +0800
 categories: ios
 author: jdochen
 tags: iOS事件

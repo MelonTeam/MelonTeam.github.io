@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "开发中容易忽略和挖坑的场景总结"
-date: 2017-05-27 15:53:00
+date: 2017-05-27 15:53:00 +0800
 categories: ios
 author: lilinli
 tags: 坑系列

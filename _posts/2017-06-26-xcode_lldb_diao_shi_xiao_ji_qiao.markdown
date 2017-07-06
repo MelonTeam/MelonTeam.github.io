@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "XCode LLDB调试小技巧"
-date: 2017-06-26 11:27:00
+date: 2017-06-26 11:27:00 +0800
 categories: android
 author: chaodong
 tags: 调试 小技巧

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "重磅整理---Android进程保活组件"
-date: 2017-05-05 21:36:00
+date: 2017-05-05 21:36:00 +0800
 categories: android
 author: henrikwu
 tags: 进程保活 Android

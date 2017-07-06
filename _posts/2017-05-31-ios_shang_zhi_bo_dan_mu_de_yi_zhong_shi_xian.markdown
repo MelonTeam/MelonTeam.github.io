@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "iOS上直播弹幕的一种实现"
-date: 2017-05-31 11:57:00
+date: 2017-05-31 11:57:00 +0800
 categories: ios
 author: nicema
 tags: 弹幕实现 iOS

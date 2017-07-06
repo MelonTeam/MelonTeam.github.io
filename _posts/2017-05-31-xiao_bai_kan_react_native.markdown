@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "小白看React Native"
-date: 2017-05-31 10:36:00
+date: 2017-05-31 10:36:00 +0800
 categories: ios
 author: peterlmeng
-tags: ReactNat...
+tags: ReactNative
 ---
 
 * content

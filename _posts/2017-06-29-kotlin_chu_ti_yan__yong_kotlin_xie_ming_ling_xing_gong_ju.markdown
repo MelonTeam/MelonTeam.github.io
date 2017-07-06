@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Kotlin 初体验: 用 Kotlin 写命令行工具"
-date: 2017-06-29 22:56:00
+date: 2017-06-29 22:56:00 +0800
 categories: android
 author: vashzhong
 tags: java kotlin

@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "浅析Associated Object"
-date: 2017-05-27 10:10:00
+date: 2017-05-27 10:10:00 +0800
 categories: ios
 author: neilliang
-tags: Associat...
+tags: AssociatedObject
 ---
 
 * content

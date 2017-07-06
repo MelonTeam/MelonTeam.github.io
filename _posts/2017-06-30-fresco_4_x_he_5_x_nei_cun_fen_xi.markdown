@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Fresco 4.X和5.X内存分析"
-date: 2017-06-30 20:36:00
+date: 2017-06-30 20:36:00 +0800
 categories: android
 author: siriushe
 tags: fresco

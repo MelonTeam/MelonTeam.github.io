@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "Flipagram 涂鸦特效逆向分析"
-date: 2017-05-27 15:56:00
+date: 2017-05-27 15:56:00 +0800
 categories: ios
 author: qingduan
-tags: 涂鸦粒子...
+tags: 涂鸦粒子效果
 ---
 
 * content

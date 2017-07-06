@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "浅析Android中的ThreadLocal"
-date: 2017-06-30 22:49:00
+date: 2017-06-30 22:49:00 +0800
 categories: android
 author: limingzhang
-tags: ThreadLo... Android
+tags: ThreadLocal Android
 ---
 
 * content

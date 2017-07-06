@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "使用Anko Layouts来开发Android(翻译)"
-date: 2017-06-29 11:06:00
+date: 2017-06-29 11:06:00 +0800
 categories: android
 author: baobaowang
 tags: 布局 kotlin

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "一个创建自定义事件源的例子"
-date: 2017-05-31 19:57:00
+date: 2017-05-31 19:57:00 +0800
 categories: ios
 author: justinytang
 tags: 线程 runloop

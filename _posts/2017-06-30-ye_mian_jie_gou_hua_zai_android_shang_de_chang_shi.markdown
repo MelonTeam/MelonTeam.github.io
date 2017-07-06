@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "页面结构化在Android上的尝试"
-date: 2017-06-30 16:38:00
+date: 2017-06-30 16:38:00 +0800
 categories: android
 author: bizaitan
-tags: LEGO 页面结构...
+tags: LEGO 页面结构化
 ---
 
 * content

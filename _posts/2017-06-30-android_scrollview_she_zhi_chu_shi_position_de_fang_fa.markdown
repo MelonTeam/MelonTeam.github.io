@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Android ScrollView设置初始position的方法"
-date: 2017-06-30 16:03:00
+date: 2017-06-30 16:03:00 +0800
 categories: android
 author: freedeng
 tags: 反射 初始位置

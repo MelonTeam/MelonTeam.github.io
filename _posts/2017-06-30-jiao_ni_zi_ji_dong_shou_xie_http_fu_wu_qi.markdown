@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "教你自己动手写HTTP服务器"
-date: 2017-06-30 20:40:00
+date: 2017-06-30 20:40:00 +0800
 categories: android
 author: vincanyang
-tags: 轻量HTTP...
+tags: 轻量HTTP服务器组件
 ---
 
 * content

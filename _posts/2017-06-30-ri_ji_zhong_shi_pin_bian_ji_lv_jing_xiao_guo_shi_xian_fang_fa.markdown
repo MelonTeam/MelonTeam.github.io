@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "日迹中视频编辑滤镜效果实现方法"
-date: 2017-06-30 22:10:00
+date: 2017-06-30 22:10:00 +0800
 categories: android
 author: berylzhao
 tags: 滤镜实现
@@ -79,7 +79,6 @@ decoder.dequeueOutputBuffer(info, 10000);
 decoder.releaseOutputBuffer(bufferIndex, isRender);
 
 }
-
 ```
 
 走到这里，我们已经可以从Surface上拿到每一帧对应的Texture

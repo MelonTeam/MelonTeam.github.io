@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "一种下载管理方案的设计与实现"
-date: 2017-06-21 10:13:00
+date: 2017-06-21 10:13:00 +0800
 categories: android
 author: leoyxwang
 tags: 下载 优先级
