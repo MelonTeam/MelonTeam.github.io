@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/">
+    <link rel="canonical" href="http://MelonTeam.com/page9/">
     <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
@@ -120,15 +120,11 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/">浅析Android中的ThreadLocal</a>
+                  <a class="post-link" href="/2017/03/28/Video_codec_learning_sharing/">视频编解码学习分享</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>limingzhang
+                        <i class="fa fa-calendar"></i>2017-03-28
                     </div>
                     
                     
@@ -144,7 +140,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#视频" title="Category: 视频" rel="category">视频</a>
     
   
 
@@ -165,9 +161,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#ThreadLo..." title="Tag: ThreadLo..." rel="tag">ThreadLo...</a>&nbsp;
+        <a href="/tag/#编解码" title="Tag: 编解码" rel="tag">编解码</a>&nbsp;
     
-        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>
+        <a href="/tag/#视频" title="Tag: 视频" rel="tag">视频</a>
     
   
 
@@ -179,28 +175,23 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    
-                    ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK<br />
-1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。<br />
+                    <div class='preview-image'><img src='/image/Video_codec_learning_sharing/1.png' alt='' /></div>
+                    目录 视频为什么要编解码 视频是否可以压缩 编解码实现原理 编解码标准和国际组织 视频文件封装（容器） 视频质量评价体系<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/28/Video_codec_learning_sharing/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">日迹中视频编辑滤镜效果实现方法</a>
+                  <a class="post-link" href="/2017/03/27/IOS_touch_event_distribution_mechanism/">IOS触摸事件分发机制详解</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>berylzhao
+                        <i class="fa fa-calendar"></i>2017-03-27
                     </div>
                     
                     
@@ -216,7 +207,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -237,7 +228,7 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#滤镜实现" title="Tag: 滤镜实现" rel="tag">滤镜实现</a>
+        <a href="/tag/#事件" title="Tag: 事件" rel="tag">事件</a>
     
   
 
@@ -249,28 +240,28 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807' alt='' /></div>
-                    导语 本文简要分析，日迹视频解码流程以及视频滤镜的实现原理<br />
-需求背景：日迹需要的编辑滤镜效果预览图<br />
+                    <div class='preview-image'><img src='/image/IOS_touch_event_distribution_mechanism/1.png' alt='' /></div>
+                    ## 前言<br />
+很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:<br />
+某个点击消息由父视图来处理，子视图怎么把消息传递给父视图<br />
+这个按钮不灵敏，怎么扩大点击响应区域<br />
+怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息<br />
+阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-test view 、人为干预响应者能否对这一事件作出响应最终来控制触摸事件的分发机制。<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/27/IOS_touch_event_distribution_mechanism/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">OpenGL ES读书笔记（一）—初始庐山真面目</a>
+                  <a class="post-link" href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">Android短视频边下边播详解</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>vianhuang
+                        <i class="fa fa-calendar"></i>2017-03-27
                     </div>
                     
                     
@@ -307,9 +298,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+        <a href="/tag/#边下边播" title="Tag: 边下边播" rel="tag">边下边播</a>&nbsp;
     
-        <a href="/tag/#OpenGL" title="Tag: OpenGL" rel="tag">OpenGL</a>
+        <a href="/tag/#视频" title="Tag: 视频" rel="tag">视频</a>
     
   
 
@@ -321,27 +312,25 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/OpenGL_ES_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/bed68d59028baaf5ddda621d0c9b196ca19901b2e072f4879772e2e7de2f5375' alt='' /></div>
-                    1. OpenGL ES简介 1.1 顶点着色器 1.2 片段着色器<br />
+                    <div class='preview-image'><img src='/image/Android_short_video_side_of_the_next_sowing_solution/1.png' alt='' /></div>
+                           短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。<br />
+【视频格式】<br />
+       想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/">教你自己动手写HTTP服务器</a>
+                  <a class="post-link" href="/2017/03/27/ML04GradientDescent/">机器学习入门系列04，Gradient Descent（梯度下降法）</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>vincanyang
+                        <i class="fa fa-calendar"></i>2017-03-27
                     </div>
                     
                     
@@ -357,7 +346,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
     
   
 
@@ -378,7 +367,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#轻量HTTP..." title="Tag: 轻量HTTP..." rel="tag">轻量HTTP...</a>
+        <a href="/tag/#机器学习" title="Tag: 机器学习" rel="tag">机器学习</a>&nbsp;
+    
+        <a href="/tag/#机器学习入门笔记" title="Tag: 机器学习入门笔记" rel="tag">机器学习入门笔记</a>
     
   
 
@@ -390,29 +381,27 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/0980a6591b23c720a88253b9f052d832890e06c2ce26c7aa339fb5b2487a5a16' alt='' /></div>
-                    网络IO模型选择<br />
-谈到HTTP服务器，立马就能联想到Apache、Nginx等大名鼎鼎的开源组件。如果需要一个本地代理HTTP服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在Android上手动编写一个轻量的HTTP服务器，通过阅读本文，笔者即将为你揭开HTTP服务器的面纱，收获一个五脏俱全的轻量HTTP服务器组件TinyHttpd。<br />
-网络IO模型选择<br />
+                    <div class='preview-image'><img src='http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0p6ppb7dj20z20ck76o.jpg' alt='' /></div>
+                    什么是Gradient Descent（梯度下降法）？ Review: 梯度下降法 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66632699<br />
+什么是Gradient Descent（梯度下降法）？<br />
+在第二篇文章中有介绍到梯度下降法的做法，传送门：机器学习入门系列02，Regression 回归：案例研究<br />
+Review: 梯度下降法<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/27/ML04GradientDescent/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/">Fresco 4.X和5.X内存分析</a>
+                  <a class="post-link" href="/2017/03/27/ML03BiasAndVariance/">机器学习入门系列03，Error的来源：偏差和方差（bias 和 variance）</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>siriushe
+                        <i class="fa fa-calendar"></i>2017-03-27
                     </div>
                     
                     
@@ -428,7 +417,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
     
   
 
@@ -449,7 +438,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#fresco" title="Tag: fresco" rel="tag">fresco</a>
+        <a href="/tag/#方差" title="Tag: 方差" rel="tag">方差</a>&nbsp;
+    
+        <a href="/tag/#无偏估计" title="Tag: 无偏估计" rel="tag">无偏估计</a>
     
   
 
@@ -461,29 +452,26 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Fresco_4_X_he_5_X_nei_cun_fen_xi/a4d7236838155ee5bbca33914aa21364c5b4e8a743c3452c791bde4c914b750b' alt='' /></div>
-                    4.X系统的Fresco<br />
-两年前部落项目接入Fresco的时候，那时候主流机型还是4.X。Fresco在4.X的机器的内存性能很好，Bitmap存在Ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。<br />
-4.X系统的Fresco<br />
+                    <div class='preview-image'><img src='http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ofd7d2nj20vi0hsgnx.jpg' alt='' /></div>
+                    回顾 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66611368<br />
+回顾<br />
+第二篇中神奇宝贝的例子：<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/27/ML03BiasAndVariance/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/fork_join_kuang_jia/">Fork/Join 框架</a>
+                  <a class="post-link" href="/2017/03/27/ML02Regression/">机器学习入门系列02，Regression 回归：案例研究</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
-                    </div>
-                    
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>kueeniechen
+                        <i class="fa fa-calendar"></i>2017-03-27
                     </div>
                     
                     
@@ -499,7 +487,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
     
   
 
@@ -520,9 +508,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#并发" title="Tag: 并发" rel="tag">并发</a>&nbsp;
+        <a href="/tag/#回归" title="Tag: 回归" rel="tag">回归</a>&nbsp;
     
-        <a href="/tag/#java" title="Tag: java" rel="tag">java</a>
+        <a href="/tag/#损失函数" title="Tag: 损失函数" rel="tag">损失函数</a>
     
   
 
@@ -534,14 +522,16 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Fork_Join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3' alt='' /></div>
-                    1. 简介<br />
-1.1 什么是Fork/Join框架<br />
-        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java<br />
+                    <div class='preview-image'><img src='http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0me8ssa8j20zc0kcn5j.jpg' alt='' /></div>
+                    为什么要先进行案例研究？ Regression （回归） 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66577532<br />
+为什么要先进行案例研究？<br />
+没有比较好的数学基础，直接接触深度学习会非常抽象，所以这里我们先通过一个预测 Pokemon Go 的 Combat Power (CP) 值的案例，打开深度学习的大门。<br />
+Regression （回归）<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/fork_join_kuang_jia/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/03/27/ML02Regression/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -554,10 +544,12 @@
         <div class="pagination text-align">
           <div class="btn-group">
             
-                
+              
+                  <a href="/page8"  class="btn btn-outline">&laquo;</a>
+              
             
             
-                <a href="javascript:;" class="active btn btn-outline">1</a>
+                <a href="/"  class="btn btn-outline">1</a>
             
             
               
@@ -589,7 +581,7 @@
               
             
               
-                  <a href="/page9"  class="btn btn-outline">9</a>
+                  <a href="javascript:;"  class="active btn btn-outline">9</a>
               
             
               
@@ -597,7 +589,7 @@
               
             
             
-                <a href="/page2"  class="btn btn-outline">&raquo;</a>
+                <a href="/page10"  class="btn btn-outline">&raquo;</a>
             
             </div>
         </div>

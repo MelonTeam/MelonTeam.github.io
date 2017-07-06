@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>机器学习入门系列06，logistic regression逻辑回归</title>
+    <meta name="description" content="引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的csdn上查看，传送门：（无奈脸）csdn博客文章地址：http://blog.csdn.net/zyq522376829...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>机器学习入门系列06，logistic regression逻辑回归</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-04-10
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yoferzhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%88%A4%E5%88%AB%E6%96%B9%E6%B3%95" title="Tag: 判别方法" rel="tag">判别方法</a-->
+        <a href="/tag/#判别方法" title="Tag: 判别方法" rel="tag">判别方法</a>&nbsp;
+    
+        <!--a href="/tag/#%E4%BA%A4%E5%8F%89%E7%86%B5" title="Tag: 交叉熵" rel="tag">交叉熵</a-->
+        <a href="/tag/#交叉熵" title="Tag: 交叉熵" rel="tag">交叉熵</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#a-namestep1--classreference-linkstep1-" id="markdown-toc-a-namestep1--classreference-linkstep1-"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</a></li>
+  <li><a href="#a-namestep2--classreference-linkstep2-" id="markdown-toc-a-namestep2--classreference-linkstep2-"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</a></li>
+  <li><a href="#a-namestep3-function-classreference-linkstep3-function" id="markdown-toc-a-namestep3-function-classreference-linkstep3-function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</a></li>
+  <li><a href="#a-name-classreference-link" id="markdown-toc-a-name-classreference-link"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</a></li>
+  <li><a href="#a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative" id="markdown-toc-a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</a>    <ul>
+      <li><a href="#a-name-classreference-link-1" id="markdown-toc-a-name-classreference-link-1"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</a></li>
+      <li><a href="#a-namediscriminativegenerative-classreference-linkdiscriminativegenerative" id="markdown-toc-a-namediscriminativegenerative-classreference-linkdiscriminativegenerative"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</a></li>
+      <li><a href="#a-namesoftmax-classreference-linksoftmax" id="markdown-toc-a-namesoftmax-classreference-linksoftmax"><a name="softmax" class="reference-link"></a>softmax</a></li>
+      <li><a href="#a-namesoftmax-classreference-linksoftmax-1" id="markdown-toc-a-namesoftmax-classreference-linksoftmax-1"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</a></li>
+      <li><a href="#a-nametarget-classreference-linktarget" id="markdown-toc-a-nametarget-classreference-linktarget"><a name="定义target" class="reference-link"></a>定义target</a></li>
+    </ul>
+  </li>
+  <li><a href="#a-name-classreference-link-2" id="markdown-toc-a-name-classreference-link-2"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</a>    <ul>
+      <li><a href="#a-namefeature-transformation-classreference-linkfeature-transformation" id="markdown-toc-a-namefeature-transformation-classreference-linkfeature-transformation"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</a></li>
+      <li><a href="#a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models" id="markdown-toc-a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</a></li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+
+</blockquote>
+
+<p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ml16.html</a></p>
+
+<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的csdn上查看，传送门：（无奈脸）</p>
+
+<blockquote>
+
+</blockquote>
+
+<p>csdn博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/69941886">http://blog.csdn.net/zyq522376829/article/details/69941886</a></p>
+
+<!--more-->
+
+<h1 id="a-namestep1--classreference-linkstep1-"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</h1>
+
+<p>上一篇讲到分类问题的解决方法，推导出函数集的形式为：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/705d4dca130a98d7daaa0f77e3fe3369f2a8449bf1b6a7ef159c1c40dda6e02a" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegtzgbqkqj20zm0lk77t.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegtzgbqkqj20zm0lk77t.jpg';}" alt="" /></p>
+
+<p>将函数集可视化：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/919cdee0bd7eca20194daf1e7521141a4c4bae7fa77ea3eec1a121fc6754196c" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegtzxnktpj213k0lyjuv.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegtzxnktpj213k0lyjuv.jpg';}" alt="" /></p>
+
+<p>图中z写错了，应该是 z=∑iwixi+bz = \sum_{i} w_{i} x_{i} + bz=∑​i​​w​i​​x​i​​+b。这种函数集的分类问题叫做 <strong>logistic regression（逻辑回归）</strong>，将它和第二篇讲到的线性回归简单对比一下函数集：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/79dba25ed0ed9c791d5cf6d7886a1bcfd4c5098689b2e45926e5999659526859" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu0gmykvj213o094gn8.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu0gmykvj213o094gn8.jpg';}" alt="" /></p>
+
+<h1 id="a-namestep2--classreference-linkstep2-"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</h1>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/2900afdd595cfabd8be3d0858662b100cee136f7cb8874514e86049779c28acb" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu1tsbvxj20sm06waad.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu1tsbvxj20sm06waad.jpg';}" alt="" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>上图有一个训练集，每个对象分别对应属于哪个类型（例如 x3x^{3}x​3​​ 属于 c2c_{2}c​2​​ ）。假设这些数据都是由后验概率 fw,b(x)=pw,b(c1∣x)f_{w,b}(x) = p_{w, b}(c_{1}</td>
+      <td>x)f​w,b​​(x)=p​w,b​​(c​1​​∣x)产生的。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>给定一组 w和b，就可以计算这组w，b下产生上图n个训练数据的概率，</p>
+
+<p>l(w,b)=fw,b(x1)fw,b(x2)(1−fw,b(x3))⋯fw,b(xn)(1−1)l(w, b) = f_{w,b}(x^{1})f_{w,b}(x^{2}) \left( 1-f_{w,b}(x^{3}) \right) \cdots f_{w,b}(x^{n}) \qquad (1-1)l(w,b)=f​w,b​​(x​1​​)f​w,b​​(x​2​​)(1−f​w,b​​(x​3​​))⋯f​w,b​​(x​n​​)(1−1)</p>
+
+<p>对于使得 l(w,b)l(w, b)l(w,b)最大的www和 bbb，记做wstarw^{star}w​star​​ 和 bstarb^{star}b​star​​ ，即：</p>
+
+<p>wstar,bstar=argmaxw,bl(w,b)(1−2)w^{star},b^{star} = \arg \max_{w,b} l(w,b) \qquad (1-2)w​star​​,b​star​​=argmax​w,b​​l(w,b)(1−2)</p>
+
+<p>将训练集数字化，并且将式1-2中求max通过取负自然对数转化为求min ：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/10cf1f7262bb76330c9a92e62a8bbde6aa230fd598bcaa42468948d287f38baf" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu2bunz0j21340sctcu.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu2bunz0j21340sctcu.jpg';}" alt="" /></p>
+
+<p>然后将−lnl(w,b)-\ln l(w,b)−lnl(w,b)改写为下图中带蓝色下划线式子的样子：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/fb9d61ef6c0003a1eba83a4af4e768eaf6fb623582ab7c7c21c3d7cd617dbb52" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu3jn47xj210u0modk3.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu3jn47xj210u0modk3.jpg';}" alt="" /></p>
+
+<p>图中蓝色下划线实际上代表的是两个伯努利分布（0-1分布，两点分布）的 <strong>cross entropy（交叉熵）</strong></p>
+
+<p>假设有两个分布 p 和 q，如图中蓝色方框所示，这两个分布之间交叉熵的计算方式就是 h(p,q)h(p,q)h(p,q)；交叉熵代表的含义是这两个分布有多接近，如果两个分布是一模一样的话，那计算出的交叉熵就是0</p>
+
+<blockquote>
+
+</blockquote>
+
+<p>交叉熵的详细理论可以参考《information theory（信息论）》，具体哪本书我就不推荐了，由于学这门科目的时候用的是我们学校出版的教材。。。没有其他横向对比，不过这里用到的不复杂，一般教材都会讲到。</p>
+
+<p>下面再拿逻辑回归和线性回归作比较，这次比较损失函数：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/7bc69dc0ffa797244f20af0e493fa3c9df14b190d251f62a0bb2d0b92ec86db1" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu40e5rlj213i0ow78j.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu40e5rlj213i0ow78j.jpg';}" alt="" /></p>
+
+<p>此时直观上的理解：如果把function的输出和target（真正的function y^n\hat{y}^{n}​y​^​​​n​​）都看作是两个伯努利分布，所做的事情就是希望这两个分布越接近越好。</p>
+
+<h1 id="a-namestep3-function-classreference-linkstep3-function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</h1>
+
+<p>下面用梯度下降法求：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/795d35b794c2cee04bb242a26cb0da8dea3f529cab763e9d725cd4d05ab09f0c" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu5y340zj212e0nudk4.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu5y340zj212e0nudk4.jpg';}" alt="" /></p>
+
+<p>要求−lnl(w,b)-\ln l(w,b)−lnl(w,b) 对 wiw_{i}w​i​​的偏微分，只需要先算出lnfw,b(xn)\ln f_{w,b}(x^{n})lnf​w,b​​(x​n​​) 对 wiw_{i}w​i​​的偏微分以及 ln(1−fw,b(xn))\ln \left( 1- f_{w,b}(x^{n}) \right) ln(1−f​w,b​​(x​n​​)) 对 wiw_{i}w​i​​的偏微分。计算lnfw,b(xn)\ln f_{w,b}(x^{n})lnf​w,b​​(x​n​​) 对 wiw_{i}w​i​​偏微分，fw,b(x)f_{w,b}(x)f​w,b​​(x)可以用σ(z)\sigma (z)σ(z)表示，而zzz可以用wiw_{i}w​i​​和 bbb表示，所以利用链式法则展开。</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/3699e3073224908cdcd45a625a09c03ed84217612254636d97ea12b2751c0690" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu6e4kgqj212w0no0wo.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu6e4kgqj212w0no0wo.jpg';}" alt="" /></p>
+
+<p>计算 ln(1−fw,b(xn))\ln \left( 1- f_{w,b}(x^{n}) \right) ln(1−f​w,b​​(x​n​​)) 对 wiw_{i}w​i​​ 的偏微分，同理求得结果。</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/1a66eaf56a92a809fa426a85bc16b544089e7da0b9c0b571139ba04494cfb88a" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu6ulmxhj212g0o6tcn.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu6ulmxhj212g0o6tcn.jpg';}" alt="" /></p>
+
+<p>将求得两个子项的偏微分带入，化简得到结果。</p>
+
+<p>现在 wiw_{i}w​i​​ 的更新取决于学习率 η\etaη ，xinx^{n}_{i}x​i​n​​ 以及上图的紫色划线部分；紫色下划线部分直观上看就是真正的目标 y^n\hat{y}^{n}​y​^​​​n​​ 与我们的function差距有多大。</p>
+
+<p>下面再拿逻辑回归和线性回归作比较，这次比较如果挑选最好的function：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/d3b91b6140b54f94623879e229ddc75957e09a1061b083d0307cbad83f6e8f01" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7cc2owj213q0te79e.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7cc2owj213q0te79e.jpg';}" alt="" /></p>
+
+<p>对于逻辑回归，target y^n\hat{y}^{n}​y​^​​​n​​ 是0或者1，输出是介于0和1之间。而线性回归的target可以是任何实数，输出也可以是任何值。</p>
+
+<h1 id="a-name-classreference-link"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</h1>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/922de6c7d31ad5910c481b0ff949f5534eb9c6dea524f5775eccc34a032e23bb" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7u3y64j211o0sgtdx.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7u3y64j211o0sgtdx.jpg';}" alt="" /></p>
+
+<p>考虑上图中的平方误差形式。在step3计算出了对 wiw_{i}w​i​​ 的偏微分。假设 y^n=1\hat{y}^{n} = 1​y​^​​​n​​=1 ，如果 fw,b(xn)=1f_{w,b}(x^{n}) = 1f​w,b​​(x​n​​)=1，就是非常接近target，会导致偏微分中第一部分为0，从而偏微分为0；而 fw,b(xn)=0f_{w,b}(x^{n}) = 0f​w,b​​(x​n​​)=0，会导致第二部分为0，从而偏微分也是0。</p>
+
+<p>对于两个参数的变化，对总的损失函数作图：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/d61bf201ebb9b9c10596b1825a3c30548b910104ed88f5815fb0bef52b84a29f" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu8ajigbj20x60kmn7x.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu8ajigbj20x60kmn7x.jpg';}" alt="" /></p>
+
+<p>如果是交叉熵，距离target越远，微分值就越大，就可以做到距离target越远，更新参数越快。而平方误差在距离target很远的时候，微分值非常小，会造成移动的速度非常慢，这就是很差的效果了。</p>
+
+<h1 id="a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</h1>
+
+<p>逻辑回归的方法称为<strong>discriminative（判别）</strong> 方法；上一篇中用高斯来描述后验概率，称为 <strong>generative（生成）</strong> 方法。它们的函数集都是一样的：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/eb1824d607082e84f8869b321d53d73caabf56b5b9455c05d5d1827b6b8fa675" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu8si932j21160pqn0v.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu8si932j21160pqn0v.jpg';}" alt="" /></p>
+
+<p>如果是逻辑回归，就可以直接用梯度下降法找出w和b；如果是概率生成模型，像上篇那样求出 μ1\mu^{1}μ​1​​ ， μ2\mu^{2}μ​2​​ ，协方差矩阵的逆，然后就能算出w和b。</p>
+
+<p>用逻辑回归和概率生成模型找出来的w和b是不一样的。</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/93d723632f762e6edc16b4e6eee5ec5f145a23c9c90e55d63f87bb189bdeec10" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu98hriwj20zo0jcgpx.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu98hriwj20zo0jcgpx.jpg';}" alt="" /></p>
+
+<p>上图是前一篇的例子，图中画的是只考虑两个因素，如果考虑所有因素，结果是逻辑回归的效果好一些。</p>
+
+<h2 id="a-name-classreference-link-1"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</h2>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/d6fec8d6f2bc99f0547eef27758a87203a6059506b0c6b658208a10742d11632" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu9otwf6j212a0kgju6.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu9otwf6j212a0kgju6.jpg';}" alt="" /></p>
+
+<p>上图的训练集有13组数据，类别1里面两个特征都是1，剩下的(1, 0), (0, 1), (0, 0) 都认为是类别2；然后给一个测试数据(1, 1)，它是哪个类别呢？人类来判断的话，不出意外基本都认为是类别1。下面看一下朴素贝叶斯分类器（naive bayes）会有什么样的结果。</p>
+
+<p>朴素贝叶斯分类器如图中公式：xxx属于cic_{i}c​i​​ 的概率等于每个特征属于cic_{i}c​i​​ 概率的乘积。</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/85617f494e45fdca09db343da0d3417a8c31088326f4e8902f800f23f6ab85ff" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegua47345j213a0t0n1c.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegua47345j213a0t0n1c.jpg';}" alt="" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>计算出p(c1∣x)p(c_{1}</td>
+      <td>x)p(c​1​​∣x)的结果是小于0.5的，即对于朴素贝叶斯分类器来说，测试数据 (1, 1)是属于类别2的，这和直观上的判断是相反的。其实这是合理，实际上训练集的数据量太小，但是对于 (1, 1)可能属于类别2这件事情，朴素贝叶斯分类器是有假设这种情况存在的（机器脑补这种可能性==）。所以结果和人类直观判断的结果不太一样。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="a-namediscriminativegenerative-classreference-linkdiscriminativegenerative"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</h2>
+
+<p>生成方法的优势：<br />
+- 训练集数据量很小的情况；因为判别方法没有做任何假设，就是看着训练集来计算，训练集数量越来越大的时候，error会越小。而生成方法会自己脑补，受到数据量的影响比较小。- 对于噪声数据有更好的鲁棒性（robust）。- 先验和类相关的概率可以从不同的来源估计。比如语音识别，可能直观会认为现在的语音识别大都使用神经网络来进行处理，是判别方法，但事实上整个语音识别是 generative 的方法，dnn只是其中的一块而已；因为还是需要算一个先验概率，就是某句话被说出来的概率，而估计某句话被说出来的概率不需要声音数据，只需要爬很多的句子，就能计算某句话出现的几率。<br />
+# <a name="multi-class classification（多类别分类）" class="reference-link"></a>multi-class classification（多类别分类）</p>
+
+<h2 id="a-namesoftmax-classreference-linksoftmax"><a name="softmax" class="reference-link"></a>softmax</h2>
+
+<p>下面看一下多类别分类问题的做法，具体原理可以参考《pattern recognition and machine learning》christopher m. bishop 著 ，p209-210</p>
+
+<p>假设有3个类别，每个都有自己的weight和bias</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/f018040ca2793cf18f32d07689da576cf9cd4a86344aa9b071000bcd664bcb39" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegual9vb4j21300p8wio.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegual9vb4j21300p8wio.jpg';}" alt="" /></p>
+
+<p>把z1,z2,z3z_{1}, z_{2}, z_{3}z​1​​,z​2​​,z​3​​放到一个叫做softmax的方程中，softmax做的事情就是它们进行exponential（指数化），将exponential 的结果相加，再分别用 exponential 的结果除以相加的结果。原本z1,z2,z3z_{1}, z_{2}, z_{3}z​1​​,z​2​​,z​3​​可以是任何值，但做完softmax之后输出会被限制住，都介于0到1之间，并且和是1。softmax做事情就是对最大值进行强化。</p>
+
+<p>把结果看成</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>yi=p(ci∣x)=exp(zk)∑j=1nexp(zj)y_{i} = p(c_{i}</td>
+      <td>x) = \frac{\exp (z_{k})}{\sum^{n}<em>{j = 1}\exp (z</em>{j})}y​i​​=p(c​i​​∣x)=​∑​j=1​n​​exp(z​j​​)​​exp(z​k​​)​​</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>比如图中数字的例子，即输入x，属于类别1的几率是0.88，属于类别2的几率是0.12，属于类别3的几率是0。</p>
+
+<p>softmax的输出就是用来估计后验概率（posterior probability）。为什么会这样？下面进行简单的说明：</p>
+
+<h2 id="a-namesoftmax-classreference-linksoftmax-1"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</h2>
+
+<p>假设有3个类别，这3个类别都是高斯分布，它们也共用同一个协方差矩阵，进行类似上一篇讲述的推导，就可以得到softmax。</p>
+
+<p>信息论学科中有一个 <strong>maximum entropy（最大熵）</strong>的概念，也可以推导出softmax。简单说信息论中定义了一个最大熵。指数簇分布的最大熵等价于其指数形式的最大似然界。二项式的最大熵解等价于二项式指数形式(sigmoid)的最大似然，多项式分布的最大熵等价于多项式分布指数形式(softmax)的最大似然，因此为什么用sigmoid函数，那是因为指数簇分布最大熵的特性的必然性。假设分布求解最大熵，引入拉格朗日函数，求偏导数等于0，直接求出就是sigmoid函数形式。还有很多指数簇分布都有对应的最大似然界。而且，单个指数簇分布往往表达能力有限，就引入了多个指数簇分布的混合模型，比如高斯混合，引出了em算法。想lda就是多项式分布的混合模型。</p>
+
+<blockquote>
+
+</blockquote>
+
+<p>关于最大熵推导softmax有一篇论文讲的比较好：<the equivalence="" of="" logistic="" regression="" and="" maximum="" entropymodels="">。传送门：[http://www.win-vector.com/dfiles/logisticregressionmaxent.pdf](http://www.win-vector.com/dfiles/logisticregressionmaxent.pdf)。如果传送门失效，google一下就好。</the></p>
+
+<h2 id="a-nametarget-classreference-linktarget"><a name="定义target" class="reference-link"></a>定义target</h2>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/3cfed25d647af05985bc450c47b50fb74bce2ae1e2b60d9a7f704124a370f39c" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegub3mqjcj21280o4acs.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegub3mqjcj21280o4acs.jpg';}" alt="" /></p>
+
+<p>上一篇讲到如果定义类别1 y^=1\hat{y} = 1​y​^​​=1，类别2 y^=2\hat{y} = 2​y​^​​=2，类别3 y^=3\hat{y} = 3​y​^​​=3，这样会人为造成类别1 和类型2有一定的关系这种问题。但可以将 y^\hat{y}​y​^​​定义为矩阵，这样就避免了。而且为了计算交叉熵，y^\hat{y}​y​^​​也需要是个概率分布才可以。</p>
+
+<h1 id="a-name-classreference-link-2"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</h1>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/9c84ca55ad8572427302e69c4dfac6835de3e75f688c5b95960461207efe78c8" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegubnf6lbj210y0n4gp1.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegubnf6lbj210y0n4gp1.jpg';}" alt="" /></p>
+
+<p>考虑上图的例子，两个类别分布在两个对角线两端，用逻辑回归可以处理吗？</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/a71fb74d098a55fc9d344beffcaa481258cd010d4f7ce75a406c7c757a3ac5ee" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feguc3pfwdj212a0nqwrr.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feguc3pfwdj212a0nqwrr.jpg';}" alt="" /></p>
+
+<p>这里的逻辑回归所能做的分界线就是一条直线，没有办法将红蓝色用一条直线分开。</p>
+
+<h2 id="a-namefeature-transformation-classreference-linkfeature-transformation"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</h2>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/c709d8af2ff696318ad6ea21d88dd41376f42ce625f5f50762227cbf8ac7280b" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucj35y8j211w0n0diz.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucj35y8j211w0n0diz.jpg';}" alt="" /></p>
+
+<p>特征转换的方式很多，举例类别1转化为某个点到 (0,0)(0, 0)(0,0) 点的距离，类别2转化为某个点到 (1,1)(1,1)(1,1) 点的距离。然后问题就转化右图，此时就可以处理了。但是实际中并不是总能轻易的找到好的特征转换的方法。</p>
+
+<h2 id="a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</h2>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/69a5313f4b05f7b5648bc2e27ac49da5ab73846d155d7feb6ddd93b9e06e0bc1" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucxcuzzj211k0h4wgg.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucxcuzzj211k0h4wgg.jpg';}" alt="" /></p>
+
+<p>可以将很多的逻辑回归接到一起，就可以进行特征转换。比如上图就用两个逻辑回归 z1z_{1}z​1​​和 z2z_{2}z​2​​来进行特征转换，然后对于 x1x_{1}x​1​​撇 和 x2x_{2}x​2​​撇（km上右上角打不出来一撇，单引号什么的都是失效），再用一个逻辑回归zzz来进行分类。</p>
+
+<p>对上述例子用这种方式处理：</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/43587afcb1eef92ed9534da74c96b964331dc665bf7353e0f495bab2507c4dea" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegudc72xmj213c0syqh5.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegudc72xmj213c0syqh5.jpg';}" alt="" /></p>
+
+<p>右上角的图，可以调整参数使得得出这四种情况。同理右下角也是</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/71f3828763c388f6073de0cdd7c87b3b15cc62928d40ad4bc586571e1811c129" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegudsjc2dj21260suh0k.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegudsjc2dj21260suh0k.jpg';}" alt="" /></p>
+
+<p>经过这样的转换之后，点就被处理为可以进行分类的结果。</p>
+
+<p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/12c326c635a696aff4718e23f4ab3c6b49106fa6c0006b508dacc9aa0992c0ee" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegue7og8mj21220rw152.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegue7og8mj21220rw152.jpg';}" alt="" /></p>
+
+<p>一个逻辑回归的输入可以来源于其他逻辑回归的输出，这个逻辑回归的输出也可以是其他逻辑回归的输入。把每个逻辑回归称为一个  <strong>neuron（神经元）</strong>，把这些神经元连接起来的网络，就叫做 <strong>neural network（神经网络）</strong>。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/04/06/shen_du_xue_xi_ru_men_shi_zhan___san__-_luo_ji_hui_gui/">深度学习入门实战（三）-逻辑回归</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/04/25/lao_si_ji_yong_shen_jing_wang_luo_dai_nin_an_quan_jia_shi/">老司机用神经网络带您安全驾驶</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/">
+    <link rel="canonical" href="http://MelonTeam.com/page5/">
     <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
@@ -120,15 +120,15 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/">浅析Android中的ThreadLocal</a>
+                  <a class="post-link" href="/2017/06/01/yi_ge_chuang_jian_zi_ding_yi_shi_jian_yuan_de_li_zi/">一个创建自定义事件源的例子</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-06-01
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>limingzhang
+                        <i class="fa fa-user"></i>justinytang
                     </div>
                     
                     
@@ -144,7 +144,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -165,9 +165,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#ThreadLo..." title="Tag: ThreadLo..." rel="tag">ThreadLo...</a>&nbsp;
+        <a href="/tag/#线程" title="Tag: 线程" rel="tag">线程</a>&nbsp;
     
-        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>
+        <a href="/tag/#runloop" title="Tag: runloop" rel="tag">runloop</a>
     
   
 
@@ -179,28 +179,29 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    
-                    ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK<br />
-1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。<br />
+                    <div class='preview-image'><img src='/image/yi_ge_chuang_jian_zi_ding_yi_shi_jian_yuan_de_li_zi/31b90899e7a07d66751bfacd23d3f4f1a56a54f394ecaa6e17eb4bc1e1fd178f' alt='' /></div>
+                    RunLoop 的适用场景<br />
+上一篇文章我们介绍了RunLoop的相关知识，但是毕竟我们实际开发中很少应用，今天我们就通过介绍RunLoop在iOS系统中的应用，来实现一个小小的demo，启发我们在开发过程中设计代码架构时的思路。<br />
+RunLoop 的适用场景<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/qian_xi_android_zhong_de_threadlocal/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/06/01/yi_ge_chuang_jian_zi_ding_yi_shi_jian_yuan_de_li_zi/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">日迹中视频编辑滤镜效果实现方法</a>
+                  <a class="post-link" href="/2017/05/31/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/">iOS上直播弹幕的一种实现</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-05-31
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>berylzhao
+                        <i class="fa fa-user"></i>nicema
                     </div>
                     
                     
@@ -216,7 +217,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -237,7 +238,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#滤镜实现" title="Tag: 滤镜实现" rel="tag">滤镜实现</a>
+        <a href="/tag/#弹幕实现" title="Tag: 弹幕实现" rel="tag">弹幕实现</a>&nbsp;
+    
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
     
   
 
@@ -249,28 +252,29 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807' alt='' /></div>
-                    导语 本文简要分析，日迹视频解码流程以及视频滤镜的实现原理<br />
-需求背景：日迹需要的编辑滤镜效果预览图<br />
+                    <div class='preview-image'><img src='/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/1cfe1a180560e57cddfcc6f8c886e79f89602765f92200a80945771ebd659618' alt='' /></div>
+                    一、弹幕简介<br />
+一、弹幕简介<br />
+所谓弹幕，就是评论的一种表现形式，更能吸引用户眼球，增强用户体验，增加用户参与感和使用粘度。用户可以在观看内容（视频为主）的同时查看其他人对这个视频的评论，而不需要找到对应的评论区查看。现在视频网站基本都已经实现了弹幕，深受年轻用户的追捧和喜爱。<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/05/31/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">OpenGL ES读书笔记（一）—初始庐山真面目</a>
+                  <a class="post-link" href="/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/">iOS runtime方法调用与消息转发</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-05-31
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>vianhuang
+                        <i class="fa fa-user"></i>monawang
                     </div>
                     
                     
@@ -286,7 +290,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -307,9 +311,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+        <a href="/tag/#运行时" title="Tag: 运行时" rel="tag">运行时</a>&nbsp;
     
-        <a href="/tag/#OpenGL" title="Tag: OpenGL" rel="tag">OpenGL</a>
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
     
   
 
@@ -321,27 +325,30 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/OpenGL_ES_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/bed68d59028baaf5ddda621d0c9b196ca19901b2e072f4879772e2e7de2f5375' alt='' /></div>
-                    1. OpenGL ES简介 1.1 顶点着色器 1.2 片段着色器<br />
+                    <div class='preview-image'><img src='/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/d515fc633024d8f4dd248537f2a8362fa68e82564207a02fe9108e58e289a3d6' alt='' /></div>
+                    一、方法调用<br />
+| 导语 iOS<br />
+runtime为开发者提供了很多灵活便捷的方法，使得在运行时也可以改变类的结构。这篇文章主要是从方法调用作为切入点，来学习&amp;记录runtime的理论知识。<br />
+一、方法调用<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/">教你自己动手写HTTP服务器</a>
+                  <a class="post-link" href="/2017/05/31/xiao_bai_kan_react_native/">小白看React Native</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-05-31
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>vincanyang
+                        <i class="fa fa-user"></i>peterlmeng
                     </div>
                     
                     
@@ -357,7 +364,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -378,7 +385,7 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#轻量HTTP..." title="Tag: 轻量HTTP..." rel="tag">轻量HTTP...</a>
+        <a href="/tag/#ReactNat..." title="Tag: ReactNat..." rel="tag">ReactNat...</a>
     
   
 
@@ -390,29 +397,28 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/0980a6591b23c720a88253b9f052d832890e06c2ce26c7aa339fb5b2487a5a16' alt='' /></div>
-                    网络IO模型选择<br />
-谈到HTTP服务器，立马就能联想到Apache、Nginx等大名鼎鼎的开源组件。如果需要一个本地代理HTTP服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在Android上手动编写一个轻量的HTTP服务器，通过阅读本文，笔者即将为你揭开HTTP服务器的面纱，收获一个五脏俱全的轻量HTTP服务器组件TinyHttpd。<br />
-网络IO模型选择<br />
+                    <div class='preview-image'><img src='/image/xiao_bai_kan_React_Native/ed5471a3ecad068ac5e6cf89867813bb1a83303ba9f19c7c1fd18d335e23182e' alt='' /></div>
+                    1.What is React Native<br />
+1.What is React Native<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/05/31/xiao_bai_kan_react_native/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/">Fresco 4.X和5.X内存分析</a>
+                  <a class="post-link" href="/2017/05/31/ios_runloop_de_jie_shao/">iOS RunLoop的介绍</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-05-31
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>siriushe
+                        <i class="fa fa-user"></i>justinytang
                     </div>
                     
                     
@@ -428,7 +434,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -449,7 +455,7 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#fresco" title="Tag: fresco" rel="tag">fresco</a>
+        <a href="/tag/#runloop" title="Tag: runloop" rel="tag">runloop</a>
     
   
 
@@ -461,29 +467,29 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Fresco_4_X_he_5_X_nei_cun_fen_xi/a4d7236838155ee5bbca33914aa21364c5b4e8a743c3452c791bde4c914b750b' alt='' /></div>
-                    4.X系统的Fresco<br />
-两年前部落项目接入Fresco的时候，那时候主流机型还是4.X。Fresco在4.X的机器的内存性能很好，Bitmap存在Ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。<br />
-4.X系统的Fresco<br />
+                    <div class='preview-image'><img src='/image/iOS_RunLoop_de_jie_shao/2d5bd0531f7154347a77d579f670ec660a1db083e41b23fb001068121a7f3909' alt='' /></div>
+                    导语 一道题引出的对RunLoop的认知。<br />
+        最近做到一道有关 runloop 的选择题，题目大概是这样的：<br />
+        关于 Runloop 的说法中，哪些是正确的？（不定项选择）<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/fresco_4_x_he_5_x_nei_cun_fen_xi/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/05/31/ios_runloop_de_jie_shao/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/2017/07/01/fork_join_kuang_jia/">Fork/Join 框架</a>
+                  <a class="post-link" href="/2017/05/28/zou_jin_masonry/">走进 Masonry</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-07-01
+                        <i class="fa fa-calendar"></i>2017-05-28
                     </div>
                     
                     <div class="label-card">
-                        <i class="fa fa-user"></i>kueeniechen
+                        <i class="fa fa-user"></i>pikachuqiu
                     </div>
                     
                     
@@ -499,7 +505,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#android" title="Category: android" rel="category">android</a>
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
     
   
 
@@ -520,9 +526,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#并发" title="Tag: 并发" rel="tag">并发</a>&nbsp;
+        <a href="/tag/#autolayo..." title="Tag: autolayo..." rel="tag">autolayo...</a>&nbsp;
     
-        <a href="/tag/#java" title="Tag: java" rel="tag">java</a>
+        <a href="/tag/#masonry" title="Tag: masonry" rel="tag">masonry</a>
     
   
 
@@ -534,14 +540,14 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Fork_Join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3' alt='' /></div>
-                    1. 简介<br />
-1.1 什么是Fork/Join框架<br />
-        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java<br />
+                    <div class='preview-image'><img src='/image/zou_jin_Masonry/8c6e704af29919c593cdd467aefaadbf8bd41d6d4d8488133b637ecd3e1aac6c' alt='' /></div>
+                    导语 Masonry 源码阅读<br />
+在阅读这篇文章之前，你需要对两块东西有明确的了解<br />
+1、AutoLayout, 至少能够知道并使用过<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/2017/07/01/fork_join_kuang_jia/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2017/05/28/zou_jin_masonry/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -554,10 +560,12 @@
         <div class="pagination text-align">
           <div class="btn-group">
             
-                
+              
+                  <a href="/page4"  class="btn btn-outline">&laquo;</a>
+              
             
             
-                <a href="javascript:;" class="active btn btn-outline">1</a>
+                <a href="/"  class="btn btn-outline">1</a>
             
             
               
@@ -573,7 +581,7 @@
               
             
               
-                  <a href="/page5"  class="btn btn-outline">5</a>
+                  <a href="javascript:;"  class="active btn btn-outline">5</a>
               
             
               
@@ -597,7 +605,7 @@
               
             
             
-                <a href="/page2"  class="btn btn-outline">&raquo;</a>
+                <a href="/page6"  class="btn btn-outline">&raquo;</a>
             
             </div>
         </div>
