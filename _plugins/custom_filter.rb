@@ -10,7 +10,11 @@ module CustomFilter
     end
 
     def preview_image(img_url)
-        return "<div class='preview-image'><img src='#{img_url}' alt='' /></div>"
+        if img_url != nil
+            return "<div class='preview-image'><img src='#{img_url}' alt='' /></div>"
+        else
+            return ""
+        end
     end
 
     def trim_newlines(input)
