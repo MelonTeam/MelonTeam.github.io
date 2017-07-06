@@ -10,20 +10,12 @@ title: MelonTeam
 brief-intro: 移动终端前沿技术的探索者
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://MelonTeam.com" # the base hostname & protocol for your site
-
-permalink: /:year/:month/:day/:title/
-
+permalink: /posts/:title/
+timezone: Asia/Shanghai
 excerpt_separator: "<!--more-->"
 
 # other links
-twitter_username: 
-facebook_username: 
 github_username:  MelonTeam
-email: 
-weibo_username: 
-zhihu_username: 
-linkedIn_username: 
-dribbble_username:
 
 # comments
 uyan_id: 2136610
