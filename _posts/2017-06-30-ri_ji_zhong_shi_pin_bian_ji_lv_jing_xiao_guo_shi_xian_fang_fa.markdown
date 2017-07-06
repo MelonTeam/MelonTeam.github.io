@@ -39,6 +39,8 @@ mediacodec 负责对音视频数据进行解码，并渲染指定的surface上�
 
 代码示例：
 
+```java
+
 //初始化extractor
 
 mediaextractor extractor = new mediaextractor();
@@ -78,6 +80,8 @@ decoder.dequeueoutputbuffer(info, 10000);
 decoder.releaseoutputbuffer(bufferindex, isrender);
 
 }
+```
+
 
 走到这里，我们已经可以从surface上拿到每一帧对应的texture
 （纹理），之后我们就可以利用opengl的可编程管线，对纹理进行相关的滤镜处理。下面说下opengl的渲染流程。
