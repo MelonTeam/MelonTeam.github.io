@@ -16,7 +16,7 @@ MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加�
 **一，MVP简介**
 
 <!--more-->
-**![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/d8b32fbd6fe4df60eab0f0a9c483c207cd9f0c32f2c89197af5529da6c3ca0d5)**
+**![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/d8b32fbd6fe4df60eab0f0a9c483c207cd9f0c32f2c89197af5529da6c3ca0d5)**
 
 MVC太过常见这里不啰嗦。实际应用MVC当中，Activity占据打部分的工作，View和Controller的身份分不清。而MVP则是一种设计模式专门优化Activity
 / Fragment。
@@ -169,7 +169,7 @@ MVP的缺点也是非常明确的
 
 4. 在手Q项目里，MVP会激增很多方法数，
 
-![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/c7712fbf9c37de4ed1d2b697d12dbcce00b329c7dfaf1c7c86b197e60f37c7fa)  
+![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/c7712fbf9c37de4ed1d2b697d12dbcce00b329c7dfaf1c7c86b197e60f37c7fa)  
 
 三，Lego页面结构化
 
@@ -177,7 +177,7 @@ MVP的缺点也是非常明确的
 
 前面铺垫这么多，终于到我要吹水的时候了。MVC，MVP，还有MVVM等MVX系列的设计模式，都是一种大而全的统一管理。在项目结构中最为关键其实是：分模块！
 
-![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/33a461966937ac209e4478fedf4506c21f5a889c4464a54d4ab01b817f7c3f4a)
+![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/33a461966937ac209e4478fedf4506c21f5a889c4464a54d4ab01b817f7c3f4a)
 
 看看某宝的首页，顶部搜索栏，banner，导航分类，抢购，特价，底部Tab。这是一个Activity的话，你再怎么MVP，也是需要划分模块，然后分而治之。
 
@@ -185,7 +185,7 @@ MVP的缺点也是非常明确的
 
 页面结构化，并不是新玩意，是当时做web的一套代码风格。下图是当时做Web总结组件化的一张图。现在看来，也就并没有过时
 
-![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/fa1f198b6ca44df1b81968f2c20928e7b1aced3457b77dc973202d4ec4da29e6)
+![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/fa1f198b6ca44df1b81968f2c20928e7b1aced3457b77dc973202d4ec4da29e6)
 
 页面被划分问一个个区域的模块，有自身的逻辑和规划。有人说，这不就是一个个组件嘛。然后“页面结构化”并不是指组件。
 
@@ -216,7 +216,7 @@ MVP的缺点也是非常明确的
 
 日迹首页评论赞
 
-![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/6c6ab3ada2ff3727941c4a7deaf4b931c2a2cfa102e64d5a191deb9ecf42261f)
+![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/6c6ab3ada2ff3727941c4a7deaf4b931c2a2cfa102e64d5a191deb9ecf42261f)
 
     
     
@@ -273,7 +273,7 @@ MVP的缺点也是非常明确的
 
 大部分页面的渲染流程线，如下图
 
-![](/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/bec1f8d682b167b63cc66af68ed6aeeabe8953f988245a96df99a0b63ae55dec)
+![](/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/bec1f8d682b167b63cc66af68ed6aeeabe8953f988245a96df99a0b63ae55dec)
 
 我们把这些常用的网络请求，处理数据，事件绑定，上报，容错处理等一系列逻辑方法，以页面块为单位封装成一个Lego模块。
 

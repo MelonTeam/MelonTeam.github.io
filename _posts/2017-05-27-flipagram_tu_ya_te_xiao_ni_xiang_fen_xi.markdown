@@ -30,7 +30,7 @@ Flipagram是美国一款非常火爆的短视频应用，一度登顶美国appst
 
 ## Flipagram特效
 
-![Untitled](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/a658c5552ff00982a62844332c5ebb83852d4e45677ad42d5f984767987e6e2f)
+![Untitled](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/a658c5552ff00982a62844332c5ebb83852d4e45677ad42d5f984767987e6e2f)
 
 ## 仿涂鸦特效
 
@@ -153,26 +153,26 @@ Flipagram是美国一款非常火爆的短视频应用，一度登顶美国appst
     
 
 具体效果：  
-![Untitled1](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/92e77db926e37e4048d8d52e9e340ea5f0a840b874a371e2b016a5f53ef85ba9)
+![Untitled1](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/92e77db926e37e4048d8d52e9e340ea5f0a840b874a371e2b016a5f53ef85ba9)
 
 ### Flipagram特效参数分析
 
 粒子效果的参数非常多，要实现和Flipagram一样的效果，设置参数是一件非常繁琐的事情，借用粒子效果的工具分析了一种类似效果的具体参数，主要包含4个方面的参数：发射机、粒子、色彩、纹理  
 16个发射机参数(截取部分显示)：  
 ![屏幕快照 2017-04-28
-下午2.05.28](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/2fe6c2862e10ae1f4c1a9eebfbbe85db8fb321bd2dfbf6c7534c0a22e2f58f9d)
+下午2.05.28](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/2fe6c2862e10ae1f4c1a9eebfbbe85db8fb321bd2dfbf6c7534c0a22e2f58f9d)
 
 10个粒子参数(截取部分显示)：  
 ![屏幕快照 2017-04-28
-下午2.05.39](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/472680555b4c18e282bdb26fe5458ee6b8836c878ebcb5314ba5bd47b8b2be01)
+下午2.05.39](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/472680555b4c18e282bdb26fe5458ee6b8836c878ebcb5314ba5bd47b8b2be01)
 
 12个色彩参数(截取部分显示)：  
 ![屏幕快照 2017-04-28
-下午2.05.46](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/b8008c75a6fc39919a88daac1a678a9b06281c5000babb29abaa26429f2754a9)
+下午2.05.46](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/b8008c75a6fc39919a88daac1a678a9b06281c5000babb29abaa26429f2754a9)
 
 纹理设置：  
 ![屏幕快照 2017-04-28
-下午2.05.53](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/d65415b4f3fa5a956b979931f29259456344a9383c027e54dbf816daa55e6e40)
+下午2.05.53](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/d65415b4f3fa5a956b979931f29259456344a9383c027e54dbf816daa55e6e40)
 
 **小结：通过类似粒子效果的参数分析，发现系统接口的参数比较少，根本实现不了这种稍微复杂一点的效果。**
 
@@ -182,13 +182,13 @@ Flipagram是美国一款非常火爆的短视频应用，一度登顶美国appst
 
 通过分析Flipagram的涂鸦页面的UI层级，发现和涂鸦渲染层的类是`FGDrawControlsView`  
 ![708FF504-D266-4C76-A31A-
-E75094AAE585](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/39a67b431717fbf92b7b7f943c689f422eb6f782eeedb2c5ad7b23f955c3b6bc)
+E75094AAE585](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/39a67b431717fbf92b7b7f943c689f422eb6f782eeedb2c5ad7b23f955c3b6bc)
 
 ### 相关类
 
 通过反汇编分析了和渲染层`FGDrawControlsView`相关的主要类：`FGDrawEnginePathFactory`、`FGDrawEnginePath`、`FGDrawEngine`  
 ![056C8FF2-D711-4FAA-BA7F-
-8451A4C8966D](/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/c59271ab58e5f8f9934b2b7a817602d27e87ee1c8ddd2a65eab9a973c6251f1d)
+8451A4C8966D](/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/c59271ab58e5f8f9934b2b7a817602d27e87ee1c8ddd2a65eab9a973c6251f1d)
 
 `FGDrawEnginePathFactory`是一个负责创建具体特效路径的工厂类，比如：烟花效果的路径、不同画刷的路径、表情效果的路径、沙子效果的路径等等。
 `FGDrawEnginePath`设置粒子发射机的特性和粒子特效参数，比如：颜色、画刷参数、弧度等，同时维护了一条路径的矢量点阵信息。

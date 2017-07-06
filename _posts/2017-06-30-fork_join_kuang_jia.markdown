@@ -19,7 +19,7 @@ tags: 并发 java
 7 更进了一步，Fork/Join框架是
 ExecutorService接口的一个实现，用来解决可以通过分治法将问题拆分成小任务的问题。在一个任务中，先检查将要解决的问题大小，如果大于一个设定的大小，那就将问题拆分成可以通过框架来执行的小任务，否则直接在任务里解决这个问题，然后根据需要返回任务的结果。下面的图形总结了这个原理：
 
-![](/image/Fork_Join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3)  
+![](/image/fork_join_kuang_jia/ee186a6b47eb3c90f157a914308d2f15d1390a49eced0a29ad5cb6a424f867e3)  
 **1.2 工作窃取算法**  
             Fork/Join框架和 Executor Framework主要的区别在于工作窃取算法（Work-Stealing
 Algorithm）。假设我们有一个大任务，把任务分成互不依赖的子任务，为了减少线程间的竞争，就把这些子任务放到不同队列中，并为每个队列创建一个单独的线程来执行队列里的任务。但是有的线程干活干得快，与其等着不如去帮其他线程完成任务，通过这种方式，这些线程在运行时拥有所有的优点，进而提升应用程序的性能。  
@@ -230,5 +230,5 @@ Main函数，通过默认构造器创建了ForkJoinPool对象，然后执行Docu
 
  执行结果：
 
-![](/image/Fork_Join_kuang_jia/fa585145caba008440413cc9d98cbcbf8f8568eddee2791dbaee068c640270f6)
+![](/image/fork_join_kuang_jia/fa585145caba008440413cc9d98cbcbf8f8568eddee2791dbaee068c640270f6)
 

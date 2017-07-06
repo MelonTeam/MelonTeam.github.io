@@ -239,7 +239,7 @@ Malloc
 History可以输出某一地址的malloc和free记录，从中我们可以得到一些有用信息帮助我们定位问题，比如MRC下赋值的时候没有retain导致用的时候野指针了。
 
 首先要打开Malloc Stack选项  
-![](/image/XCode_LLDB_diao_shi_xiao_ji_qiao/543f52df5a0c5ca1aa6a8a72a7da82ab108b815a335c3dafe5bb91f9fc3bb86e)
+![](/image/xcode_lldb_diao_shi_xiao_ji_qiao/543f52df5a0c5ca1aa6a8a72a7da82ab108b815a335c3dafe5bb91f9fc3bb86e)
 
 然后我们写个简单的程序
 
@@ -253,7 +253,7 @@ History可以输出某一地址的malloc和free记录，从中我们可以得到
     
 
 执行一下  
-![](/image/XCode_LLDB_diao_shi_xiao_ji_qiao/bf5d97711fda59ef58c90bffd06861a3e0b89ef742e00a5216ea5794bd6f1fa0)  
+![](/image/xcode_lldb_diao_shi_xiao_ji_qiao/bf5d97711fda59ef58c90bffd06861a3e0b89ef742e00a5216ea5794bd6f1fa0)  
 如我们所料Crash了，但看堆栈和错误log好像没什么线索
 
 我们查看左边Crash栈的第0帧
@@ -474,7 +474,7 @@ malloc_info —stack-history xxxxxxx（xxxx是地址）
 看[3]发现我们在-[ViewController viewDidLoad]的第23行free了
 
 我们看看对应代码  
-![](/image/XCode_LLDB_diao_shi_xiao_ji_qiao/58233b5529054bdc766d633797a698e09b43c2f8f30eece3620ccd55bb7c4880)  
+![](/image/xcode_lldb_diao_shi_xiao_ji_qiao/58233b5529054bdc766d633797a698e09b43c2f8f30eece3620ccd55bb7c4880)  
 可以明显看出是21行加了一个autorelease，22行又release了导致出问题的
 
 当然这是个简单的demo，实际情况会复杂的多，使用Malloc History也只是能提供更多信息来追查相应问题，不能保证一定能找出导致野指针的地方。

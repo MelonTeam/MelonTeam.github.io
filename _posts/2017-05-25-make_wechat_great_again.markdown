@@ -133,7 +133,7 @@ TimeLine 上新发的内容，但是一旦点击头像进入主页后就提示�
 
 我只保留了这俩『活儿好不粘人』的工具类入口：
 
-![](/image/Make_WeChat_Great_Again/2164e4e62516adbc21d95499bc60fda7f6767100bb8c36e18d52cffa1d3aa7c5)
+![](/image/make_wechat_great_again/2164e4e62516adbc21d95499bc60fda7f6767100bb8c36e18d52cffa1d3aa7c5)
 
 其实扫一扫页面可以通过右上角加号更快进入，也可以去掉。小程序其实平时也基本不用，偶尔用的时候现搜，鸡肋入口。不能再干掉了，否则还不如索性干掉整个发现页面。
 
@@ -188,15 +188,15 @@ TimeLine 上新发的内容，但是一旦点击头像进入主页后就提示�
 
 先到设置页面：
 
-![](/image/Make_WeChat_Great_Again/042007a520fc38a4b6d53b50263b5f90ecdc18f01aa9fa82ed853954ee5da5a0)
+![](/image/make_wechat_great_again/042007a520fc38a4b6d53b50263b5f90ecdc18f01aa9fa82ed853954ee5da5a0)
 
 在文本框输入个正数：
 
-![](/image/Make_WeChat_Great_Again/8a7a0dfb2f3e6103afc98320d84f641aef7a6598f0a9b043cb379178bc3430b5)
+![](/image/make_wechat_great_again/8a7a0dfb2f3e6103afc98320d84f641aef7a6598f0a9b043cb379178bc3430b5)
 
 完美：
 
-![](/image/Make_WeChat_Great_Again/bf30eb035365a9b978a8fdb72fb4f7ffb85f0b0ab19f59556dcdb7a1d8e8aa1f)
+![](/image/make_wechat_great_again/bf30eb035365a9b978a8fdb72fb4f7ffb85f0b0ab19f59556dcdb7a1d8e8aa1f)
 
 > **==我就问你怕不怕==**
 
@@ -294,7 +294,7 @@ API，使用者碰到问题需要深入到框架去调试，又因为是内部�
 夜间模式其实也就是主题适配，这个手机 QQ 玩的是最 6
 的了，无人能敌。要想做一个完美的皮肤引擎是很庞大的工作，不仅是多套色值方案的存储和切换问题，还有多套图片资源的适配问题。这里由于时间仓促，只做了个很辣眼睛的夜间模式，而且切换回来需要杀进程重新进：
 
-![](/image/Make_WeChat_Great_Again/acf2e5d3185b9e35b70a877b45ada0105b4e10e59989195d157eacd87faf9780)
+![](/image/make_wechat_great_again/acf2e5d3185b9e35b70a877b45ada0105b4e10e59989195d157eacd87faf9780)
 
 这么辣眼睛的审美会被狂吐槽，就不贴代码了，有兴趣的去项目里查看哈哈。
 

@@ -79,6 +79,7 @@ decoder.dequeueOutputBuffer(info, 10000);
 decoder.releaseOutputBuffer(bufferIndex, isRender);
 
 }
+
 ```
 
 走到这里，我们已经可以从Surface上拿到每一帧对应的Texture

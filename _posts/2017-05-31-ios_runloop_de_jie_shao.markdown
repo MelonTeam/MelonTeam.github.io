@@ -52,7 +52,7 @@ UIApplicationMain() 方法在这里不仅完成了初始化我们的程序并设
         下图展示了Run Loop的模型 :
 
            ![Run
-Loop](/image/iOS_RunLoop_de_jie_shao/cf69c54eac42418d13292e9ca4a43e201001856fc156f04e3879940847b799af)
+Loop](/image/ios_runloop_de_jie_shao/cf69c54eac42418d13292e9ca4a43e201001856fc156f04e3879940847b799af)
 
        从图中可以看出，RunLoop 是线程中的一个循环，并对接收到的事件进行处理。我们的代码可以通过提供 while 或者 for 循环来驱动
 RunLoop 。在循环中，RunLoop 对象来负责事件处理代码（接收事件并且调用事件处理方法）。
@@ -139,7 +139,7 @@ RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创�
 
         其中CFRunLoopModeRef类并没有对外暴露，只是通过 CFRunLoopRef 的接口进行了封装。他们的关系如下:
 
-![RunLoop_0](/image/iOS_RunLoop_de_jie_shao/2d5bd0531f7154347a77d579f670ec660a1db083e41b23fb001068121a7f3909)
+![RunLoop_0](/image/ios_runloop_de_jie_shao/2d5bd0531f7154347a77d579f670ec660a1db083e41b23fb001068121a7f3909)
 
         一个 RunLoop 包含若干个 Mode，每个 Mode 又包含若干个 Source/Timer/Observer。每次调用
 RunLoop 的主函数时，只能指定其中一个 Mode，这个Mode被称作 CurrentMode。如果需要切换 Mode，只能退出
@@ -322,7 +322,7 @@ app 正常调度这些事件，活动的计时器可能无法被触发直到你�
 
 下面是一个示意图:
 
-![RunLoop_1](/image/iOS_RunLoop_de_jie_shao/5fc057faec0df53dc8f56850e495248710a9b5c32ac91248e5328848091c037f)
+![RunLoop_1](/image/ios_runloop_de_jie_shao/5fc057faec0df53dc8f56850e495248710a9b5c32ac91248e5328848091c037f)
 
         其内部代码整理如下：
 

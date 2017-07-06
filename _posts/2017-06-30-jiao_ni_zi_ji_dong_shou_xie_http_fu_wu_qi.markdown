@@ -23,7 +23,7 @@ HTTP是建立在TCP之上的一种协议，所以我们可以通过TCP协议来�
 
 BIO，Blocking I/O，即经典的传统服务器端同步阻塞I/O编程模型，如下图所示：
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/0980a6591b23c720a88253b9f052d832890e06c2ce26c7aa339fb5b2487a5a16)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/0980a6591b23c720a88253b9f052d832890e06c2ce26c7aa339fb5b2487a5a16)
 
 其对应的伪代码如下：
 
@@ -66,7 +66,7 @@ BIO，Blocking I/O，即经典的传统服务器端同步阻塞I/O编程模型�
 
 NIO，Non-blocking IO，非阻塞IO，是一个可以替代传统BIO的新一代IO编程模型，如下图所示：
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/03088dcafce5538c8e164429926b6072fbaa468a48e41b4a76bc62651aebbefe)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/03088dcafce5538c8e164429926b6072fbaa468a48e41b4a76bc62651aebbefe)
 
 其对应的伪代码如下：
 
@@ -210,7 +210,7 @@ COLON(冒号)
 
 为了更加形象地理解http请求包格式，我们画了一张图如下：
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/2955e1d734d5d68d7c9c422964afce7d240ff49e1ff4464505ee5657e6c369a1)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/2955e1d734d5d68d7c9c422964afce7d240ff49e1ff4464505ee5657e6c369a1)
 
 
 
@@ -228,7 +228,7 @@ COLON(冒号)
 
 ## Http响应解析
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/ecda6638ace5d4b84ce609af9ba92fbb04c801637152e03f33dab30d1828e156)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/ecda6638ace5d4b84ce609af9ba92fbb04c801637152e03f33dab30d1828e156)
 
 如上图所示，主要包含三部分：状态行(response line),响应头(header),响应正文(body)。
 
@@ -244,7 +244,7 @@ COLON(冒号)
 
 Server接收到的Client请求数据是字节数组byte[]，基于OOP编程，显然我们更希望得到的是HttpRequest对象，所以需要一个将byte[]封装成HttpRequest对象的过程，于是我们抽象了一个叫HttpRequestDecoder的类来完成该过程。当然你也可以使用一个方法就能完成这个编码过程，但独立一个HttpRequestDecoder类显然更加符合OOP设计，有利于代码理解和扩展。
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/2db5bb9476cd6056899615695216a5a956ac18c2a59d8137d0dd4b717ce7303d)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/2db5bb9476cd6056899615695216a5a956ac18c2a59d8137d0dd4b717ce7303d)
 
 
 
@@ -252,7 +252,7 @@ Server接收到的Client请求数据是字节数组byte[]，基于OOP编程，�
 
 Server返回给Client的结果会通过HttpResponse对象来包装，所以我们需要将HttpResponse转换成byte[]，于是我们同样也抽象了一个叫HttpResponseDecoder的类，其主要职责就是将HttpResponse编码成byte[]，如下图所示。和上述的HttpRequestDecoder一样，这样的设计更加更加符合OOP思维，有利于代码理解和扩展。
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/5765ea8983156ffccbff060b7a092af80f1eee61d1f4807c26702947cf668849)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/5765ea8983156ffccbff060b7a092af80f1eee61d1f4807c26702947cf668849)
 
 ## 拦截器Interceptor
 
@@ -266,7 +266,7 @@ l
 
 于是我们实现了拦截器来满足这种需求，拦截器其实就是责任链模式的实现，利用切面的方式无侵入式地修改HttpRequest和HttpResponse，譬如我们可以使用拦截器来实现打印请求和响应的日志等。
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/4a48e13c22d69e197a5078697d2bf6d4068d306575081c08bff7e05e00ea3186)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/4a48e13c22d69e197a5078697d2bf6d4068d306575081c08bff7e05e00ea3186)
 
 
 
@@ -355,7 +355,7 @@ l
 
  可能看代码还是有点复杂，简要画了张图如下：
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/adea5f906c9ad24e84ca9f770b7ea04f8c35c287b6a35b32942bff1730e2b3d6)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/adea5f906c9ad24e84ca9f770b7ea04f8c35c287b6a35b32942bff1730e2b3d6)
 
 ## 端口开放风险
 
@@ -370,13 +370,13 @@ l
 2).将random_key作为密钥，url和timestamp作为输入，使用HMAC-
 MD5/SHA1生成一个hash值sign，然后将该字符串追加到url后面，向server发起请求，如下图所示：
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/073bdddb9773ad8c9d47df293fe029e71093506df2afeef68a06ac8df27dcc17)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/073bdddb9773ad8c9d47df293fe029e71093506df2afeef68a06ac8df27dcc17)
 
 3).server收到请求后，先验证timestamp是否超过时间限制，防止重放攻击，接着根据random_key（本地获取）、url、timestamp使用同样的签名算法也生成一个签名字符串sign，然后和请求的sign比对，如果一致，则认为是授权的，否则就拒绝请求，如下图所示：
 
 
 
-![](/image/jiao_ni_zi_ji_dong_shou_xie_HTTP_fu_wu_qi/02324d6d67a257c62450654722e68a7d56b4cea94ae3f6865f56ad9160097e4a)
+![](/image/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/02324d6d67a257c62450654722e68a7d56b4cea94ae3f6865f56ad9160097e4a)
 
 由于身份鉴权本质上是修改了URL，所以可以使用拦截器进行实现，具体可参见AuthInterceptor类。
 

@@ -23,14 +23,14 @@ tags: java kotlin
 
 ### 工具执行大概示例如图
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/561e340954b438b6cc388aa0dd20c0d9e58b864cc4133e1a0f8b6836406dd5d2)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/561e340954b438b6cc388aa0dd20c0d9e58b864cc4133e1a0f8b6836406dd5d2)  
 如图, root 下边 N 层目录, M 个文件  
 找到关心的文件(示例中为 *.java )  
 根据规则替换文件内容, 重新把替换内容写入目标位置
 
 ### 文件处理流程
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/129521323c8e14695a0d7dee37389c31b42db93dd8b607153ceccb79a0ec5a58)
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/129521323c8e14695a0d7dee37389c31b42db93dd8b607153ceccb79a0ec5a58)
 
 如上图画了个大致图示, 因为过滤文件规则, 按照规则匹配和替换, 这两个操作不依赖额外的资源, 可以进行一定的多线程并行
 
@@ -44,20 +44,20 @@ so, 就是用reactive.io对应的kotlin库, 实现这套功能
 
 获取机器核数, 自定义线程池:  
 自定义线程池代码, 因为要指定线程名称, 所以实现了匿名 ThreadFactory 实现类, kotlin 代码相对比较简单  
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/43826b407a6e951472eb9a84fcd3476c5249f1c06c0311dba1e8a2e5dbfe4986)
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/43826b407a6e951472eb9a84fcd3476c5249f1c06c0311dba1e8a2e5dbfe4986)
 
 ### 2\. 参数解析
 
 命令行工具当然需要读入参数了  
 我这里定义 src, dst 参数  
 使用 joptsimple.OptionParser 轻松实现:  
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/705a8609e2bae5b8eed8f86a1167c54e9a196425fe70783d1586b68ecc2136e1)
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/705a8609e2bae5b8eed8f86a1167c54e9a196425fe70783d1586b68ecc2136e1)
 
 ### 3\. 解析参数, 根据目标文件夹, 创建目录结构
 
 工具中如果指定了 dst, 那么会镜像创建 src 的所有文件夹, 实现如下
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/adeac795e2c6bea573fd2180d47e380c7c06b29a257eb60037ba7ce82d1d8797)
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/adeac795e2c6bea573fd2180d47e380c7c06b29a257eb60037ba7ce82d1d8797)
 
 kotlin 中的类型转换用 as 这个关键字, 其中 as String, 表示会将结果转换为 String, 如果结果为 null,
 那么这里直接会发生运行时异常  
@@ -68,35 +68,35 @@ kotlin的文件遍历有一个函数式的扩展: walk(), 用起来也是函数�
 
 ### 4\. 给reactive库创建几个线程切换的scheduler
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/7d0b7b1dcdb400a9a73063595e8461d6c554025eac191fa9a68f338c6e05f291)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/7d0b7b1dcdb400a9a73063595e8461d6c554025eac191fa9a68f338c6e05f291)  
 可以看到 readScheduler/writeScheduler, ThreadFactory 没有显式的写匿名对象, 因为 kotlin 支持这种
 lambda 式的语法糖, 来实现一个单函数接口(比如 Runnable / Callable), 后边还会看到
 
 ### 5\. 执行图示的那一坨 reactive 流程
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/578e2d6f672d817b3e340f88130bd3c48310358994c1ea20bad298e6ac91d390)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/578e2d6f672d817b3e340f88130bd3c48310358994c1ea20bad298e6ac91d390)  
 完成, 就是这么简单
 
 rxkotlin的扩展, 简化了各种常用类型创建Observable对象的写法:
 
 #### 多线程过滤部分:
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/d07ca50ddd41c440cec0ffbb8d7495994792a7433df48a08e749e21dd68b529a)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/d07ca50ddd41c440cec0ffbb8d7495994792a7433df48a08e749e21dd68b529a)  
 可以看到 filter和flatmap 里边又是一个 lambda 实现了一个接口 (java8中也是类似的, x -> {})
 
 #### 读取文件部分:
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/94f1bb2bca04c9d7272b3a558ff3252d65b374c3c08b3b3095f14105286543e4)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/94f1bb2bca04c9d7272b3a558ff3252d65b374c3c08b3b3095f14105286543e4)  
 读取文件这里之所以用flatMap, 是因为需要每次读完文件后, 下一步切换到多线程 scheduler
 
 #### 写文件部分:
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/2dc9a44c8115d84ff006c0088a4ce1a834fed10d9c352c64b1dff595dfae5f00)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/2dc9a44c8115d84ff006c0088a4ce1a834fed10d9c352c64b1dff595dfae5f00)  
 kotlin没有 java 的 X ? y : z 的三目运算语法, 只能写成if else, 有点类似python.
 
 #### 计数统计部分
 
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/1b80a61cc1bb296c00dc96d994f90ad44701262417c04c06b823b30a24fe52da)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/1b80a61cc1bb296c00dc96d994f90ad44701262417c04c06b823b30a24fe52da)  
 count().blockingGet()返回的便是最后写了多少个文件的个数了.
 
 ## 其他:
@@ -104,18 +104,18 @@ count().blockingGet()返回的便是最后写了多少个文件的个数了.
 ### 替换的实现在哪里呀?
 
 其实就在这里  
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/398215288b0f1894726f6d056fac32f1a2332f4a42b17f9555f343473d6722bf)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/398215288b0f1894726f6d056fac32f1a2332f4a42b17f9555f343473d6722bf)  
 就是这一句 .compose(processStrategy)  
 processStrategy是一个由你实现的 ObservableTransformer , 随意发挥即可  
 比如这个实现:  
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/ba5d7d66c45d21c2d7253cef58d9857803c20095eeda7727c7a31fa48694c6d8)  
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/ba5d7d66c45d21c2d7253cef58d9857803c20095eeda7727c7a31fa48694c6d8)  
 在文本中找TODO的注释, 然后替换成””, 不想再骗自己了, 注意到这里用flatMap顺带做了filter的效果, 如果没有找到匹配,
 相当于就在这一步被过滤掉, 不会进行下一步写文件.
 
 ### 写完了怎么编jar包?
 
 我这里使用的是gradle + kotlin插件, 可以继承一个jar的任务来生成fatjar, 我的整个build.gradle如下:  
-![](/image/Kotlin_chu_ti_yan__yong_Kotlin_xie_ming_ling_xing_gong_ju/6080e358601a2e1b63fcfd1353a3216aaccef66ca9899709e7abc4e013b9fc3d)
+![](/image/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/6080e358601a2e1b63fcfd1353a3216aaccef66ca9899709e7abc4e013b9fc3d)
 
 ### 我看kotlin
 

@@ -93,14 +93,14 @@ App开发习以为常的问题，大部分Crash我们通过日志找到调用栈
 
 重写ImageView.onDraw()方法实际上等于我们需要替换ImageView类，把所有的xml布局文件中的ImageView换成我们新定义的CatchExceptionImageView？这个显然不太好办。最后我在LayoutInflater类中找到了方法。
 
-![](/image/Android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_View_lei/ad947170e91ba0b5e64f376019da94b3552102cf14d1ac876cbced9cbb5c6873)
+![](/image/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/ad947170e91ba0b5e64f376019da94b3552102cf14d1ac876cbced9cbb5c6873)
 
 每个Activity拥有一个LayoutInflater 对象，它负责解析Android xml 布局文件然后实例化View或者View子类对象。核心函数是
 LayoutInflater.createViewFromTag(View parent, String name, AttributeSet
 attrs)，它通过xml标签指定的类名字，实例化出View对象。在这里做手脚，我们可以将xml中所有的标签实例化成
 CatchExceptionImageView。
 
-![](/image/Android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_View_lei/950108b9e6717511666023bd26ec644fc640244f5123b63164ee9dbe12059260)
+![](/image/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_xi_tong_view_lei/950108b9e6717511666023bd26ec644fc640244f5123b63164ee9dbe12059260)
 
 查看createViewFromTag()源码我们可以发现， LayoutInflater其实支持外部提供工厂类来自定义View的创建机制，对应的方法是
 setFactory() 和 setFactory2()。

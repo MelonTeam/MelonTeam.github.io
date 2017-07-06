@@ -87,7 +87,7 @@ view 2是view 1的子view，当一个点击落在view 2区域内，这个查找�
   1. 通过hitTest找到了view 2
   2. view 2内部没有其他子view
 
-![](/image/iOS_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f917d992a04a979280748b4409a4ebefc25acbdaca0868901765348edc8fcb0a)
+![](/image/ios_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f917d992a04a979280748b4409a4ebefc25acbdaca0868901765348edc8fcb0a)
 
 再看看另一个特殊的场景：
 
@@ -95,7 +95,7 @@ view 2还是view 1的子view；但当一个点击落在view 2的区域内时，�
 1的hitTest中就返回了nil，因为点击区域不在view 1中，导致view
 1的子view都不会再进行hitTest；这点跟web中的事件处理是截然不同的；这也导致一些超边界的点击必须由业务去重载hitText方法。
 
-![](/image/iOS_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f6754ccccb23a2b3dde193a0c273fc859f455083ea4e17d1ac53b5265bc91ddb)
+![](/image/ios_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f6754ccccb23a2b3dde193a0c273fc859f455083ea4e17d1ac53b5265bc91ddb)
 
 （2）事件响应阶段（响应链）：
 

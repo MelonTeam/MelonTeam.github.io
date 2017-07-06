@@ -27,12 +27,12 @@ tags: Android OpenGL
 OpenGL ES（OpenGL for Embedded Systems）是以手持和嵌入式设备为目标的高级3D图形应用程序编程接口。OpenGL
 ES是当今智能手机中占据统治地位的图形API，支持的平台包括IOS,，Android，BlackBerry，bada，Linux和Windows。  
 OpenGL ES 实现了具有可编程着色功能的图形管线。下图展示了OpenGL ES 图形管线，图中带有阴影的方框表示OpenGL ES中管线的可编程阶段。  
-![](/image/OpenGL_ES_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/bed68d59028baaf5ddda621d0c9b196ca19901b2e072f4879772e2e7de2f5375)
+![](/image/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/bed68d59028baaf5ddda621d0c9b196ca19901b2e072f4879772e2e7de2f5375)
 
 ### 1.1 顶点着色器
 
 其工作过程为首先将原始的顶点几何信息及其他属性传送到顶点着色器中，经过自己开发的顶点着色器处理后产生纹理坐标，颜色，点位置等后续流程需要的各项顶点属性信息，然后将其传递给图元装配阶段。  
-![](/image/OpenGL_ES_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/16559f7ffb43acd09b53c950b5e25d3dfd177eff12a5db8e66fe5895d23985da)  
+![](/image/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/16559f7ffb43acd09b53c950b5e25d3dfd177eff12a5db8e66fe5895d23985da)  
 顶点着色器的输入包括：
 
   * 着色器程序——描述顶点上执行操作的顶点着色器程序源代码或者可执行文件。
@@ -43,7 +43,7 @@ OpenGL ES 实现了具有可编程着色功能的图形管线。下图展示了O
 ### 1.2 片段着色器
 
 片元着色器是用于处理片元值及其相关数据的可编程单元，其可以执行纹理的采样，颜色的汇总，计算雾颜色等操作，每片元执行一次。片元着色器主要功能为通过重复执行（每片元一次），将3D物体中的图元光栅化后产生的每个片元的颜色等属性计算出来送入后继阶段。  
-![](/image/OpenGL_ES_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/c372fe09285e5b04a93c088f3ab80b8ce762925ad77ea65dbfbb10ea073cb819)
+![](/image/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/c372fe09285e5b04a93c088f3ab80b8ce762925ad77ea65dbfbb10ea073cb819)
 
 片段着色器的输入包括：
 

@@ -19,7 +19,7 @@ crash，查了一些JNI堆栈分析的方法，涉及到ndk的几个工具的使
 
 为了查看JNI的异常堆栈，我这里模拟了一个出错的代码：
 
-![image](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/7f23d66391878bb7de757b542b48437b1e79365851dcbadeaf7b498ae0403094)
+![image](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/7f23d66391878bb7de757b542b48437b1e79365851dcbadeaf7b498ae0403094)
 
 这段代码在testException的13行会有空指针的问题，我们实际运行的时候会碰到这样的堆栈异常：
 
@@ -58,7 +58,7 @@ jni.so），分别是0bfd->0bf4，出错的地方是0bf4，能通过这些调用
 
 NDK提供了一个工具帮助我们定位汇编命令对应的代码文件以及行数：arm-linux-androideabi-addr2line,工具的位置如下：
 
-![](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/f74291e17fc95573ab785ab0baa6bce389d0b1931184d542d64611cc2cf72f1c)
+![](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/f74291e17fc95573ab785ab0baa6bce389d0b1931184d542d64611cc2cf72f1c)
 
 输入如下命令：
 
@@ -72,7 +72,7 @@ NDK提供了一个工具帮助我们定位汇编命令对应的代码文件以�
 
 结果如下：
 
-![](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/77c659659119c8d69a607027151058e7cfcd7ded42e1811c0e274a371a96f923)
+![](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/77c659659119c8d69a607027151058e7cfcd7ded42e1811c0e274a371a96f923)
 
 从结果我们可以看到，出错的地方是hello-jni.cpp的第13行，确实就是我们出现空指针的地方；
 
@@ -89,16 +89,16 @@ NDK提供了一个工具帮助我们定位汇编命令对应的代码文件以�
 
 ## obj目录下so dump结果
 
-![](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/6f51d93716c1657e517a2db9fdedeef8df10a166438cf510df3131cd47b585a4)
+![](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/6f51d93716c1657e517a2db9fdedeef8df10a166438cf510df3131cd47b585a4)
 
 ## libs目录下的so dump结果
 
-![](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/904e438c134fc2f2a907d2df5734db44b7ef31534f5bac5e6b894d4fca66adf4)
+![](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/904e438c134fc2f2a907d2df5734db44b7ef31534f5bac5e6b894d4fca66adf4)
 
 ## 三、ndk-stack工具
 
 工具位置：  
-![](/image/Android_JNI_dui_zhan_fen_xi_gong_ju_jian_jie/58a78ae83cf89a27a288cabaa2698b84b238f18cc1d225a384e11bacc5ed4813)
+![](/image/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/58a78ae83cf89a27a288cabaa2698b84b238f18cc1d225a384e11bacc5ed4813)
 
 ndk-stack可以直接从日志中分析出堆栈的错误信息，能够直接帮助我们定位到错误的位置，一步到位；
 

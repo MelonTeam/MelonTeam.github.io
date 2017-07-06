@@ -139,7 +139,7 @@ links/index.html)找到有关设置app links的更多信息。
 这可能是将Instant App集成到现有应用程序中最困难的一步。这是因为今天绝大多数应用程序大多是单个模块构建，支持Instant
 Apps需要开发人员将其构建分为多个称为 features的模块。每个功能都代表应用程序的一部分，可以根据需要下载。
 
-![功能模块关系](/image/_yi_Android_Instant_Apps_jian_jie/5659a05bdc421934a94770c0fe7e102d28101fa7d6462e0fbe5539e94de2f517)
+![功能模块关系](/image/yi_android_instant_apps_jian_jie/5659a05bdc421934a94770c0fe7e102d28101fa7d6462e0fbe5539e94de2f517)
 
   1. Feature modules ——  是应用新的 `com.android.feature 的`Gradle插件的模块。它们只是library 项目，`aar`在被其他模块使用时产生。值得注意的是，它们没有应用程序ID，因为它们只是library 项目。
 

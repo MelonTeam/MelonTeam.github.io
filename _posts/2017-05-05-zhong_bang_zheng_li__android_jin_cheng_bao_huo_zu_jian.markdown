@@ -21,7 +21,7 @@ github地址： <https://github.com/stephen8341/KeepProcLive>
 
 2\.  Service设置为前台进程 将后台进程设置为前台进程，提高进程优先级
 
-![](/image/zhong_bang_zheng_li__Android_jin_cheng_bao_huo_zu_jian/17035b806bd0b12889624d692c4215756b8b697de87ea9af0deb916c80db5290)
+![](/image/zhong_bang_zheng_li__android_jin_cheng_bao_huo_zu_jian/17035b806bd0b12889624d692c4215756b8b697de87ea9af0deb916c80db5290)
 
 3\.  1像素Activity方案 关屏后加载1个像素的Activity到Window，提高锁屏 后的进程优先级
 

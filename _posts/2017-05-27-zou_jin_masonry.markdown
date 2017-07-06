@@ -35,11 +35,11 @@ Google 看看对应的文章
 
 首先简单看一下 Masonry 主要的设计以及 Class 结构方法，这是一个经典的 `Composite` 设计模式
 
-![](/image/zou_jin_Masonry/8c6e704af29919c593cdd467aefaadbf8bd41d6d4d8488133b637ecd3e1aac6c)
+![](/image/zou_jin_masonry/8c6e704af29919c593cdd467aefaadbf8bd41d6d4d8488133b637ecd3e1aac6c)
 
 另外还有一个辅助的 Class `MASConstraintMaker`
 
-![](/image/zou_jin_Masonry/4ec3e1d2e9b91a075aaccc989655b251bed470c0bfa7a2eb634b8d2f603ed6b8)
+![](/image/zou_jin_masonry/4ec3e1d2e9b91a075aaccc989655b251bed470c0bfa7a2eb634b8d2f603ed6b8)
 
 其中 `left`、`right` 等方法分别被定义在了 `MASConstraint` 和 `MASConstraintMaker`
 中，具体的内部实现稍微不同
@@ -154,7 +154,7 @@ Google 看看对应的文章
 
 `MASViewAttribute` 的 Class 结构如下图
 
-![](/image/zou_jin_Masonry/7ba4c05c76f16fe4040a8a60313017ac935c820739eca6fd0bc1c1d676d3915e)
+![](/image/zou_jin_masonry/7ba4c05c76f16fe4040a8a60313017ac935c820739eca6fd0bc1c1d676d3915e)
 
 上面的 item 字段，`Masonry` 上给的是 `id` 字段，因为 还有 `UIViewController` 的 `topLayoutGuide`
 属性，这里 为了方便理解，可以把`item`直接直接看作 `UIView`
@@ -248,7 +248,7 @@ fileRight。当链式变成更多之后，比如 `make.left.right.bottom`, 就�
 这样的文件夹，里面放了一个文件夹 folderLeftRight 和一个文件 fileBottom, folderLeftRight 里面有 2 个文件夹
 fileLeft 和 fileRight。接下来，如果更多的链式也保持一样的道理，再添加一个文件夹而已，模型大致是这样
 
-![](/image/zou_jin_Masonry/7bd1c3a86d6d0d52d38a63c0562dc558ef292f7593f47d49d53e74060310a122)
+![](/image/zou_jin_masonry/7bd1c3a86d6d0d52d38a63c0562dc558ef292f7593f47d49d53e74060310a122)
 
 箭头表示这个 `MASConstraint` 在哪一个 `MASCompositeConstraint` 的
 `childConstraints`，而最终被保存的数据结构，就是 root 所代表的那个 `MASCompositeConstraint`

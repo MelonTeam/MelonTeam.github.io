@@ -33,7 +33,7 @@ tags: 弹幕实现 iOS
 
 弹幕开始滚动的前提是已经拉到评论数据，因此，弹幕的启动是由数据来驱动的。弹幕这里的整体设计思想，想使整套实现能够实现定制化。因此，这三个部分需要以一种比较灵活的方式组合在一起。
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/1cfe1a180560e57cddfcc6f8c886e79f89602765f92200a80945771ebd659618)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/1cfe1a180560e57cddfcc6f8c886e79f89602765f92200a80945771ebd659618)
 
 上图是整体设计思路，将滚动方式、展示形式和数据模块分成三个部分。
 
@@ -48,23 +48,23 @@ tags: 弹幕实现 iOS
 
        1、QAutoRollTableView 下图给的就是滚动弹幕的tableview接口，接口作用如图中注释。
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/3dd723e29de19e83d8e92822126be72b6ee629ef7878189ec12967ede0c2d548)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/3dd723e29de19e83d8e92822126be72b6ee629ef7878189ec12967ede0c2d548)
 
         2、QAutoRollDataSource
 初始化需要制定一个dataModel,由dataModel来提供弹幕数据，和驱动力。这个对象本身需要只需要制定每个cell的样式和展示逻辑即可。
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/d299b2aad05322c49a17b5d3f8cbc3b16865257e5f89b9b5109f23541cc330ba)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/d299b2aad05322c49a17b5d3f8cbc3b16865257e5f89b9b5109f23541cc330ba)
 
 3、dataModel本身就相对简单，只需要关注业务本身的拉取逻辑即可。准备好数据后，需要通过delegate通知到tableview，开始滚动
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/436d9481426611c56b8da8831b09d478eb3477819c38c15ac6621915b4ea2c3f)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/436d9481426611c56b8da8831b09d478eb3477819c38c15ac6621915b4ea2c3f)
 
      日迹的弹幕提供了一个通用的显示纯文本的弹幕控件，下图中cellForRow方法由
 QAutoRollTableTextDataSource提供，指定纯文本显示。
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/82fc31c036853fff3de6394df429162e60378ff82b014ce75b7cee2425cda2b8)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/82fc31c036853fff3de6394df429162e60378ff82b014ce75b7cee2425cda2b8)
 
-![](/image/iOS_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/d002c9d69dbc657bf06b84bef15e6545036bd1fa3093b90eb68f3a622f9c90c3)
+![](/image/ios_shang_zhi_bo_dan_mu_de_yi_zhong_shi_xian/d002c9d69dbc657bf06b84bef15e6545036bd1fa3093b90eb68f3a622f9c90c3)
 
 以上是我在做日迹需求中实现弹幕的一套方案，写的比较仓促，接口设计上，可能不是很友好，希望大家批评指正。
 

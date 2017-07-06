@@ -18,7 +18,7 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
 <!--more-->
 ## 1.1. 总体流程
 
-![](/image/ji_yu_Java_fan_she_shi_xian_Android_de_ORM_kuang_jia/65d745851b21df0033d471c5711a9250c21d1764455fab9d4a507932978fa721)
+![](/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/65d745851b21df0033d471c5711a9250c21d1764455fab9d4a507932978fa721)
 
 >   1. 对于数据库的“增删改”操作，将对象输入，通过ORM框架处理，构建SQL语句，然后写入数据库，如图1所示；
 
@@ -28,7 +28,7 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
 
 ## 1.2. ORM内部实现流程
 
-![](/image/ji_yu_Java_fan_she_shi_xian_Android_de_ORM_kuang_jia/6feb82d370385ce74029dc2663bd3bf95a6d54cec65665ef39b4e0d292abf3b2)
+![](/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/6feb82d370385ce74029dc2663bd3bf95a6d54cec65665ef39b4e0d292abf3b2)
 
 > 构建SQL语句的原理：通过Java反射机制，获取Class的字段和Object字段值，通过字符串拼接构建SQL。
 

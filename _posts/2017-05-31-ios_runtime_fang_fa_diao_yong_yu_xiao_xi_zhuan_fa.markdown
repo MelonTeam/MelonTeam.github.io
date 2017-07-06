@@ -23,11 +23,11 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
 
      objc_msgsend的大致运行流程如下图，其中需要重点关注的是“寻找方法实现”这一步。
 
-![](/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/d515fc633024d8f4dd248537f2a8362fa68e82564207a02fe9108e58e289a3d6)
+![](/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/d515fc633024d8f4dd248537f2a8362fa68e82564207a02fe9108e58e289a3d6)
 
 寻找方法实现可以概括为以下几步：
 
-![](/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/49d65bf7c25d01679631572571ba47035cc6ddd790eaae7950b4c32b405703e0)
+![](/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/49d65bf7c25d01679631572571ba47035cc6ddd790eaae7950b4c32b405703e0)
 
 ### 二、消息转发
 
@@ -56,7 +56,7 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
 
 ·如果返回nil，那么调用forwardInvocation
 
-![](/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/e61d9fea2a32c69da6ab6876f3a26add0dfcf4e231ccd171d2ff36e92d99fbe7)
+![](/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/e61d9fea2a32c69da6ab6876f3a26add0dfcf4e231ccd171d2ff36e92d99fbe7)
 
 我们现在来动手动态的添加一个方法。首先，在viewdidload里调用一个不存在的方法：
 

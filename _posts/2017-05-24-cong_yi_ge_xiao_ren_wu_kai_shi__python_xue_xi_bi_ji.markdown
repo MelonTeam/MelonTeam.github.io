@@ -82,7 +82,7 @@ Python”。作为仅次于PHP的第二大语言，网络爬虫正是Python的�
 查看Pysmb文档关于SMBConnection方法的说明，该参数和remote
 server的配置名称必须严格一致，否则会被拒绝，看起来这个点无法简单绕过；
 
-![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__Python_xue_xi_bi_ji/ca74fc2d0e1ce6af9dc9c2e6d70af8a58e2287763d50edf7f524cbb2a9d182cd)
+![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/ca74fc2d0e1ce6af9dc9c2e6d70af8a58e2287763d50edf7f524cbb2a9d182cd)
 
 解决这个问题花了我一些时间，通过查询资料可知，腾讯的文件系统TFS是一个分布式的文件系统，采用DFS技术，虽然访问时并无明显差别，但不同的目录很可能存在于不同的主机上；在Mac上尝试获取无果后，偶然发现了一个取巧的方法，可以进行“曲线救国”：在Window上，对于共享文件，我们可以通过右键属性，查看其DFS选项，这里可以获取该目录所在的服务器路径，如下所示：
 
@@ -90,9 +90,9 @@ server的配置名称必须严格一致，否则会被拒绝，看起来这个�
 ，其中的FS-gk27a，正是我们所需要的服务器域名；而有了服务器域名，获取其IP则很简单了，在CMD中ping一下，便可得到服务器真实域名为 FS-
 gk27a.tencent.com，IP地址为10.14.37.68；
 
-![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__Python_xue_xi_bi_ji/05d882dc50020347a8a9c3db1df8690aded4c9009586f21b0bab085f678f0773)
+![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/05d882dc50020347a8a9c3db1df8690aded4c9009586f21b0bab085f678f0773)
 
-![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__Python_xue_xi_bi_ji/5acc0f805fafda8a88e31167ba3e0be6a3ebf3f35e1269eff8f7c84ab907d81d)
+![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/5acc0f805fafda8a88e31167ba3e0be6a3ebf3f35e1269eff8f7c84ab907d81d)
 
 有了这些参数，便可顺利连接服务器；"腾讯电影协会-
 影音博物馆”目录下有四个文件夹，其中“★书籍”和“★游戏”不是我们所需要的，可以直接过滤，剩下的可以通过一个递归的方法，循环获取文件信息，精简后的代码如下：
@@ -116,7 +116,7 @@ gk27a.tencent.com，IP地址为10.14.37.68；
 
  抓包大约会持续10分钟，最后我们可以得到一份全量数据；从日志上看，共有26万多个文件，我的天，终于明白为何在Mac上搜索如此缓慢了；
 
-![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__Python_xue_xi_bi_ji/6175a27d51c2eda5f51c99bef3ff6927456d09994ea3064dd99d86f0a45ba635)
+![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/6175a27d51c2eda5f51c99bef3ff6927456d09994ea3064dd99d86f0a45ba635)
 
 ### 分词器的选型
 
@@ -143,7 +143,7 @@ Jieba分词器是一个开源的基于词典的中文分词库，优点是搜索
 
 我们直接进入体验环节，通过运行Search.py，搜索”摔跤吧“，结果如下：
 
-![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__Python_xue_xi_bi_ji/b9b20cc4b7bfde2966c2c44161fe5dafdc4c53c2d7236f38cf045efcf7f713c9)
+![](/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/b9b20cc4b7bfde2966c2c44161fe5dafdc4c53c2d7236f38cf045efcf7f713c9)
 
 Perfect，成功获得了我们想要的结果；在Finder中用CMD+K快捷键，输入上面的SMB链接，即可跳到对应的文件夹；而更重要的是，有了本地的索引库，以后终于不用忍受龟速般的搜索了，简直是我等伸手党的福音啊；虽然目前由于时间缘故，还未做到对索引库进行增量更新乃至自动更新，但从技术上分析是可行的，这里留待以后完成。
 

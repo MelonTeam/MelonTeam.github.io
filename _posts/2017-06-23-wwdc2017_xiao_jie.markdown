@@ -19,7 +19,7 @@ tags: COREML ARKit
 
 #### iMac Pro
 
-![](/image/WWDC2017_xiao_jie/e48bda85df5ce48d97b488a3a3b916ba85ec1a583436abf0622faf922941b3af)
+![](/image/wwdc2017_xiao_jie/e48bda85df5ce48d97b488a3a3b916ba85ec1a583436abf0622faf922941b3af)
 
 这款深空灰色的设备被称为至今为止的最强 Mac，它将搭载最高 18 核心的 Intel Xeon 处理器和 AMD Radeon Pro Vega
 显卡，单精度和「半精度」运算峰值分别可达 11 Teraflops 和 22 Teraflops。除此之外，它还配备了最高 4TB SSD，在 27 吋的
@@ -29,7 +29,7 @@ Retina 5K 屏幕背后有 4 个 Thunderbolt 3 插口和多个 USB 接口。设�
 
 #### Homepod
 
-![](/image/WWDC2017_xiao_jie/1d0f690ce4abb68f9ccd7bb9c19c5e4a054f8874047628a725a99936d33a5c82)
+![](/image/wwdc2017_xiao_jie/1d0f690ce4abb68f9ccd7bb9c19c5e4a054f8874047628a725a99936d33a5c82)
 
 Siri智能音箱HomePod。搭载6个麦克风阵列，4英寸低音炮，底部配有7个扬声器阵列，内置Apple A8处理器。
 
@@ -71,7 +71,7 @@ iPhone 如果感应到你可能正在开车，就会暂时屏蔽来电、短信�
 
 #### ARKit
 
-![](/image/WWDC2017_xiao_jie/947450244ab8c66dc4b65328f0ec722e7c38fee6192890f5760719d12982d972)
+![](/image/wwdc2017_xiao_jie/947450244ab8c66dc4b65328f0ec722e7c38fee6192890f5760719d12982d972)
 
 ARKit 利用单镜头和陀螺仪，在对平面的识别和虚拟物体的稳定上做得相当出色。几乎可以肯定不做最早，只做最好的 Apple 似乎在这一刻回到了舞台上。
 
@@ -81,7 +81,7 @@ ARKit 极大降低了普通开发者玩 AR 的门槛，也是 Apple 现阶段用
 
 #### Core ML
 
-![](/image/WWDC2017_xiao_jie/9f80f167e2729df5dc548195f5de363a4b3ccd58c1f7fc84a924b79255e7b664)
+![](/image/wwdc2017_xiao_jie/9f80f167e2729df5dc548195f5de363a4b3ccd58c1f7fc84a924b79255e7b664)
 
 Core ML 所扮演的角色更多的是将已经训练好的模型转换为 iOS 可以理解的形式，并且将新的数据“喂给”模型，获取输出。
 
