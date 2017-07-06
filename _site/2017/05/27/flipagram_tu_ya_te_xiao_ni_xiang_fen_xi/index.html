@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>flipagram 涂鸦特效逆向分析</title>
-    <meta name="description" content="  背景  flipagram特效  仿涂鸦特效">
+    <title>Flipagram 涂鸦特效逆向分析</title>
+    <meta name="description" content="  背景  Flipagram特效  仿涂鸦特效">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -66,16 +66,6 @@
                         <a href="/category/">
                         
                             <i class="fa fa-th-list"></i>分类
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
                         </a>
                     </li>
                     
@@ -114,6 +104,10 @@
                 
                     
                 
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -122,7 +116,7 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>flipagram 涂鸦特效逆向分析</h1>
+        <h1>Flipagram 涂鸦特效逆向分析</h1>
         <div class="label">
 
             <div class="label-card">
@@ -184,14 +178,14 @@
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
   <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
-  <li><a href="#flipagram特效" id="markdown-toc-flipagram特效">flipagram特效</a></li>
+  <li><a href="#flipagram特效" id="markdown-toc-flipagram特效">Flipagram特效</a></li>
   <li><a href="#仿涂鸦特效" id="markdown-toc-仿涂鸦特效">仿涂鸦特效</a>    <ul>
-      <li><a href="#ios粒子效果" id="markdown-toc-ios粒子效果">ios粒子效果</a></li>
-      <li><a href="#flipagram特效参数分析" id="markdown-toc-flipagram特效参数分析">flipagram特效参数分析</a></li>
+      <li><a href="#ios粒子效果" id="markdown-toc-ios粒子效果">IOS粒子效果</a></li>
+      <li><a href="#flipagram特效参数分析" id="markdown-toc-flipagram特效参数分析">Flipagram特效参数分析</a></li>
     </ul>
   </li>
   <li><a href="#逆向分析" id="markdown-toc-逆向分析">逆向分析</a>    <ul>
-      <li><a href="#ui层级分析" id="markdown-toc-ui层级分析">ui层级分析</a></li>
+      <li><a href="#ui层级分析" id="markdown-toc-ui层级分析">UI层级分析</a></li>
       <li><a href="#相关类" id="markdown-toc-相关类">相关类</a></li>
       <li><a href="#小结" id="markdown-toc-小结">小结</a></li>
     </ul>
@@ -201,17 +195,17 @@
 
 <ul>
   <li>背景</li>
-  <li>flipagram特效</li>
+  <li>Flipagram特效</li>
   <li>仿涂鸦特效
 <!--more-->
     <ul>
-      <li>ios粒子效果</li>
-      <li>flipagram特效参数分析</li>
+      <li>IOS粒子效果</li>
+      <li>Flipagram特效参数分析</li>
     </ul>
   </li>
   <li>逆向分析
     <ul>
-      <li>ui层级分析</li>
+      <li>UI层级分析</li>
       <li>相关类</li>
       <li>小结</li>
     </ul>
@@ -221,180 +215,180 @@
 
 <h2 id="背景">背景</h2>
 
-<p>flipagram是美国一款非常火爆的短视频应用，一度登顶美国appstore榜首。前段时间又被今日头条重金收购，被当做今日头条发展海外短视频、提升国际影响力的发力点。本着好奇的心情体验了一下这款app，印象最深的是视频编辑能力比较强，特别是动态涂鸦效果感觉非常惊艳，打算好好研究一下，优化改进一下手q现有的涂鸦效果。</p>
+<p>Flipagram是美国一款非常火爆的短视频应用，一度登顶美国appstore榜首。前段时间又被今日头条重金收购，被当做今日头条发展海外短视频、提升国际影响力的发力点。本着好奇的心情体验了一下这款APP，印象最深的是视频编辑能力比较强，特别是动态涂鸦效果感觉非常惊艳，打算好好研究一下，优化改进一下手Q现有的涂鸦效果。</p>
 
-<h2 id="flipagram特效">flipagram特效</h2>
+<h2 id="flipagram特效">Flipagram特效</h2>
 
-<p><img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/3811bde633bcb0a35390dedea415cca7642b53746ffe82e4004004f189a07899" alt="untitled" /></p>
+<p><img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/a658c5552ff00982a62844332c5ebb83852d4e45677ad42d5f984767987e6e2f" alt="Untitled" /></p>
 
 <h2 id="仿涂鸦特效">仿涂鸦特效</h2>
 
 <p>初步推测：系统自带的粒子效果+手势，在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。</p>
 
-<h3 id="ios粒子效果">ios粒子效果</h3>
+<h3 id="ios粒子效果">IOS粒子效果</h3>
 
-<p>系统自带的粒子效果实现主要的类是：<code class="highlighter-rouge">caemitterbehavior</code>、<code class="highlighter-rouge">caemitterlayer</code>、<code class="highlighter-rouge">caemittercell</code>他们的作用分别是，定义粒子发射机的行为、设置发射机的特征、设置粒子的具体特效。</p>
+<p>系统自带的粒子效果实现主要的类是：<code class="highlighter-rouge">CAEmitterBehavior</code>、<code class="highlighter-rouge">CAEmitterLayer</code>、<code class="highlighter-rouge">CAEmitterCell</code>他们的作用分别是，定义粒子发射机的行为、设置发射机的特征、设置粒子的具体特效。</p>
 
 <p>使用比较简单：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    //create the root layer
-    rootlayer = [calayer layer];
+<div class="highlighter-rouge"><pre class="highlight"><code>    //Create the root layer
+    rootLayer = [CALayer layer];
 
-    //set the root layer's attributes
-    rootlayer.bounds = cgrectmake(0, 0, 640, 480);
-    cgcolorref color = cgcolorcreategenericrgb(0.0, 0.0, 0.0, 1);
-    rootlayer.backgroundcolor = color;
-    cgcolorrelease(color);
+    //Set the root layer's attributes
+    rootLayer.bounds = CGRectMake(0, 0, 640, 480);
+    CGColorRef color = CGColorCreateGenericRGB(0.0, 0.0, 0.0, 1);
+    rootLayer.backgroundColor = color;
+    CGColorRelease(color);
 
-    //load the spark image for the particle
-    nsimage *image = [nsimage imagenamed:@"tspark"];
-    cgimageref img = [image cgimageforproposedrect:nil context:nil hints:nil];
+    //Load the spark image for the particle
+    NSImage *image = [NSImage imageNamed:@"tspark"];
+    CGImageRef img = [image CGImageForProposedRect:nil context:nil hints:nil];
 
-    mortor = [caemitterlayer layer];
-    mortor.emitterposition = cgpointmake(320, 0);
-    mortor.rendermode = kcaemitterlayeradditive;
+    mortor = [CAEmitterLayer layer];
+    mortor.emitterPosition = CGPointMake(320, 0);
+    mortor.renderMode = kCAEmitterLayerAdditive;
 
-    //invisible particle representing the rocket before the explosion
-    caemittercell *rocket = [caemittercell emittercell];
-    rocket.emissionlongitude = m_pi / 2;
-    rocket.emissionlatitude = 0;
+    //Invisible particle representing the rocket before the explosion
+    CAEmitterCell *rocket = [CAEmitterCell emitterCell];
+    rocket.emissionLongitude = M_PI / 2;
+    rocket.emissionLatitude = 0;
     rocket.lifetime = 1.6;
-    rocket.birthrate = 1;
+    rocket.birthRate = 1;
     rocket.velocity = 400;
-    rocket.velocityrange = 100;
-    rocket.yacceleration = -250;
-    rocket.emissionrange = m_pi / 4;
-    color = cgcolorcreategenericrgb(0.5, 0.5, 0.5, 0.5);
+    rocket.velocityRange = 100;
+    rocket.yAcceleration = -250;
+    rocket.emissionRange = M_PI / 4;
+    color = CGColorCreateGenericRGB(0.5, 0.5, 0.5, 0.5);
     rocket.color = color;
-    cgcolorrelease(color);
-    rocket.redrange = 0.5;
-    rocket.greenrange = 0.5;
-    rocket.bluerange = 0.5;
+    CGColorRelease(color);
+    rocket.redRange = 0.5;
+    rocket.greenRange = 0.5;
+    rocket.blueRange = 0.5;
 
-    //name the cell so that it can be animated later using keypath
+    //Name the cell so that it can be animated later using keypath
     rocket.name = @"rocket";
 
-    //flare particles emitted from the rocket as it flys
-    caemittercell *flare = [caemittercell emittercell];
+    //Flare particles emitted from the rocket as it flys
+    CAEmitterCell *flare = [CAEmitterCell emitterCell];
     flare.contents = (__bridge id)img;
-    flare.emissionlongitude = (4 * m_pi) / 2;
+    flare.emissionLongitude = (4 * M_PI) / 2;
     flare.scale = 0.4;
     flare.velocity = 100;
-    flare.birthrate = 45;
+    flare.birthRate = 45;
     flare.lifetime = 1.5;
-    flare.yacceleration = -350;
-    flare.emissionrange = m_pi / 7;
-    flare.alphaspeed = -0.7;
-    flare.scalespeed = -0.1;
-    flare.scalerange = 0.1;
-    flare.begintime = 0.01;
+    flare.yAcceleration = -350;
+    flare.emissionRange = M_PI / 7;
+    flare.alphaSpeed = -0.7;
+    flare.scaleSpeed = -0.1;
+    flare.scaleRange = 0.1;
+    flare.beginTime = 0.01;
     flare.duration = 0.7;
 
-    //the particles that make up the explosion
-    caemittercell *firework = [caemittercell emittercell];
+    //The particles that make up the explosion
+    CAEmitterCell *firework = [CAEmitterCell emitterCell];
     firework.contents = (__bridge id)img;
-    firework.birthrate = 9999;
+    firework.birthRate = 9999;
     firework.scale = 0.6;
     firework.velocity = 130;
     firework.lifetime = 2;
-    firework.alphaspeed = -0.2;
-    firework.yacceleration = -80;
-    firework.begintime = 1.5;
+    firework.alphaSpeed = -0.2;
+    firework.yAcceleration = -80;
+    firework.beginTime = 1.5;
     firework.duration = 0.1;
-    firework.emissionrange = 2 * m_pi;
-    firework.scalespeed = -0.1;
+    firework.emissionRange = 2 * M_PI;
+    firework.scaleSpeed = -0.1;
     firework.spin = 2;
 
-    //name the cell so that it can be animated later using keypath
+    //Name the cell so that it can be animated later using keypath
     firework.name = @"firework";
 
-    //prespark is an invisible particle used to later emit the spark
-    caemittercell *prespark = [caemittercell emittercell];
-    prespark.birthrate = 80;
-    prespark.velocity = firework.velocity * 0.70;
-    prespark.lifetime = 1.7;
-    prespark.yacceleration = firework.yacceleration * 0.85;
-    prespark.begintime = firework.begintime - 0.2;
-    prespark.emissionrange = firework.emissionrange;
-    prespark.greenspeed = 100;
-    prespark.bluespeed = 100;
-    prespark.redspeed = 100;
+    //preSpark is an invisible particle used to later emit the spark
+    CAEmitterCell *preSpark = [CAEmitterCell emitterCell];
+    preSpark.birthRate = 80;
+    preSpark.velocity = firework.velocity * 0.70;
+    preSpark.lifetime = 1.7;
+    preSpark.yAcceleration = firework.yAcceleration * 0.85;
+    preSpark.beginTime = firework.beginTime - 0.2;
+    preSpark.emissionRange = firework.emissionRange;
+    preSpark.greenSpeed = 100;
+    preSpark.blueSpeed = 100;
+    preSpark.redSpeed = 100;
 
-    //name the cell so that it can be animated later using keypath
-    prespark.name = @"prespark";
+    //Name the cell so that it can be animated later using keypath
+    preSpark.name = @"preSpark";
 
-    //the 'sparkle' at the end of a firework
-    caemittercell *spark = [caemittercell emittercell];
+    //The 'sparkle' at the end of a firework
+    CAEmitterCell *spark = [CAEmitterCell emitterCell];
     spark.contents = (__bridge id)img;
     spark.lifetime = 0.05;
-    spark.yacceleration = -250;
-    spark.begintime = 0.8;
+    spark.yAcceleration = -250;
+    spark.beginTime = 0.8;
     spark.scale = 0.4;
-    spark.birthrate = 10;
+    spark.birthRate = 10;
 
-    prespark.emittercells = @[spark];
-    rocket.emittercells = @[flare, firework, prespark];
-    mortor.emittercells = @[rocket];
-    [rootlayer addsublayer:mortor];
+    preSpark.emitterCells = @[spark];
+    rocket.emitterCells = @[flare, firework, preSpark];
+    mortor.emitterCells = @[rocket];
+    [rootLayer addSublayer:mortor];
 
-    //set the view's layer to the base layer
-    theview.layer = rootlayer;
-    [theview setwantslayer:yes];
+    //Set the view's layer to the base layer
+    theView.layer = rootLayer;
+    [theView setWantsLayer:YES];
 
-    //force the view to update
-    [theview setneedsdisplay:yes];
+    //Force the view to update
+    [theView setNeedsDisplay:YES];
 </code></pre>
 </div>
 
 <p>具体效果：<br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/dd892091c4c0d2d508f464cb91746bc4f53fb2e040ab93ad5cf3aa184fe64e53" alt="untitled1" /></p>
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/92e77db926e37e4048d8d52e9e340ea5f0a840b874a371e2b016a5f53ef85ba9" alt="Untitled1" /></p>
 
-<h3 id="flipagram特效参数分析">flipagram特效参数分析</h3>
+<h3 id="flipagram特效参数分析">Flipagram特效参数分析</h3>
 
-<p>粒子效果的参数非常多，要实现和flipagram一样的效果，设置参数是一件非常繁琐的事情，借用粒子效果的工具分析了一种类似效果的具体参数，主要包含4个方面的参数：发射机、粒子、色彩、纹理<br />
+<p>粒子效果的参数非常多，要实现和Flipagram一样的效果，设置参数是一件非常繁琐的事情，借用粒子效果的工具分析了一种类似效果的具体参数，主要包含4个方面的参数：发射机、粒子、色彩、纹理<br />
 16个发射机参数(截取部分显示)：<br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/5fdceb6c5888ff91a17f68a587749e0045b85982ec56918bb72e93b996c4c8d9" alt="屏幕快照 2017-04-28
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/2fe6c2862e10ae1f4c1a9eebfbbe85db8fb321bd2dfbf6c7534c0a22e2f58f9d" alt="屏幕快照 2017-04-28
 下午2.05.28" /></p>
 
 <p>10个粒子参数(截取部分显示)：<br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/453134d07a5a9bf0c70b0f494d2184b2bc725df47909f431b25d1469554da0a1" alt="屏幕快照 2017-04-28
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/472680555b4c18e282bdb26fe5458ee6b8836c878ebcb5314ba5bd47b8b2be01" alt="屏幕快照 2017-04-28
 下午2.05.39" /></p>
 
 <p>12个色彩参数(截取部分显示)：<br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/930b8b3f6ac2a81f3cfe4583765a10072694e8a21fa4ab902174218c7f82ccd1" alt="屏幕快照 2017-04-28
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/b8008c75a6fc39919a88daac1a678a9b06281c5000babb29abaa26429f2754a9" alt="屏幕快照 2017-04-28
 下午2.05.46" /></p>
 
 <p>纹理设置：<br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/e91dc92d57a0d6e7f730d9894af2c226d0437874a10b3e6dcdbcaf09d8ad5ab6" alt="屏幕快照 2017-04-28
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/d65415b4f3fa5a956b979931f29259456344a9383c027e54dbf816daa55e6e40" alt="屏幕快照 2017-04-28
 下午2.05.53" /></p>
 
 <p><strong>小结：通过类似粒子效果的参数分析，发现系统接口的参数比较少，根本实现不了这种稍微复杂一点的效果。</strong></p>
 
 <h2 id="逆向分析">逆向分析</h2>
 
-<h3 id="ui层级分析">ui层级分析</h3>
+<h3 id="ui层级分析">UI层级分析</h3>
 
-<p>通过分析flipagram的涂鸦页面的ui层级，发现和涂鸦渲染层的类是<code class="highlighter-rouge">fgdrawcontrolsview</code><br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/42472930a5dd1c25ebba733d1d3a0465503fbe4e6c9c65c9a638e31d0ef127d4" alt="708ff504-d266-4c76-a31a-
-e75094aae585" /></p>
+<p>通过分析Flipagram的涂鸦页面的UI层级，发现和涂鸦渲染层的类是<code class="highlighter-rouge">FGDrawControlsView</code><br />
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/39a67b431717fbf92b7b7f943c689f422eb6f782eeedb2c5ad7b23f955c3b6bc" alt="708FF504-D266-4C76-A31A-
+E75094AAE585" /></p>
 
 <h3 id="相关类">相关类</h3>
 
-<p>通过反汇编分析了和渲染层<code class="highlighter-rouge">fgdrawcontrolsview</code>相关的主要类：<code class="highlighter-rouge">fgdrawenginepathfactory</code>、<code class="highlighter-rouge">fgdrawenginepath</code>、<code class="highlighter-rouge">fgdrawengine</code><br />
-<img src="/image/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/100e7193c51c9bfa5c2dc4b37ffde86ac43bb537e7edd0cdf8cf27f3a646b725" alt="056c8ff2-d711-4faa-ba7f-
-8451a4c8966d" /></p>
+<p>通过反汇编分析了和渲染层<code class="highlighter-rouge">FGDrawControlsView</code>相关的主要类：<code class="highlighter-rouge">FGDrawEnginePathFactory</code>、<code class="highlighter-rouge">FGDrawEnginePath</code>、<code class="highlighter-rouge">FGDrawEngine</code><br />
+<img src="/image/Flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/c59271ab58e5f8f9934b2b7a817602d27e87ee1c8ddd2a65eab9a973c6251f1d" alt="056C8FF2-D711-4FAA-BA7F-
+8451A4C8966D" /></p>
 
-<p><code class="highlighter-rouge">fgdrawenginepathfactory</code>是一个负责创建具体特效路径的工厂类，比如：烟花效果的路径、不同画刷的路径、表情效果的路径、沙子效果的路径等等。
-<code class="highlighter-rouge">fgdrawenginepath</code>设置粒子发射机的特性和粒子特效参数，比如：颜色、画刷参数、弧度等，同时维护了一条路径的矢量点阵信息。
-<code class="highlighter-rouge">fgdrawengine</code>内部利用了opengl把发射机参数、粒子效果参数、色彩参数、纹理参数的具体效果渲染出来。</p>
+<p><code class="highlighter-rouge">FGDrawEnginePathFactory</code>是一个负责创建具体特效路径的工厂类，比如：烟花效果的路径、不同画刷的路径、表情效果的路径、沙子效果的路径等等。
+<code class="highlighter-rouge">FGDrawEnginePath</code>设置粒子发射机的特性和粒子特效参数，比如：颜色、画刷参数、弧度等，同时维护了一条路径的矢量点阵信息。
+<code class="highlighter-rouge">FGDrawEngine</code>内部利用了OpenGL把发射机参数、粒子效果参数、色彩参数、纹理参数的具体效果渲染出来。</p>
 
 <h3 id="小结">小结</h3>
 
-<p><code class="highlighter-rouge">ios</code>自带的粒子效果使用比较简单，但是效果也比较单一，很难实现酷炫的效果。<code class="highlighter-rouge">flipagram</code>的涂鸦特效实现是在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。其中<code class="highlighter-rouge">fgdrawenginepath</code>主要负责管理路径和特效信息，<code class="highlighter-rouge">fgdrawengine</code>负责渲染具体的效果。</p>
+<p><code class="highlighter-rouge">IOS</code>自带的粒子效果使用比较简单，但是效果也比较单一，很难实现酷炫的效果。<code class="highlighter-rouge">Flipagram</code>的涂鸦特效实现是在手指移动的过程中创建不同效果的粒子发射机，粒子发射机发射不同效果的粒子。其中<code class="highlighter-rouge">FGDrawEnginePath</code>主要负责管理路径和特效信息，<code class="highlighter-rouge">FGDrawEngine</code>负责渲染具体的效果。</p>
 
 <h2 id="后续工作">后续工作</h2>
 
-<p>继续分析<code class="highlighter-rouge">fgdrawengine</code>的内部接口，利用<code class="highlighter-rouge">opengl</code>实现一个粒子特效引擎，最终实现<code class="highlighter-rouge">flipagram</code>的涂鸦特效。</p>
+<p>继续分析<code class="highlighter-rouge">FGDrawEngine</code>的内部接口，利用<code class="highlighter-rouge">OpenGL</code>实现一个粒子特效引擎，最终实现<code class="highlighter-rouge">Flipagram</code>的涂鸦特效。</p>
 
 
         </article>
@@ -511,7 +505,7 @@ e75094aae585" /></p>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/05/28/guan_yu_gpuimage/">关于gpuimage</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/05/28/guan_yu_gpuimage/">关于GPUImage</a></p>
         
     </div>
 </div>
@@ -579,17 +573,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

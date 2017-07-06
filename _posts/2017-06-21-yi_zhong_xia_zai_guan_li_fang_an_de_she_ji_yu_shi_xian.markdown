@@ -11,54 +11,54 @@ tags: 下载 优先级
 {:toc}
 
 | 导语
-4g时代流量资费大幅下降，各种“wbq”卡惊艳出世——在此背景下，下载对于移动端已不再是一种昂贵的高成本行为。同时emmc、ufs等存储介质的发展也为移动端下载解决了一定的i/o瓶颈问题。本文主要描述一种android端下载管理方案的设计和实现思路。重点在思路，实现方案并不一定十分完善^_^
+4G时代流量资费大幅下降，各种“WBQ”卡惊艳出世——在此背景下，下载对于移动端已不再是一种昂贵的高成本行为。同时EMMC、UFS等存储介质的发展也为移动端下载解决了一定的I/O瓶颈问题。本文主要描述一种Android端下载管理方案的设计和实现思路。重点在思路，实现方案并不一定十分完善^_^
 
 # 前言
 
 <!--more-->
-观察几年前的移动应用可以发现，安装包体积非常小。原因很简单：呈现的内容简单，足够全量打包进安装包。如今业务繁杂、ui绚丽的需求由于安装包体积限制不可能再进行全量打包，必须通过后期的按需下载实现接入。因此，需要设计一个通用的下载组件管理app内所有资源的下载。
+观察几年前的移动应用可以发现，安装包体积非常小。原因很简单：呈现的内容简单，足够全量打包进安装包。如今业务繁杂、UI绚丽的需求由于安装包体积限制不可能再进行全量打包，必须通过后期的按需下载实现接入。因此，需要设计一个通用的下载组件管理App内所有资源的下载。
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/8999e1db9ecda53d18b3e3c5268f31c9501f28853b1d308ce850e6fc267b4bff)
 
 # 一、技术调研
 
-## 1.1 downloadmanager
+## 1.1 DownloadManager
 
-the download manager is a system service that handles long-running http
-downloads. clients may request that a uri be downloaded to a particular
-destination file. the download manager will conduct the download in the
-background, taking care of http interactions and retrying downloads after
-failures or across connectivity changes and system reboots. instances of this
+The download manager is a system service that handles long-running HTTP
+downloads. Clients may request that a URI be downloaded to a particular
+destination file. The download manager will conduct the download in the
+background, taking care of HTTP interactions and retrying downloads after
+failures or across connectivity changes and system reboots. Instances of this
 class should be obtained through
-`[getsystemservice(string)](https://developer.android.com/reference/android/content/context.html#getsystemservice\(java.lang.string\))`
+`[getSystemService(String)](https://developer.android.com/reference/android/content/Context.html#getSystemService\(java.lang.String\))`
 by passing
-`[download_service](https://developer.android.com/reference/android/content/context.html#download_service)`.
-apps that request downloads through this api should register a broadcast
+`[DOWNLOAD_SERVICE](https://developer.android.com/reference/android/content/Context.html#DOWNLOAD_SERVICE)`.
+Apps that request downloads through this API should register a broadcast
 receiver for
-`[action_notification_clicked](https://developer.android.com/reference/android/app/downloadmanager.html#action_notification_clicked)`
+`[ACTION_NOTIFICATION_CLICKED](https://developer.android.com/reference/android/app/DownloadManager.html#ACTION_NOTIFICATION_CLICKED)`
 to appropriately handle when the user clicks on a running download in a
-notification or from the downloads ui. note that the application must have the
-`[internet](https://developer.android.com/reference/android/manifest.permission.html#internet)`
+notification or from the downloads UI. Note that the application must have the
+`[INTERNET](https://developer.android.com/reference/android/Manifest.permission.html#INTERNET)`
 permission to use this class.
 
-        从android 2.3（api level
-9）开始，android以service的方式提供了全局的downloadmanager来系统级地优化处理长时间的下载操作。上述官方文档的描述中说明，downloadmanager支持失败重试、notification通知等基本特性。特别是系统组件的特性能够支持完全的后台下载。
+        从Android 2.3（API level
+9）开始，Android以Service的方式提供了全局的DownloadManager来系统级地优化处理长时间的下载操作。上述官方文档的描述中说明，DownloadManager支持失败重试、Notification通知等基本特性。特别是系统组件的特性能够支持完全的后台下载。
 
         **优点**
 
-        （1）基于broadcast的通信机制实现与特定app零耦合。
+        （1）基于Broadcast的通信机制实现与特定App零耦合。
 
         （2）对于简单的单文件下载，可以满足使用需求。
 
-        （3）支持ipc。
+        （3）支持IPC。
 
-        （4）对网络环境（移动网络、wi-fi等）进行了特殊处理，适合不同网络环境的使用。
+        （4）对网络环境（移动网络、Wi-Fi等）进行了特殊处理，适合不同网络环境的使用。
 
         **缺点**
 
-        （1）需注册broadcast监听下载完成事件，稍显复杂。
+        （1）需注册Broadcast监听下载完成事件，稍显复杂。
 
-        （2）基于contentprovider的任务查询机制，增加了使用复杂度。
+        （2）基于ContentProvider的任务查询机制，增加了使用复杂度。
 
         （3）需手动实现断点续传。
 
@@ -68,7 +68,7 @@ permission to use this class.
 
 ## 1.2 第三方开源下载组件
 
-github上存量的具有相对完整功能的下载组件并不多，较为突出的有**filedownloader**。支持在独立的下载进程进行下载保证健壮性，并支持替换网络请求框架。在项目中已有成熟应用。
+Github上存量的具有相对完整功能的下载组件并不多，较为突出的有**FileDownloader**。支持在独立的下载进程进行下载保证健壮性，并支持替换网络请求框架。在项目中已有成熟应用。
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/abe0034094aa4dc52e9c536022e2215fd0c76d188750532051ff6b8138214c9d)
 
@@ -82,7 +82,7 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
 
         （1）组件代码量大，使用门槛稍高。
 
-<https://github.com/lingochamp/filedownloader>
+<https://github.com/lingochamp/FileDownloader>
 
 # 二、需求分析
 
@@ -130,19 +130,19 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
 
   
         下载的任务包括4种状态：就绪、下载中、排队中和已停止。  
-（1）就绪（ready）。任务创建时默认为就绪状态，具有不可逆性，即不能从任何其他状态转化为就绪态。就绪态的任务未执行，已写入数据库。就绪任务可直接被取消（删除，下同）。  
-（2）下载中（downloading）。任务在下载队列中正在下载，下载队列的大小由文件下载的最大任务数配置确定。若下载中的任务被优先级更高的任务插队，则转化为排队中状态。若下载中的任务被停止或产生异常（如网络中断），则转入已停止状态（数据库中同步任务信息）。任务下载完成后自动销毁（删除）。  
-（3）排队中（queueing）。任务在排队队列中等待，直到下载队列中有任务被删除后根据排队队列中的优先级继续一个任务的下载。排队中的任务可被直接停止或取消。  
-        （4）已停止（stopped）。任务执行过（可能经历过下载中或排队中状态），由于异常或被停止转入已停止状态。已停止的任务可被直接取消。
+（1）就绪（Ready）。任务创建时默认为就绪状态，具有不可逆性，即不能从任何其他状态转化为就绪态。就绪态的任务未执行，已写入数据库。就绪任务可直接被取消（删除，下同）。  
+（2）下载中（Downloading）。任务在下载队列中正在下载，下载队列的大小由文件下载的最大任务数配置确定。若下载中的任务被优先级更高的任务插队，则转化为排队中状态。若下载中的任务被停止或产生异常（如网络中断），则转入已停止状态（数据库中同步任务信息）。任务下载完成后自动销毁（删除）。  
+（3）排队中（Queueing）。任务在排队队列中等待，直到下载队列中有任务被删除后根据排队队列中的优先级继续一个任务的下载。排队中的任务可被直接停止或取消。  
+        （4）已停止（Stopped）。任务执行过（可能经历过下载中或排队中状态），由于异常或被停止转入已停止状态。已停止的任务可被直接取消。
 
 ## 3.2 下载任务控制
 
-        下载管理组件需要对外开放部分api使外部能够对下载过程进行控制，主要包括新增任务、启动下载、停止下载和取消下载。  
-        （1）新增任务（dladd）  
-新增任务是指创建一个任务对象，设置下载url、保存路径（非必须，有默认值）、优先级、回调监听等必须的参数后把任务信息写入数据库进行持久化。此时任务未执行，各任务队列中还没有保存该任务。此api可用于添加一个手动执行的任务。  
-        （2）启动下载（dlstart）  
+        下载管理组件需要对外开放部分API使外部能够对下载过程进行控制，主要包括新增任务、启动下载、停止下载和取消下载。  
+        （1）新增任务（dlAdd）  
+新增任务是指创建一个任务对象，设置下载URL、保存路径（非必须，有默认值）、优先级、回调监听等必须的参数后把任务信息写入数据库进行持久化。此时任务未执行，各任务队列中还没有保存该任务。此API可用于添加一个手动执行的任务。  
+        （2）启动下载（dlStart）  
         启动下载是一个比较复杂的过程，包括**创建任务**和**加入任务队列**两大过程。  
-        **创建任务**首先检查任务参数合法性，然后检查该任务（url）是否为下载队列中的重复任务。接着处理历史任务恢复，先从内存中已停止队列查找url，再从数据库中查找url，恢复断点续传信息。最后完善任务信息、设置新的优先级、复位标志位后保存至数据库。  
+        **创建任务**首先检查任务参数合法性，然后检查该任务（URL）是否为下载队列中的重复任务。接着处理历史任务恢复，先从内存中已停止队列查找URL，再从数据库中查找URL，恢复断点续传信息。最后完善任务信息、设置新的优先级、复位标志位后保存至数据库。  
         **加入任务队列**根据下载队列的大小和任务的优先级进行排队调度，决定将该任务加入排队队列或下载队列。
     
     
@@ -156,90 +156,90 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
          * @param priority 任务优先级
          * @param listener 下载监听器
          */
-        public synchronized void dlstart(string url, string dir, string name, list headers, int priority,
-                                         idlistener listener) {
+        public synchronized void dlStart(String url, String dir, String name, List headers, int priority,
+                                         IDListener listener) {
             // 验证优先级合法
-            if (priority != priority_low && priority != priority_normal && priority != priority_high && priority !=
-                    priority_unspecified) {
-                throw new illegalargumentexception("priority illegal. please set a correct priority between priority_low," +
+            if (priority != PRIORITY_LOW && priority != PRIORITY_NORMAL && priority != PRIORITY_HIGH && priority !=
+                    PRIORITY_UNSPECIFIED) {
+                throw new IllegalArgumentException("Priority illegal. Please set a correct priority between PRIORITY_LOW," +
                         " " +
-                        "priority_normal, priority_high and priority_unspecified.");
+                        "PRIORITY_NORMAL, PRIORITY_HIGH and PRIORITY_UNSPECIFIED.");
             }
-            boolean haslistener = listener != null;
-            if (textutils.isempty(url)) {
-                if (haslistener) {
-                    listener.onerror(error_invalid_url, "url can not be null.", url);
+            boolean hasListener = listener != null;
+            if (TextUtils.isEmpty(url)) {
+                if (hasListener) {
+                    listener.onError(ERROR_INVALID_URL, "Url can not be null.", url);
                 }
                 return;
             }
-            if (!networkutil.isnetworkavailable(mcontext)) {
-                if (haslistener) {
-                    listener.onerror(error_not_network, "network is not available.", url);
+            if (!NetworkUtil.isNetworkAvailable(mContext)) {
+                if (hasListener) {
+                    listener.onError(ERROR_NOT_NETWORK, "Network is not available.", url);
                 }
                 return;
             }
             // 是正在下载或排队的任务
-            if (task_dling.containskey(url) || isqueueing(url)) {
-                if (haslistener) {
-                    listener.onerror(error_repeat_url, "url is downloading.", url);
+            if (TASK_DLING.containsKey(url) || isQueueing(url)) {
+                if (hasListener) {
+                    listener.onError(ERROR_REPEAT_URL, "Url is downloading.", url);
                 }
                 return;
             }
             // 不是正在下载或排队的任务
-            logutil.logd(tag, "不是正在下载的任务");
-            dltaskinfo info;
+            LogUtil.logD(TAG, "不是正在下载的任务");
+            DLTaskInfo info;
             // 是否是就绪任务或上次未执行过的排队任务
-            boolean isreadytask = false;
+            boolean isReadyTask = false;
             // 是运行/排队过的已暂停的任务
-            if (task_stopped.containskey(url)) {
-                logutil.logd(tag, "是运行/排队过的已暂停的任务，恢复下载.");
-                info = task_stopped.remove(url);
+            if (TASK_STOPPED.containsKey(url)) {
+                LogUtil.logD(TAG, "是运行/排队过的已暂停的任务，恢复下载.");
+                info = TASK_STOPPED.remove(url);
             }
             // 内存任务列表中不存在该任务，从数据库中读取任务信息（本次运行未启动过该任务的下载）
             else {
-                logutil.logd(tag, "不是运行过的已暂停任务，从数据库中恢复");
-                info = dldbmanager.getinstance().querytaskinfo(url);
+                LogUtil.logD(TAG, "不是运行过的已暂停任务，从数据库中恢复");
+                info = DLDBManager.getInstance().queryTaskInfo(url);
                 if (null != info) {
-                    logutil.logd(tag, "数据库中查到信息");
+                    LogUtil.logD(TAG, "数据库中查到信息");
                     // directly add task case
-                    list threadinfo = dldbmanager.getinstance().queryallthreadinfo(url);
-                    if (threadinfo == null) {
-                        logutil.logd(tag, "是就绪任务或上次未执行过的排队任务");
-                        isreadytask = true;
+                    List threadInfo = DLDBManager.getInstance().queryAllThreadInfo(url);
+                    if (threadInfo == null) {
+                        LogUtil.logD(TAG, "是就绪任务或上次未执行过的排队任务");
+                        isReadyTask = true;
                     } else {
-                        logutil.logd(tag, "是已暂停的任务");
+                        LogUtil.logD(TAG, "是已暂停的任务");
                         info.threads.clear();
-                        info.threads.addall(threadinfo);
+                        info.threads.addAll(threadInfo);
                     }
                 }
             }
             // 新建任务
-            if (!isreadytask && null == info) {
-                logutil.logd(tag, "新建任务");
-                info = new dltaskinfo();
-                info.baseurl = url;
-                info.realurl = url;
-                dir = textutils.isempty(dir) ? mcontext.getcachedir().getabsolutepath() : dir;
-                info.dirpath = dir;
-                info.filename = name;
+            if (!isReadyTask && null == info) {
+                LogUtil.logD(TAG, "新建任务");
+                info = new DLTaskInfo();
+                info.baseUrl = url;
+                info.realUrl = url;
+                dir = TextUtils.isEmpty(dir) ? mContext.getCacheDir().getAbsolutePath() : dir;
+                info.dirPath = dir;
+                info.fileName = name;
             }
             // 断点续传任务（不是单线程任务）
-            else if (!info.issinglethread) {
-                logutil.logd(tag, "断点续传任务（不是单线程任务）");
-                info.isresume = !isreadytask;
-                for (dlthreadinfo threadinfo : info.threads) {
-                    threadinfo.isstop = false;
+            else if (!info.isSingleThread) {
+                LogUtil.logD(TAG, "断点续传任务（不是单线程任务）");
+                info.isResume = !isReadyTask;
+                for (DLThreadInfo threadInfo : info.threads) {
+                    threadInfo.isStop = false;
                 }
             }
             info.redirect = 0;
-            info.requestheaders = dlutil.initrequestheaders(headers, info);
+            info.requestHeaders = DLUtil.initRequestHeaders(headers, info);
             info.listener = listener;
-            info.haslistener = haslistener;
+            info.hasListener = hasListener;
             // 未指定优先级
-            if (priority == priority_unspecified) {
-                if (info.priority == priority_unspecified) {
+            if (priority == PRIORITY_UNSPECIFIED) {
+                if (info.priority == PRIORITY_UNSPECIFIED) {
                     // 任务未指定优先级，使用中优先级
-                    info.priority = priority_normal;
+                    info.priority = PRIORITY_NORMAL;
                 }
             }
             // 使用外部指定的优先级
@@ -247,46 +247,46 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
                 info.priority = priority;
             }
             // 任务插入数据库
-            if (dldbmanager.getinstance().querytaskinfo(url) == null) {
-                dldbmanager.getinstance().inserttaskinfo(info);
+            if (DLDBManager.getInstance().queryTaskInfo(url) == null) {
+                DLDBManager.getInstance().insertTaskInfo(info);
             }
-            if (haslistener) {
-                listener.oncreate(info);
+            if (hasListener) {
+                listener.onCreate(info);
             }
-            resetqueue(info); // 强制isqueue复位
+            resetQueue(info); // 强制isQueue复位
             // 检查当前下载任务数和优先级
-            if (task_dling.size() >= mmaxtask) {
-                dltaskinfo lowestprioritydltask = task_dling_prio.get(task_dling_prio.size() - 1);
-                logutil.logd(tag, "task_dling_prio中最低优先级为" + lowestprioritydltask.priority);
-                logutil.logd(tag, "调用dlstart的任务优先级为" + info.priority);
+            if (TASK_DLING.size() >= mMaxTask) {
+                DLTaskInfo lowestPriorityDLTask = TASK_DLING_PRIO.get(TASK_DLING_PRIO.size() - 1);
+                LogUtil.logD(TAG, "TASK_DLING_PRIO中最低优先级为" + lowestPriorityDLTask.priority);
+                LogUtil.logD(TAG, "调用dlStart的任务优先级为" + info.priority);
                 // 若当前下载队列中存在更低优先级的任务
-                if (lowestprioritydltask.priority > info.priority) {
-                    logutil.logd(tag, "当前下载队列中存在更低优先级的任务，正在下载队列中最低优先级任务进入排队");
-                    dlqueue(lowestprioritydltask.baseurl);
+                if (lowestPriorityDLTask.priority > info.priority) {
+                    LogUtil.logD(TAG, "当前下载队列中存在更低优先级的任务，正在下载队列中最低优先级任务进入排队");
+                    dlQueue(lowestPriorityDLTask.baseUrl);
                 }
                 // 若当前下载队列中不存在更低优先级的任务
                 else {
-                    logutil.logd(tag, "当前下载队列中不存在更低优先级的任务");
-                    addqueuetask(info);
+                    LogUtil.logD(TAG, "当前下载队列中不存在更低优先级的任务");
+                    addQueueTask(info);
                     return;
                 }
             }
-            adddltaskpriority(info);
-            task_dling.put(url, info);
-            info.status = status_downloading;
-            if (haslistener) {
-                listener.onprepare(info.baseurl);
+            addDLTaskPriority(info);
+            TASK_DLING.put(url, info);
+            info.status = STATUS_DOWNLOADING;
+            if (hasListener) {
+                listener.onPrepare(info.baseUrl);
             }
-            logutil.logd(tag, "准备运行任务url：" + url);
-            pool_task.execute(new dltask(info));
+            LogUtil.logD(TAG, "准备运行任务URL：" + url);
+            POOL_TASK.execute(new DLTask(info));
         }
 
-        （3）停止下载（dlstop）  
+        （3）停止下载（dlStop）  
 停止下载的操作对象是下载中或排队中的任务。首先处理内存中已停止队列和下载队列的添加和删除，然后通过标志位在下载线程中处理关闭网络连接、在数据库中保存任务信息、在内存中加入已停止队列和调度排队队列中的下一个任务。其中单线程（不支持多线程）任务的停止（暂停）等同于取消。
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/aa3735bc91c363fa0720c58ab672ce23b64fd6a3c36571b8382c3b650e509dd0)
 
-        （4）取消下载（dlcancel）  
+        （4）取消下载（dlCancel）  
 取消下载的操作对象是所有状态的任务。该方法需要特别区分已停止任务和就绪任务。下载中的任务从下载队列中删除后，在下载线程中关闭网络连接、清理数据（删除数据库信息和已下载文件）、调度下一个排队任务。对于排队中的任务，从排队队列中删除后，清理数据即可。已停止任务需从已停止队列中删除任务。而就绪任务不在内存的任务队列中，只需清理数据。
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/65d87fcda292f3c8c79261c321811570593671f391d29e8f262593b1fb036810)
@@ -296,15 +296,15 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
 ### 3.3.1 任务队列
 
         下载管理一共包含4个支持线程并发的任务队列。  
-        1）下载队列（**concurrenthashmap**）。用于保存正在下载的任务信息（dltaskinfo）。  
-2）下载优先级队列（**synchronizedlist**）。考虑到concurrenthashmap插入entry的无序性，故设置一个保存正在下载任务优先级的队列用于快速查找。  
-        3）已停止队列（**concurrenthashmap**）。用于保存执行过的已停止任务信息。  
-        4）排队队列（**synchronizedlist
+        1）下载队列（**ConcurrentHashMap**）。用于保存正在下载的任务信息（DLTaskInfo）。  
+2）下载优先级队列（**SynchronizedList**）。考虑到ConcurrentHashMap插入Entry的无序性，故设置一个保存正在下载任务优先级的队列用于快速查找。  
+        3）已停止队列（**ConcurrentHashMap**）。用于保存执行过的已停止任务信息。  
+        4）排队队列（**SynchronizedList
 **）。用于保存排队中的任务信息，按任务优先级从高到底排列，高优先级任务位于队首，便于取出。
 
 ### 3.3.2 任务调度
 
-任务调度以任务的优先级为依据。优先级越高，优先级的正值越小。对未指定优先级的处理在启动下载的dlstart方法中的“设置任务优先级”部分，设计此项可为多次执行的下载任务改变优先级。
+任务调度以任务的优先级为依据。优先级越高，优先级的正值越小。对未指定优先级的处理在启动下载的dlStart方法中的“设置任务优先级”部分，设计此项可为多次执行的下载任务改变优先级。
 
 优先级(int)
 
@@ -314,25 +314,25 @@ github上存量的具有相对完整功能的下载组件并不多，较为突�
   
 ---|---  
   
-prio_low(3)
+PRIO_LOW(3)
 
 |
 
 文件下载任务低优先级（默认）  
   
-prio_normal(2)
+PRIO_NORMAL(2)
 
 |
 
 文件下载任务中优先级  
   
-prio_high(1)
+PRIO_HIGH(1)
 
 |
 
 文件下载任务高优先级  
   
-prio_unspecified(0)
+PRIO_UNSPECIFIED(0)
 
 |
 
@@ -347,46 +347,46 @@ prio_unspecified(0)
          *
          * @return
          */
-        synchronized dlmanager scheduledltask() {
-            if (!task_queue.isempty()) {
-                if (task_dling.size() >= mmaxtask) {
-                    logutil.logd(tag, "task_dling_prio中最低优先级为" + task_dling_prio.get(task_dling_prio.size() - 1).priority);
-                    logutil.logd(tag, "task_prepare中最高优先级为" + task_queue.get(0).priority);
-                    if (task_dling_prio.get(task_dling_prio.size() - 1).priority < task_queue.get(0).priority) {
-                        logutil.logd(tag, "排序队列中没有可替换调度的任务");
+        synchronized DLManager scheduleDLTask() {
+            if (!TASK_QUEUE.isEmpty()) {
+                if (TASK_DLING.size() >= mMaxTask) {
+                    LogUtil.logD(TAG, "TASK_DLING_PRIO中最低优先级为" + TASK_DLING_PRIO.get(TASK_DLING_PRIO.size() - 1).priority);
+                    LogUtil.logD(TAG, "TASK_PREPARE中最高优先级为" + TASK_QUEUE.get(0).priority);
+                    if (TASK_DLING_PRIO.get(TASK_DLING_PRIO.size() - 1).priority < TASK_QUEUE.get(0).priority) {
+                        LogUtil.logD(TAG, "排序队列中没有可替换调度的任务");
                     }
                 } else {
-                    dltaskinfo info = poppreparetask();
-                    adddltaskpriority(info);
-                    task_dling.put(info.baseurl, info);
-                    info.status = status_downloading;
-                    if (info.haslistener) {
-                        info.listener.onprepare(info.baseurl);
+                    DLTaskInfo info = popPrepareTask();
+                    addDLTaskPriority(info);
+                    TASK_DLING.put(info.baseUrl, info);
+                    info.status = STATUS_DOWNLOADING;
+                    if (info.hasListener) {
+                        info.listener.onPrepare(info.baseUrl);
                     }
-                    pool_task.execute(new dltask(info));
+                    POOL_TASK.execute(new DLTask(info));
                 }
             }
-            return smanager;
+            return sManager;
         }
 
-### 3.3.3 任务/线程模型（dltask/dlthread）
+### 3.3.3 任务/线程模型（DLTask/DLThread）
 
 由于一些原因，本下载组件设计之初加入了单文件多线程分段下载的支持（实际上移动端通常采用的做法是单文件单线程，因为这样足够用），增强了一定的健壮性。
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/d2855b1d9e8f863efededcd70b975267bb738961d4eb01256010b516818dd6ed)
 
-文件下载初始化时创建了线程池**pool_task**负责执行下载任务和线程池**pool_thread**负责执行下载线程，线程池大小和阻塞队列长度根据设备运行时的cpu核心数确定。
+文件下载初始化时创建了线程池**POOL_TASK**负责执行下载任务和线程池**POOL_THREAD**负责执行下载线程，线程池大小和阻塞队列长度根据设备运行时的CPU核心数确定。
 
     
     
-        private final executorservice pool_task = new threadpoolexecutor(pool_size,
-                pool_size_max, 3, timeunit.seconds, pool_queue_task, task_factory);
-        private final executorservice pool_thread = new threadpoolexecutor(pool_size * 5,
-                pool_size_max * 5, 1, timeunit.seconds, pool_queue_thread, thread_factory);
+        private final ExecutorService POOL_TASK = new ThreadPoolExecutor(POOL_SIZE,
+                POOL_SIZE_MAX, 3, TimeUnit.SECONDS, POOL_QUEUE_TASK, TASK_FACTORY);
+        private final ExecutorService POOL_Thread = new ThreadPoolExecutor(POOL_SIZE * 5,
+                POOL_SIZE_MAX * 5, 1, TimeUnit.SECONDS, POOL_QUEUE_THREAD, THREAD_FACTORY);
 
-        启动下载后，线程池**pool_task**开始执行下载任务：  
-1）使用**httpurlconnection**建立网络连接获取响应码和头信息（文件长度、文件名等），确定是否使用多线程（响应码为200或响应码为206且文件长度为0时使用单线程，**_注：此处可能有别的判断方法，需根据服务器的实际情况判断_**）。  
-        2）校验本地文件（包括临时文件）是否存在和完整，决定是否继续下载。可根据md5进行文件完整性校验。  
+        启动下载后，线程池**POOL_TASK**开始执行下载任务：  
+1）使用**HttpURLConnection**建立网络连接获取响应码和头信息（文件长度、文件名等），确定是否使用多线程（响应码为200或响应码为206且文件长度为0时使用单线程，**_注：此处可能有别的判断方法，需根据服务器的实际情况判断_**）。  
+        2）校验本地文件（包括临时文件）是否存在和完整，决定是否继续下载。可根据MD5进行文件完整性校验。  
         3）初始化和同步数据库中的任务信息和线程信息。历史任务直接恢复线程信息。如使用多线程，线程数根据每个线程最大长度的配置值计算得出。
 
     
@@ -394,41 +394,41 @@ prio_unspecified(0)
         /**
          * 设置线程信息
          */
-        private void dldispatch() {
-            int threadsize;
-            int threadlength;
-            // 线程数下限: 小于length_per_thread开单线程
-            if (info.totalbytes <= length_per_thread) {
-                threadsize = 1;
+        private void dlDispatch() {
+            int threadSize;
+            int threadLength;
+            // 线程数下限: 小于LENGTH_PER_THREAD开单线程
+            if (info.totalBytes <= LENGTH_PER_THREAD) {
+                threadSize = 1;
             }
-            // 线程数上限: 大于length_per_thread * 2开2个线程
-            else if (info.totalbytes > length_per_thread * 2) {
-                threadsize = 2;
+            // 线程数上限: 大于LENGTH_PER_THREAD * 2开2个线程
+            else if (info.totalBytes > LENGTH_PER_THREAD * 2) {
+                threadSize = 2;
             }
             // 根据文件大小分配线程
             else {
-                threadsize = info.totalbytes / length_per_thread;
+                threadSize = info.totalBytes / LENGTH_PER_THREAD;
             }
-            threadlength = info.totalbytes / threadsize;
-            int remainder = info.totalbytes % threadlength;
-            logutil.logd(tag, "thread calc finished:" + info.baseurl + ", threadsize=" + threadsize);
-            for (int i = 0; i < threadsize; i++) {
-                int start = i * threadlength;
-                int end = start + threadlength - 1;
-                if (i == threadsize - 1) {
-                    end = start + threadlength + remainder;
+            threadLength = info.totalBytes / threadSize;
+            int remainder = info.totalBytes % threadLength;
+            LogUtil.logD(TAG, "thread calc finished:" + info.baseUrl + ", threadSize=" + threadSize);
+            for (int i = 0; i < threadSize; i++) {
+                int start = i * threadLength;
+                int end = start + threadLength - 1;
+                if (i == threadSize - 1) {
+                    end = start + threadLength + remainder;
                 }
-                dlthreadinfo threadinfo =
-                        new dlthreadinfo(uuid.randomuuid().tostring(), info.baseurl, start, end);
-                info.adddlthread(threadinfo);
-                dldbmanager.getinstance().insertthreadinfo(threadinfo);
-                dlmanager.getinstance().adddlthread(new dlthread(threadinfo, info, this));
-                logutil.logd(tag, "not resume task thread added:" + info.baseurl);
+                DLThreadInfo threadInfo =
+                        new DLThreadInfo(UUID.randomUUID().toString(), info.baseUrl, start, end);
+                info.addDLThread(threadInfo);
+                DLDBManager.getInstance().insertThreadInfo(threadInfo);
+                DLManager.getInstance().addDLThread(new DLThread(threadInfo, info, this));
+                LogUtil.logD(TAG, "not resume task thread added:" + info.baseUrl);
             }
         }
 
-        线程初始化完成后，线程池**pool_thread**开始执行下载线程：  
-        1）设置请求头的range参数为线程的起始位置和结束位置，使用**httpurlconnection**用get方式建立网络连接。
+        线程初始化完成后，线程池**POOL_THREAD**开始执行下载线程：  
+        1）设置请求头的Range参数为线程的起始位置和结束位置，使用**HttpURLConnection**用GET方式建立网络连接。
 
     
     
@@ -437,75 +437,75 @@ prio_unspecified(0)
          *
          * @param conn
          */
-        private void addrequestheaders(httpurlconnection conn) {
-            for (dlheader header : dlinfo.requestheaders) {
-                conn.addrequestproperty(header.key, header.value);
+        private void addRequestHeaders(HttpURLConnection conn) {
+            for (DLHeader header : dlInfo.requestHeaders) {
+                conn.addRequestProperty(header.key, header.value);
             }
-            conn.setrequestproperty("range", "bytes=" + dlthreadinfo.start + "-" + dlthreadinfo.end);
+            conn.setRequestProperty("Range", "bytes=" + dlThreadInfo.start + "-" + dlThreadInfo.end);
         }
 
-        2）根据线程的起始和结束位置使用**randomaccessfile**实现文件的随机读写。
+        2）根据线程的起始和结束位置使用**RandomAccessFile**实现文件的随机读写。
 
     
     
-                raf = new randomaccessfile(dlinfo.file, "rw");
-                fd = raf.getfd();
+                raf = new RandomAccessFile(dlInfo.file, "rw");
+                fd = raf.getFD();
                 // 定位到开始写文件位置
-                raf.seek(dlthreadinfo.start);
+                raf.seek(dlThreadInfo.start);
     
-                byte[] b = new byte[raf_buffer_size];
+                byte[] b = new byte[RAF_BUFFER_SIZE];
                 int len;
-                while (!dlthreadinfo.isstop && !dlthreadinfo.iscancel && !dlthreadinfo.isqueue && !dlinfo.isqueue && (len
+                while (!dlThreadInfo.isStop && !dlThreadInfo.isCancel && !dlThreadInfo.isQueue && !dlInfo.isQueue && (len
                         = bis.read(b)) != -1) {
-                    dlthreadinfo.start += len;
+                    dlThreadInfo.start += len;
                     raf.write(b, 0, len);
-                    listener.onprogress(len, fd, dlthreadinfo);
+                    listener.onProgress(len, fd, dlThreadInfo);
                 }
 
-3）下载进度回调（onprogress）在下载过程中不断被调用，完成文件写入和进度保存（内存和数据库）。结合最短间隔和最小已下载文件长度增量控制回调频率，防止ui刷新过快（掉帧处理）。并配合
-**filedescriptor**实现延迟写入存储设备，解决randomaccessfile无缓冲的问题，最大程度地提升下载效率。**_注：此处也可采用nio方式解决randomaccessfile无缓冲的问题。_**
+3）下载进度回调（onProgress）在下载过程中不断被调用，完成文件写入和进度保存（内存和数据库）。结合最短间隔和最小已下载文件长度增量控制回调频率，防止UI刷新过快（掉帧处理）。并配合
+**FileDescriptor**实现延迟写入存储设备，解决RandomAccessFile无缓冲的问题，最大程度地提升下载效率。**_注：此处也可采用NIO方式解决RandomAccessFile无缓冲的问题。_**
 
     
     
-       @override
-        public synchronized void onprogress(int progress, filedescriptor fd, dlthreadinfo threadinfo) {
-            info.currentbytes += progress;
-            logutil.logd(tag, info.currentbytes + "");
+       @Override
+        public synchronized void onProgress(int progress, FileDescriptor fd, DLThreadInfo threadInfo) {
+            info.currentBytes += progress;
+            LogUtil.logD(TAG, info.currentBytes + "");
     
-            long timenow = systemclock.elapsedrealtime();
-            long timedelta = timenow - lasttime;
-            int bytesdelta = info.currentbytes - lasttotalbytes;
+            long timeNow = SystemClock.elapsedRealtime();
+            long timeDelta = timeNow - lastTime;
+            int bytesDelta = info.currentBytes - lastTotalBytes;
     
-            if (timedelta > min_progress_interval && bytesdelta > min_progress_step) {
+            if (timeDelta > MIN_PROGRESS_INTERVAL && bytesDelta > MIN_PROGRESS_STEP) {
                 // 同步文件
                 if (fd != null) {
                     try {
                         fd.sync();
-                    } catch (syncfailedexception e) {
-                        e.printstacktrace();
+                    } catch (SyncFailedException e) {
+                        e.printStackTrace();
                     }
                 }
                 // 更新数据库
-                if (threadinfo != null) {
-                    dldbmanager.getinstance().updatethreadinfo(threadinfo);
-                    dldbmanager.getinstance().updatetaskinfo(info);
+                if (threadInfo != null) {
+                    DLDBManager.getInstance().updateThreadInfo(threadInfo);
+                    DLDBManager.getInstance().updateTaskInfo(info);
                 }
                 // 保存本次进度
-                lasttime = timenow;
-                lasttotalbytes = info.currentbytes;
-                // 通知ui
-                if (info.haslistener) {
-                    info.listener.onprogress(info.currentbytes, info.totalbytes, info.baseurl);
+                lastTime = timeNow;
+                lastTotalBytes = info.currentBytes;
+                // 通知UI
+                if (info.hasListener) {
+                    info.listener.onProgress(info.currentBytes, info.totalBytes, info.baseUrl);
                 }
             }
         }
 
-        4）下载完成回调（onfinish）在下载完成时被调用，删除下载任务和数据库中的任务信息后进行任务调度。
+        4）下载完成回调（onFinish）在下载完成时被调用，删除下载任务和数据库中的任务信息后进行任务调度。
 
 ### 3.3.4 数据表设计
 
-文件下载需要在下载过程中对下载任务和下载线程信息进行持久化，以保证文件下载线程或app被结束后能够实现断点续传，减少重复的下载量。与**downloadmanager**思路相同，但只使用数据库存储供app内部使用。  
-两张表以baseurl建立关联。线程表只保存本线程的起始位置和结束位置，uuid方便线程完成后删除线程。任务表保存除线程表中以外的所有任务相关信息。
+文件下载需要在下载过程中对下载任务和下载线程信息进行持久化，以保证文件下载线程或App被结束后能够实现断点续传，减少重复的下载量。与**DownloadManager**思路相同，但只使用数据库存储供App内部使用。  
+两张表以baseUrl建立关联。线程表只保存本线程的起始位置和结束位置，UUID方便线程完成后删除线程。任务表保存除线程表中以外的所有任务相关信息。
 
 下载任务数据表
 
@@ -529,7 +529,7 @@ _id
 
 |
 
-integer
+Integer
 
 |
 
@@ -539,39 +539,39 @@ integer
 
 自增主键，不可为空  
   
-baseurl
+baseUrl
 
 |
 
-varchar(255)
+Varchar(255)
 
 |
 
-文件原始url
-
-|
-
-不可为空  
-  
-realurl
-
-|
-
-varchar(255)
-
-|
-
-文件真实url
+文件原始URL
 
 |
 
 不可为空  
   
-dirpath
+realUrl
 
 |
 
-varchar(127)
+Varchar(255)
+
+|
+
+文件真实URL
+
+|
+
+不可为空  
+  
+dirPath
+
+|
+
+Varchar(127)
 
 |
 
@@ -581,11 +581,11 @@ varchar(127)
 
 不可为空  
   
-filename
+fileName
 
 |
 
-varchar(30)
+Varchar(30)
 
 |
 
@@ -595,11 +595,11 @@ varchar(30)
 
 不可为空  
   
-currentbytes
+currentBytes
 
 |
 
-integer
+Integer
 
 |
 
@@ -609,11 +609,11 @@ integer
 
 非负  
   
-totalbytes
+totalBytes
 
 |
 
-integer
+Integer
 
 |
 
@@ -627,7 +627,7 @@ priority
 
 |
 
-integer
+Integer
 
 |
 
@@ -661,7 +661,7 @@ _id
 
 |
 
-integer
+Integer
 
 |
 
@@ -671,15 +671,15 @@ integer
 
 自增主键，不可为空  
   
-baseurl
+baseUrl
 
 |
 
-varchar(255)
+Varchar(255)
 
 |
 
-文件原始url
+文件原始URL
 
 |
 
@@ -689,39 +689,39 @@ id
 
 |
 
-varchar(127)
+Varchar(127)
 
 |
 
-线程uuid，唯一标识线程
+线程UUID，唯一标识线程
 
 |
 
 不可为空  
   
-startpos
+startPos
 
 |
 
-integer
+Integer
 
 |
 
-线程开始下载位置（bytes）
+线程开始下载位置（Bytes）
 
 |
 
 非负  
   
-endpos
+endPos
 
 |
 
-integer
+Integer
 
 |
 
-线程结束下载位置（bytes）
+线程结束下载位置（Bytes）
 
 |
 
@@ -733,8 +733,8 @@ integer
 
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/38c0ffce784a2d5ddaea60640110de13becaff1d4d94a69072d6d2bccbef5117)
 
-上图描述了线程（**dlthread**）通知任务（**dltask**）的流程。外部改变线程中不同状态的标记位结束线程的下载过程，线程通过线程监听（**idlthreadlistener**）的onxxx的回调方法通知任务进行处理。  
-最重要的是对外部调用者的消息通知。和内部通知类似，文件下载提供了一种任务监听（**idlistener**），包含了9种回调方法，如下表所示。
+上图描述了线程（**DLThread**）通知任务（**DLTask**）的流程。外部改变线程中不同状态的标记位结束线程的下载过程，线程通过线程监听（**IDLThreadListener**）的onXXX的回调方法通知任务进行处理。  
+最重要的是对外部调用者的消息通知。和内部通知类似，文件下载提供了一种任务监听（**IDListener**），包含了9种回调方法，如下表所示。
 
 **方法名******
 
@@ -752,11 +752,11 @@ integer
   
 ---|---|---|---  
   
-oncreate
+onCreate
 
 |
 
-dltaskinfo
+dLTaskInfo
 
 |
 
@@ -766,11 +766,11 @@ dltaskinfo
 
 主线程  
   
-onprepare
+onPrepare
 
 |
 
-baseurl
+baseUrl
 
 |
 
@@ -780,11 +780,11 @@ baseurl
 
 主/后台线程  
   
-onerror
+onError
 
 |
 
-status, msg, baseurl
+status, msg, baseUrl
 
 |
 
@@ -794,11 +794,11 @@ status, msg, baseurl
 
 主/后台线程  
   
-onstart
+onStart
 
 |
 
-filename, baseurl, filelength
+fileName, baseUrl, fileLength
 
 |
 
@@ -808,11 +808,11 @@ filename, baseurl, filelength
 
 后台线程  
   
-onprogress
+onProgress
 
 |
 
-progress, totalbytes, baseurl
+progress, totalBytes, baseUrl
 
 |
 
@@ -822,11 +822,11 @@ progress, totalbytes, baseurl
 
 后台线程  
   
-onstop
+onStop
 
 |
 
-progress, baseurl
+progress, baseUrl
 
 |
 
@@ -836,11 +836,11 @@ progress, baseurl
 
 主/后台线程  
   
-onfinish
+onFinish
 
 |
 
-file, baseurl
+file, baseUrl
 
 |
 
@@ -850,11 +850,11 @@ file, baseurl
 
 主/后台线程  
   
-oncancel
+onCancel
 
 |
 
-baseurl
+baseUrl
 
 |
 
@@ -864,11 +864,11 @@ baseurl
 
 主/后台线程  
   
-onqueue
+onQueue
 
 |
 
-baseurl
+baseUrl
 
 |
 
@@ -878,65 +878,65 @@ baseurl
 
 主/后台线程  
   
-从表中注意到不同回调方法的调用线程不同。为方便使用，提供了两种回调监听实现类。一种是**simpledlistener**，默认所有回调方法的实现为空，通知方和接收方一对一耦合；另一种为**eventbusdlistener**，每个回调方法的实现类均为发送**eventbus**事件，方便事件接收方完成线程切换和全局监听。
+从表中注意到不同回调方法的调用线程不同。为方便使用，提供了两种回调监听实现类。一种是**SimpleDListener**，默认所有回调方法的实现为空，通知方和接收方一对一耦合；另一种为**EventBusDListener**，每个回调方法的实现类均为发送**EventBus**事件，方便事件接收方完成线程切换和全局监听。
 
     
     
     /**
-     * 使用eventbus的download listener
+     * 使用EventBus的Download Listener
      */
-    public class eventbusdllistener implements idlistener {
+    public class EventBusDLListener implements IDListener {
     
-        @override
-        public void oncreate(dltaskinfo info) {
-            eventbus.getdefault().post(new dlcreateevent(info));
+        @Override
+        public void onCreate(DLTaskInfo info) {
+            EventBus.getDefault().post(new DLCreateEvent(info));
         }
     
-        @override
-        public void onprepare(string baseurl) {
-            eventbus.getdefault().post(new dlprepareevent(baseurl));
-        }
-    
-    
-        @override
-        public void onstart(string filename, string baseurl, int filelength) {
-            eventbus.getdefault().post(new dlstartevent(filename, baseurl, filelength));
+        @Override
+        public void onPrepare(String baseUrl) {
+            EventBus.getDefault().post(new DLPrepareEvent(baseUrl));
         }
     
     
-        @override
-        public void onprogress(int progress, int total, string baseurl) {
-            eventbus.getdefault().post(new dlprogressevent(progress, total, baseurl));
+        @Override
+        public void onStart(String fileName, String baseUrl, int fileLength) {
+            EventBus.getDefault().post(new DLStartEvent(fileName, baseUrl, fileLength));
         }
     
     
-        @override
-        public void onstop(int progress, string baseurl) {
-            eventbus.getdefault().post(new dlstopevent(progress, baseurl));
+        @Override
+        public void onProgress(int progress, int total, String baseUrl) {
+            EventBus.getDefault().post(new DLProgressEvent(progress, total, baseUrl));
         }
     
     
-        @override
-        public void onfinish(file file, string baseurl) {
-            eventbus.getdefault().post(new dlfinishevent(file, baseurl));
+        @Override
+        public void onStop(int progress, String baseUrl) {
+            EventBus.getDefault().post(new DLStopEvent(progress, baseUrl));
         }
     
     
-        @override
-        public void onerror(int status, string error, string baseurl) {
-            eventbus.getdefault().post(new dlerrorevent(status, error, baseurl));
+        @Override
+        public void onFinish(File file, String baseUrl) {
+            EventBus.getDefault().post(new DLFinishEvent(file, baseUrl));
         }
     
     
-        @override
-        public void oncancel(string baseurl) {
-            eventbus.getdefault().post(new dlcancelevent(baseurl));
+        @Override
+        public void onError(int status, String error, String baseUrl) {
+            EventBus.getDefault().post(new DLErrorEvent(status, error, baseUrl));
         }
     
     
-        @override
-        public void onqueue(string baseurl) {
-            eventbus.getdefault().post(new dlqueueevent(baseurl));
+        @Override
+        public void onCancel(String baseUrl) {
+            EventBus.getDefault().post(new DLCancelEvent(baseUrl));
+        }
+    
+    
+        @Override
+        public void onQueue(String baseUrl) {
+            EventBus.getDefault().post(new DLQueueEvent(baseUrl));
         }
     }
 
@@ -949,18 +949,18 @@ baseurl
 ![](/image/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/e2ee46cab3de2a96e58d0ecf343e868ebbd40d1bdca95090135827c98e311fae)
 
   
-        **dlmanager**负责与外部的交互和下载过程的控制。**dldbmanager**负责数据库的读写。**dltask**和**dlthread**负责完成下载逻辑，其中**dltaskinfo**和**dlthreadinfo**分别为任务和线程信息的实体类，**idlthreadlistener**负责线程和任务间的通信。**idlistener**以及它的两个实现类负责文件下载与外部的通信。
+        **DLManager**负责与外部的交互和下载过程的控制。**DLDBManager**负责数据库的读写。**DLTask**和**DLThread**负责完成下载逻辑，其中**DLTaskInfo**和**DLThreadInfo**分别为任务和线程信息的实体类，**IDLThreadListener**负责线程和任务间的通信。**IDListener**以及它的两个实现类负责文件下载与外部的通信。
 
 # 四、优化和总结
 
         针对部分低端机型下载过程中可能遇到的下载速度偏低、系统响应迟钝的情况，做了一定的优化。  
-1）对**dltask**和**dlthread**等后台线程，降低线程优先级。调用代码process.setthreadpriority(process.thread_priority_background)即可。  
-2）对**httpurlconnection**使用**bufferedinputstream**包装输入流，并将读取数据的缓冲区适当增大为8kb（8*1024），减少存储设备i/o次数。  
+1）对**DLTask**和**DLThread**等后台线程，降低线程优先级。调用代码Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)即可。  
+2）对**HttpURLConnection**使用**BufferedInputStream**包装输入流，并将读取数据的缓冲区适当增大为8KB（8*1024），减少存储设备I/O次数。  
         结合上文叙述的**掉帧处理**，优化后卡顿现象明显改善，下载速度能够达到最大带宽。
 
 * * *
 
 另外，本文描述的下载管理方案可能存在如主进程下载的不稳定性、不支持跨进程通信等一些问题，实际应用中仍需做进一步的改进。但总体思路仍具有一定的参考意义。
 
-        thanks~~~
+        Thanks~~~
 

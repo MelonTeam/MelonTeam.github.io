@@ -12,7 +12,7 @@ tags: 坑系列
 
 | 导语 总结代码设计时容易忽略的场景，需求启动阶段就考虑好各个场景，可以提高代码的健壮性，有效减少bug数
 
-### model
+### Model
 
     
 <!--more-->
@@ -29,7 +29,7 @@ tags: 坑系列
 
 
 
-### view
+### View
 
     
     
@@ -37,7 +37,7 @@ tags: 坑系列
     把数据请求代码写到view里面
         这里不是不可以，而是不好，因为view的生命周期系统提供相应的回调，所以很多同学都把数据请求写到view的init方法里，这不仅仅引起代码耦合问题，一些性能问题也难以规避
         没考虑点击的频率限制
-    动画只会简单实用uiview提供的接口，一些序列动画请直接使用coreanimatino接口
+    动画只会简单实用UIView提供的接口，一些序列动画请直接使用coreAnimatino接口
     尽量不要在一个动画的completion里启动另外一个动画。为什么？
         动画一旦启动，无法直接中断。一些放大动画会先记录原来的值，等动画结束再还原回来，这个值很可能在其他地方被修改，导致还原回去的是个错误的值。
     随处可见的魔法数字
@@ -45,14 +45,14 @@ tags: 坑系列
 
 
 
-### controller
+### Controller
 
     
     
-    动不动就继承系统的vc
+    动不动就继承系统的VC
         请多组合，少继承
-    willappear/didappear 一定要考虑重入问题
-    如果一个函数能改成静态的，说明这个函数与vc无关，请放到vc外面去，即使只有一行代码
+    willAppear/didAppear 一定要考虑重入问题
+    如果一个函数能改成静态的，说明这个函数与VC无关，请放到VC外面去，即使只有一行代码
     
     上报
     
@@ -64,10 +64,10 @@ tags: 坑系列
 
     
     
-    tableview里设置了cornerradio，boundtomask等属性，生成圆角图片
+    tableview里设置了Cornerradio，boundtomask等属性，生成圆角图片
     tableview上的label使用sizetofit方法
     这方法有严重的性能问题，请异步使用coretext里的接口来计算size，以免阻塞主线程
-    上传队列里如果有很多的uiimage，请考虑先存到本地，到真正上传时再从io读进来
+    上传队列里如果有很多的UIImage，请考虑先存到本地，到真正上传时再从io读进来
     上传队列每个task都应嵌套在autoreleasepool中
 
 

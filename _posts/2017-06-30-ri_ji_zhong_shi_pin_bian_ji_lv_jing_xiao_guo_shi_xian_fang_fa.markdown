@@ -33,25 +33,24 @@ tags: 滤镜实现
 
 
 
-mediaextractor 负责从视频文件中解析每一帧的原始数据；
+MediaExtractor 负责从视频文件中解析每一帧的原始数据；
 
-mediacodec 负责对音视频数据进行解码，并渲染指定的surface上；
+Mediacodec 负责对音视频数据进行解码，并渲染指定的surface上；
 
 代码示例：
 
 ```java
-
 //初始化extractor
 
-mediaextractor extractor = new mediaextractor();
+MediaExtractor extractor = new MediaExtractor();
 
-extractor.setdatasource(...);
+extractor.setDataSource(...);
 
 ...
 
 //初始化meidacoec
 
-mediacodec decoder= mediacodec.createdecodecbytype(mine);
+MediaCodec decoder= Mediacodec.createDecodecByType(mine);
 
 decoder.configure(format, surface, null, 0);
 
@@ -61,13 +60,13 @@ decoder.start();
 
 //循环处理每一帧
 
-while(notendflag){
+While(notEndFlag){
 
 //把读出来的帧数据交给mediacodec去解析
 
-extractor.readsampledate(buffer, 0);
+extractor.readSampleDate(buffer, 0);
 
-decoder.queueinputbuffer(bufferindex, 0, samplesize, showtimeus, 0);
+decoder.queueInputBuffer(bufferIndex, 0, sampleSize, showTimeus, 0);
 
 //向前移动 准备读取下一帧
 
@@ -75,16 +74,15 @@ extractor.advance();
 
 //把mediacodec解析后的数据交给surface去渲染
 
-decoder.dequeueoutputbuffer(info, 10000);
+decoder.dequeueOutputBuffer(info, 10000);
 
-decoder.releaseoutputbuffer(bufferindex, isrender);
+decoder.releaseOutputBuffer(bufferIndex, isRender);
 
 }
 ```
 
-
-走到这里，我们已经可以从surface上拿到每一帧对应的texture
-（纹理），之后我们就可以利用opengl的可编程管线，对纹理进行相关的滤镜处理。下面说下opengl的渲染流程。
+走到这里，我们已经可以从Surface上拿到每一帧对应的Texture
+（纹理），之后我们就可以利用Opengl的可编程管线，对纹理进行相关的滤镜处理。下面说下opengl的渲染流程。
 
 ![](/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/29f020e2d6d92c74e67eaeee0d6ee1ce471b2212ec23c66584f7b137714876d1)
 
@@ -94,8 +92,8 @@ decoder.releaseoutputbuffer(bufferindex, isrender);
 
 
 
-cpu
-将物体顶点坐标、顶点变换矩阵、纹理坐标、纹理变换矩阵等通过api传给vertexshader（顶点着色器），它针对vbo提供的每个顶点执行一遍顶点着色器，vertexshader通过varying限定符传输易变变量给fragmentshader使用，frgementshader对光栅化的每个片元进行处理，生成多重的颜色混合效果，最后渲染到屏幕或者写到文件中。
+CPU
+将物体顶点坐标、顶点变换矩阵、纹理坐标、纹理变换矩阵等通过API传给VertexShader（顶点着色器），它针对VBO提供的每个顶点执行一遍顶点着色器，VertexShader通过varying限定符传输易变变量给FragmentShader使用，FrgementShader对光栅化的每个片元进行处理，生成多重的颜色混合效果，最后渲染到屏幕或者写到文件中。
 
 
 
@@ -103,14 +101,14 @@ cpu
 
 我们拍摄出来的每一帧图片都是彩色图片，每个像素的颜色由红、绿、蓝三种值混合而成，红绿蓝的取值由很多种，组合形成各种不同的彩色图片，而灰度图片只有256种颜色。由彩色图片生成灰色图片一般由三种算法:
 
-a. 最大值法：r=g=b=max（r,g,b），这种方式亮度值偏高；
+A. 最大值法：R=G=B=MAX（R,G,B），这种方式亮度值偏高；
 
-b. 平均值法：r=g=b=(r+g+b)/3, 这种方式图片亮度值被平均，图片非常柔和
+B. 平均值法：R=G=B=(R+G+B)/3, 这种方式图片亮度值被平均，图片非常柔和
 
-c. 加权平均法：r=g=b=(r*wr+g*wg+b*wb)，由于人眼对不同颜色的敏感度不一样，所以权重也不同，业界比较常用的权重值是(0.2125,
+C. 加权平均法：R=G=B=(R*Wr+G*Wg+B*Wb)，由于人眼对不同颜色的敏感度不一样，所以权重也不同，业界比较常用的权重值是(0.2125,
 0.7154, 0.0721)。
 
-我们采用的最后一种加权平均的方式，知道了算法就来实现下吧。要实现gpu实时滤镜，首先要了解这么写shader，网上有很多shader的文章，这里我就不做叙述。
+我们采用的最后一种加权平均的方式，知道了算法就来实现下吧。要实现GPU实时滤镜，首先要了解这么写Shader，网上有很多shader的文章，这里我就不做叙述。
 
 
 
@@ -124,7 +122,7 @@ c. 加权平均法：r=g=b=(r*wr+g*wg+b*wb)，由于人眼对不同颜色的敏
 
 3. 暖色冷色滤镜的实现
 
-通过ps调整出目标图片与原图每个通道的偏差规律，并把这种差异生成颜色表，给出最终的滤镜变换查表纹理，fragmentshader处理的时候，不同的rgb颜色值去查表纹理中找到对应的目标颜色值进行替换即可。
+通过PS调整出目标图片与原图每个通道的偏差规律，并把这种差异生成颜色表，给出最终的滤镜变换查表纹理，FragmentShader处理的时候，不同的RGB颜色值去查表纹理中找到对应的目标颜色值进行替换即可。
 
 
 

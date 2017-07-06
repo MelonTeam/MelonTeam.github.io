@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>开发中容易忽略和挖坑的场景总结</title>
-    <meta name="description" content="  model            导语 总结代码设计时容易忽略的场景，需求启动阶段就考虑好各个场景，可以提高代码的健壮性，有效减少bug数      model">
+    <meta name="description" content="  Model            导语 总结代码设计时容易忽略的场景，需求启动阶段就考虑好各个场景，可以提高代码的健壮性，有效减少bug数      Model">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -73,21 +73,15 @@
                     
                     <li>
                         
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
                         <a href="/board/">
                         
                             <i class="fa fa-pencil"></i>留言板
                         </a>
                     </li>
+                    
+                
+                    
+                
                     
                 
                     
@@ -183,9 +177,9 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#model" id="markdown-toc-model">model</a></li>
-  <li><a href="#view" id="markdown-toc-view">view</a></li>
-  <li><a href="#controller" id="markdown-toc-controller">controller</a></li>
+  <li><a href="#model" id="markdown-toc-model">Model</a></li>
+  <li><a href="#view" id="markdown-toc-view">View</a></li>
+  <li><a href="#controller" id="markdown-toc-controller">Controller</a></li>
   <li><a href="#性能" id="markdown-toc-性能">性能</a></li>
 </ul>
 
@@ -197,7 +191,7 @@
   </tbody>
 </table>
 
-<h3 id="model">model</h3>
+<h3 id="model">Model</h3>
 
 <!--more-->
 
@@ -213,13 +207,13 @@
 </code></pre>
 </div>
 
-<h3 id="view">view</h3>
+<h3 id="view">View</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>动不动就reload整个tableview
 把数据请求代码写到view里面
     这里不是不可以，而是不好，因为view的生命周期系统提供相应的回调，所以很多同学都把数据请求写到view的init方法里，这不仅仅引起代码耦合问题，一些性能问题也难以规避
     没考虑点击的频率限制
-动画只会简单实用uiview提供的接口，一些序列动画请直接使用coreanimatino接口
+动画只会简单实用UIView提供的接口，一些序列动画请直接使用coreAnimatino接口
 尽量不要在一个动画的completion里启动另外一个动画。为什么？
     动画一旦启动，无法直接中断。一些放大动画会先记录原来的值，等动画结束再还原回来，这个值很可能在其他地方被修改，导致还原回去的是个错误的值。
 随处可见的魔法数字
@@ -227,12 +221,12 @@
 </code></pre>
 </div>
 
-<h3 id="controller">controller</h3>
+<h3 id="controller">Controller</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>动不动就继承系统的vc
+<div class="highlighter-rouge"><pre class="highlight"><code>动不动就继承系统的VC
     请多组合，少继承
-willappear/didappear 一定要考虑重入问题
-如果一个函数能改成静态的，说明这个函数与vc无关，请放到vc外面去，即使只有一行代码
+willAppear/didAppear 一定要考虑重入问题
+如果一个函数能改成静态的，说明这个函数与VC无关，请放到VC外面去，即使只有一行代码
 
 上报
 
@@ -242,10 +236,10 @@ willappear/didappear 一定要考虑重入问题
 
 <h3 id="性能">性能</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>tableview里设置了cornerradio，boundtomask等属性，生成圆角图片
+<div class="highlighter-rouge"><pre class="highlight"><code>tableview里设置了Cornerradio，boundtomask等属性，生成圆角图片
 tableview上的label使用sizetofit方法
 这方法有严重的性能问题，请异步使用coretext里的接口来计算size，以免阻塞主线程
-上传队列里如果有很多的uiimage，请考虑先存到本地，到真正上传时再从io读进来
+上传队列里如果有很多的UIImage，请考虑先存到本地，到真正上传时再从io读进来
 上传队列每个task都应嵌套在autoreleasepool中
 </code></pre>
 </div>
@@ -359,13 +353,13 @@ tableview上的label使用sizetofit方法
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/05/27/bu_gai_que_shao_de_error_ti_xi/">不该缺少的error体系</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/05/27/bu_gai_que_shao_de_error_ti_xi/">不该缺少的Error体系</a></p>
         
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/05/27/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">flipagram 涂鸦特效逆向分析</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/05/27/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">Flipagram 涂鸦特效逆向分析</a></p>
         
     </div>
 </div>
@@ -433,17 +427,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

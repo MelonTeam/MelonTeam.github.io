@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "viewpager与fragment那些事儿"
+title: "ViewPager与Fragment那些事儿"
 date: 2017-06-29 21:03:00
 categories: android
 author: arendgxma
-tags: viewpage... fragment
+tags: ViewPage... fragment
 ---
 
 * content
@@ -14,14 +14,14 @@ tags: viewpage... fragment
 
 # 本文会讲解：
 
-1.viewpager与fragment使用过程中，偶现页面混乱问题的可能原因以及解决方案。
+1.viewPager与Fragment使用过程中，偶现页面混乱问题的可能原因以及解决方案。
 <!--more-->
 
-2.notifydatasetchange方法在viewpager中不起作用的问题的解决方案。
+2.notifyDataSetChange方法在viewPager中不起作用的问题的解决方案。
 
-3.通过修改fragmentpageradapter，避免fragment被过度持有。
+3.通过修改FragmentPagerAdapter，避免Fragment被过度持有。
 
-4.探讨viewpager中moffscreenpagelimit的作用。
+4.探讨viewPager中mOffscreenPageLimit的作用。
 
 
 
@@ -29,13 +29,13 @@ tags: viewpage... fragment
 
 ## **一：背景******
 
-最近开发一个需求，页面ui大致如下:
+最近开发一个需求，页面UI大致如下:
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/4fac17b8541bcfd39fb6962a6e2c9fcddfbfe6a57e473144c542654e0bbe4a7b)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/4fac17b8541bcfd39fb6962a6e2c9fcddfbfe6a57e473144c542654e0bbe4a7b)
 
 
 
-要求每一个tab都可以对应一个全新的子页面。很自然的想到使用viewpager+fragment这一对组合，其中fragment复用于子页面和主页面中的tab内容。
+要求每一个tab都可以对应一个全新的子页面。很自然的想到使用ViewPager+Fragment这一对组合，其中Fragment复用于子页面和主页面中的tab内容。
 
 
 
@@ -43,25 +43,25 @@ tags: viewpage... fragment
 
 1.产品需求：输入框只要有变化，就会以输入框当前词触发本地搜索，并且依据本地搜索元素数量来判断是否自动触发网络搜索。
 
-当触发网络搜索有回包之后，会出现上方的tabhost。下方内容区域展示可滑动。tabhost可点击。
+当触发网络搜索有回包之后，会出现上方的tabHost。下方内容区域展示可滑动。tabHost可点击。
 
 2.用户场景：用户可能会在这个页面输入很多词，可能用户输入的过程是”王” -> “王者” ->
-“王者荣耀”。可能用户刚刚搜”王”，没来得及输入完”王者荣耀”四个字，就已经触发了网络搜索，并且产生回包，展示tabhost。
+“王者荣耀”。可能用户刚刚搜”王”，没来得及输入完”王者荣耀”四个字，就已经触发了网络搜索，并且产生回包，展示tabHost。
 
-考虑到两个问题之后，认为需要对fragment做重用处理，如果在搜第一个字的时候产生多个fragment，那么搜王者荣耀的时候，应该能够复用第一次产生的fragment，否则可能会导致new
-过多的fragment对象，导致性能问题。
+考虑到两个问题之后，认为需要对Fragment做重用处理，如果在搜第一个字的时候产生多个Fragment，那么搜王者荣耀的时候，应该能够复用第一次产生的Fragment，否则可能会导致new
+过多的Fragment对象，导致性能问题。
 
 
 
-首先我对要进行复用的fragment建立了一个软引用缓存：
+首先我对要进行复用的Fragment建立了一个软引用缓存：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/09cc031f8a48a1744f22d04cd3372ff6426d433e6887ca0afb90e421416d82aa)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/09cc031f8a48a1744f22d04cd3372ff6426d433e6887ca0afb90e421416d82aa)
 
-备为后续重用fragment时取用的容器。
+备为后续重用Fragment时取用的容器。
 
-当无缓存时，才会去重新new一个。否则只是对fragment中必要的参数重新设置即可。
+当无缓存时，才会去重新new一个。否则只是对Fragment中必要的参数重新设置即可。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/1986df717c682d0abebe864d3139ce20211f5f8512d012afc18b0ab5c9d2edb6)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/1986df717c682d0abebe864d3139ce20211f5f8512d012afc18b0ab5c9d2edb6)
 
 
 
@@ -69,69 +69,69 @@ tags: viewpage... fragment
 
 需求开发阶段，自测时经常发生页面错乱的问题，类似这样：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/695774d225c733671a5c0248b30a19c3f2ea68a0b5078140fccd959956ceaa49)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/695774d225c733671a5c0248b30a19c3f2ea68a0b5078140fccd959956ceaa49)
 
 
 
 这可是严重问题，必须解决！于是开始了漫长的定位过程~
 
-先思考复现场景，由于采用复用+缓存的策略，可能在当前页面展示音乐tab内容的fragment，在上一次搜索中被用来展示兴趣部落tab内容。
+先思考复现场景，由于采用复用+缓存的策略，可能在当前页面展示音乐tab内容的Fragment，在上一次搜索中被用来展示兴趣部落tab内容。
 
-此处省略走查复用fragment时代码逻辑是否有问题花费的10000000ms.....
+此处省略走查复用Fragment时代码逻辑是否有问题花费的10000000ms.....
 
-orz。。。
+Orz。。。
 
 
 
-在走查复用代码，发现没有证据表明会导致此问题之后，只能去看组件源码来排查问题，首先想到的是adapter获取fragment的时候是否有什么特别的处理。
+在走查复用代码，发现没有证据表明会导致此问题之后，只能去看组件源码来排查问题，首先想到的是adapter获取Fragment的时候是否有什么特别的处理。
 
 考虑自定义的adapter中取item的方法：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/d770a1ed0c791403b24cfd2f7cbae1b1aef654fc13446991b8481cbc52b3c42e)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/d770a1ed0c791403b24cfd2f7cbae1b1aef654fc13446991b8481cbc52b3c42e)
 
 代码比较简单，看不出问题所在。
 
-于是考虑adapter在什么情况下会调用getitem方法，通过阅读源码得知：
+于是考虑adapter在什么情况下会调用getItem方法，通过阅读源码得知：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/d5e1eec2b8a003a891441ccc97b68c21cbabf99d3e718d02d79a6d1dcf37579f)
-
-
-
-只有在mfragmentmanager.findfragmentbytag(name)不为空的时候，才会走到我们的getitem逻辑。
-
-那么什么时候findfragmentbytag不为空？经过验证，只要对应name的fragment之前已经被加入过mfragmentmanager，即调用了图中方法
-
-![](/image/viewpager_yu_fragment_na_xie_shi_er/ff98ef45d8426c36a43181da439bb864aa13c5e5c5aae5535533477833d802c8)
-
-并且没有调用remove方法，后续mfragment都是可以从其中获取到对应name的fragment的。
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/d5e1eec2b8a003a891441ccc97b68c21cbabf99d3e718d02d79a6d1dcf37579f)
 
 
 
-由于从mfragmentmanager取fragment是依据makefragmentname方法来的，传入的参数有container.getid()和itemid。
+只有在mFragmentManager.findFragmentByTag(name)不为空的时候，才会走到我们的getItem逻辑。
 
-其中container.getid()固定为一个默认值，于是去看getitemid的具体实现：
+那么什么时候findFragmentByTag不为空？经过验证，只要对应name的Fragment之前已经被加入过mFragmentManager，即调用了图中方法
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/3fbb4210925b576940355a7b6fc927a0b8404ac238d6b9c20af0bfef67a19082)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/ff98ef45d8426c36a43181da439bb864aa13c5e5c5aae5535533477833d802c8)
+
+并且没有调用remove方法，后续mFragment都是可以从其中获取到对应name的Fragment的。
+
+
+
+由于从mFragmentManager取Fragment是依据makeFragmentName方法来的，传入的参数有container.getId()和itemId。
+
+其中container.getId()固定为一个默认值，于是去看getItemId的具体实现：
+
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/3fbb4210925b576940355a7b6fc927a0b8404ac238d6b9c20af0bfef67a19082)
 
 很简单，只是传回一个position，但是问题就来了：
 
 
 
-用户在第一次搜索回包，建立fragmentlist，此时fragment的itemid和fragment展示内容的关系可能是这样
+用户在第一次搜索回包，建立FragmentList，此时Fragment的itemId和Fragment展示内容的关系可能是这样
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/bf0dae7e35fe81672ea6236e28f606421335cfee36a701ca4c07234d287289a5)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/bf0dae7e35fe81672ea6236e28f606421335cfee36a701ca4c07234d287289a5)
 
 而第二次搜索回包时，后台要求的顺序未必按照音乐，电影，部落来。经过重用之后，可能变成这样：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/5e0cf91491ee806d9732c621841f7081c8689fa75f95ce6d4e3d62fab0c6afbe)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/5e0cf91491ee806d9732c621841f7081c8689fa75f95ce6d4e3d62fab0c6afbe)
 
 
 
-这个时候如果在instantiateitem方法中还去用position去获取对应的fragment，这里可能导致新取出来的用来展示”电影”tab的fragment，实际上是之前用来展示”音乐”tab的fragment。
+这个时候如果在instantiateItem方法中还去用position去获取对应的Fragment，这里可能导致新取出来的用来展示”电影”tab的Fragment，实际上是之前用来展示”音乐”tab的Fragment。
 
-听起来很有道理，似乎解释了为什么页面会展示错乱的问题，话不多说，立刻修改了getitemid方法。
+听起来很有道理，似乎解释了为什么页面会展示错乱的问题，话不多说，立刻修改了getItemId方法。
 
-新的id已经和展示内容绑定起来了，但....
+新的Id已经和展示内容绑定起来了，但....
 
 
 
@@ -139,49 +139,49 @@ orz。。。
 
 
 
-于是通过不断打log以及利用搜索引擎，想找到一点蛛丝马迹，倒是搜到了一些反映fragmentpageradapter的notifydatasetchange不生效的问题：
+于是通过不断打log以及利用搜索引擎，想找到一点蛛丝马迹，倒是搜到了一些反映FragmentPagerAdapter的notifyDataSetChange不生效的问题：
 
-有人说只要在getitempostion方法的实现中返回这个值，就可以保证notifydatasetchange生效。  
-public int getitemposition(object object) {  
-return pageradapter.position_none;  
+有人说只要在getItemPostion方法的实现中返回这个值，就可以保证notifyDataSetChange生效。  
+public int getItemPosition(Object object) {  
+return PagerAdapter.POSITION_NONE;  
 }
 
-看起来不生效这个问题很严重啊，在自己的代码中也多处使用到adapter的notifydatasetchange方法，会不会也有这个所谓不生效的问题？
+看起来不生效这个问题很严重啊，在自己的代码中也多处使用到adapter的notifyDatasetChange方法，会不会也有这个所谓不生效的问题？
 
 那么为什么返回这个参数能保证数据集正确更新到？看看源码咯：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/a9035b6cb90d817b691e1fbb8084b9cb87c45222d62adf417c9911c485a825c4)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/a9035b6cb90d817b691e1fbb8084b9cb87c45222d62adf417c9911c485a825c4)
 
-这里可以发现，当返回的postion为none时，mitems会remove掉对应位置保存的item，同时也会通知adapter调用destroyitem方法，其中传入的第三个参数ii.object就是我们的fragment对象。
+这里可以发现，当返回的postion为NONE时，mItems会remove掉对应位置保存的item，同时也会通知adapter调用destroyItem方法，其中传入的第三个参数ii.object就是我们的Fragment对象。
 
-问题来了：为什么一定要传position_none，传别的不行吗，这个方法不应该是只为返回none来设计的吧，不然要他何用。继续看源码~
+问题来了：为什么一定要传POSITION_NONE，传别的不行吗，这个方法不应该是只为返回NONE来设计的吧，不然要他何用。继续看源码~
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/3244c3e33bfca2c3e15bbec94c58e254a9deb68b80e74799166c750f71e5cecb)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/3244c3e33bfca2c3e15bbec94c58e254a9deb68b80e74799166c750f71e5cecb)
 
 当我传入一个>0的数，会走到这里的逻辑，也就是简单的进行赋值操作。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/34f9d1fed258945330ed5f9adb3f80a3ad03b3c66622472fd41672b94c841f70)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/34f9d1fed258945330ed5f9adb3f80a3ad03b3c66622472fd41672b94c841f70)
 
 随后会调用sort方法进行排序，并走进这里的判断，辗转调用到populate方法。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/f309c1a0c82c48f54d68d59a0603d044877c94400e0d9de906f05b037efaa887)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/f309c1a0c82c48f54d68d59a0603d044877c94400e0d9de906f05b037efaa887)
 
-在populate方法中，如果当前位置的item找不到，则会调用addnewitem方法，其中会调用adapter的instantiateitem方法，来重新”生成”一个fragment。
+在populate方法中，如果当前位置的item找不到，则会调用addNewItem方法，其中会调用adapter的instantiateItem方法，来重新”生成”一个Fragment。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/ba877801be17ac6ecc8cdc6f05fa93c97836dd33e8f2c8251905112b37eb5534)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/ba877801be17ac6ecc8cdc6f05fa93c97836dd33e8f2c8251905112b37eb5534)
 
 
 
-由此可见，所谓notifydatasetchange不生效的原因，并不是一定要在getitempostion中返回position_none，而是要为每一个fragment赋予正确的位置。
+由此可见，所谓notifyDataSetChange不生效的原因，并不是一定要在getItemPostion中返回POSITION_NONE，而是要为每一个Fragment赋予正确的位置。
 
-当组件发现在当前要展示的页面找不到对应位置的fragment的时候，自然会调用addnewitem方法，产生一个新的fragment对象。
+当组件发现在当前要展示的页面找不到对应位置的Fragment的时候，自然会调用addNewItem方法，产生一个新的Fragment对象。
 
 所以正确的修改方式如下：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/b90fb641ee15fbf7eac78dbe6864a6a5feecd6a0f9cd67d2dfe90fd74939cb52)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/b90fb641ee15fbf7eac78dbe6864a6a5feecd6a0f9cd67d2dfe90fd74939cb52)
 
 由于fragments的顺序和我们的tab展示的顺序是一致的，所以只要把object在fragments中的位置传递回去即可，如果object的位置不在list中，就可以return
-postion_none，通知组件删除啦~
+POSTION_NONE，通知组件删除啦~
 
 经过这样的修改，发现问题迎刃而解~
 
@@ -193,63 +193,63 @@ postion_none，通知组件删除啦~
 
 1.软引用缓存失效问题
 
-其实从检查instantiateitem方法的时候，我们发现adapter已经为我们的fragment对象创建了引用，保存了下来，这样会使得文头一开始提到的软引用缓存策略失效。
+其实从检查instantiateItem方法的时候，我们发现adapter已经为我们的fragment对象创建了引用，保存了下来，这样会使得文头一开始提到的软引用缓存策略失效。
 
 
 
-这里如何改动呢，方法其实很简单，通过观察datasetchange相关的代码，我们发现当item返回的postion为none时，mitems会remove掉对应位置保存的item，同时也会通知adapter调用destroyitem方法。
+这里如何改动呢，方法其实很简单，通过观察DatasetChange相关的代码，我们发现当item返回的postion为NONE时，mItems会remove掉对应位置保存的item，同时也会通知adapter调用destroyItem方法。
 
-观察adapter的默认destroyitem实现：
+观察adapter的默认destroyItem实现：
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/f3f26b49fb6e0b16771cb2da3d10c3a745f4132882f65d5b087890c9f115fc00)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/f3f26b49fb6e0b16771cb2da3d10c3a745f4132882f65d5b087890c9f115fc00)
 
 
 
 仅仅是做了detach操作，这还不够，于是我改了一行，变成了
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/2a2aa369c9879dcde5ab99a02f02927914352fc8d865fb5e31f31ceabe6fc51a)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/2a2aa369c9879dcde5ab99a02f02927914352fc8d865fb5e31f31ceabe6fc51a)
 
-同样的，在instantiateitem方法里的
+同样的，在instantiateItem方法里的
 
-都只会返回null了，因为当destroyitem后需要重新instantiateitem时，已经没有保存在mfragmentmanager的fragment对象了~
-事实上我们重新去getitem的成本也很低，只是去从list集合中取了一个对象而已。
+都只会返回null了，因为当destroyItem后需要重新instantiateItem时，已经没有保存在mFragmentManager的fragment对象了~
+事实上我们重新去getItem的成本也很低，只是去从list集合中取了一个对象而已。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/ae88799e696c17a82f182681f400f884337e0196080913fa1c5850af7c4223b1)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/ae88799e696c17a82f182681f400f884337e0196080913fa1c5850af7c4223b1)
 
 
 
-2.fragment自动预加载问题：
+2.Fragment自动预加载问题：
 
-在查看datasetchange的代码时，发现一个很有意思的方法和常量
+在查看DatasetChange的代码时，发现一个很有意思的方法和常量
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/24b6ea6fddab357783bb91191edaa2eb4c287bf434c08690610ebbcd767246b5)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/24b6ea6fddab357783bb91191edaa2eb4c287bf434c08690610ebbcd767246b5)
 
 通过查看注释和调试，发现他是用来控制展示一个fragment之后，自动预加载两边fragment的数量，默认和最小值都为1。
 
 问题来了，为什么不能为0？
 因为之前看到微码上有人分享了一个在这种viewpager场景下懒加载fragment的代码，会想到为什么不在这个地方对组件进行微调，以达到每次都只加载一个fragment的效果？
 
-于是debug进行调试，强行将moffscreenpagelimit赋值为0，发现并没有生效~
+于是debug进行调试，强行将mOffscreenPageLimit赋值为0，发现并没有生效~
 
 
 
 查看代码发现主要在这里出了问题：
 
-首先根据moffscreenpagelimit计算startpos的值。
+首先根据mOffscreenPageLimit计算startPos的值。
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/d1c4358fa9a6681b37c677ab134a5acec297a1a25a8b8966c8fdd0cdf2d2875d)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/d1c4358fa9a6681b37c677ab134a5acec297a1a25a8b8966c8fdd0cdf2d2875d)
 
-然后查看这部分循环，针对mcuritem左边做处理的代码
+然后查看这部分循环，针对mCurItem左边做处理的代码
 
-![](/image/viewpager_yu_fragment_na_xie_shi_er/7e0acf691fe79809f988aa7f2aa5d93ed3d50337c6484ebc243409a95d8f0000)
+![](/image/ViewPager_yu_Fragment_na_xie_shi_er/7e0acf691fe79809f988aa7f2aa5d93ed3d50337c6484ebc243409a95d8f0000)
 
-这部分是对viewpager当前展示页面左边数据内容进行处理的代码，可以看到extrawidthleft被赋初值为0。
+这部分是对viewPager当前展示页面左边数据内容进行处理的代码，可以看到extraWidthLeft被赋初值为0。
 
-在第4行，leftwidthneeded被赋值，其中curitem.widthfactor的默认赋值为1，故for循环中第一次循环中，在第7行的判断分支无法满足。
+在第4行，leftWidthNeeded被赋值，其中curItem.widthFactor的默认赋值为1，故for循环中第一次循环中，在第7行的判断分支无法满足。
 
 又因为我们考虑的是懒加载，只考虑只加载自己当前展示页面的fragment，故第三行ii赋值必然取不到数据，为null。
 
-最后会走进26行的分支里面，调用addnewitem方法，生成的位置正好就是第一次循环时pos的值，即当前页面左边的页面fragment。
+最后会走进26行的分支里面，调用addNewItem方法，生成的位置正好就是第一次循环时pos的值，即当前页面左边的页面fragment。
 
 直到下一次循环，才会走进前两个分支。
 

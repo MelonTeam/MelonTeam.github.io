@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>[译]android instant apps简介</title>
-    <meta name="description" content="| 导语 google最近发布了instant apps，可以帮助开发者进一步的增强android的原生app体验。instantapps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生app体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。android ...">
+    <title>[译]Android Instant Apps简介</title>
+    <meta name="description" content="| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。InstantApps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生App体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。Android ...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -66,16 +66,6 @@
                         <a href="/category/">
                         
                             <i class="fa fa-th-list"></i>分类
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
                         </a>
                     </li>
                     
@@ -114,6 +104,10 @@
                 
                     
                 
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -122,7 +116,7 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>[译]android instant apps简介</h1>
+        <h1>[译]Android Instant Apps简介</h1>
         <div class="label">
 
             <div class="label-card">
@@ -167,11 +161,11 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#app" title="Tag: app" rel="tag">app</a-->
-        <a href="/tag/#app" title="Tag: app" rel="tag">app</a>&nbsp;
+        <!--a href="/tag/#App" title="Tag: App" rel="tag">App</a-->
+        <a href="/tag/#App" title="Tag: App" rel="tag">App</a>&nbsp;
     
-        <!--a href="/tag/#instant" title="Tag: instant" rel="tag">instant</a-->
-        <a href="/tag/#instant" title="Tag: instant" rel="tag">instant</a>
+        <!--a href="/tag/#Instant" title="Tag: Instant" rel="tag">Instant</a-->
+        <a href="/tag/#Instant" title="Tag: Instant" rel="tag">Instant</a>
     
   
 
@@ -195,13 +189,13 @@
   </li>
   <li><a href="#-1" id="markdown-toc--1">#</a>    <ul>
       <li><a href="#确定用例" id="markdown-toc-确定用例">确定用例</a>        <ul>
-          <li><a href="#支持deep-link和app-link" id="markdown-toc-支持deep-link和app-link">支持deep link和app link</a></li>
+          <li><a href="#支持deep-link和app-link" id="markdown-toc-支持deep-link和app-link">支持Deep Link和App Link</a></li>
         </ul>
       </li>
     </ul>
   </li>
   <li><a href="#-2" id="markdown-toc--2">#</a>    <ul>
-      <li><a href="#app-links" id="markdown-toc-app-links">app links</a></li>
+      <li><a href="#app-links" id="markdown-toc-app-links">App Links</a></li>
     </ul>
   </li>
   <li><a href="#-3" id="markdown-toc--3">#</a>    <ul>
@@ -215,26 +209,26 @@
           <li><a href="#开发测试" id="markdown-toc-开发测试">开发测试</a></li>
           <li><a href="#发布" id="markdown-toc-发布">发布</a></li>
           <li><a href="#代码签名" id="markdown-toc-代码签名">代码签名</a></li>
-          <li><a href="#intent-filters" id="markdown-toc-intent-filters">intent filters</a></li>
+          <li><a href="#intent-filters" id="markdown-toc-intent-filters">Intent Filters</a></li>
         </ul>
       </li>
     </ul>
   </li>
   <li><a href="#-6" id="markdown-toc--6">#</a>    <ul>
-      <li><a href="#示例应用程序bumblebee" id="markdown-toc-示例应用程序bumblebee">示例应用程序：bumblebee</a></li>
+      <li><a href="#示例应用程序bumblebee" id="markdown-toc-示例应用程序bumblebee">示例应用程序：Bumblebee</a></li>
     </ul>
   </li>
 </ul>
 
-<p>| 导语 google最近发布了instant apps，可以帮助开发者进一步的增强android的原生app体验。instant
-apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生app体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。</p>
+<p>| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。Instant
+Apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生App体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。</p>
 
-<p>android instant apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。instant
-apps由url触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，nfc和其他应用程序甚至其他的instant
+<p>Android Instant Apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。Instant
+Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，NFC和其他应用程序甚至其他的Instant
 <!--more-->
-apps。</p>
+Apps。</p>
 
-<p>instant apps与安装的对应软件apk共享一个代码库，并也是通过google play商店的android instant apps区进行分发的。</p>
+<p>Instant Apps与安装的对应软件apk共享一个代码库，并也是通过Google Play商店的Android Instant Apps区进行分发的。</p>
 
 <h1>#</h1>
 
@@ -242,20 +236,20 @@ apps。</p>
 
 <h3 id="工具">工具</h3>
 
-<p>为了开始使用instant apps，我们需要获得一些新的工具。</p>
+<p>为了开始使用Instant Apps，我们需要获得一些新的工具。</p>
 
 <ol>
   <li>
-    <p>android studio 3.0和instant apps sdk ——除了instant apps sdk外，google还宣布推出<a href="https://androidstudio.googleblog.com/2017/05/android-studio-30-canary-1-sdk-updates.html">android studio 3.0 preview</a>，并附带了许多全新的功能，包括instant apps支持。需要下载并安装它才能开始使用。<a href="https://developer.android.com/topic/instant-apps/getting-started/setup.html">这里</a>提供了一整套说明<a href="https://developer.android.com/topic/instant-apps/getting-started/setup.html"></a></p>
+    <p>Android Studio 3.0和Instant apps SDK ——除了Instant apps SDK外，Google还宣布推出<a href="https://androidstudio.googleblog.com/2017/05/android-studio-30-canary-1-sdk-updates.html">Android Studio 3.0 Preview</a>，并附带了许多全新的功能，包括Instant Apps支持。需要下载并安装它才能开始使用。<a href="https://developer.android.com/topic/instant-apps/getting-started/setup.html">这里</a>提供了一整套说明<a href="https://developer.android.com/topic/instant-apps/getting-started/setup.html"></a></p>
   </li>
   <li>
-    <p>gradle 4.0（nightly）—— 随着其他改进，gradle 4.0还提供了<a href="https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation">新的依赖配置</a>供你使用。值得一提的是，gradle3.4废弃了<code class="highlighter-rouge">compile</code>配置，支持<code class="highlighter-rouge">api</code>和<code class="highlighter-rouge">implementation</code>。这些新配置可帮助你来控制哪些是作为公共的api的依赖; <code class="highlighter-rouge">implementation</code>用于声明只在模块内部可用的依赖项，而声明的依赖关系<code class="highlighter-rouge">api</code>将被导出并提供给后续部分。</p>
+    <p>Gradle 4.0（Nightly）—— 随着其他改进，Gradle 4.0还提供了<a href="https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation">新的依赖配置</a>供你使用。值得一提的是，Gradle3.4废弃了<code class="highlighter-rouge">compile</code>配置，支持<code class="highlighter-rouge">api</code>和<code class="highlighter-rouge">implementation</code>。这些新配置可帮助你来控制哪些是作为公共的API的依赖; <code class="highlighter-rouge">Implementation</code>用于声明只在模块内部可用的依赖项，而声明的依赖关系<code class="highlighter-rouge">api</code>将被导出并提供给后续部分。</p>
   </li>
   <li>
-    <p>用于gradle 3.0.0-alpha1的android插件 —— 这附带了一些新的gradle插件，可帮助你模块化应用程序; <code class="highlighter-rouge">com.android.instantapp</code>和<code class="highlighter-rouge">com.android.feature</code>。</p>
+    <p>用于Gradle 3.0.0-alpha1的Android插件 —— 这附带了一些新的gradle插件，可帮助你模块化应用程序; <code class="highlighter-rouge">com.android.instantapp</code>和<code class="highlighter-rouge">com.android.feature</code>。</p>
   </li>
   <li>
-    <p> instant apps api——google还提供了一个方便的实用程序集合，你可以将其包含在你的项目中：</p>
+    <p> Instant Apps API——Google还提供了一个方便的实用程序集合，你可以将其包含在你的项目中：</p>
   </li>
 </ol>
 
@@ -263,56 +257,56 @@ apps。</p>
 </code></pre>
 </div>
 
-<p>它包含一些有用的静态方法来帮助检查用户是在和即时的还是安装的版本进行交互，并使用系统对话框提示他们安装完整的apk。</p>
+<p>它包含一些有用的静态方法来帮助检查用户是在和即时的还是安装的版本进行交互，并使用系统对话框提示他们安装完整的APK。</p>
 
 <h1 id="-1">#</h1>
 
 <h2 id="确定用例">确定用例</h2>
 
-<p>第一个也许最重要的一步是确定应用程序的哪些部分最适合使用 instant apps 中的功能。 instant apps
-由操作驱动，并在用户需要时将其自动提供给用户。例如，一个在停车场的用户可能没有安装停车计费器app，但是使用instant
-apps，所有用户需要做的是访问url，而native app可以快速，轻松的利用所有的支付api完成支付。</p>
+<p>第一个也许最重要的一步是确定应用程序的哪些部分最适合使用 Instant Apps 中的功能。 Instant Apps
+由操作驱动，并在用户需要时将其自动提供给用户。例如，一个在停车场的用户可能没有安装停车计费器App，但是使用Instant
+Apps，所有用户需要做的是访问URL，而native App可以快速，轻松的利用所有的支付API完成支付。</p>
 
 <blockquote>
-  <p>instant apps should focus primarily on helping users complete whatever task
+  <p>Instant Apps should focus primarily on helping users complete whatever task
 they set out to do with as little friction as possible, not drive full app
 installs.（即时应用程序应该主要侧重于帮助用户完成任何他们设置的任务，尽可能少的摩擦，而不是驱动完整的应用程序安装。）</p>
 </blockquote>
 
-<h3 id="支持deep-link和app-link">支持deep link和app link</h3>
+<h3 id="支持deep-link和app-link">支持Deep Link和App Link</h3>
 
-<p>如果你已经完成了一个支持多个用户流的复杂应用程序，则可能会实现deep
-link（深层链接）。深层链接允许任何人创建一个url，直接链接到应用程序中的特定页面。由于 instant app运行在网址上，因此deep
-link和app link已成为必需。常规深层链接的一个主要区别是不支持自定义uri scheme，例如</p>
+<p>如果你已经完成了一个支持多个用户流的复杂应用程序，则可能会实现Deep
+Link（深层链接）。深层链接允许任何人创建一个URL，直接链接到应用程序中的特定页面。由于 Instant App运行在网址上，因此Deep
+Link和App Link已成为必需。常规深层链接的一个主要区别是不支持自定义URI scheme，例如</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>myshoppingapp://products/600613
 </code></pre>
 </div>
 
-<p>相反，你现在必须支持https url</p>
+<p>相反，你现在必须支持https URL</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>https://.com/products/600613
 </code></pre>
 </div>
 
-<p>如果你愿意，你可以继续在已安装的应用程序中使用自定义scheme，但是有一个很好的例子可以将所有深层链接切换到url。instant
-app中的每个功能必须至少有一个入口点被定义为深层链接。这决定了用户在点击instant app url时会看到什么，或者是否从instant
-app中的其他功能导航到该功能。下面是一个将deep link模式绑定到一个<code class="highlighter-rouge">activity</code>的 intent filter 的示例</p>
+<p>如果你愿意，你可以继续在已安装的应用程序中使用自定义scheme，但是有一个很好的例子可以将所有深层链接切换到URL。Instant
+App中的每个功能必须至少有一个入口点被定义为深层链接。这决定了用户在点击Instant App Url时会看到什么，或者是否从Instant
+App中的其他功能导航到该功能。下面是一个将Deep Link模式绑定到一个<code class="highlighter-rouge">Activity</code>的 intent filter 的示例</p>
 
-<p>在这种情况下，<code class="highlighter-rouge">itemdetailactivity</code>将在用户访问时launch</p>
+<p>在这种情况下，<code class="highlighter-rouge">ItemDetailActivity</code>将在用户访问时launch</p>
 
 <p><code class="highlighter-rouge">https://bumblebee.willowtreeapps.com/items/600613</code>。</p>
 
 <h1 id="-2">#</h1>
 
-<h2 id="app-links">app links</h2>
+<h2 id="app-links">App Links</h2>
 
-<p>其次，你还需要将你的web域与instant app的包名相关联。这种绑定，称为android app
-links，向google证明你拥有并可以控制你想与应用关联的web域。以前，app
-links允许安装的应用程序自动将自己与你的网站关联，以便用户点击你的网站的url时，他们会跳过提示对话框，直接转到你的应用程序。现在，通过为你的instant
-app设置app links，没有安装应用的用户将无缝地路由到你的instant app。app
-links对于已安装的应用程序是可选的，因为用户可以手动选择要处理deep links的应用程序，但是，app links是instant
-app工作的必要条件。要设置它，你只需要在你的域或子域的根目录上托管一个json文件 <code class="highlighter-rouge">/.well-known/assetlinks.json</code></p>
+<p>其次，你还需要将你的web域与Instant App的包名相关联。这种绑定，称为Android App
+Links，向Google证明你拥有并可以控制你想与应用关联的web域。以前，App
+Links允许安装的应用程序自动将自己与你的网站关联，以便用户点击你的网站的URL时，他们会跳过提示对话框，直接转到你的应用程序。现在，通过为你的Instant
+App设置App LInks，没有安装应用的用户将无缝地路由到你的Instant App。App
+LInks对于已安装的应用程序是可选的，因为用户可以手动选择要处理Deep LInks的应用程序，但是，App LInks是Instant
+App工作的必要条件。要设置它，你只需要在你的域或子域的根目录上托管一个JSON文件 <code class="highlighter-rouge">/.well-known/assetlinks.json</code></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>[
   {
@@ -323,7 +317,7 @@ app工作的必要条件。要设置它，你只需要在你的域或子域的�
       "namespace": "android_app",
       "package_name": "com.myapp.packagename",
       "sha256_cert_fingerprints": [
-        "96:14:26:30:cc:e3:c0:9b:05:12:7b:9a:31:9e:88:36:82:12:84:27:4c:52:2f:05:fe:66:a8:ab:b9:f0:f5:f0"
+        "96:14:26:30:CC:E3:C0:9B:05:12:7B:9A:31:9E:88:36:82:12:84:27:4C:52:2F:05:FE:66:A8:AB:B9:F0:F5:F0"
       ]
     }
   }
@@ -331,8 +325,8 @@ app工作的必要条件。要设置它，你只需要在你的域或子域的�
 </code></pre>
 </div>
 
-<p>instant app模块将需要具有单独的包名称来命名空间，你的instant
-app和可安装的应用程序可以共享其应用程序id，因此你只需要在该<code class="highlighter-rouge">"package_name"</code>字段中注册该应用程序id
+<p>Instant App模块将需要具有单独的包名称来命名空间，你的Instant
+App和可安装的应用程序可以共享其应用程序ID，因此你只需要在该<code class="highlighter-rouge">"package_name"</code>字段中注册该应用程序ID
 。你可以在<a href="https://developer.android.com/training/app-
 links/index.html">这里</a>找到有关设置app links的更多信息。</p>
 
@@ -340,13 +334,13 @@ links/index.html">这里</a>找到有关设置app links的更多信息。</p>
 
 <h2 id="模块化并重构应用">模块化并重构应用</h2>
 
-<p>这可能是将instant app集成到现有应用程序中最困难的一步。这是因为今天绝大多数应用程序大多是单个模块构建，支持instant
-apps需要开发人员将其构建分为多个称为 features的模块。每个功能都代表应用程序的一部分，可以根据需要下载。</p>
+<p>这可能是将Instant App集成到现有应用程序中最困难的一步。这是因为今天绝大多数应用程序大多是单个模块构建，支持Instant
+Apps需要开发人员将其构建分为多个称为 features的模块。每个功能都代表应用程序的一部分，可以根据需要下载。</p>
 
-<p><img src="/image/_yi_android_instant_apps_jian_jie/bf98bf3f2ff8d77122187f79c9735fc000b85e5f5d8420f0d6b500f531b2b38d" alt="功能模块关系" /></p>
+<p><img src="/image/_yi_Android_Instant_Apps_jian_jie/5659a05bdc421934a94770c0fe7e102d28101fa7d6462e0fbe5539e94de2f517" alt="功能模块关系" /></p>
 
 <ol>
-  <li>feature modules ——  是应用新的 <code class="highlighter-rouge">com.android.feature 的</code>gradle插件的模块。它们只是library 项目，<code class="highlighter-rouge">aar</code>在被其他模块使用时产生。值得注意的是，它们没有应用程序id，因为它们只是library 项目。</li>
+  <li>Feature modules ——  是应用新的 <code class="highlighter-rouge">com.android.feature 的</code>Gradle插件的模块。它们只是library 项目，<code class="highlighter-rouge">aar</code>在被其他模块使用时产生。值得注意的是，它们没有应用程序ID，因为它们只是library 项目。</li>
 </ol>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: 'com.android.feature'
@@ -360,14 +354,14 @@ dependencies {
 </code></pre>
 </div>
 
-<p>feature module 的manifest 也值得注意，因为它在功能上只是完整的应用程序的一部分，它的manifest
-将在项目组合时与其他人合并。因此，feature 的manifest应包含模块中包含的activities 。每个feature 的manifest
+<p>Feature module 的manifest 也值得注意，因为它在功能上只是完整的应用程序的一部分，它的manifest
+将在项目组合时与其他人合并。因此，Feature 的manifest应包含模块中包含的Activities 。每个Feature 的manifest
 也应包含该模块的唯一包名称。</p>
 
-<p>例如，这里是一个feature module例子的manifest 。</p>
+<p>例如，这里是一个Feature module例子的manifest 。</p>
 
 <ol>
-  <li>base feature module —— 基本功能模块可以被认为是项目的根。它包含其他模块要使用的共享代码和资源。这个基本功能模块与其他feature的区别是<code class="highlighter-rouge">basefeature</code>设置为<code class="highlighter-rouge">true</code>。</li>
+  <li>Base feature module —— 基本功能模块可以被认为是项目的根。它包含其他模块要使用的共享代码和资源。这个基本功能模块与其他feature的区别是<code class="highlighter-rouge">baseFeature</code>设置为<code class="highlighter-rouge">true</code>。</li>
 </ol>
 
 <blockquote>
@@ -379,7 +373,7 @@ dependencies {
 <div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: "com.android.feature"
 
 android {
-    basefeature true
+    baseFeature true
     ...
 }
 
@@ -394,18 +388,18 @@ dependencies {
 <p>基本功能的manifest 通常包含全局内容，如应用程序标签。这是一个示例base feature manifest 。</p>
 
 <p>虽然不是强制性的，但建议基本功能manifest包含引用实现<code class="highlighter-rouge">default-
-url</code>元数据的activity的activity标签。这告诉android，如果你的即时应用程序没有从deep
-links打开，而是像launcher这样的地方，android会启动哪些activity。</p>
+url</code>元数据的Activity的Activity标签。这告诉Android，如果你的即时应用程序没有从Deep
+Links打开，而是像launcher这样的地方，Android会启动哪些Activity。</p>
 
 <ol>
-  <li>apk模块——这是我们都熟悉的普通build模块。现在，它的设置是为了输出<code class="highlighter-rouge">apk</code>要安装在用户设备上的基础和功能模块。由于它的目的是输出一个可安装的artifact ，这个模块确实有一个应用程序id。</li>
+  <li>APK模块——这是我们都熟悉的普通build模块。现在，它的设置是为了输出<code class="highlighter-rouge">apk</code>要安装在用户设备上的基础和功能模块。由于它的目的是输出一个可安装的artifact ，这个模块确实有一个应用程序ID。</li>
 </ol>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: 'com.android.application'
 
 android {
-    defaultconfig {
-        applicationid "com.willowtreeapps.instantappsdemo.apk"
+    defaultConfig {
+        applicationId "com.willowtreeapps.instantappsdemo.apk"
         ...
     }
     ...
@@ -421,10 +415,10 @@ dependencies {
 <p>这里的应用程序manifest 是将所有其他从其他功能模块继承的manifest合并的结果。</p>
 
 <ol>
-  <li>instant app模块 - implements  <code class="highlighter-rouge">com.android.instant</code>插件。消费功能模块，并生成一个拆分apk zip，其中包含将进入instant app的所有功能。它几乎是一个没有清单的manifest的空壳，只能在项目中实现其他功能功能模块。</li>
+  <li>Instant App模块 - implements  <code class="highlighter-rouge">com.android.instant</code>插件。消费功能模块，并生成一个拆分APK zip，其中包含将进入Instant App的所有功能。它几乎是一个没有清单的manifest的空壳，只能在项目中实现其他功能功能模块。</li>
 </ol>
 
-<p>以下是instant app模块构建脚本的示例。</p>
+<p>以下是Instant App模块构建脚本的示例。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: "com.android.instantapp"
 
@@ -439,24 +433,24 @@ dependencies {
 
 <h2 id="可能遇到的问题">可能遇到的问题</h2>
 
-<p>现在我们已经了解了instant apps的结构，重要的是要看看我们在集成一个instant
-app时遇到的一些问题。你依赖的某些gradle插件可能无法正常工作。许多用于android项目的gradle插件使用<code class="highlighter-rouge">com.android.application</code>或<code class="highlighter-rouge">com.android.library</code>插件检查模块。虽然新的<code class="highlighter-rouge">com.android.feature</code>插件，与library项目类似，他们没有样本包名，所以你最喜欢的gradle插件可能需要更新。</p>
+<p>现在我们已经了解了Instant Apps的结构，重要的是要看看我们在集成一个Instant
+App时遇到的一些问题。你依赖的某些gradle插件可能无法正常工作。许多用于Android项目的gradle插件使用<code class="highlighter-rouge">com.android.application</code>或<code class="highlighter-rouge">com.android.library</code>插件检查模块。虽然新的<code class="highlighter-rouge">com.android.feature</code>插件，与library项目类似，他们没有样本包名，所以你最喜欢的gradle插件可能需要更新。</p>
 
-<p>在支持instant apps时，使用deep links可以实现所有的应用内导航，在某些情况下也是有必要的。如果你刚刚添加https deep
+<p>在支持Instant Apps时，使用deep links可以实现所有的应用内导航，在某些情况下也是有必要的。如果你刚刚添加https deep
 links到你的应用程序（或切换到自定义方案），你可能会注意到，当通过深层链接从一个activity 导航到另一个activity
-时，android会弹出提示对话框。系统需要用户决定是否处理网页浏览器或应用程序中的deep
-link。显然，你希望用户默认保留在你的应用程序中，而不让他们选择离开web浏览器。这通过如上所述实现app
-links来解决。但是，如果在开发过程中你没有正确的web服务器设置，你可以实现此解决方法，以避免弹出对话框：</p>
+时，Android会弹出提示对话框。系统需要用户决定是否处理网页浏览器或应用程序中的deep
+link。显然，你希望用户默认保留在你的应用程序中，而不让他们选择离开Web浏览器。这通过如上所述实现App
+Links来解决。但是，如果在开发过程中你没有正确的Web服务器设置，你可以实现此解决方法，以避免弹出对话框：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>private static void invokedeeplink(context context, string deeplink) {
-        intent intent = new intent(intent.action_view, uri.parse(deeplink));
-        intent.setpackage(context.getpackagename()); // direct to activities in this app
-        context.startactivity(intent);
+<div class="highlighter-rouge"><pre class="highlight"><code>private static void invokeDeepLink(Context context, String deepLink) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(deepLink));
+        intent.setPackage(context.getPackageName()); // direct to activities in this app
+        context.startActivity(intent);
     }
 </code></pre>
 </div>
 
-<p>你可以从context获取应用程序的包名称，并强制view <code class="highlighter-rouge">intent</code>仅考虑你的包名称下的activity。</p>
+<p>你可以从Context获取应用程序的包名称，并强制VIEW <code class="highlighter-rouge">Intent</code>仅考虑你的包名称下的Activity。</p>
 
 <h1 id="-5">#</h1>
 
@@ -464,35 +458,35 @@ links来解决。但是，如果在开发过程中你没有正确的web服务器
 
 <h3 id="开发测试">开发测试</h3>
 
-<p>为了在开发过程中本地测试你的instant app，你显然可以使用android studio来运行instant app。下面说说它是怎么运作的。</p>
+<p>为了在开发过程中本地测试你的Instant App，你显然可以使用Android Studio来运行Instant App。下面说说它是怎么运作的。</p>
 
 <p>我们假设你的instant-app模块名字是<code class="highlighter-rouge">instantapp</code>。首先运行gradle任务 <code class="highlighter-rouge">gradle
-:instantapp:assembledebug</code>
-这将在你的builds文件夹中产生一个zip。接下来解压缩这个zip，你会发现几个apk，每个功能模块一个。最后运行这个adb命令</p>
+:instantapp:assembleDebug</code>
+这将在你的builds文件夹中产生一个zip。接下来解压缩这个zip，你会发现几个APK，每个功能模块一个。最后运行这个adb命令</p>
 
 <p> <code class="highlighter-rouge">adb install-multiple -r -t --ephemeral base.apk feature1.apk feature2.apk</code></p>
 
-<p>来同时安装所有这些apk。
-其中<code class="highlighter-rouge">base.apk</code>，<code class="highlighter-rouge">feature1.apk</code>和<code class="highlighter-rouge">feature2.apk</code>是你的功能apk。警告：我们注意到这个adb命令可能会间歇性地失败。。。。</p>
+<p>来同时安装所有这些APK。
+其中<code class="highlighter-rouge">base.apk</code>，<code class="highlighter-rouge">feature1.apk</code>和<code class="highlighter-rouge">feature2.apk</code>是你的功能APK。警告：我们注意到这个adb命令可能会间歇性地失败。。。。</p>
 
 <h3 id="发布">发布</h3>
 
-<p>为了将instant app发布到google play商店，你只需运行与上述相同的gradle task，但使用发行版本： <code class="highlighter-rouge">gradle
-:instantapp:assemblerelease</code> 然后将zip存档上传到play
-store控制台。你不需要解压缩。但是，在google接受你的即时应用之前，你需要确保某些设置正确。</p>
+<p>为了将Instant App发布到Google Play商店，你只需运行与上述相同的gradle task，但使用发行版本： <code class="highlighter-rouge">gradle
+:instantapp:assembleRelease</code> 然后将zip存档上传到Play
+Store控制台。你不需要解压缩。但是，在Google接受你的即时应用之前，你需要确保某些设置正确。</p>
 
 <h3 id="代码签名">代码签名</h3>
 
-<p>instant
-apps本质上是一组apk，每个功能模块一个。因此，你需要以与签名可安装apk相同的方式签名这些apk。这意味着你需要为每个功能模块<code class="highlighter-rouge">build.gradle</code>（包括基本功能模块）添加一个签名配置。</p>
+<p>Instant
+Apps本质上是一组APK，每个功能模块一个。因此，你需要以与签名可安装APK相同的方式签名这些APK。这意味着你需要为每个功能模块<code class="highlighter-rouge">build.gradle</code>（包括基本功能模块）添加一个签名配置。</p>
 
-<h3 id="intent-filters">intent filters</h3>
+<h3 id="intent-filters">Intent Filters</h3>
 
 <p>为了部署你的即时应用程序，你还需要验证你的manifests 中的intent
-filters符不符合格式。有关工作设置的示例，请参阅上述``声明<code class="highlighter-rouge">itemdetailactivity</code>。以下是关键点：</p>
+filters符不符合格式。有关工作设置的示例，请参阅上述``声明<code class="highlighter-rouge">ItemDetailActivity</code>。以下是关键点：</p>
 
-<p>确保包括<code class="highlighter-rouge">android:autoverify="true"</code>。此属性告诉android自动验证你的app links。由于即时应用程式适用于app
-links，因此此属性是必需的。确保你使用多个``标签，每个标签只有一个属性。所以不用这个</p>
+<p>确保包括<code class="highlighter-rouge">android:autoVerify="true"</code>。此属性告诉Android自动验证你的App Links。由于即时应用程式适用于App
+Links，因此此属性是必需的。确保你使用多个``标签，每个标签只有一个属性。所以不用这个</p>
 
 <p>你应该使用</p>
 
@@ -500,31 +494,31 @@ links，因此此属性是必需的。确保你使用多个``标签，每个标�
 
 <h1 id="-6">#</h1>
 
-<h2 id="示例应用程序bumblebee">示例应用程序：bumblebee</h2>
+<h2 id="示例应用程序bumblebee">示例应用程序：Bumblebee</h2>
 
-<p>我们构建了一个名为“bumblebee”的示例应用程序，只是为了了解instant
-apps的可行性。bumblebee是一个虚构的商店，有一个简单的目录和可共享的购物车。它使用firebase进行目录数据，用户数据和资源托管。我们还使用google的新架构组件构建了该应用程序，我们发现这些应用程序非常有用且易于使用。你可以在这里查看这些新的架构库的更详细的细节，我们建议你查看eric
-richardson发布的这些文章。</p>
+<p>我们构建了一个名为“Bumblebee”的示例应用程序，只是为了了解Instant
+Apps的可行性。Bumblebee是一个虚构的商店，有一个简单的目录和可共享的购物车。它使用Firebase进行目录数据，用户数据和资源托管。我们还使用Google的新架构组件构建了该应用程序，我们发现这些应用程序非常有用且易于使用。你可以在这里查看这些新的架构库的更详细的细节，我们建议你查看Eric
+Richardson发布的这些文章。</p>
 
 <p><a href="https://willowtreeapps.com/ideas/google-i-o-2017-lifecycles-of-the-
-rich-and-famous">lifecycles of the rich and
+rich-and-famous">Lifecycles of the rich and
 famous</a></p>
 
 <p><a href="https://willowtreeapps.com/ideas/google-i-o-2017-the-viewmodel-is-nice-
-from-up-here">the viewmodel is nice from up
+from-up-here">The viewmodel is nice from up
 here</a></p>
 
-<p>bumblebee是一个具有三个功能模块的即时应用程序，每个功能模块都包含自己的页面。根进入点是浏览功能，显示可购买的产品网格（实际上只是我们发现在办公室周围的物品的照片）。点击一个可以进入“物料明细”功能，其中列出了价格和完整描述。从这里，你可以选择将该项目添加到你的购物车。你可以使用购物车功能查看它，并轻松地共享你的购物车的即时应用程序链接。请记住，即时应用链接只是网址。你共享链接的任何人都可以立即直接访问你的购物车作为即时应用程序，而无需下载目录功能。</p>
+<p>Bumblebee是一个具有三个功能模块的即时应用程序，每个功能模块都包含自己的页面。根进入点是浏览功能，显示可购买的产品网格（实际上只是我们发现在办公室周围的物品的照片）。点击一个可以进入“物料明细”功能，其中列出了价格和完整描述。从这里，你可以选择将该项目添加到你的购物车。你可以使用购物车功能查看它，并轻松地共享你的购物车的即时应用程序链接。请记住，即时应用链接只是网址。你共享链接的任何人都可以立即直接访问你的购物车作为即时应用程序，而无需下载目录功能。</p>
 
-<p>以下是你可以在android手机上打开的一些链接来尝试 bumblebee：</p>
+<p>以下是你可以在Android手机上打开的一些链接来尝试 Bumblebee：</p>
 
 <p><a href="https://bumblebee.willowtreeapps.com/">https://bumblebee.willowtreeapps.com/</a></p>
 
 <p><a href="https://bumblebee.willowtreeapps.com/item/0">https://bumblebee.willowtreeapps.com/item/0</a></p>
 
-<p>你可以通过adb命令调用这些url作为intents ：</p>
+<p>你可以通过adb命令调用这些URL作为intents ：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>adb shell am start -a android.intent.action.view -d "https://bumblebee.willowtreeapps.com/"
+<div class="highlighter-rouge"><pre class="highlight"><code>adb shell am start -a android.intent.action.VIEW -d "https://bumblebee.willowtreeapps.com/"
 </code></pre>
 </div>
 
@@ -678,13 +672,13 @@ apps&gt;</p>
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/07/01/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">android scrollview设置初始position的方法</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/07/01/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">Android ScrollView设置初始position的方法</a></p>
         
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/">页面结构化在android上的尝试</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/">页面结构化在Android上的尝试</a></p>
         
     </div>
 </div>
@@ -752,17 +746,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

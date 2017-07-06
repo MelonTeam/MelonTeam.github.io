@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>图像处理之漫水填充算法（flood fill algorithm）</title>
-    <meta name="description" content="            导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，opencv中floodfill函数的使用方法。      基本思想漫水填充算法，顾名思义就像洪水漫过一样，把一块连通的区域填满，当然水要能漫过需要满足一定的条件，可以理解为满足条件的地方就...">
+    <meta name="description" content="            导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，OpenCV中floodFill函数的使用方法。      基本思想漫水填充算法，顾名思义就像洪水漫过一样，把一块连通的区域填满，当然水要能漫过需要满足一定的条件，可以理解为满足条件的地方就...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -73,21 +73,15 @@
                     
                     <li>
                         
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
                         <a href="/board/">
                         
                             <i class="fa fa-pencil"></i>留言板
                         </a>
                     </li>
+                    
+                
+                    
+                
                     
                 
                     
@@ -170,8 +164,8 @@
         <!--a href="/tag/#%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86" title="Tag: 图像处理" rel="tag">图像处理</a-->
         <a href="/tag/#图像处理" title="Tag: 图像处理" rel="tag">图像处理</a>&nbsp;
     
-        <!--a href="/tag/#opencv" title="Tag: opencv" rel="tag">opencv</a-->
-        <a href="/tag/#opencv" title="Tag: opencv" rel="tag">opencv</a>
+        <!--a href="/tag/#OpenCV" title="Tag: OpenCV" rel="tag">OpenCV</a-->
+        <a href="/tag/#OpenCV" title="Tag: OpenCV" rel="tag">OpenCV</a>
     
   
 
@@ -189,7 +183,7 @@
 <table>
   <tbody>
     <tr>
-      <td>导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，opencv中floodfill函数的使用方法。</td>
+      <td>导语 介绍了漫水填充算法（flood fill algorithm）的基本思想，实现方式和应用场景，OpenCV中floodFill函数的使用方法。</td>
     </tr>
   </tbody>
 </table>
@@ -198,7 +192,7 @@
 
 <p>漫水填充算法，顾名思义就像洪水漫过一样，把一块连通的区域填满，当然水要能漫过需要满足一定的条件，可以理解为满足条件的地方就是低洼的地方，水才能流过去。在图像处理中就是给定一个种子点作为起始点，向附近相邻的像素点扩散，把颜色相同或者相近的所有点都找出来，并填充上新的颜色，这些点形成一个连通的区域。
 <!--more-->
-漫水填充算法可以用来标记或者分离图像的一部分，可实现类似windows 画图油漆桶功能，或者ps里面的魔棒选择功能。</p>
+漫水填充算法可以用来标记或者分离图像的一部分，可实现类似Windows 画图油漆桶功能，或者PS里面的魔棒选择功能。</p>
 
 <p><strong>算法实现</strong></p>
 
@@ -208,17 +202,17 @@
 
 <p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/19e57951b16dca65d793d56826756d589dc3579954237e1f65f63bdee36d0ec6" alt="" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>//recursive 4-way floodfill, crashes if recursion stack is full
-public void floodfill4(int x, int y, int newcolor, int oldcolor)  
+<div class="highlighter-rouge"><pre class="highlight"><code>//Recursive 4-way floodfill, crashes if recursion stack is full
+public void floodFill4(int x, int y, int newColor, int oldColor)  
 {  
     if(x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; height   
-         &amp;&amp; getpixel(x, y) == oldcolor &amp;&amp; getpixel(x, y) != newcolor)   
+         &amp;&amp; getPixel(x, y) == oldColor &amp;&amp; getPixel(x, y) != newColor)   
     {   
-        setpixel(x, y, newcolor); //set color before starting recursion  
-        floodfill4(x + 1, y, newcolor, oldcolor);  
-        floodfill4(x - 1, y, newcolor, oldcolor);  
-        floodfill4(x, y + 1, newcolor, oldcolor);  
-        floodfill4(x, y - 1, newcolor, oldcolor);  
+        setPixel(x, y, newColor); //set color before starting recursion  
+        floodFill4(x + 1, y, newColor, oldColor);  
+        floodFill4(x - 1, y, newColor, oldColor);  
+        floodFill4(x, y + 1, newColor, oldColor);  
+        floodFill4(x, y - 1, newColor, oldColor);  
     }     
 }
 </code></pre>
@@ -228,20 +222,20 @@ public void floodfill4(int x, int y, int newcolor, int oldcolor)
 
 <p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/3be24eb4141d9913934796bc058becdcbfc08b12777c4b0f7a2d55b4ad96636c" alt="" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public void floodfill8(int x, int y, int newcolor, int oldcolor)  
+<div class="highlighter-rouge"><pre class="highlight"><code>public void floodFill8(int x, int y, int newColor, int oldColor)  
 {  
     if(x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; height &amp;&amp;   
-            getpixel(x, y) == oldcolor &amp;&amp; getpixel(x, y) != newcolor)   
+            getPixel(x, y) == oldColor &amp;&amp; getPixel(x, y) != newColor)   
     {   
-        setpixel(x, y, newcolor); //set color before starting recursion  
-        floodfill8(x + 1, y, newcolor, oldcolor);  
-        floodfill8(x - 1, y, newcolor, oldcolor);  
-        floodfill8(x, y + 1, newcolor, oldcolor);  
-        floodfill8(x, y - 1, newcolor, oldcolor);  
-        floodfill8(x + 1, y + 1, newcolor, oldcolor);  
-        floodfill8(x - 1, y - 1, newcolor, oldcolor);  
-        floodfill8(x - 1, y + 1, newcolor, oldcolor);  
-        floodfill8(x + 1, y - 1, newcolor, oldcolor);  
+        setPixel(x, y, newColor); //set color before starting recursion  
+        floodFill8(x + 1, y, newColor, oldColor);  
+        floodFill8(x - 1, y, newColor, oldColor);  
+        floodFill8(x, y + 1, newColor, oldColor);  
+        floodFill8(x, y - 1, newColor, oldColor);  
+        floodFill8(x + 1, y + 1, newColor, oldColor);  
+        floodFill8(x - 1, y - 1, newColor, oldColor);  
+        floodFill8(x - 1, y + 1, newColor, oldColor);  
+        floodFill8(x + 1, y - 1, newColor, oldColor);  
     }     
 } 
 </code></pre>
@@ -253,45 +247,45 @@ public void floodfill4(int x, int y, int newcolor, int oldcolor)
 <p>递归实现算法好理解，但当连通的区域很大时，很可能会导致<strong>栈溢出</strong>。关于扫描线算法和这些算法的非递归实现可以参见这里的介绍
 <a href="http://lodev.org/cgtutor/floodfill.html">http://lodev.org/cgtutor/floodfill.html</a></p>
 
-<p><strong>opencv 的 floodfill 函数</strong></p>
+<p><strong>OpenCV 的 floodFill 函数</strong></p>
 
-<p>在opencv中，漫水填充算法由floodfill函数实现，可以从指定的种子点开始填充一个连通域。连通性由像素值的接近程度来衡量。opencv2.x
-有两个c++重载的floodfill函数：</p>
+<p>在OpenCV中，漫水填充算法由floodFill函数实现，可以从指定的种子点开始填充一个连通域。连通性由像素值的接近程度来衡量。OpenCV2.X
+有两个C++重载的floodFill函数：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>/* fills the semi-uniform image region starting from the specified seed point*/
-cv_exports int floodfill( inputoutputarray image,
-                          point seedpoint, 
-                          scalar newval, 
-                          cv_out rect* rect=0,
-                          scalar lodiff=scalar(), 
-                          scalar updiff=scalar(),
+CV_EXPORTS int floodFill( InputOutputArray image,
+                          Point seedPoint, 
+                          Scalar newVal, 
+                          CV_OUT Rect* rect=0,
+                          Scalar loDiff=Scalar(), 
+                          Scalar upDiff=Scalar(),
                           int flags=4 );
 
 /* fills the semi-uniform image region and/or the mask starting from the
    specified seed point*/
-cv_exports int floodfill( inputoutputarray image,
-                          inputoutputarray mask,
-                          point seedpoint, 
-                          scalar newval, 
-                          cv_out rect* rect=0,
-                          scalar lodiff=scalar(), 
-                          scalar updiff=scalar(),
+CV_EXPORTS int floodFill( InputOutputArray image,
+                          InputOutputArray mask,
+                          Point seedPoint, 
+                          Scalar newVal, 
+                          CV_OUT Rect* rect=0,
+                          Scalar loDiff=Scalar(), 
+                          Scalar upDiff=Scalar(),
                           int flags=4 );
 </code></pre>
 </div>
 
 <p><strong>• image</strong><br />
-要处理的图片，既是入参也是出参，接受单通道或3通道，8位或浮点类型的图片。如果提供了mask而且设置了 floodfill_mask_only
+要处理的图片，既是入参也是出参，接受单通道或3通道，8位或浮点类型的图片。如果提供了Mask而且设置了 FLOODFILL_MASK_ONLY
 的flag，输入图像才不会被修改，否则调用本方法填充的结果会修改到输入图像中。</p>
 
 <p><strong>• mask</strong><br />
-掩码图像，既是入参也是出参，接受单通道8位的图片，要求比要处理的图片宽和高各大两个像素。mask要先初始化好，填充算法不能漫过mask中非0的区域。比如可以用边缘检测的结果来做为mask，以防止边缘被填充。做为输出参数，mask对应图片中被填充的像素会被置为1或者下面参数指定的值。因此当多次调用floodfill方法，使用同一个mask时，可以避免填充区域叠加和重复计算。
+掩码图像，既是入参也是出参，接受单通道8位的图片，要求比要处理的图片宽和高各大两个像素。mask要先初始化好，填充算法不能漫过mask中非0的区域。比如可以用边缘检测的结果来做为mask，以防止边缘被填充。做为输出参数，mask对应图片中被填充的像素会被置为1或者下面参数指定的值。因此当多次调用floodFill方法，使用同一个mask时，可以避免填充区域叠加和重复计算。
 因为 mask比image大，所以image中的点 p(x,y)，对应mask中的点 p(x+1, y+1)</p>
 
-<p><strong>• seedpoint</strong> 填充算法的种子点，即起始点<br />
-<strong>• newval</strong> 填充的颜色<br />
-<strong>• lodiff</strong> 最小的亮度或颜色的差值<br />
-<strong>• updiff</strong> 最大的亮度者颜色的差值<br />
+<p><strong>• seedPoint</strong> 填充算法的种子点，即起始点<br />
+<strong>• newVal</strong> 填充的颜色<br />
+<strong>• loDiff</strong> 最小的亮度或颜色的差值<br />
+<strong>• upDiff</strong> 最大的亮度者颜色的差值<br />
 <strong>• rect</strong> 可选的输出参数，返回一个最小的矩形，可以刚好把填充的连通域包起来。</p>
 
 <p><strong>• flags</strong><br />
@@ -300,15 +294,15 @@ cv_exports int floodfill( inputoutputarray image,
    - 比如flag值(4|(255«8)) 表示使用四领域填充，mask填充色值是255。</p>
 
 <p>   - 剩余的位有两个值可以单独设置或者用（|）同时设置：<br />
-<strong>     floodfill_mask_only</strong> 表示不修改原始输入图像，只把结果输出到mask图中，在mask中将填充区域标上前面flag中指定的值。newval的参数值将被忽略。</p>
+<strong>     FLOODFILL_MASK_ONLY</strong> 表示不修改原始输入图像，只把结果输出到mask图中，在mask中将填充区域标上前面flag中指定的值。newVal的参数值将被忽略。</p>
 
-<p><strong>     floodfill_fixed_range</strong> 表示待填充像素只和种子点比较。如果不设置这个标记，表示待   填充的像素是和相邻的像素比较（相当于差值范围是浮动的），这种情况下填充区域的像素可能      会和种子点相差越来越大。</p>
+<p><strong>     FLOODFILL_FIXED_RANGE</strong> 表示待填充像素只和种子点比较。如果不设置这个标记，表示待   填充的像素是和相邻的像素比较（相当于差值范围是浮动的），这种情况下填充区域的像素可能      会和种子点相差越来越大。</p>
 
 <p><strong>未知点的判断</strong></p>
 
 <p>通过下面未知点是否应该填充的判断条件，可以更好的理解上述参数的含义。</p>
 
-<p>灰度图固定范围时(flag中设置了 floodfill_fixed_range )，未知点的判断，只跟种子点比较：</p>
+<p>灰度图固定范围时(flag中设置了 FLOODFILL_FIXED_RANGE )，未知点的判断，只跟种子点比较：</p>
 
 <p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/babf45ce1bc8424f7a043f44ed54e7fbdf2b389b7e78fd2ff7b23eb25dbff868" alt="" /></p>
 
@@ -324,7 +318,7 @@ cv_exports int floodfill( inputoutputarray image,
 
 <p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/947a8e774729353301d72bb678a96992af95d8113e544a7c67e449784a6adc4c" alt="" /></p>
 
-<p>eg：通过多次选择背景种子点和调用 floodfill，可以把背景和前景分离开，黑白图是mask图。</p>
+<p>eg：通过多次选择背景种子点和调用 floodFill，可以把背景和前景分离开，黑白图是mask图。</p>
 
 <p><img src="/image/tu_xiang_chu_li_zhi_man_shui_tian_chong_suan_fa_flood_fill_algorithm_/1967569a1fd069345e86869115f835ef2cf687bb94ea87d81d9b818e3cc1a8a9" alt="" /></p>
 
@@ -471,13 +465,13 @@ cv_exports int floodfill( inputoutputarray image,
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/">xcode lldb调试小技巧</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/">XCode LLDB调试小技巧</a></p>
         
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/">使用anko layouts来开发android(翻译)</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/06/29/shi_yong_anko_layouts_lai_kai_fa_android_fan_yi_/">使用Anko Layouts来开发Android(翻译)</a></p>
         
     </div>
 </div>
@@ -545,17 +539,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

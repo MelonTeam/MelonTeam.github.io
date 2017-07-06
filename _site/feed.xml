@@ -5,24 +5,24 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 05 Jul 2017 18:46:13 +0800</pubDate>
-    <lastBuildDate>Wed, 05 Jul 2017 18:46:13 +0800</lastBuildDate>
+    <pubDate>Thu, 06 Jul 2017 11:10:56 +0800</pubDate>
+    <lastBuildDate>Thu, 06 Jul 2017 11:10:56 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>浅析android中的threadlocal</title>
+        <title>浅析Android中的ThreadLocal</title>
         <description>
-threadlocal第一眼很容易让人误以为这是一个thread，其实并不是，它是在jdk
-1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个threadlocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是android中的threadlocal呢，原因是android中的threadlocal和jdk的threadlocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。
+ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK
+1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。
 
 </description>
         <pubDate>Sat, 01 Jul 2017 06:49:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/01/qian_xi_android_zhong_de_threadlocal/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/01/qian_xi_android_zhong_de_threadlocal/</guid>
         
-        <category>threadlo...</category>
+        <category>ThreadLo...</category>
         
-        <category>android</category>
+        <category>Android</category>
         
         
         <category>android</category>
@@ -57,10 +57,10 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
       </item>
     
       <item>
-        <title>opengl es读书笔记（一）—初始庐山真面目</title>
+        <title>OpenGL ES读书笔记（一）—初始庐山真面目</title>
         <description>
 &lt;ul&gt;
-  &lt;li&gt;1. opengl es简介
+  &lt;li&gt;1. OpenGL ES简介
     &lt;ul&gt;
       &lt;li&gt;1.1 顶点着色器&lt;/li&gt;
       &lt;li&gt;1.2 片段着色器&lt;/li&gt;
@@ -73,9 +73,9 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
         <link>http://localhost:4000/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
         
-        <category>android</category>
+        <category>Android</category>
         
-        <category>opengl</category>
+        <category>OpenGL</category>
         
         
         <category>android</category>
@@ -83,21 +83,21 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
       </item>
     
       <item>
-        <title>教你自己动手写http服务器</title>
+        <title>教你自己动手写HTTP服务器</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#网络io模型选择&quot; id=&quot;markdown-toc-网络io模型选择&quot;&gt;网络io模型选择&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#网络io模型选择&quot; id=&quot;markdown-toc-网络io模型选择&quot;&gt;网络IO模型选择&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-谈到http服务器，立马就能联想到apache、nginx等大名鼎鼎的开源组件。如果需要一个本地代理http服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在android上手动编写一个轻量的http服务器，通过阅读本文，笔者即将为你揭开http服务器的面纱，收获一个五脏俱全的轻量http服务器组件tinyhttpd。
+谈到HTTP服务器，立马就能联想到Apache、Nginx等大名鼎鼎的开源组件。如果需要一个本地代理HTTP服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在Android上手动编写一个轻量的HTTP服务器，通过阅读本文，笔者即将为你揭开HTTP服务器的面纱，收获一个五脏俱全的轻量HTTP服务器组件TinyHttpd。
 
-&lt;h2 id=&quot;网络io模型选择&quot;&gt;网络io模型选择&lt;/h2&gt;
+&lt;h2 id=&quot;网络io模型选择&quot;&gt;网络IO模型选择&lt;/h2&gt;
 
 </description>
         <pubDate>Sat, 01 Jul 2017 04:40:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/01/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
         
-        <category>轻量http...</category>
+        <category>轻量HTTP...</category>
         
         
         <category>android</category>
@@ -105,14 +105,14 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
       </item>
     
       <item>
-        <title>fresco 4.x和5.x内存分析</title>
+        <title>Fresco 4.X和5.X内存分析</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#4x系统的fresco&quot; id=&quot;markdown-toc-4x系统的fresco&quot;&gt;4.x系统的fresco&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#4x系统的fresco&quot; id=&quot;markdown-toc-4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-两年前部落项目接入fresco的时候，那时候主流机型还是4.x。fresco在4.x的机器的内存性能很好，bitmap存在ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。
+两年前部落项目接入Fresco的时候，那时候主流机型还是4.X。Fresco在4.X的机器的内存性能很好，Bitmap存在Ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。
 
-&lt;h2 id=&quot;4x系统的fresco&quot;&gt;4.x系统的fresco&lt;/h2&gt;
+&lt;h2 id=&quot;4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/h2&gt;
 
 </description>
         <pubDate>Sat, 01 Jul 2017 04:36:00 +0800</pubDate>
@@ -127,11 +127,11 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
       </item>
     
       <item>
-        <title>fork/join 框架</title>
+        <title>Fork/Join 框架</title>
         <description>
 &lt;strong&gt;1. 简介&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;1.1 什么是fork/join框架&lt;/strong&gt;&lt;br /&gt;
-        java 5 引入了 executor 和 executorservice 接口，使得 java在并发支持上得到了进一步的提升。 java
+&lt;strong&gt;1.1 什么是Fork/Join框架&lt;/strong&gt;&lt;br /&gt;
+        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java
 
 </description>
         <pubDate>Sat, 01 Jul 2017 02:35:00 +0800</pubDate>
@@ -148,19 +148,19 @@ threadlocal第一眼很容易让人误以为这是一个thread，其实并不是
       </item>
     
       <item>
-        <title>页面结构化在android上的尝试</title>
+        <title>页面结构化在Android上的尝试</title>
         <description>
 | 导语
-mvp开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手q项目并不很适合。参考之前web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲lego在android上一次小小尝试
+MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手Q项目并不很适合。参考之前Web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲Lego在Android上一次小小尝试
 
-&lt;strong&gt;一，mvp简介&lt;/strong&gt;
+&lt;strong&gt;一，MVP简介&lt;/strong&gt;
 
 </description>
         <pubDate>Sat, 01 Jul 2017 00:38:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
         
-        <category>lego</category>
+        <category>LEGO</category>
         
         <category>页面结构...</category>
         
@@ -170,22 +170,22 @@ mvp开发模式可以帮助项目结构解耦，但其庞大的方法数增加�
       </item>
     
       <item>
-        <title>[译]android instant apps简介</title>
+        <title>[译]Android Instant Apps简介</title>
         <description>
-| 导语 google最近发布了instant apps，可以帮助开发者进一步的增强android的原生app体验。instant
-apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生app体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。
+| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。Instant
+Apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生App体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。
 
-android instant apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。instant
-apps由url触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，nfc和其他应用程序甚至其他的instant
+Android Instant Apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。Instant
+Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，NFC和其他应用程序甚至其他的Instant
 
 </description>
         <pubDate>Sat, 01 Jul 2017 00:09:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/01/_yi_android_instant_apps_jian_jie/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/01/_yi_android_instant_apps_jian_jie/</guid>
         
-        <category>app</category>
+        <category>App</category>
         
-        <category>instant</category>
+        <category>Instant</category>
         
         
         <category>android</category>
@@ -193,11 +193,11 @@ apps由url触发，这意味着它们可以从任何位置启动，包括搜索�
       </item>
     
       <item>
-        <title>android scrollview设置初始position的方法</title>
+        <title>Android ScrollView设置初始position的方法</title>
         <description>
 最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。
 
-刚听到这个需求的时候，觉得这个很简单，直接设置scrollview的初始滚动值即可。然而，当真正实现的时候却发现，android压根没有方法可以设置scrollview的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
+刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
 
 </description>
         <pubDate>Sat, 01 Jul 2017 00:03:00 +0800</pubDate>
@@ -214,12 +214,12 @@ apps由url触发，这意味着它们可以从任何位置启动，包括搜索�
       </item>
     
       <item>
-        <title>kotlin 初体验: 用 kotlin 写命令行工具</title>
+        <title>Kotlin 初体验: 用 Kotlin 写命令行工具</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#工具需求&quot; id=&quot;markdown-toc-工具需求&quot;&gt;工具需求&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-| 导语 可喜可贺, kotlin 在今年的 google i/o 大会上, 成为 google android 平台的新一门官方语言,
+| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,
 偶尔有了个写工具的机会试着用它来替代原来常用的 python
 
 &lt;h2 id=&quot;工具需求&quot;&gt;工具需求&lt;/h2&gt;

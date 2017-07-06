@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>小白看react native</title>
-    <meta name="description" content="  1.what is react native1.what is react native">
+    <title>小白看React Native</title>
+    <meta name="description" content="  1.What is React Native1.What is React Native">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -66,16 +66,6 @@
                         <a href="/category/">
                         
                             <i class="fa fa-th-list"></i>分类
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
                         </a>
                     </li>
                     
@@ -114,6 +104,10 @@
                 
                     
                 
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -122,7 +116,7 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>小白看react native</h1>
+        <h1>小白看React Native</h1>
         <div class="label">
 
             <div class="label-card">
@@ -167,8 +161,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#reactnat..." title="Tag: reactnat..." rel="tag">reactnat...</a-->
-        <a href="/tag/#reactnat..." title="Tag: reactnat..." rel="tag">reactnat...</a>
+        <!--a href="/tag/#ReactNat..." title="Tag: ReactNat..." rel="tag">ReactNat...</a-->
+        <a href="/tag/#ReactNat..." title="Tag: ReactNat..." rel="tag">ReactNat...</a>
     
   
 
@@ -183,10 +177,10 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#1what-is-react-native" id="markdown-toc-1what-is-react-native">1.what is react native</a></li>
+  <li><a href="#1what-is-react-native" id="markdown-toc-1what-is-react-native">1.What is React Native</a></li>
   <li><a href="#2工欲善其事必现利其器" id="markdown-toc-2工欲善其事必现利其器">2.工欲善其事，必现利其器</a></li>
-  <li><a href="#3jsx" id="markdown-toc-3jsx">3.jsx</a></li>
-  <li><a href="#4es6" id="markdown-toc-4es6">4.es6</a>    <ul>
+  <li><a href="#3jsx" id="markdown-toc-3jsx">3.JSX</a></li>
+  <li><a href="#4es6" id="markdown-toc-4es6">4.ES6</a>    <ul>
       <li><a href="#letconst" id="markdown-toc-letconst">let，const</a></li>
       <li><a href="#classextendssuper" id="markdown-toc-classextendssuper">class，extends，super</a></li>
       <li><a href="#arrow-function" id="markdown-toc-arrow-function">arrow function</a></li>
@@ -196,91 +190,91 @@
   </li>
   <li><a href="#5布局" id="markdown-toc-5布局">5.布局</a>    <ul>
       <li><a href="#像素密度" id="markdown-toc-像素密度">像素密度</a></li>
-      <li><a href="#flex-in-react-native" id="markdown-toc-flex-in-react-native">flex in react native</a></li>
+      <li><a href="#flex-in-react-native" id="markdown-toc-flex-in-react-native">Flex in React Native</a></li>
       <li><a href="#绝对布局和相对布局" id="markdown-toc-绝对布局和相对布局">绝对布局和相对布局</a></li>
     </ul>
   </li>
   <li><a href="#6prosstate" id="markdown-toc-6prosstate">6.pros&amp;state</a></li>
-  <li><a href="#7virtual-dom" id="markdown-toc-7virtual-dom">7.virtual dom</a></li>
-  <li><a href="#8diff算法" id="markdown-toc-8diff算法">8.diff算法</a>    <ul>
+  <li><a href="#7virtual-dom" id="markdown-toc-7virtual-dom">7.Virtual Dom</a></li>
+  <li><a href="#8diff算法" id="markdown-toc-8diff算法">8.DIFF算法</a>    <ul>
       <li><a href="#传统-diff-算法" id="markdown-toc-传统-diff-算法">传统 diff 算法</a></li>
-      <li><a href="#react-diff" id="markdown-toc-react-diff">react diff</a></li>
+      <li><a href="#react-diff" id="markdown-toc-react-diff">React diff</a></li>
     </ul>
   </li>
-  <li><a href="#9react-native生命周期" id="markdown-toc-9react-native生命周期">9.react native生命周期</a></li>
-  <li><a href="#10react-native自定义控件" id="markdown-toc-10react-native自定义控件">10.react native自定义控件</a></li>
-  <li><a href="#11react-native-debug" id="markdown-toc-11react-native-debug">11.react native debug</a>    <ul>
+  <li><a href="#9react-native生命周期" id="markdown-toc-9react-native生命周期">9.React Native生命周期</a></li>
+  <li><a href="#10react-native自定义控件" id="markdown-toc-10react-native自定义控件">10.React Native自定义控件</a></li>
+  <li><a href="#11react-native-debug" id="markdown-toc-11react-native-debug">11.React Native Debug</a>    <ul>
       <li><a href="#红屏" id="markdown-toc-红屏">红屏</a></li>
-      <li><a href="#chrome-debug" id="markdown-toc-chrome-debug">chrome debug</a></li>
-      <li><a href="#log" id="markdown-toc-log">log</a></li>
+      <li><a href="#chrome-debug" id="markdown-toc-chrome-debug">Chrome Debug</a></li>
+      <li><a href="#log" id="markdown-toc-log">Log</a></li>
     </ul>
   </li>
-  <li><a href="#12hot-reload" id="markdown-toc-12hot-reload">12.hot reload</a></li>
+  <li><a href="#12hot-reload" id="markdown-toc-12hot-reload">12.Hot Reload</a></li>
   <li><a href="#13小结" id="markdown-toc-13小结">13.小结</a></li>
 </ul>
 
 <hr />
 
-<h1 id="1what-is-react-native">1.what is react native</h1>
+<h1 id="1what-is-react-native">1.What is React Native</h1>
 <!--more-->
 
-<p><img src="/image/xiao_bai_kan_react_native/c5ab4b65b604f834bfb58e03bcd479a52816f2049ef4cacdf3c8b6687f0e5bca" alt="react
-native" /><br />
-众所周知，产品的需求总是想快速的迭代。但是由于应用分发市场的审核机制（主要是ios审核），使一些快速迭代的需求只能选择web作为应用场景。虽然web应用已经是一个很成熟的业务，h5的助力也使web应用快速占据移动市场。但是web应用有web应用的瓶颈，在一些交互、性能方面还是无法媲美原生应用。这个时候，react
-native的出现，也许给我们带来了一点点新的思路。react native从出生就带有着，跨平台，快速迭代，节省安装包等标签。在react
-native之前，也有很多技术意图跨平台，但是真正做到完全跨平台的技术，准确来说应该是没有的。也许react native提出的‘learn once,
-write anywhere’可行。本次，就以一个小白的视角，来管中窥豹一下react native。</p>
+<p><img src="/image/xiao_bai_kan_React_Native/f6b0e150c759b964a84b9fb557da5ee67b21e5a9119bee5c3beaf1753b4d2c78" alt="React
+Native" /><br />
+众所周知，产品的需求总是想快速的迭代。但是由于应用分发市场的审核机制（主要是iOS审核），使一些快速迭代的需求只能选择web作为应用场景。虽然web应用已经是一个很成熟的业务，H5的助力也使web应用快速占据移动市场。但是web应用有web应用的瓶颈，在一些交互、性能方面还是无法媲美原生应用。这个时候，React
+Native的出现，也许给我们带来了一点点新的思路。React Native从出生就带有着，跨平台，快速迭代，节省安装包等标签。在React
+Native之前，也有很多技术意图跨平台，但是真正做到完全跨平台的技术，准确来说应该是没有的。也许React Native提出的‘Learn once,
+write anywhere’可行。本次，就以一个小白的视角，来管中窥豹一下React Native。</p>
 
 <hr />
 
 <h1 id="2工欲善其事必现利其器">2.工欲善其事，必现利其器</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/00a7371f7908c07b48f582125e83a6e7269d39d6b9a92dd043f16a8bc167f086" alt="名言" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/ed5471a3ecad068ac5e6cf89867813bb1a83303ba9f19c7c1fd18d335e23182e" alt="名言" /></p>
 
-<p>工欲善其事，必现利其器是自古以来不变的道理。在我们平时开发的时候，一款好的ide会使我们的开发效率成倍提升。而好的ide也会助力于好的语言的未来发展。就像oc或者swift，就伴随着xcode；c++或者c#，大家肯定想到visual
+<p>工欲善其事，必现利其器是自古以来不变的道理。在我们平时开发的时候，一款好的IDE会使我们的开发效率成倍提升。而好的IDE也会助力于好的语言的未来发展。就像oc或者swift，就伴随着xcode；c++或者c#，大家肯定想到visual
 stutio。</p>
 
-<p><img src="/image/xiao_bai_kan_react_native/35aef829c47ec50d558228f7daded2c3808c4ead9534535230259f36430f3f87" alt="webstrom" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/9c9daa5413ac4544b31309016ea042f287616e7d7baa689e183e825bf497a547" alt="WebStrom" /></p>
 
-<p>虽然说，开发react
-native的ide有很多。著名的有nuclide，sublime，webstrom。但是，个人比较偏爱于webstrom，这款号称最聪明的javascript
-ide。</p>
+<p>虽然说，开发React
+Native的IDE有很多。著名的有Nuclide，Sublime，WebStrom。但是，个人比较偏爱于WebStrom，这款号称最聪明的javascript
+IDE。</p>
 
 <hr />
 
-<h1 id="3jsx">3.jsx</h1>
+<h1 id="3jsx">3.JSX</h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>//使用jsx
-react.render(
+<div class="highlighter-rouge"><pre class="highlight"><code>//使用JSX
+React.render(
     &lt;div&gt;
         &lt;div&gt;
             &lt;div&gt;demodiv&gt;
         div&gt;
     div&gt;,
-    document.getelementbyid('demo')
+    document.getElementById('demo')
 );
 
-//不使用jsx
-react.render(
-    react.createelement('div', null,
-        react.createelement('div', null,
-            react.createelement('div', null, 'demo')
+//不使用JSX
+React.render(
+    React.createElement('div', null,
+        React.createElement('div', null,
+            React.createElement('div', null, 'demo')
         )
     ),
-    document.getelementbyid('demo')
+    document.getElementById('demo')
 );
 </code></pre>
 </div>
 
-<p>jsx语法，像是在javascript代码里直接写xml的语法，实质上这只是一个语法糖，每一个xml标签都会被jsx转换工具转换成纯javascript代码，react
-官方推荐使用jsx， 当然你想直接使用纯javascript代码写也是可以的，只是使用jsx，组件的结构和组件之间的关系看上去更加清晰。</p>
+<p>JSX语法，像是在Javascript代码里直接写XML的语法，实质上这只是一个语法糖，每一个XML标签都会被JSX转换工具转换成纯Javascript代码，React
+官方推荐使用JSX， 当然你想直接使用纯Javascript代码写也是可以的，只是使用JSX，组件的结构和组件之间的关系看上去更加清晰。</p>
 
 <hr />
 
-<h1 id="4es6">4.es6</h1>
+<h1 id="4es6">4.ES6</h1>
 
-<p>我们在看react native的同时，首先得了解react
-native使用的语言。es6作为javascript语言下一代标准，我们稍微了解一下几个关键的es6的语法，会更好的理解react native。</p>
+<p>我们在看React Native的同时，首先得了解React
+Native使用的语言。ES6作为javascript语言下一代标准，我们稍微了解一下几个关键的ES6的语法，会更好的理解React Native。</p>
 
 <h3 id="letconst">let，const</h3>
 
@@ -289,10 +283,10 @@ const也可以用了声明变量，但是声明的是常量。一旦声明，就
 
 <h3 id="classextendssuper">class，extends，super</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class dog{
+<div class="highlighter-rouge"><pre class="highlight"><code>class Dog{
 
   constructor(){
-      this.type = 'dog';
+      this.type = 'Dog';
   }
 
   eat(){
@@ -300,19 +294,19 @@ const也可以用了声明变量，但是声明的是常量。一旦声明，就
   }
 }
 
-let dog = new dog();
-dog.eat();//dog eat
+let Dog = new Dog();
+Dog.eat();//Dog eat
 
-class bigdog extends dog{
+class BigDog extends Dog{
 
     constructor(){
         super();
-        this.type = 'bigdog';
+        this.type = 'BigDog';
     }
 }
 
-let bigdog = new bigdog();
-bigdog.eat();//bigdog eat
+let BigDog = new BigDog();
+BigDog.eat();//BigDog eat
 </code></pre>
 </div>
 
@@ -334,7 +328,7 @@ bigdog.eat();//bigdog eat
 
 <p>default很简单，意思就是默认值。大家可以看下面的例子，调用 say() 方法时忘了传参<br />
 数，传统的做法就是加上这一句 type = type || ‘1’ 来指定默认值。<br />
-如果用es6我们而已直接这么写：</p>
+如果用ES6我们而已直接这么写：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>function say(type = '1'){
       console.log(type)
@@ -354,7 +348,7 @@ say('1', '2, '3') //["1", "2", "3"]
 
 <h3 id="import-export">import export</h3>
 
-<p>有了这两个关键字。我们就可以像ios一样，把不同的js当成不同的模块，需要暴漏出来的export出来。需要引用的import进来。</p>
+<p>有了这两个关键字。我们就可以像iOS一样，把不同的js当成不同的模块，需要暴漏出来的export出来。需要引用的import进来。</p>
 
 <hr />
 
@@ -362,70 +356,70 @@ say('1', '2, '3') //["1", "2", "3"]
 
 <h3 id="像素密度">像素密度</h3>
 
-<p>react native 提供的是像素无关的长度单位</p>
+<p>React Native 提供的是像素无关的长度单位</p>
 
-<h3 id="flex-in-react-native">flex in react native</h3>
+<h3 id="flex-in-react-native">Flex in React Native</h3>
 
-<p>flex布局类似于web中的flex布局，只不过，在react native中的flex布局取了web中的flex布局的子集。</p>
+<p>Flex布局类似于web中的Flex布局，只不过，在React Native中的Flex布局取了web中的Flex布局的子集。</p>
 
 <h3 id="绝对布局和相对布局">绝对布局和相对布局</h3>
 
-<p>react native中的绝对布局和相对布局，就有点像我们传统终端开发中的布局方式，区别是一个是相对路径，一个是绝对路径。</p>
+<p>React Native中的绝对布局和相对布局，就有点像我们传统终端开发中的布局方式，区别是一个是相对路径，一个是绝对路径。</p>
 
 <hr />
 
 <h1 id="6prosstate">6.pros&amp;state</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/b0c403955a0408a33627be7ec497bacc6eb502b840c6093e45dcd536a808654e" alt="pros&amp;state" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/1050b123fee00e1baad39869828066dc73fba74fe58d9331656c30b3a47ac570" alt="pros&amp;state" /></p>
 
 <p>state<br />
-state是react中组件的一个对象.react把用户界面当做是状态机,想象它有不同的状态然后渲染这些状态,可以轻松让用户界面与数据保持一致.<br />
-react中,更新组件的state,会导致重新渲染用户界面(不要操作dom).简单来说,就是用户界面会随着state变化而变化.</p>
+state是React中组件的一个对象.React把用户界面当做是状态机,想象它有不同的状态然后渲染这些状态,可以轻松让用户界面与数据保持一致.<br />
+React中,更新组件的state,会导致重新渲染用户界面(不要操作DOM).简单来说,就是用户界面会随着state变化而变化.</p>
 
 <p>props<br />
 组件中的props是一种父级向子级传递数据的方式.</p>
 
 <hr />
 
-<h1 id="7virtual-dom">7.virtual dom</h1>
+<h1 id="7virtual-dom">7.Virtual Dom</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/afd21d435144a7e11ddfddc252855bef8455c2deb3955d389488f2ecb1d1111a" alt="virtual
-dom" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/df707a4b3c8aa3fe89f94a7a4a37189222e6cb20ea7ec4cd590c6aaca6c460d6" alt="Virtual
+Dom" /></p>
 
-<p>dom操作很慢是两个原因，一个是因为需要操作具体的native控件，这本身操作就不快，第二是我们处理dom的方式很慢，virtual
-dom解决了我们对dom的低劣操作，它的想法是，它想让我们不需要直接进行dom操作，而是将希望展现的最终结果告诉react，react通过js构造一个新的数据结构即virtual
-dom进行render，这个virtual dom 仅仅存在于数据结构中，并没有实际渲染出dom。当你试图改变显示内容时，新生成的virtual
-dom会与现在的virtual
-dom对比，通过diff算法找到区别，这些操作都是在快速的js中完成的，最后对实际dom进行最小的dom操作来完成效果，这就是virtual
-dom的概念。总结的来说，就是通过引入新的数据结构，计算出最小移动dom的方法，再去真实操作dom，这样的成本是最低的。</p>
+<p>DOM操作很慢是两个原因，一个是因为需要操作具体的native控件，这本身操作就不快，第二是我们处理dom的方式很慢，Virtual
+Dom解决了我们对Dom的低劣操作，它的想法是，它想让我们不需要直接进行Dom操作，而是将希望展现的最终结果告诉React，React通过js构造一个新的数据结构即Virtual
+dom进行render，这个Virtual dom 仅仅存在于数据结构中，并没有实际渲染出Dom。当你试图改变显示内容时，新生成的Virtual
+Dom会与现在的Virtual
+dom对比，通过diff算法找到区别，这些操作都是在快速的js中完成的，最后对实际Dom进行最小的Dom操作来完成效果，这就是Virtual
+Dom的概念。总结的来说，就是通过引入新的数据结构，计算出最小移动Dom的方法，再去真实操作Dom，这样的成本是最低的。</p>
 
 <hr />
 
-<h1 id="8diff算法">8.diff算法</h1>
+<h1 id="8diff算法">8.DIFF算法</h1>
 
 <h3 id="传统-diff-算法">传统 diff 算法</h3>
 
 <p>计算一棵树形结构转换成另一棵树形结构的最少操作，这是一个复杂且值得研究的问题。传统 diff 算法通过循环递归对节点进行依次对比，效率低下，算法复杂度达到
-o(n3)，其中 n 是树中节点的总数。</p>
+O(n3)，其中 n 是树中节点的总数。</p>
 
-<h3 id="react-diff">react diff</h3>
+<h3 id="react-diff">React diff</h3>
 
-<p>传统 diff 算法的复杂度为 o(n3)，显然这是无法满足性能要求的。react 通过制定大胆的策略，将 o(n3) 复杂度的问题转换成 o(n)
+<p>传统 diff 算法的复杂度为 O(n3)，显然这是无法满足性能要求的。React 通过制定大胆的策略，将 O(n3) 复杂度的问题转换成 O(n)
 复杂度的问题。<br />
-1.ui 中 dom 节点跨层级的移动操作特别少，可以忽略不计。<br />
+1.UI 中 DOM 节点跨层级的移动操作特别少，可以忽略不计。<br />
 2拥有相同类的两个组件将会生成相似的树形结构，拥有不同类的两个组件将会生成不同的树形结构。<br />
 3.对于同一层级的一组子节点，它们可以通过唯一 id 进行区分。<br />
-基于以上三个前提策略，react 分别对 tree diff、component diff 以及 element diff
-进行算法优化，事实也证明这三个前提策略是合理且准确的，它保证了整体界面构建的性能。而这种算法的优化，也使算法复杂度，趋紧于o(n) 。大大提升了性能。</p>
+基于以上三个前提策略，React 分别对 tree diff、component diff 以及 element diff
+进行算法优化，事实也证明这三个前提策略是合理且准确的，它保证了整体界面构建的性能。而这种算法的优化，也使算法复杂度，趋紧于O(n) 。大大提升了性能。</p>
 
 <hr />
 
-<h1 id="9react-native生命周期">9.react native生命周期</h1>
+<h1 id="9react-native生命周期">9.React Native生命周期</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/4138235d18ef4c57ae7dfb8b93951baf903a7fb267bb1ec83a82232fdb1198f1" alt="lifecycle(图片来源于互联网)" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/cc46b4c2c7555bd2dc6e6c0f333c5a4e3a37d702b054cf11113b094baafd4966" alt="lifecycle(图片来源于互联网)" /></p>
 
-<p>react native的生命周期和我们终端开发中所接触的生命周期不太一样。react
-native的构成是组件化，所以，生命周期也就围绕着组建的创建，组建的更新，组建的消亡展开的。<br />
+<p>React Native的生命周期和我们终端开发中所接触的生命周期不太一样。React
+Native的构成是组件化，所以，生命周期也就围绕着组建的创建，组建的更新，组建的消亡展开的。<br />
 组件生命周期大致分为三个阶段：<br />
 第一阶段：组建的创建，这是组件第一次绘制阶段，这里会进入组建的初始化函数。<br />
 第二阶段：在是组件在运行和交互阶段，这个阶段组件可以处理用户交互，或者接收事件更新界面；<br />
@@ -434,59 +428,59 @@ native的构成是组件化，所以，生命周期也就围绕着组建的创�
 
 <hr />
 
-<h1 id="10react-native自定义控件">10.react native自定义控件</h1>
+<h1 id="10react-native自定义控件">10.React Native自定义控件</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/c98e38eb6969462308cd5aa9f31b457e3cb4fc6514175c96e66ab5e05b603921" alt="video插件" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/39d6a93a4900155153f912161ae3e93ac4718443b2b30e13fbeba34e252d8e84" alt="Video插件" /></p>
 
-<p>react native对插件的支持非常解耦合。比如，我们想添加一个video的插件，我们就可以 直接输入 npm install react-
+<p>React Native对插件的支持非常解耦合。比如，我们想添加一个Video的插件，我们就可以 直接输入 npm install react-
 native-video —save,然后再输入 react-native link,就自动向native模块中添加了各种依赖和导包的操作。</p>
 
-<p><img src="/image/xiao_bai_kan_react_native/95072ffced96e86e8777a83daf4304c55e2bab9a9311a3b3fcb3862bf2df4b0f" alt="project" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/639184787e4220b5f33d76fa9c05b221887fce3aae2041f6711ce75ccabaa87c" alt="project" /></p>
 
 <p>以上工程目录就可以看到，video插件已经link到工程目录中了。</p>
 
 <hr />
 
-<h1 id="11react-native-debug">11.react native debug</h1>
+<h1 id="11react-native-debug">11.React Native Debug</h1>
 
 <h3 id="红屏">红屏</h3>
 
-<p><img src="/image/xiao_bai_kan_react_native/fc1d53944a09a785ece9dcfbed1b7c0044c7a51a4c379fc3c7cf5f9f50d868fc" alt="红屏" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/f29537f932b47bc3a631bc613448568e347bde53f2e40cd355d1f338c944342d" alt="红屏" /></p>
 
-<p>红屏错误只有在debug模式中才会出现。在react
-native中一旦出现了红屏问题，就说明你的js代码在运行中出了错误，一般的错误红屏会直接指出出错的行数或者错误的类型以及堆栈信息。如果没有指出的话，那就得依靠调试工具或者log信息了。</p>
+<p>红屏错误只有在debug模式中才会出现。在React
+Native中一旦出现了红屏问题，就说明你的js代码在运行中出了错误，一般的错误红屏会直接指出出错的行数或者错误的类型以及堆栈信息。如果没有指出的话，那就得依靠调试工具或者log信息了。</p>
 
-<h3 id="chrome-debug">chrome debug</h3>
+<h3 id="chrome-debug">Chrome Debug</h3>
 
-<p><img src="/image/xiao_bai_kan_react_native/6d617637fdb1ee06bc90dafed95db76ca24c7ab8515644c8fa6ab9e12d6e047c" alt="chrome
-debug" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/44a1f4a8608ed2c494ec38a5b04a8f17c31bf8f3cec4a04cd13bf7951d29f90d" alt="Chrome
+Debug" /></p>
 
-<p>react native的调试神器就是chrome，安装chrome插件。模拟器选择command + r 真机选择摇一摇，就可以唤出debug
-menu。选择debug in chrome，就可以唤出chrome调试器。chrome调试器非常强大，像普通的单步断点调试，条件调试，堆栈信息等。</p>
+<p>React Native的调试神器就是Chrome，安装Chrome插件。模拟器选择command + R 真机选择摇一摇，就可以唤出Debug
+Menu。选择debug in chrome，就可以唤出chrome调试器。chrome调试器非常强大，像普通的单步断点调试，条件调试，堆栈信息等。</p>
 
-<h3 id="log">log</h3>
+<h3 id="log">Log</h3>
 
-<p><img src="/image/xiao_bai_kan_react_native/931314149e7261e04a0fb16cc121a9f9135f9021e8714f69a739e91e6b2af1d2" alt="log" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/8a376c65d16d16c9613192249fac97dcbfbcaab788e544859048743f250eed55" alt="Log" /></p>
 
-<p>log的信息无论是开发环境还是生产环境都是很重要的。chrome
+<p>Log的信息无论是开发环境还是生产环境都是很重要的。chrome
 debug可以直接在命令行中打印出log信息。生产环境，可以选择将log打印到文件中，进行上报分析。</p>
 
 <hr />
 
-<h1 id="12hot-reload">12.hot reload</h1>
+<h1 id="12hot-reload">12.Hot Reload</h1>
 
-<p><img src="/image/xiao_bai_kan_react_native/836e83afb9e5a6913c21ca7d11301f47ac28fcac255a4863a49728c14f001fbb" alt="hot
-reload" /></p>
+<p><img src="/image/xiao_bai_kan_React_Native/1be054dcd5a4628ea4272fc4e1c521fea34acdd5cb4aef1a65306ad8488186e8" alt="Hot
+Reload" /></p>
 
-<p>所见即所得是react native的一大亮点。无论是真机还是模拟器，只要填好对应的ip。就可以实时显示代码。模拟器选择command + r
-真机选择摇一摇，就可以唤出debug menu。可以在debug menu中选择hot reload 的方式。</p>
+<p>所见即所得是React Native的一大亮点。无论是真机还是模拟器，只要填好对应的ip。就可以实时显示代码。模拟器选择command + R
+真机选择摇一摇，就可以唤出Debug Menu。可以在Debug Menu中选择Hot Reload 的方式。</p>
 
 <hr />
 
 <h1 id="13小结">13.小结</h1>
 
-<p>本次带着大家，走马观花式的观看了react native的简介，语言以及重要语法，样式，性能分析，重要的state&amp;props
-，生命周期等等。这些介绍虽然浅浅介绍，没有深入探究。但是这样的管中窥豹，希望大家对react native有了一点点大概的印象，起到小白入门的作用。</p>
+<p>本次带着大家，走马观花式的观看了React Native的简介，语言以及重要语法，样式，性能分析，重要的state&amp;props
+，生命周期等等。这些介绍虽然浅浅介绍，没有深入探究。但是这样的管中窥豹，希望大家对React Native有了一点点大概的印象，起到小白入门的作用。</p>
 
 
         </article>
@@ -597,13 +591,13 @@ reload" /></p>
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/05/31/ios_runloop_de_jie_shao/">ios runloop的介绍</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/05/31/ios_runloop_de_jie_shao/">iOS RunLoop的介绍</a></p>
         
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/">ios runtime方法调用与消息转发</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/">iOS runtime方法调用与消息转发</a></p>
         
     </div>
 </div>
@@ -671,17 +665,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

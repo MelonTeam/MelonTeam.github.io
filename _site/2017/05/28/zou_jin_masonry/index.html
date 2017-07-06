@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>走进 masonry</title>
-    <meta name="description" content="            导语 masonry 源码阅读      在阅读这篇文章之前，你需要对两块东西有明确的了解1、autolayout, 至少能够知道并使用过">
+    <title>走进 Masonry</title>
+    <meta name="description" content="            导语 Masonry 源码阅读      在阅读这篇文章之前，你需要对两块东西有明确的了解1、AutoLayout, 至少能够知道并使用过">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -66,16 +66,6 @@
                         <a href="/category/">
                         
                             <i class="fa fa-th-list"></i>分类
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
                         </a>
                     </li>
                     
@@ -114,6 +104,10 @@
                 
                     
                 
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -122,7 +116,7 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>走进 masonry</h1>
+        <h1>走进 Masonry</h1>
         <div class="label">
 
             <div class="label-card">
@@ -189,99 +183,99 @@
 <table>
   <tbody>
     <tr>
-      <td>导语 masonry 源码阅读</td>
+      <td>导语 Masonry 源码阅读</td>
     </tr>
   </tbody>
 </table>
 
 <p>在阅读这篇文章之前，你需要对两块东西有明确的了解</p>
 
-<p>1、autolayout, 至少能够知道并使用过
+<p>1、AutoLayout, 至少能够知道并使用过
 <!--more--></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>/* create constraints explicitly.  constraints are of the form "view1.attr1 = view2.attr2 * multiplier + constant" 
- if your equation does not have a second view and attribute, use nil and nslayoutattributenotanattribute.
+<div class="highlighter-rouge"><pre class="highlight"><code>/* Create constraints explicitly.  Constraints are of the form "view1.attr1 = view2.attr2 * multiplier + constant" 
+ If your equation does not have a second view and attribute, use nil and NSLayoutAttributeNotAnAttribute.
  */
-+(instancetype)constraintwithitem:(id)view1 attribute:(nslayoutattribute)attr1 relatedby:(nslayoutrelation)relation toitem:(nullable id)view2 attribute:(nslayoutattribute)attr2 multiplier:(cgfloat)multiplier constant:(cgfloat)c;
++(instancetype)constraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation)relation toItem:(nullable id)view2 attribute:(NSLayoutAttribute)attr2 multiplier:(CGFloat)multiplier constant:(CGFloat)c;
 </code></pre>
 </div>
 
-<p>这个 api, 因为 <code class="highlighter-rouge">masonry</code> 本质最后调用的就是这个</p>
+<p>这个 API, 因为 <code class="highlighter-rouge">Masonry</code> 本质最后调用的就是这个</p>
 
 <p>2、设计模式
-<a href="https://en.wikipedia.org/wiki/composite_pattern">composite</a>，如果你还不清楚该设计模式，你需要
-google 看看对应的文章</p>
+<a href="https://en.wikipedia.org/wiki/Composite_pattern">Composite</a>，如果你还不清楚该设计模式，你需要
+Google 看看对应的文章</p>
 
 <p>—————————————————— 回归正题 ——————————————————</p>
 
-<p>首先简单看一下 masonry 主要的设计以及 class 结构方法，这是一个经典的 <code class="highlighter-rouge">composite</code> 设计模式</p>
+<p>首先简单看一下 Masonry 主要的设计以及 Class 结构方法，这是一个经典的 <code class="highlighter-rouge">Composite</code> 设计模式</p>
 
-<p><img src="/image/zou_jin_masonry/8c6e704af29919c593cdd467aefaadbf8bd41d6d4d8488133b637ecd3e1aac6c" alt="" /></p>
+<p><img src="/image/zou_jin_Masonry/8c6e704af29919c593cdd467aefaadbf8bd41d6d4d8488133b637ecd3e1aac6c" alt="" /></p>
 
-<p>另外还有一个辅助的 class <code class="highlighter-rouge">masconstraintmaker</code></p>
+<p>另外还有一个辅助的 Class <code class="highlighter-rouge">MASConstraintMaker</code></p>
 
-<p><img src="/image/zou_jin_masonry/4ec3e1d2e9b91a075aaccc989655b251bed470c0bfa7a2eb634b8d2f603ed6b8" alt="" /></p>
+<p><img src="/image/zou_jin_Masonry/4ec3e1d2e9b91a075aaccc989655b251bed470c0bfa7a2eb634b8d2f603ed6b8" alt="" /></p>
 
-<p>其中 <code class="highlighter-rouge">left</code>、<code class="highlighter-rouge">right</code> 等方法分别被定义在了 <code class="highlighter-rouge">masconstraint</code> 和 <code class="highlighter-rouge">masconstraintmaker</code>
+<p>其中 <code class="highlighter-rouge">left</code>、<code class="highlighter-rouge">right</code> 等方法分别被定义在了 <code class="highlighter-rouge">MASConstraint</code> 和 <code class="highlighter-rouge">MASConstraintMaker</code>
 中，具体的内部实现稍微不同</p>
 
 <p>看完了上面类设计图，我们开始跟踪程序</p>
 
-<p><code class="highlighter-rouge">masonry</code> 开始于这样的代码结构</p>
+<p><code class="highlighter-rouge">Masonry</code> 开始于这样的代码结构</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (void)viewdidload {
-    [super viewdidload];
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
 
-    uiview *aview = [[uiview alloc] init];
-    [self.view addsubview:aview];
+    UIView *aview = [[UIView alloc] init];
+    [self.view addSubview:aview];
 
-    [aview mas_makeconstraints:^(masconstraintmaker *make) {
-        make.top.equalto(self.view);
-        make.left.right.equalto(@0);
+    [aview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.right.equalTo(@0);
     }];
 }
 </code></pre>
 </div>
 
-<p>其中， <code class="highlighter-rouge">mas_makeconstraints</code> 方法在 <code class="highlighter-rouge">view+masadditions</code>(由于还有 macos 平台，所以 这里的view
-被定义为 <code class="highlighter-rouge">nsview</code> 或者 <code class="highlighter-rouge">uiview</code>) 被定义</p>
+<p>其中， <code class="highlighter-rouge">mas_makeConstraints</code> 方法在 <code class="highlighter-rouge">View+MASAdditions</code>(由于还有 macOS 平台，所以 这里的View
+被定义为 <code class="highlighter-rouge">NSView</code> 或者 <code class="highlighter-rouge">UIView</code>) 被定义</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (nsarray *)mas_makeconstraints:(void(^)(masconstraintmaker *))block {
-    self.translatesautoresizingmaskintoconstraints = no;
-    masconstraintmaker *constraintmaker = [[masconstraintmaker alloc] initwithview:self];
-    block(constraintmaker);
-    return [constraintmaker install];
+<div class="highlighter-rouge"><pre class="highlight"><code>- (NSArray *)mas_makeConstraints:(void(^)(MASConstraintMaker *))block {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    MASConstraintMaker *constraintMaker = [[MASConstraintMaker alloc] initWithView:self];
+    block(constraintMaker);
+    return [constraintMaker install];
 }
 </code></pre>
 </div>
 
-<p>代码的第一行关闭 autoresizingmask， 相当于让 autolayout 开始生效</p>
+<p>代码的第一行关闭 AutoresizingMask， 相当于让 AutoLayout 开始生效</p>
 
-<p>第二行创建了一个 <code class="highlighter-rouge">masconstraintmaker</code>(<code class="highlighter-rouge">masconstraintmaker</code> 与 <code class="highlighter-rouge">masconstraint</code> 一样 定义了
-<code class="highlighter-rouge">left</code> <code class="highlighter-rouge">right</code> 等方法) 对象，也就进行链式操作<code class="highlighter-rouge">make.left.right.equalto</code> 的开始，创建了所谓的 <code class="highlighter-rouge">maker</code>.</p>
+<p>第二行创建了一个 <code class="highlighter-rouge">MASConstraintMaker</code>(<code class="highlighter-rouge">MASConstraintMaker</code> 与 <code class="highlighter-rouge">MASConstraint</code> 一样 定义了
+<code class="highlighter-rouge">left</code> <code class="highlighter-rouge">right</code> 等方法) 对象，也就进行链式操作<code class="highlighter-rouge">make.left.right.equalTo</code> 的开始，创建了所谓的 <code class="highlighter-rouge">maker</code>.</p>
 
-<p>第三行执行代码 <code class="highlighter-rouge">block(constraintmaker)</code>， 也就是执行我们写的 <code class="highlighter-rouge">make.left.right.equalto</code> 的代码</p>
+<p>第三行执行代码 <code class="highlighter-rouge">block(constraintMaker)</code>， 也就是执行我们写的 <code class="highlighter-rouge">make.left.right.equalTo</code> 的代码</p>
 
-<p>下面开始解析这一段链式代码(``make.left.right.equalto`)</p>
+<p>下面开始解析这一段链式代码(``make.left.right.equalTo`)</p>
 
-<p><code class="highlighter-rouge">masconstraintmaker</code> 内部有一个 <code class="highlighter-rouge">nsmutablearray *constraints</code> 对象， <code class="highlighter-rouge">constraints</code>
+<p><code class="highlighter-rouge">MASConstraintMaker</code> 内部有一个 <code class="highlighter-rouge">NSMutableArray *constraints</code> 对象， <code class="highlighter-rouge">constraints</code>
 保存了每一条 make 出来的信息，比如如果你写这样的代码</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>make.top.equalto(self.view);
-make.left.right.equalto(@0);
-make.bottom.equalto(self.view)
+<div class="highlighter-rouge"><pre class="highlight"><code>make.top.equalTo(self.view);
+make.left.right.equalTo(@0);
+make.bottom.equalTo(self.view)
 </code></pre>
 </div>
 
-<p><code class="highlighter-rouge">constraints</code> 将会保存 3 个对象，第一个对象记录了 <code class="highlighter-rouge">make.top.equalto(self.view)</code> 的所有信息，第二个对象记录了
-<code class="highlighter-rouge">make.left.right.equalto([@0](https://github.com/0 "@0" ))</code> 的所有信息，第三个对象记录了
-<code class="highlighter-rouge">make.bottom.equalto(self.view)</code>，而对象的数据结构就是上图中的 <code class="highlighter-rouge">masviewconstraint</code> 和
-<code class="highlighter-rouge">mascompositeconstraint</code></p>
+<p><code class="highlighter-rouge">constraints</code> 将会保存 3 个对象，第一个对象记录了 <code class="highlighter-rouge">make.top.equalTo(self.view)</code> 的所有信息，第二个对象记录了
+<code class="highlighter-rouge">make.left.right.equalTo([@0](https://github.com/0 "@0" ))</code> 的所有信息，第三个对象记录了
+<code class="highlighter-rouge">make.bottom.equalTo(self.view)</code>，而对象的数据结构就是上图中的 <code class="highlighter-rouge">MASViewConstraint</code> 和
+<code class="highlighter-rouge">MASCompositeConstraint</code></p>
 
-<p>接下来，我们开始解析 <code class="highlighter-rouge">masviewconstraint</code> 和
-<code class="highlighter-rouge">mascompositeconstraint</code>这两个对象，也就是一个<code class="highlighter-rouge">mascompositeconstraint</code> 或者 一个
-<code class="highlighter-rouge">masviewconstraint</code>
-是如何存储一个类似于<code class="highlighter-rouge">make.left.right.equalto([@0](https://github.com/0 "@0"
+<p>接下来，我们开始解析 <code class="highlighter-rouge">MASViewConstraint</code> 和
+<code class="highlighter-rouge">MASCompositeConstraint</code>这两个对象，也就是一个<code class="highlighter-rouge">MASCompositeConstraint</code> 或者 一个
+<code class="highlighter-rouge">MASViewConstraint</code>
+是如何存储一个类似于<code class="highlighter-rouge">make.left.right.equalTo([@0](https://github.com/0 "@0"
 ));</code>这样一条链式信息的 ：</p>
 
 <p>先看第一个层级：</p>
@@ -292,63 +286,63 @@ make.bottom.equalto(self.view)
 
 <p>调用顺序如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (masconstraint *)top {
-    return [self addconstraintwithlayoutattribute:nslayoutattributetop];
+<div class="highlighter-rouge"><pre class="highlight"><code>- (MASConstraint *)top {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeTop];
 }
 
 
 
-- (masconstraint *)addconstraintwithlayoutattribute:(nslayoutattribute)layoutattribute {
-    return [self constraint:nil addconstraintwithlayoutattribute:layoutattribute];
+- (MASConstraint *)addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    return [self constraint:nil addConstraintWithLayoutAttribute:layoutAttribute];
 }
 
 
 
-- (masconstraint *)constraint:(masconstraint *)constraint addconstraintwithlayoutattribute:(nslayoutattribute)layoutattribute {
-    masviewattribute *viewattribute = [[masviewattribute alloc] initwithview:self.view layoutattribute:layoutattribute];
-    masviewconstraint *newconstraint = [[masviewconstraint alloc] initwithfirstviewattribute:viewattribute];
-//    if ([constraint iskindofclass:masviewconstraint.class]) {
+- (MASConstraint *)constraint:(MASConstraint *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    MASViewAttribute *viewAttribute = [[MASViewAttribute alloc] initWithView:self.view layoutAttribute:layoutAttribute];
+    MASViewConstraint *newConstraint = [[MASViewConstraint alloc] initWithFirstViewAttribute:viewAttribute];
+//    if ([constraint isKindOfClass:MASViewConstraint.class]) {
 //        //replace with composite constraint
-//        nsarray *children = @[constraint, newconstraint];
-//        mascompositeconstraint *compositeconstraint = [[mascompositeconstraint alloc] initwithchildren:children];
-//        compositeconstraint.delegate = self;
-//        [self constraint:constraint shouldbereplacedwithconstraint:compositeconstraint];
-//        return compositeconstraint;
+//        NSArray *children = @[constraint, newConstraint];
+//        MASCompositeConstraint *compositeConstraint = [[MASCompositeConstraint alloc] initWithChildren:children];
+//        compositeConstraint.delegate = self;
+//        [self constraint:constraint shouldBeReplacedWithConstraint:compositeConstraint];
+//        return compositeConstraint;
 //    }
     if (!constraint) {
-        newconstraint.delegate = self;
-        [self.constraints addobject:newconstraint];
+        newConstraint.delegate = self;
+        [self.constraints addObject:newConstraint];
     }
-    return newconstraint;
+    return newConstraint;
 }
 </code></pre>
 </div>
 
 <p>其中上面注释的代码是本次调用不会运行的，后面会讲到注释掉的代码的作用</p>
 
-<p>介绍一下 <code class="highlighter-rouge">masviewattribute</code></p>
+<p>介绍一下 <code class="highlighter-rouge">MASViewAttribute</code></p>
 
-<p><code class="highlighter-rouge">masviewattribute</code> 的 class 结构如下图</p>
+<p><code class="highlighter-rouge">MASViewAttribute</code> 的 Class 结构如下图</p>
 
-<p><img src="/image/zou_jin_masonry/7ba4c05c76f16fe4040a8a60313017ac935c820739eca6fd0bc1c1d676d3915e" alt="" /></p>
+<p><img src="/image/zou_jin_Masonry/7ba4c05c76f16fe4040a8a60313017ac935c820739eca6fd0bc1c1d676d3915e" alt="" /></p>
 
-<p>上面的 item 字段，<code class="highlighter-rouge">masonry</code> 上给的是 <code class="highlighter-rouge">id</code> 字段，因为 还有 <code class="highlighter-rouge">uiviewcontroller</code> 的 <code class="highlighter-rouge">toplayoutguide</code>
-属性，这里 为了方便理解，可以把<code class="highlighter-rouge">item</code>直接直接看作 <code class="highlighter-rouge">uiview</code></p>
+<p>上面的 item 字段，<code class="highlighter-rouge">Masonry</code> 上给的是 <code class="highlighter-rouge">id</code> 字段，因为 还有 <code class="highlighter-rouge">UIViewController</code> 的 <code class="highlighter-rouge">topLayoutGuide</code>
+属性，这里 为了方便理解，可以把<code class="highlighter-rouge">item</code>直接直接看作 <code class="highlighter-rouge">UIView</code></p>
 
-<p>剩余的代码很简单，只是根据 top 这个属性，新建你一个 <code class="highlighter-rouge">masviewconstraint</code> 的对象，然后为 <code class="highlighter-rouge">masviewconstraint</code>
-创建 <code class="highlighter-rouge">firstviewattribute</code> (这里还没有生成 <code class="highlighter-rouge">secondviewattribute</code>)</p>
+<p>剩余的代码很简单，只是根据 top 这个属性，新建你一个 <code class="highlighter-rouge">MASViewConstraint</code> 的对象，然后为 <code class="highlighter-rouge">MASViewConstraint</code>
+创建 <code class="highlighter-rouge">firstViewAttribute</code> (这里还没有生成 <code class="highlighter-rouge">secondViewAttribute</code>)</p>
 
 <p>相当于下面的代码：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>//self  是外部的 [aview mas_makeconstraints] 的 aview
-masviewconstraint *newconstraint.firstviewattribute.item = self.view //外部调用 make.top 的 aview
-newconstraint.firstviewattribute.layoutconstraint = nslayoutattributetop
+<div class="highlighter-rouge"><pre class="highlight"><code>//self  是外部的 [aView mas_makeConstraints] 的 aView
+MASViewConstraint *newConstraint.firstViewAttribute.item = self.view //外部调用 make.top 的 aview
+newConstraint.firstViewAttribute.layoutConstraint = NSLayoutAttributeTop
 </code></pre>
 </div>
 
-<p>最后 把 这个 <code class="highlighter-rouge">newconstraint</code> 加入到 <code class="highlighter-rouge">masconstraintmaker(make)</code> 的 <code class="highlighter-rouge">constraints</code> 对象中</p>
+<p>最后 把 这个 <code class="highlighter-rouge">newConstraint</code> 加入到 <code class="highlighter-rouge">MASConstraintMaker(make)</code> 的 <code class="highlighter-rouge">constraints</code> 对象中</p>
 
-<p>这样 完成了 <code class="highlighter-rouge">make.top</code> 的操作 （<code class="highlighter-rouge">.equalto</code> 的操作稍后介绍），也就是让<code class="highlighter-rouge">constraints</code>对象保存了所有 <code class="highlighter-rouge">make.top</code>
+<p>这样 完成了 <code class="highlighter-rouge">make.top</code> 的操作 （<code class="highlighter-rouge">.equalTo</code> 的操作稍后介绍），也就是让<code class="highlighter-rouge">constraints</code>对象保存了所有 <code class="highlighter-rouge">make.top</code>
 的信息</p>
 
 <p>接着，我们看第二句（和 <code class="highlighter-rouge">make.top</code> 的区别在于这句话有 2 个链式结构构成）</p>
@@ -359,118 +353,118 @@ newconstraint.firstviewattribute.layoutconstraint = nslayoutattributetop
 
 <p>其中，前面半句 <code class="highlighter-rouge">make.left</code> 和上面的步骤是一样的，不同的地方在于后面 <code class="highlighter-rouge">.right</code></p>
 
-<p>首先，前半句 <code class="highlighter-rouge">make.left</code> 返回了 <code class="highlighter-rouge">masattribute(masviewconstraint)</code>对象。注意，这里返回的已经不是
-<code class="highlighter-rouge">masconstraintmaker(make)</code> 对象了。所以 我们需要看看 <code class="highlighter-rouge">masviewconstraint</code> 的 <code class="highlighter-rouge">left</code>
+<p>首先，前半句 <code class="highlighter-rouge">make.left</code> 返回了 <code class="highlighter-rouge">MASAttribute(MASViewConstraint)</code>对象。注意，这里返回的已经不是
+<code class="highlighter-rouge">MASConstraintMaker(make)</code> 对象了。所以 我们需要看看 <code class="highlighter-rouge">MASViewConstraint</code> 的 <code class="highlighter-rouge">left</code>
 方法做了那些事情。</p>
 
 <p>调用顺序如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (masconstraint *)left {
-    return [self addconstraintwithlayoutattribute:nslayoutattributeleft];
+<div class="highlighter-rouge"><pre class="highlight"><code>- (MASConstraint *)left {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLeft];
 }
 
 
 
-- (masconstraint *)addconstraintwithlayoutattribute:(nslayoutattribute)layoutattribute {
-    nsassert(!self.haslayoutrelation, @"attributes should be chained before defining the constraint relation");
+- (MASConstraint *)addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    NSAssert(!self.hasLayoutRelation, @"Attributes should be chained before defining the constraint relation");
 
-    return [self.delegate constraint:self addconstraintwithlayoutattribute:layoutattribute];    //这里 delegate 指向了刚刚的 `masconstraintmaker(make)` 对象
+    return [self.delegate constraint:self addConstraintWithLayoutAttribute:layoutAttribute];    //这里 delegate 指向了刚刚的 `MASConstraintMaker(make)` 对象
 }
 
 
 
-- (masconstraint *)constraint:(masconstraint *)constraint addconstraintwithlayoutattribute:(nslayoutattribute)layoutattribute {
-    masviewattribute *viewattribute = [[masviewattribute alloc] initwithview:self.view layoutattribute:layoutattribute];
-    masviewconstraint *newconstraint = [[masviewconstraint alloc] initwithfirstviewattribute:viewattribute];
-    if ([constraint iskindofclass:masviewconstraint.class]) {
+- (MASConstraint *)constraint:(MASConstraint *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    MASViewAttribute *viewAttribute = [[MASViewAttribute alloc] initWithView:self.view layoutAttribute:layoutAttribute];
+    MASViewConstraint *newConstraint = [[MASViewConstraint alloc] initWithFirstViewAttribute:viewAttribute];
+    if ([constraint isKindOfClass:MASViewConstraint.class]) {
         //replace with composite constraint
-        nsarray *children = @[constraint, newconstraint];
-        mascompositeconstraint *compositeconstraint = [[mascompositeconstraint alloc] initwithchildren:children];
-        compositeconstraint.delegate = self;
-        [self constraint:constraint shouldbereplacedwithconstraint:compositeconstraint];
-        return compositeconstraint;
+        NSArray *children = @[constraint, newConstraint];
+        MASCompositeConstraint *compositeConstraint = [[MASCompositeConstraint alloc] initWithChildren:children];
+        compositeConstraint.delegate = self;
+        [self constraint:constraint shouldBeReplacedWithConstraint:compositeConstraint];
+        return compositeConstraint;
     }
 //    if (!constraint) {
-//        newconstraint.delegate = self;
-//        [self.constraints addobject:newconstraint];
+//        newConstraint.delegate = self;
+//        [self.constraints addObject:newConstraint];
 //    }
-    return newconstraint;
+    return newConstraint;
 }
 </code></pre>
 </div>
 
-<p>方法通过某个协议以及 <code class="highlighter-rouge">delegate</code> 重新调用回到了 <code class="highlighter-rouge">masconstraintmaker(make)</code> 的</p>
+<p>方法通过某个协议以及 <code class="highlighter-rouge">delegate</code> 重新调用回到了 <code class="highlighter-rouge">MASConstraintMaker(make)</code> 的</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (masconstraint *)constraint:(masconstraint *)constraint addconstraintwithlayoutattribute:(nslayoutattribute)layoutattribute
+<div class="highlighter-rouge"><pre class="highlight"><code>- (MASConstraint *)constraint:(MASConstraint *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute
 </code></pre>
 </div>
 
-<p>方法。但是，这一次最后这个函数的执行了上阶段注释的代码，这段代码和之前的代码相同，也是先创建了一个 <code class="highlighter-rouge">masviewconstraint</code> 的对象。
-不同之处在于这次组成了一个 <code class="highlighter-rouge">mascompositeconstraint</code>，<code class="highlighter-rouge">mascompositeconstraint</code> 的
-<code class="highlighter-rouge">childconstraints</code> 放了上次的 <code class="highlighter-rouge">make.left</code> 的信息和这次 <code class="highlighter-rouge">make.right</code> 的信息，并且 用
-<code class="highlighter-rouge">mascompositeconstraint</code> 替换了原来的 <code class="highlighter-rouge">masviewconstraint</code>。 (这里希望你理解 <code class="highlighter-rouge">composite</code>
-设计模式的精髓, 因为 类似这种<code class="highlighter-rouge">make.left.right.top</code>三连以上的链式句式 <code class="highlighter-rouge">mascompositeconstraint</code>
-里面放的是两个<code class="highlighter-rouge">mascompositeconstraint</code>)</p>
+<p>方法。但是，这一次最后这个函数的执行了上阶段注释的代码，这段代码和之前的代码相同，也是先创建了一个 <code class="highlighter-rouge">MASViewConstraint</code> 的对象。
+不同之处在于这次组成了一个 <code class="highlighter-rouge">MASCompositeConstraint</code>，<code class="highlighter-rouge">MASCompositeConstraint</code> 的
+<code class="highlighter-rouge">childConstraints</code> 放了上次的 <code class="highlighter-rouge">make.left</code> 的信息和这次 <code class="highlighter-rouge">make.right</code> 的信息，并且 用
+<code class="highlighter-rouge">MASCompositeConstraint</code> 替换了原来的 <code class="highlighter-rouge">MASViewConstraint</code>。 (这里希望你理解 <code class="highlighter-rouge">Composite</code>
+设计模式的精髓, 因为 类似这种<code class="highlighter-rouge">make.left.right.top</code>三连以上的链式句式 <code class="highlighter-rouge">MASCompositeConstraint</code>
+里面放的是两个<code class="highlighter-rouge">MASCompositeConstraint</code>)</p>
 
-<p>这里不太好理解，可以这么想：一个 <code class="highlighter-rouge">masviewconstraint</code> 就是一个文件(文件系统的文件)，一个
-<code class="highlighter-rouge">mascompositeconstraint</code> 就是一个文件夹，每一个 <code class="highlighter-rouge">.left</code>、<code class="highlighter-rouge">.right</code> 这样的 layout
-就是一个文件。于是，<code class="highlighter-rouge">make.left</code>, 创建了一个文件 fileleft，<code class="highlighter-rouge">make.left.right</code> 在创建 fileleft 的基础上了一个
-文件 fileright（代表着 <code class="highlighter-rouge">right</code>），之后又创建了一个文件夹叫做 folderleftright, 这个文件夹里面放了 fileleft 与
-fileright。当链式变成更多之后，比如 <code class="highlighter-rouge">make.left.right.bottom</code>, 就会创建一个 folderleftrightbottom
-这样的文件夹，里面放了一个文件夹 folderleftright 和一个文件 filebottom, folderleftright 里面有 2 个文件夹
-fileleft 和 fileright。接下来，如果更多的链式也保持一样的道理，再添加一个文件夹而已，模型大致是这样</p>
+<p>这里不太好理解，可以这么想：一个 <code class="highlighter-rouge">MASViewConstraint</code> 就是一个文件(文件系统的文件)，一个
+<code class="highlighter-rouge">MASCompositeConstraint</code> 就是一个文件夹，每一个 <code class="highlighter-rouge">.left</code>、<code class="highlighter-rouge">.right</code> 这样的 layout
+就是一个文件。于是，<code class="highlighter-rouge">make.left</code>, 创建了一个文件 fileLeft，<code class="highlighter-rouge">make.left.right</code> 在创建 fileLeft 的基础上了一个
+文件 fileRight（代表着 <code class="highlighter-rouge">right</code>），之后又创建了一个文件夹叫做 folderLeftRight, 这个文件夹里面放了 fileLeft 与
+fileRight。当链式变成更多之后，比如 <code class="highlighter-rouge">make.left.right.bottom</code>, 就会创建一个 folderLeftRightBottom
+这样的文件夹，里面放了一个文件夹 folderLeftRight 和一个文件 fileBottom, folderLeftRight 里面有 2 个文件夹
+fileLeft 和 fileRight。接下来，如果更多的链式也保持一样的道理，再添加一个文件夹而已，模型大致是这样</p>
 
-<p><img src="/image/zou_jin_masonry/7bd1c3a86d6d0d52d38a63c0562dc558ef292f7593f47d49d53e74060310a122" alt="" /></p>
+<p><img src="/image/zou_jin_Masonry/7bd1c3a86d6d0d52d38a63c0562dc558ef292f7593f47d49d53e74060310a122" alt="" /></p>
 
-<p>箭头表示这个 <code class="highlighter-rouge">masconstraint</code> 在哪一个 <code class="highlighter-rouge">mascompositeconstraint</code> 的
-<code class="highlighter-rouge">childconstraints</code>，而最终被保存的数据结构，就是 root 所代表的那个 <code class="highlighter-rouge">mascompositeconstraint</code>
-（如果只有一层，则是 <code class="highlighter-rouge">masviewconstraint</code>，因为他们同时继承自 <code class="highlighter-rouge">masconstraint</code>）</p>
+<p>箭头表示这个 <code class="highlighter-rouge">MASConstraint</code> 在哪一个 <code class="highlighter-rouge">MASCompositeConstraint</code> 的
+<code class="highlighter-rouge">childConstraints</code>，而最终被保存的数据结构，就是 root 所代表的那个 <code class="highlighter-rouge">MASCompositeConstraint</code>
+（如果只有一层，则是 <code class="highlighter-rouge">MASViewConstraint</code>，因为他们同时继承自 <code class="highlighter-rouge">MASConstraint</code>）</p>
 
-<p>最后是 <code class="highlighter-rouge">equalto</code> 的语法</p>
+<p>最后是 <code class="highlighter-rouge">equalTo</code> 的语法</p>
 
-<p>先看一下 <code class="highlighter-rouge">equalto</code> 的定义</p>
+<p>先看一下 <code class="highlighter-rouge">equalTo</code> 的定义</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (masconstraint * (^)(id attr))equalto
+<div class="highlighter-rouge"><pre class="highlight"><code>- (MASConstraint * (^)(id attr))equalTo
 </code></pre>
 </div>
 
-<p>划重点了：<code class="highlighter-rouge">equalto</code> 是一个 返回 <code class="highlighter-rouge">masconstraint *</code> 里面包括一个参数 <code class="highlighter-rouge">attr</code> 名为 <code class="highlighter-rouge">equalto</code> 的 block</p>
+<p>划重点了：<code class="highlighter-rouge">equalTo</code> 是一个 返回 <code class="highlighter-rouge">MASConstraint *</code> 里面包括一个参数 <code class="highlighter-rouge">attr</code> 名为 <code class="highlighter-rouge">equalTo</code> 的 block</p>
 
 <p>之所以是 <code class="highlighter-rouge">attr</code> 被定义为 <code class="highlighter-rouge">id</code> 是因为 我们可以写出这样的代码</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>make.left.equalto(self.view) 或者 make.left.equalto(@0)
+<div class="highlighter-rouge"><pre class="highlight"><code>make.left.equalTo(self.view) 或者 make.left.equalTo(@0)
 </code></pre>
 </div>
 
-<p>整个 equalto 的调用顺序如下（<code class="highlighter-rouge">self</code> 是 <code class="highlighter-rouge">masconstraint</code>对象）</p>
+<p>整个 equalTo 的调用顺序如下（<code class="highlighter-rouge">self</code> 是 <code class="highlighter-rouge">MASConstraint</code>对象）</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (masconstraint * (^)(id))equalto {
+<div class="highlighter-rouge"><pre class="highlight"><code>- (MASConstraint * (^)(id))equalTo {
     return ^id(id attribute) {
-        return self.equaltowithrelation(attribute, nslayoutrelationequal);
+        return self.equalToWithRelation(attribute, NSLayoutRelationEqual);
     };
 }
 
 
 
-- (masconstraint * (^)(id, nslayoutrelation))equaltowithrelation {
-    return ^id(id attribute, nslayoutrelation relation) {
-//        if ([attribute iskindofclass:nsarray.class]) {
-//            nsassert(!self.haslayoutrelation, @"redefinition of constraint relation");
-//            nsmutablearray *children = nsmutablearray.new;
+- (MASConstraint * (^)(id, NSLayoutRelation))equalToWithRelation {
+    return ^id(id attribute, NSLayoutRelation relation) {
+//        if ([attribute isKindOfClass:NSArray.class]) {
+//            NSAssert(!self.hasLayoutRelation, @"Redefinition of constraint relation");
+//            NSMutableArray *children = NSMutableArray.new;
 //            for (id attr in attribute) {
-//                masviewconstraint *viewconstraint = [self copy];
-//                viewconstraint.layoutrelation = relation;
-//                viewconstraint.secondviewattribute = attr;
-//                [children addobject:viewconstraint];
+//                MASViewConstraint *viewConstraint = [self copy];
+//                viewConstraint.layoutRelation = relation;
+//                viewConstraint.secondViewAttribute = attr;
+//                [children addObject:viewConstraint];
 //            }
-//            mascompositeconstraint *compositeconstraint = [[mascompositeconstraint alloc] initwithchildren:children];
-//            compositeconstraint.delegate = self.delegate;
-//            [self.delegate constraint:self shouldbereplacedwithconstraint:compositeconstraint];
-//            return compositeconstraint;
+//            MASCompositeConstraint *compositeConstraint = [[MASCompositeConstraint alloc] initWithChildren:children];
+//            compositeConstraint.delegate = self.delegate;
+//            [self.delegate constraint:self shouldBeReplacedWithConstraint:compositeConstraint];
+//            return compositeConstraint;
 //        } else {
-            nsassert(!self.haslayoutrelation || self.layoutrelation == relation &amp;&amp; [attribute iskindofclass:nsvalue.class], @"redefinition of constraint relation");
-            self.layoutrelation = relation;
-            self.secondviewattribute = attribute;
+            NSAssert(!self.hasLayoutRelation || self.layoutRelation == relation &amp;&amp; [attribute isKindOfClass:NSValue.class], @"Redefinition of constraint relation");
+            self.layoutRelation = relation;
+            self.secondViewAttribute = attribute;
             return self;
 //        }
     };
@@ -478,79 +472,79 @@ fileleft 和 fileright。接下来，如果更多的链式也保持一样的道�
 </code></pre>
 </div>
 
-<p>这里 我只列举出了 <code class="highlighter-rouge">masviewconstraint</code> 的 <code class="highlighter-rouge">equaltowithrelation</code>， 因为 <code class="highlighter-rouge">composite</code>
-模式中<code class="highlighter-rouge">mascompositeconstraint</code> 的 <code class="highlighter-rouge">equaltowithrelation</code> 其实就是让所有的子类依次去执行
-<code class="highlighter-rouge">equaltowithrelation</code>，最终也就是让 <code class="highlighter-rouge">masviewconstraint</code> 去执行
-<code class="highlighter-rouge">equaltowithrelation</code>的。就像我们算文件和文件夹的 filesize 道理一样，文件夹占用固定的
+<p>这里 我只列举出了 <code class="highlighter-rouge">MASViewConstraint</code> 的 <code class="highlighter-rouge">equalToWithRelation</code>， 因为 <code class="highlighter-rouge">Composite</code>
+模式中<code class="highlighter-rouge">MASCompositeConstraint</code> 的 <code class="highlighter-rouge">equalToWithRelation</code> 其实就是让所有的子类依次去执行
+<code class="highlighter-rouge">equalToWithRelation</code>，最终也就是让 <code class="highlighter-rouge">MASViewConstraint</code> 去执行
+<code class="highlighter-rouge">equalToWithRelation</code>的。就像我们算文件和文件夹的 fileSize 道理一样，文件夹占用固定的
 4k（举个:chestnut:），文件夹真正的大小就是算他下面的每一个文件大小，遇到文件夹，继续递归下去计算。</p>
 
-<p>另外，看一下 <code class="highlighter-rouge">masviewconstraint</code> 的 <code class="highlighter-rouge">secondviewattribute</code> 被定义</p>
+<p>另外，看一下 <code class="highlighter-rouge">MASViewConstraint</code> 的 <code class="highlighter-rouge">secondViewAttribute</code> 被定义</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (void)setsecondviewattribute:(id)secondviewattribute {
-    if ([secondviewattribute iskindofclass:nsvalue.class]) {
-        [self setlayoutconstantwithvalue:secondviewattribute];
-    } else if ([secondviewattribute iskindofclass:mas_view.class]) {
-        _secondviewattribute = [[masviewattribute alloc] initwithview:secondviewattribute layoutattribute:self.firstviewattribute.layoutattribute];
-    } else if ([secondviewattribute iskindofclass:masviewattribute.class]) {
-        _secondviewattribute = secondviewattribute;
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)setSecondViewAttribute:(id)secondViewAttribute {
+    if ([secondViewAttribute isKindOfClass:NSValue.class]) {
+        [self setLayoutConstantWithValue:secondViewAttribute];
+    } else if ([secondViewAttribute isKindOfClass:MAS_VIEW.class]) {
+        _secondViewAttribute = [[MASViewAttribute alloc] initWithView:secondViewAttribute layoutAttribute:self.firstViewAttribute.layoutAttribute];
+    } else if ([secondViewAttribute isKindOfClass:MASViewAttribute.class]) {
+        _secondViewAttribute = secondViewAttribute;
     } else {
-        nsassert(no, @"attempting to add unsupported attribute: %@", secondviewattribute);
+        NSAssert(NO, @"attempting to add unsupported attribute: %@", secondViewAttribute);
     }
 }
 </code></pre>
 </div>
 
-<p>这也是为什么我们能够让<code class="highlighter-rouge">equalto</code> 后面可以接 <code class="highlighter-rouge">nsnumber</code> 和 <code class="highlighter-rouge">uiview</code> 甚至是 <code class="highlighter-rouge">nsvalue</code></p>
+<p>这也是为什么我们能够让<code class="highlighter-rouge">equalTo</code> 后面可以接 <code class="highlighter-rouge">NSNumber</code> 和 <code class="highlighter-rouge">UIView</code> 甚至是 <code class="highlighter-rouge">NSValue</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>make.left.equalto(@0) // make.left.equalto(self.view)
+<div class="highlighter-rouge"><pre class="highlight"><code>make.left.equalTo(@0) // make.left.equalTo(self.view)
 </code></pre>
 </div>
 
 <p>好了，到此为止，所有的链式代码已经解读完毕，至于 类似的 <code class="highlighter-rouge">offset</code> 道理都一样，相对简单，这里不再做过多的陈述。</p>
 
-<p>最后是 <code class="highlighter-rouge">[constraintmaker install]</code> 的代码</p>
+<p>最后是 <code class="highlighter-rouge">[constraintMaker install]</code> 的代码</p>
 
-<p>调用函数如下(<code class="highlighter-rouge">self</code> 是 <code class="highlighter-rouge">masconstraintmaker</code>)：</p>
+<p>调用函数如下(<code class="highlighter-rouge">self</code> 是 <code class="highlighter-rouge">MASConstraintMaker</code>)：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (nsarray *)install {
-    if (self.removeexisting) {
-        nsarray *installedconstraints = [masviewconstraint installedconstraintsforview:self.view];
-        for (masconstraint *constraint in installedconstraints) {
+<div class="highlighter-rouge"><pre class="highlight"><code>- (NSArray *)install {
+    if (self.removeExisting) {
+        NSArray *installedConstraints = [MASViewConstraint installedConstraintsForView:self.view];
+        for (MASConstraint *constraint in installedConstraints) {
             [constraint uninstall];
         }
     }
-    nsarray *constraints = self.constraints.copy;   
-    for (masconstraint *constraint in constraints) {
-        constraint.updateexisting = self.updateexisting;
+    NSArray *constraints = self.constraints.copy;   
+    for (MASConstraint *constraint in constraints) {
+        constraint.updateExisting = self.updateExisting;
         [constraint install];
     }
-    [self.constraints removeallobjects];
+    [self.constraints removeAllObjects];
     return constraints;
 }
 </code></pre>
 </div>
 
-<p>上面的代码 <code class="highlighter-rouge">removeexisting</code> 是 <code class="highlighter-rouge">mas_remakeconstraints</code> 做的事情， <code class="highlighter-rouge">masonry</code> 用一个
-<code class="highlighter-rouge">mutableset</code> 记录了所有通过 <code class="highlighter-rouge">masonry</code> 创建的 constraint， 这个 <code class="highlighter-rouge">set</code> 被定义在了
-<code class="highlighter-rouge">masconstraints.m</code> 里面</p>
+<p>上面的代码 <code class="highlighter-rouge">removeExisting</code> 是 <code class="highlighter-rouge">mas_remakeConstraints</code> 做的事情， <code class="highlighter-rouge">Masonry</code> 用一个
+<code class="highlighter-rouge">MutableSet</code> 记录了所有通过 <code class="highlighter-rouge">Masonry</code> 创建的 constraint， 这个 <code class="highlighter-rouge">set</code> 被定义在了
+<code class="highlighter-rouge">MASConstraints.m</code> 里面</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#define mas_view uiview
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#define MAS_VIEW UIView
 </span>
-<span class="k">@interface</span> <span class="nc">mas_view</span> <span class="p">(</span><span class="nl">masconstraints</span><span class="p">)</span>
+<span class="k">@interface</span> <span class="nc">MAS_VIEW</span> <span class="p">(</span><span class="nl">MASConstraints</span><span class="p">)</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">nsmutableset</span> <span class="o">*</span><span class="n">mas_installedconstraints</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSMutableSet</span> <span class="o">*</span><span class="n">mas_installedConstraints</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
-<span class="k">@implementation</span> <span class="nc">mas_view</span> <span class="p">(</span><span class="nl">masconstraints</span><span class="p">)</span>
+<span class="k">@implementation</span> <span class="nc">MAS_VIEW</span> <span class="p">(</span><span class="nl">MASConstraints</span><span class="p">)</span>
 
-<span class="k">static</span> <span class="kt">char</span> <span class="n">kinstalledconstraintskey</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">char</span> <span class="n">kInstalledConstraintsKey</span><span class="p">;</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">nsmutableset</span> <span class="o">*</span><span class="p">)</span><span class="n">mas_installedconstraints</span> <span class="p">{</span>
-    <span class="n">nsmutableset</span> <span class="o">*</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">objc_getassociatedobject</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">kinstalledconstraintskey</span><span class="p">);</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSMutableSet</span> <span class="o">*</span><span class="p">)</span><span class="n">mas_installedConstraints</span> <span class="p">{</span>
+    <span class="n">NSMutableSet</span> <span class="o">*</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">objc_getAssociatedObject</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">kInstalledConstraintsKey</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">constraints</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">nsmutableset</span> <span class="nf">set</span><span class="p">];</span>
-        <span class="n">objc_setassociatedobject</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">kinstalledconstraintskey</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">objc_association_retain_nonatomic</span><span class="p">);</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableSet</span> <span class="nf">set</span><span class="p">];</span>
+        <span class="n">objc_setAssociatedObject</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">kInstalledConstraintsKey</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">OBJC_ASSOCIATION_RETAIN_NONATOMIC</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">constraints</span><span class="p">;</span>
 <span class="p">}</span>
@@ -559,121 +553,121 @@ fileleft 和 fileright。接下来，如果更多的链式也保持一样的道�
 </code></pre>
 </div>
 
-<p>每次通过 <code class="highlighter-rouge">masonry</code> 添加最后添加成功的 <code class="highlighter-rouge">constraint</code> 都会被加入到这个 <code class="highlighter-rouge">set</code> 里面</p>
+<p>每次通过 <code class="highlighter-rouge">Masonry</code> 添加最后添加成功的 <code class="highlighter-rouge">constraint</code> 都会被加入到这个 <code class="highlighter-rouge">set</code> 里面</p>
 
-<p>函数的最后把所有添加到 <code class="highlighter-rouge">masconstraintmaker</code> 的 <code class="highlighter-rouge">constraints</code> 的数组清空（因为所有的 <code class="highlighter-rouge">constraint</code>
-都已经被加入到了 <code class="highlighter-rouge">view</code> 里），这里也不是什么重点，可以直接跳过。</p>
+<p>函数的最后把所有添加到 <code class="highlighter-rouge">MASConstraintMaker</code> 的 <code class="highlighter-rouge">constraints</code> 的数组清空（因为所有的 <code class="highlighter-rouge">constraint</code>
+都已经被加入到了 <code class="highlighter-rouge">View</code> 里），这里也不是什么重点，可以直接跳过。</p>
 
 <p>最后 我们看看 <code class="highlighter-rouge">install</code> 的代码</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>nsarray *constraints = self.constraints.copy;   //这里为什么用 copy 我也不是很清楚作者是怎么想的，可能是出于线程安全的考虑
-for (masconstraint *constraint in constraints) {
-    constraint.updateexisting = self.updateexisting;
+<div class="highlighter-rouge"><pre class="highlight"><code>NSArray *constraints = self.constraints.copy;   //这里为什么用 copy 我也不是很清楚作者是怎么想的，可能是出于线程安全的考虑
+for (MASConstraint *constraint in constraints) {
+    constraint.updateExisting = self.updateExisting;
     [constraint install];
 }
 </code></pre>
 </div>
 
-<p><code class="highlighter-rouge">[constraint install]</code> 也是利用了 <code class="highlighter-rouge">composite</code> 设计模式的特性（希望你能真正理解 <code class="highlighter-rouge">composite</code> ）</p>
+<p><code class="highlighter-rouge">[constraint install]</code> 也是利用了 <code class="highlighter-rouge">Composite</code> 设计模式的特性（希望你能真正理解 <code class="highlighter-rouge">Composite</code> ）</p>
 
-<p><code class="highlighter-rouge">masviewconstraint</code> 的 install 实现：</p>
+<p><code class="highlighter-rouge">MASViewConstraint</code> 的 install 实现：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>- (void)install {
-    if (self.hasbeeninstalled) {
+    if (self.hasBeenInstalled) {
         return;
     }
 
-    if ([self supportsactiveproperty] &amp;&amp; self.layoutconstraint) {
-        self.layoutconstraint.active = yes;
-        [self.firstviewattribute.view.mas_installedconstraints addobject:self];
+    if ([self supportsActiveProperty] &amp;&amp; self.layoutConstraint) {
+        self.layoutConstraint.active = YES;
+        [self.firstViewAttribute.view.mas_installedConstraints addObject:self];
         return;
     }
 
-    mas_view *firstlayoutitem = self.firstviewattribute.item;
-    nslayoutattribute firstlayoutattribute = self.firstviewattribute.layoutattribute;
-    mas_view *secondlayoutitem = self.secondviewattribute.item;
-    nslayoutattribute secondlayoutattribute = self.secondviewattribute.layoutattribute;
+    MAS_VIEW *firstLayoutItem = self.firstViewAttribute.item;
+    NSLayoutAttribute firstLayoutAttribute = self.firstViewAttribute.layoutAttribute;
+    MAS_VIEW *secondLayoutItem = self.secondViewAttribute.item;
+    NSLayoutAttribute secondLayoutAttribute = self.secondViewAttribute.layoutAttribute;
 
-    // alignment attributes must have a secondviewattribute
+    // alignment attributes must have a secondViewAttribute
     // therefore we assume that is refering to superview
-    // eg make.left.equalto(@10)
-    if (!self.firstviewattribute.issizeattribute &amp;&amp; !self.secondviewattribute) {
-        secondlayoutitem = self.firstviewattribute.view.superview;      
-        secondlayoutattribute = firstlayoutattribute;
+    // eg make.left.equalTo(@10)
+    if (!self.firstViewAttribute.isSizeAttribute &amp;&amp; !self.secondViewAttribute) {
+        secondLayoutItem = self.firstViewAttribute.view.superview;      
+        secondLayoutAttribute = firstLayoutAttribute;
     }
-    ////---------截止这里的代码都很好理解 就是在配好 nslayoutconstraint 的所有 item 和 attribute， 而这些东西在之前的 make 链式语法都组装好了---------////
+    ////---------截止这里的代码都很好理解 就是在配好 NSLayoutConstraint 的所有 item 和 attribute， 而这些东西在之前的 make 链式语法都组装好了---------////
 
-    ////---------其中 masonry 自己的注释也写明白了 为什么 make.left.equalto(@10) 这样的代码能够被组装成 nslayoutconstraint---------////     
-    //maslayoutconstraint 可以简单的认为就是 nslayoutconstraint
-    maslayoutconstraint *layoutconstraint
-        = [maslayoutconstraint constraintwithitem:firstlayoutitem
-                                        attribute:firstlayoutattribute
-                                        relatedby:self.layoutrelation
-                                           toitem:secondlayoutitem
-                                        attribute:secondlayoutattribute
-                                       multiplier:self.layoutmultiplier
-                                         constant:self.layoutconstant];
+    ////---------其中 masonry 自己的注释也写明白了 为什么 make.left.equalTo(@10) 这样的代码能够被组装成 NSLayoutConstraint---------////     
+    //MASLayoutConstraint 可以简单的认为就是 NSLayoutConstraint
+    MASLayoutConstraint *layoutConstraint
+        = [MASLayoutConstraint constraintWithItem:firstLayoutItem
+                                        attribute:firstLayoutAttribute
+                                        relatedBy:self.layoutRelation
+                                           toItem:secondLayoutItem
+                                        attribute:secondLayoutAttribute
+                                       multiplier:self.layoutMultiplier
+                                         constant:self.layoutConstant];
 
-    layoutconstraint.priority = self.layoutpriority;
-    layoutconstraint.mas_key = self.mas_key;
+    layoutConstraint.priority = self.layoutPriority;
+    layoutConstraint.mas_key = self.mas_key;
 
-    if (self.secondviewattribute.view) {
-        mas_view *closestcommonsuperview = [self.firstviewattribute.view mas_closestcommonsuperview:self.secondviewattribute.view];
-        nsassert(closestcommonsuperview,
+    if (self.secondViewAttribute.view) {
+        MAS_VIEW *closestCommonSuperview = [self.firstViewAttribute.view mas_closestCommonSuperview:self.secondViewAttribute.view];
+        NSAssert(closestCommonSuperview,
                  @"couldn't find a common superview for %@ and %@",
-                 self.firstviewattribute.view, self.secondviewattribute.view);
-        self.installedview = closestcommonsuperview;
-    } else if (self.firstviewattribute.issizeattribute) {
-        self.installedview = self.firstviewattribute.view;
+                 self.firstViewAttribute.view, self.secondViewAttribute.view);
+        self.installedView = closestCommonSuperview;
+    } else if (self.firstViewAttribute.isSizeAttribute) {
+        self.installedView = self.firstViewAttribute.view;
     } else {
-        self.installedview = self.firstviewattribute.view.superview;
+        self.installedView = self.firstViewAttribute.view.superview;
     }
 
 
-    maslayoutconstraint *existingconstraint = nil;
-    if (self.updateexisting) {
-        existingconstraint = [self layoutconstraintsimilarto:layoutconstraint];
+    MASLayoutConstraint *existingConstraint = nil;
+    if (self.updateExisting) {
+        existingConstraint = [self layoutConstraintSimilarTo:layoutConstraint];
     }
-    if (existingconstraint) {
+    if (existingConstraint) {
         // just update the constant
-        existingconstraint.constant = layoutconstraint.constant;
-        self.layoutconstraint = existingconstraint;
+        existingConstraint.constant = layoutConstraint.constant;
+        self.layoutConstraint = existingConstraint;
     } else {
-        [self.installedview addconstraint:layoutconstraint];
-        self.layoutconstraint = layoutconstraint;
-        [firstlayoutitem.mas_installedconstraints addobject:self];
+        [self.installedView addConstraint:layoutConstraint];
+        self.layoutConstraint = layoutConstraint;
+        [firstLayoutItem.mas_installedConstraints addObject:self];
     }
 }
 </code></pre>
 </div>
 
-<p>这段代码是 install 的最后一个步骤，整体来说比较简单，就是把 <code class="highlighter-rouge">masviewconstraint</code> 变成 <code class="highlighter-rouge">nslayoutconstraint</code>
-加入到具体的 <code class="highlighter-rouge">uiview</code> 当中，如果你还不清楚怎么用系统的 api 写 <code class="highlighter-rouge">autolayout</code> 的话，需要去了解一下。</p>
+<p>这段代码是 install 的最后一个步骤，整体来说比较简单，就是把 <code class="highlighter-rouge">MASViewConstraint</code> 变成 <code class="highlighter-rouge">NSLayoutConstraint</code>
+加入到具体的 <code class="highlighter-rouge">UIView</code> 当中，如果你还不清楚怎么用系统的 API 写 <code class="highlighter-rouge">AutoLayout</code> 的话，需要去了解一下。</p>
 
-<p>其中 <code class="highlighter-rouge">mas_closestcommonsuperview</code> 是找 <code class="highlighter-rouge">firstviewattribute.view</code> 和
-<code class="highlighter-rouge">secondviewattribute.view</code> 的共同公共的父 <code class="highlighter-rouge">view</code>, 这里的算法很简单，只是单纯的遍历</p>
+<p>其中 <code class="highlighter-rouge">mas_closestCommonSuperview</code> 是找 <code class="highlighter-rouge">firstViewAttribute.view</code> 和
+<code class="highlighter-rouge">secondViewAttribute.view</code> 的共同公共的父 <code class="highlighter-rouge">View</code>, 这里的算法很简单，只是单纯的遍历</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (instancetype)mas_closestcommonsuperview:(mas_view *)view {
-    mas_view *closestcommonsuperview = nil;
+<div class="highlighter-rouge"><pre class="highlight"><code>- (instancetype)mas_closestCommonSuperview:(MAS_VIEW *)view {
+    MAS_VIEW *closestCommonSuperview = nil;
 
-    mas_view *secondviewsuperview = view;
-    while (!closestcommonsuperview &amp;&amp; secondviewsuperview) {
-        mas_view *firstviewsuperview = self;
-        while (!closestcommonsuperview &amp;&amp; firstviewsuperview) {
-            if (secondviewsuperview == firstviewsuperview) {
-                closestcommonsuperview = secondviewsuperview;
+    MAS_VIEW *secondViewSuperview = view;
+    while (!closestCommonSuperview &amp;&amp; secondViewSuperview) {
+        MAS_VIEW *firstViewSuperview = self;
+        while (!closestCommonSuperview &amp;&amp; firstViewSuperview) {
+            if (secondViewSuperview == firstViewSuperview) {
+                closestCommonSuperview = secondViewSuperview;
             }
-            firstviewsuperview = firstviewsuperview.superview;
+            firstViewSuperview = firstViewSuperview.superview;
         }
-        secondviewsuperview = secondviewsuperview.superview;
+        secondViewSuperview = secondViewSuperview.superview;
     }
-    return closestcommonsuperview;
+    return closestCommonSuperview;
 }
 </code></pre>
 </div>
 
-<p>截止为止，<code class="highlighter-rouge">masonry</code> 的 <code class="highlighter-rouge">mas_makeconstraints</code> 的整个过程全部分析完毕，对于剩下的
-<code class="highlighter-rouge">mas_remakeconstraints</code> 和 <code class="highlighter-rouge">mas_updateconstraints</code> 大同小异，这里不再做更多陈述</p>
+<p>截止为止，<code class="highlighter-rouge">Masonry</code> 的 <code class="highlighter-rouge">mas_makeConstraints</code> 的整个过程全部分析完毕，对于剩下的
+<code class="highlighter-rouge">mas_remakeConstraints</code> 和 <code class="highlighter-rouge">mas_updateConstraints</code> 大同小异，这里不再做更多陈述</p>
 
 
         </article>
@@ -818,13 +812,13 @@ for (masconstraint *constraint in constraints) {
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/05/28/guan_yu_gpuimage/">关于gpuimage</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/05/28/guan_yu_gpuimage/">关于GPUImage</a></p>
         
     </div>
     <div class="nex">
 
         
-        <p><strong>下一篇</strong> <a href="/2017/05/31/ios_runloop_de_jie_shao/">ios runloop的介绍</a></p>
+        <p><strong>下一篇</strong> <a href="/2017/05/31/ios_runloop_de_jie_shao/">iOS RunLoop的介绍</a></p>
         
     </div>
 </div>
@@ -892,17 +886,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>

@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>浅析android中的threadlocal</title>
-    <meta name="description" content="threadlocal第一眼很容易让人误以为这是一个thread，其实并不是，它是在jdk1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个threadlocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是androi...">
+    <title>浅析Android中的ThreadLocal</title>
+    <meta name="description" content="ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Androi...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
@@ -35,7 +35,7 @@
                     
                     <a href="/">
                     
-                        <i class="fa fa-home"></i>Home
+                        <i class="fa fa-home"></i>首页
                     </a>
                 </li>
 
@@ -43,7 +43,7 @@
                     
                     <li>
                         
-                        <a href="/opensource/">
+                        <a href="/project/">
                         
                             <i class="fa fa-folder-open"></i>开源项目
                         </a>
@@ -53,9 +53,9 @@
                     
                     <li>
                         
-                        <a href="/archive/">
+                        <a href="/class/">
                         
-                            <i class="fa fa-archive"></i>归档
+                            <i class="fa fa-book"></i>公开课
                         </a>
                     </li>
                     
@@ -66,16 +66,6 @@
                         <a href="/category/">
                         
                             <i class="fa fa-th-list"></i>分类
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li>
-                        
-                        <a href="/tag/">
-                        
-                            <i class="fa fa-tags"></i>标签
                         </a>
                     </li>
                     
@@ -114,6 +104,10 @@
                 
                     
                 
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -122,7 +116,7 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>浅析android中的threadlocal</h1>
+        <h1>浅析Android中的ThreadLocal</h1>
         <div class="label">
 
             <div class="label-card">
@@ -167,11 +161,11 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#threadlo..." title="Tag: threadlo..." rel="tag">threadlo...</a-->
-        <a href="/tag/#threadlo..." title="Tag: threadlo..." rel="tag">threadlo...</a>&nbsp;
+        <!--a href="/tag/#ThreadLo..." title="Tag: ThreadLo..." rel="tag">ThreadLo...</a-->
+        <a href="/tag/#ThreadLo..." title="Tag: ThreadLo..." rel="tag">ThreadLo...</a>&nbsp;
     
-        <!--a href="/tag/#android" title="Tag: android" rel="tag">android</a-->
-        <a href="/tag/#android" title="Tag: android" rel="tag">android</a>
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>
     
   
 
@@ -186,194 +180,194 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#一-looper" id="markdown-toc-一-looper">一. looper</a></li>
-  <li><a href="#二threadlocal源码分析" id="markdown-toc-二threadlocal源码分析">二.threadlocal源码分析</a></li>
+  <li><a href="#一-looper" id="markdown-toc-一-looper">一. Looper</a></li>
+  <li><a href="#二threadlocal源码分析" id="markdown-toc-二threadlocal源码分析">二.ThreadLocal源码分析</a></li>
 </ul>
 
-<p>threadlocal第一眼很容易让人误以为这是一个thread，其实并不是，它是在jdk
-1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个threadlocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是android中的threadlocal呢，原因是android中的threadlocal和jdk的threadlocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。</p>
+<p>ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK
+1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。</p>
 
 <!--more-->
-<h1 id="一-looper">一. looper</h1>
+<h1 id="一-looper">一. Looper</h1>
 
-<p>threadlocal在业务开发中使用的场景比较少，所以对大家来说会比较陌生，但是它却和我们平时写的每一行代码都息息相关，接下来一起看一段简单的代码：</p>
+<p>ThreadLocal在业务开发中使用的场景比较少，所以对大家来说会比较陌生，但是它却和我们平时写的每一行代码都息息相关，接下来一起看一段简单的代码：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    class mythread extends handlerthread {
-        public mythread(string name) {
+<div class="highlighter-rouge"><pre class="highlight"><code>    class MyThread extends HandlerThread {
+        public MyThread(String name) {
             super(name);
         }
-        @override
+        @Override
         public void run() {
-            looper.prepare();
-            handler = new handler();
-            looper.loop();
+            Looper.prepare();
+            handler = new Handler();
+            Looper.loop();
         }
     }
 </code></pre>
 </div>
 
-<p>我们知道，一个线程本身是不存在消息循环的，我们需要手动调用looper.prepare()，然后再调用looper.loop()创建一个消息循环，这样的话这个线程就有了自己的一个消息循环looper，我们可以通过looper.mylooper()获取当前所在线程的looper,
-那么这个looper是保存在哪里的呢？我们点进looper.prepare()这个方法一起看一下：</p>
+<p>我们知道，一个线程本身是不存在消息循环的，我们需要手动调用Looper.prepare()，然后再调用Looper.loop()创建一个消息循环，这样的话这个线程就有了自己的一个消息循环Looper，我们可以通过Looper.myLooper()获取当前所在线程的Looper,
+那么这个Looper是保存在哪里的呢？我们点进Looper.prepare()这个方法一起看一下：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>    public static void prepare() {
         prepare(true);
     }
 
-    private static void prepare(boolean quitallowed) {
-        if (sthreadlocal.get() != null) {
-            throw new runtimeexception("only one looper may be created per thread");
+    private static void prepare(boolean quitAllowed) {
+        if (sThreadLocal.get() != null) {
+            throw new RuntimeException("Only one Looper may be created per thread");
         }
-        sthreadlocal.set(new looper(quitallowed));
+        sThreadLocal.set(new Looper(quitAllowed));
     }
 </code></pre>
 </div>
 
-<p>首先创建了一个looper对象，在looper对象的构造函数中创建了一个消息队列，然后把这个looper对象放在一个静态的成员变量sthreadlocal里头。因此所有支持消息循环的线程都共享一个threadlocal对象，但是同时也可以获取到只属于自己线程的looper，线程之间互不影响。当我们调用handler的post的方法时候，其实就是把消息丢进了创建该handler时所在的线程的消息队列里头，终止被该线程的looper所执行。</p>
+<p>首先创建了一个Looper对象，在Looper对象的构造函数中创建了一个消息队列，然后把这个Looper对象放在一个静态的成员变量sThreadLocal里头。因此所有支持消息循环的线程都共享一个ThreadLocal对象，但是同时也可以获取到只属于自己线程的Looper，线程之间互不影响。当我们调用handler的post的方法时候，其实就是把消息丢进了创建该handler时所在的线程的消息队列里头，终止被该线程的Looper所执行。</p>
 
-<h1 id="二threadlocal源码分析">二.threadlocal源码分析</h1>
+<h1 id="二threadlocal源码分析">二.ThreadLocal源码分析</h1>
 
-<p>看到这里可能大家就会想，looper在sthreadlocal内部是如何存储呢？我们一起进去看下set方法：</p>
+<p>看到这里可能大家就会想，Looper在sThreadLocal内部是如何存储呢？我们一起进去看下set方法：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>/**
-     * sets the value of this variable for the current thread. if set to
+     * Sets the value of this variable for the current thread. If set to
      * {@code null}, the value will be set to null and the underlying entry will
      * still be present.
      *
      * @param value the new value of the variable for the caller thread.
      */
-    public void set(t value) {
-        thread currentthread = thread.currentthread();
-        values values = values(currentthread);
+    public void set(T value) {
+        Thread currentThread = Thread.currentThread();
+        Values values = values(currentThread);
         if (values == null) {
-            values = initializevalues(currentthread);
+            values = initializeValues(currentThread);
         }
         values.put(this, value);
     }
 </code></pre>
 </div>
 
-<p> 先获取当前的线程 currentthread,
-然后取出currentthread的一个成员变量values，这个values其实就在最终存value的数据结构，如果values为空的话通过initializevalues为其创建一个values。我们一起看下这个values类。</p>
+<p> 先获取当前的线程 currentThread,
+然后取出currentThread的一个成员变量values，这个values其实就在最终存value的数据结构，如果values为空的话通过initializeValues为其创建一个values。我们一起看下这个Values类。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>static class values {
-
-        /**
-         * size must always be a power of 2.
-         */
-        private static final int initial_size = 16;
+<div class="highlighter-rouge"><pre class="highlight"><code>static class Values {
 
         /**
-         * placeholder for deleted entries.
+         * Size must always be a power of 2.
          */
-        private static final object tombstone = new object();
+        private static final int INITIAL_SIZE = 16;
 
         /**
-         * map entries. contains alternating keys (threadlocal) and values.
-         * the length is always a power of 2.
+         * Placeholder for deleted entries.
          */
-        private object[] table;
+        private static final Object TOMBSTONE = new Object();
 
-        /** used to turn hashes into indices. */
+        /**
+         * Map entries. Contains alternating keys (ThreadLocal) and values.
+         * The length is always a power of 2.
+         */
+        private Object[] table;
+
+        /** Used to turn hashes into indices. */
         private int mask;
 
-        /** number of live entries. */
+        /** Number of live entries. */
         private int size;
 
-        /** number of tombstones. */
+        /** Number of tombstones. */
         private int tombstones;
 
-        /** maximum number of live entries and tombstones. */
-        private int maximumload;
+        /** Maximum number of live entries and tombstones. */
+        private int maximumLoad;
 
-        /** points to the next cell to clean up. */
+        /** Points to the next cell to clean up. */
         private int clean;
 </code></pre>
 </div>
 
-<p>values初始化时的代码如下：</p>
+<p>Values初始化时的代码如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>       values() {
-            initializetable(initial_size);
+<div class="highlighter-rouge"><pre class="highlight"><code>       Values() {
+            initializeTable(INITIAL_SIZE);
             this.size = 0;
             this.tombstones = 0;
         }
 
-       private void initializetable(int capacity) {
-            this.table = new object[capacity * 2];
+       private void initializeTable(int capacity) {
+            this.table = new Object[capacity * 2];
             this.mask = table.length - 1;
             this.clean = 0;
-            this.maximumload = capacity * 2 / 3; // 2/3
+            this.maximumLoad = capacity * 2 / 3; // 2/3
         }
 </code></pre>
 </div>
 
-<p>这个table是用于存储我们用到的数组，但是它不仅仅存储value的值，他会先存储当前value所对应的值threadlocal的弱引用，然后在下一位存储value的值。可知table的长度一定是2的n次方，而mask的值则为2的n次方减一，maximumload这个值则是用来判断是否需要扩充table的数组大小。</p>
+<p>这个table是用于存储我们用到的数组，但是它不仅仅存储value的值，他会先存储当前value所对应的值ThreadLocal的弱引用，然后在下一位存储value的值。可知table的长度一定是2的N次方，而mask的值则为2的N次方减一，maximumLoad这个值则是用来判断是否需要扩充table的数组大小。</p>
 
-<p>初始化完values，我们就需要把value  put进 values中。</p>
+<p>初始化完Values，我们就需要把value  put进 values中。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>        /**
-         * sets entry for given threadlocal to given value, creating an
+         * Sets entry for given ThreadLocal to given value, creating an
          * entry if necessary.
          */
-        void put(threadlocal&gt; key, object value) {
-            cleanup();
+        void put(ThreadLocal&gt; key, Object value) {
+            cleanUp();
 
-            // keep track of first tombstone. that's where we want to go back
+            // Keep track of first tombstone. That's where we want to go back
             // and add an entry if necessary.
-            int firsttombstone = -1;
+            int firstTombstone = -1;
 
             for (int index = key.hash &amp; mask;; index = next(index)) {
-                object k = table[index];
+                Object k = table[index];
 
                 if (k == key.reference) {
-                    // replace existing entry.
+                    // Replace existing entry.
                     table[index + 1] = value;
                     return;
                 }
 
                 if (k == null) {
-                    if (firsttombstone == -1) {
-                        // fill in null slot.
+                    if (firstTombstone == -1) {
+                        // Fill in null slot.
                         table[index] = key.reference;
                         table[index + 1] = value;
                         size++;
                         return;
                     }
 
-                    // go back and replace first tombstone.
-                    table[firsttombstone] = key.reference;
-                    table[firsttombstone + 1] = value;
+                    // Go back and replace first tombstone.
+                    table[firstTombstone] = key.reference;
+                    table[firstTombstone + 1] = value;
                     tombstones--;
                     size++;
                     return;
                 }
 
-                // remember first tombstone.
-                if (firsttombstone == -1 &amp;&amp; k == tombstone) {
-                    firsttombstone = index;
+                // Remember first tombstone.
+                if (firstTombstone == -1 &amp;&amp; k == TOMBSTONE) {
+                    firstTombstone = index;
                 }
             }
         }
 </code></pre>
 </div>
 
-<p>在开头先调用了cleanup方法，顾名思义就是释放掉当前table数字中已经失效的value值。然后通过一个for循环寻找当前的value值需要存放的位置，这里起始的index使用的是key.hash
-&amp; mask，这样做的用意是什么呢? 我们知道mask的值为2的n次方减一，所以它的二进制的值每一位都是1，我们再看下key.hash的值是多少：</p>
+<p>在开头先调用了cleanUp方法，顾名思义就是释放掉当前table数字中已经失效的value值。然后通过一个for循环寻找当前的value值需要存放的位置，这里起始的index使用的是key.hash
+&amp; mask，这样做的用意是什么呢? 我们知道mask的值为2的N次方减一，所以它的二进制的值每一位都是1，我们再看下key.hash的值是多少：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>/**
-     * internal hash. we deliberately don't bother with #hashcode().
-     * hashes must be even. this ensures that the result of
+     * Internal hash. We deliberately don't bother with #hashCode().
+     * Hashes must be even. This ensures that the result of
      * (hash &amp; (table.length - 1)) points to a key and not a value.
      *
-     * we increment by doug lea's magic number(tm) (*2 since keys are in
+     * We increment by Doug Lea's Magic Number(TM) (*2 since keys are in
      * every other bucket) to help prevent clustering.
      */
-    private final int hash = hashcounter.getandadd(0x61c88647 * 2);
+    private final int hash = hashCounter.getAndAdd(0x61c88647 * 2);
 </code></pre>
 </div>
 
 <p> 这是一个神奇的数字0x61c88647，具体为什么取这个值我们暂时不深究，为的是让这个table上值存储不重复，而且分散。最后key.hash &amp;
-mask的值会落在table中的某个位置。接下来在for循环中如果我们在table中找到了threadlocal的弱引用，则替换它的下一位的value的值。如果没有找到对应的threadlocal的引用，则在table中存入当前value所对应的threadlocal的弱引用，并在下一位存入value的值。然后我们通过threadlocal的get方法查找时，其实也是先查找到对应的threadlocal的弱引用，然后下一位才是对应的value的值。</p>
+mask的值会落在table中的某个位置。接下来在for循环中如果我们在table中找到了ThreadLocal的弱引用，则替换它的下一位的value的值。如果没有找到对应的ThreadLocal的引用，则在table中存入当前value所对应的ThreadLocal的弱引用，并在下一位存入value的值。然后我们通过ThreadLocal的get方法查找时，其实也是先查找到对应的ThreadLocal的弱引用，然后下一位才是对应的value的值。</p>
 
 
         </article>
@@ -401,7 +395,7 @@ mask的值会落在table中的某个位置。接下来在for循环中如果我�
                         <ul>
                         
                         <li class="relatedPost">
-                            <a href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">opengl es读书笔记（一）—初始庐山真面目
+                            <a href="/2017/07/01/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">OpenGL ES读书笔记（一）—初始庐山真面目
                             
                             </a>
                         </li>
@@ -606,17 +600,9 @@ var uyan_config = {
         <p class="description">
             
         </p>
-        <p class="contact">
-            Contact me at: 
-            <a href="https://github.com/MelonTeam" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>         
-            
-        </p>
         <p class="power">
             <span>
-                Site powered by <a href="https://jekyllrb.com/">Jekyll</a>.
-            </span>
-            <span>
-                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
             </span>
         </p>
     </div>
