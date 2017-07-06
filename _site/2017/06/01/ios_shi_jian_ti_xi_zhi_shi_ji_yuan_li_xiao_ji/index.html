@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iOS 事件体系知识及原理小记</title>
+    <meta name="description" content="  基本知识点：基本知识点：0 UITouch">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/06/01/ios_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>iOS 事件体系知识及原理小记</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-06-01
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>jdochen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS%E4%BA%8B%E4%BB%B6" title="Tag: iOS事件" rel="tag">iOS事件</a-->
+        <a href="/tag/#iOS事件" title="Tag: iOS事件" rel="tag">iOS事件</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">基本知识点：</a></li>
+</ul>
+
+<h3 id="section">基本知识点：</h3>
+
+<p><strong>0 UITouch</strong><br />
+<!--more--></p>
+
+<p>当每一个指尖在屏幕上触发一次触摸事件时，系统就会生成对应一个UITouch对象，用于记录当前触摸的状态，主要包含运动相位、位置、大小、运动、力度（iOS9）等数据；当触摸事件发生变化时（指尖移动、压力变化），UITouch对象的相关信息也会跟着更新；每一次更新都是复用之前的UITouch对象，不会重新创建。</p>
+
+<p>主要的一些属性与方法：</p>
+
+<pre><code>@property(nonatomic,readonly) UITouchPhase        phase;  // 运动相位(开始、移动、静止、结束、取消)
+@property(nonatomic,readonly) NSUInteger          tapCount; // 在一小段时间内的连续计数
+@property(nonatomic,readonly) CGFloat majorRadius NS_AVAILABLE_IOS(8_0); // 触摸半径
+@property(nonatomic,readonly) CGFloat force NS_AVAILABLE_IOS(9_0); // 压力值
+- (CGPoint)locationInView:(nullable UIView *)view; // 获取当前坐标
+- (CGPoint)previousLocationInView:(nullable UIView *)view; // 获取上一次坐标
+</code></pre>
+
+<p><strong>1 UIEvent</strong></p>
+
+<p>在iOS系统中一个UIEvent对象代表着一个事件在，有四种类型的事件：触摸事件( UIEventTypeTouches)、运动事件(<br />
+UIEventTypeMotion)、远程控制事件( UIEventTypeRemoteControl)、物理按键事件(<br />
+UIEventTypePresses)；例如屏幕被点击了，系统会创建一个UIEvent，如果UIEvent对象已经存在，那直接复用已有的UIEvent，UIEvent在应用中一旦被创建，它的生命周期会一直伴随着应用，所以千万别retain一个UIEvent或者通过return来获取一个UIEvent，如果你希望保存UIEvent的相关信息，你可以直接copy某个属性。（TODO：到底是一种类型的事件复用一个还是整个应用只复用一个UIEvent对象）</p>
+
+<p>主要的一些属性与方法：</p>
+
+<pre><code>@property(nonatomic,readonly) UIEventType    type NS_AVAILABLE_IOS(3_0); // 四种事件类型
+@property(nonatomic,readonly) UIEventSubtype  subtype NS_AVAILABLE_IOS(3_0); // 在各个大类型中再细化区分
+@property(nonatomic, readonly, nullable) NSSet &lt;UITouch *&gt; *allTouches; // 当前事件触发时的所有UITouch对象
+</code></pre>
+
+<p><strong>2 UIResponder</strong></p>
+
+<p>事件响应者(UIResponder)的查找与事件的响应：</p>
+
+<p>响应者（responder）的概念：在iOS系统中，响应者是指能响应并处理事件的对象，UIResponder是所有responder对象的基类。UIApplication<br />
+/ UIViewController / UIView<br />
+以及所有继承UIView的UIKit类（包含UIWindow）都直接或间接的继承了UIResponder，这就意味着所有的views以及大部分key<br />
+controller都能响应并处理事件对象。</p>
+
+<p>（1）查找阶段：</p>
+
+<p>先介绍UIView的两个方法：</p>
+
+<p>- (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event;</p>
+
+<p>该方法用于检查当前坐标是否落在当前view</p>
+
+<p>- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event</p>
+
+<p>该方法的主要逻辑是：</p>
+
+<ul>
+  <li>检查当前view是否能响应事件（userInteractionEnabled!=NO &amp; hidden!=YES &amp; alpha &gt;0.01）</li>
+  <li>不满足直接返回nil；</li>
+  <li>通过pointInside:withEvent:方法，检查当前点击是否落在当前view中；</li>
+  <li>
+    <ul>
+      <li>如果点击落在当前view中，遍历subView执行hitTest:withEvent:；
+        <ul>
+          <li>
+            <ul>
+              <li>如果subView的hitTest:withEvent:有返回，则返回该返回；
+                <ul>
+                  <li>如果subView的hitTest:withEvent:没有返回，则返回当前view；</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>如果点击没有落在当前view，则返回nil；</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>响应者查找阶段就要用到这两个方法，大致流程如下：</p>
+
+<ul>
+  <li>当指尖触碰屏幕时，系统会创建一个UIEvent对象（如果已经存在，则复用），以及相应的UITouch；并将UIEvent对象放到当前活跃app的事件队列中；</li>
+  <li>UIApplication会从事件队列中取出最前面的事件进行分发以便处理，通常先发送事件给应用程序的主窗口(UIWindow)；</li>
+  <li>主窗口会调用hitTest:withEvent:方法在视图(UIView)层次结构中找到一个最合适的UIView来处理触摸事件，并将UITouch与UIEvent交给UIView处理（通过touchesBegan/touchesMoved/touchesEnded等方法传递）</li>
+</ul>
+
+<p>看个例子：</p>
+
+<p>view 2是view 1的子view，当一个点击落在view 2区域内，这个查找过程会从UIWindow开始，然后一层层子view查找下去，最终view<br />
+2会作为最合适的响应者被hitTest返回，因为view 2满足了两个条件：</p>
+
+<ol>
+  <li>通过hitTest找到了view 2</li>
+  <li>view 2内部没有其他子view</li>
+</ol>
+
+<p><img src="/image/iOS_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f917d992a04a979280748b4409a4ebefc25acbdaca0868901765348edc8fcb0a" alt="" /></p>
+
+<p>再看看另一个特殊的场景：</p>
+
+<p>view 2还是view 1的子view；但当一个点击落在view 2的区域内时，查找还是从UIWindow开始，但在view<br />
+1的hitTest中就返回了nil，因为点击区域不在view 1中，导致view<br />
+1的子view都不会再进行hitTest；这点跟web中的事件处理是截然不同的；这也导致一些超边界的点击必须由业务去重载hitText方法。</p>
+
+<p><img src="/image/iOS_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/f6754ccccb23a2b3dde193a0c273fc859f455083ea4e17d1ac53b5265bc91ddb" alt="" /></p>
+
+<p>（2）事件响应阶段（响应链）：</p>
+
+<p>在上面提到的查找阶段，通过hitTest:withEvent:最终查找到的最后view自然就做为第一个可以响应该事件的view，当该view不能处理该事件，系统会通过nextResponder继续将事件传递给下一个响应者，如果一直没有能处理的响应者，这个事件会一直传递到UIApplication，最终废弃。所以，所谓的响应链就是一系列相连接的响应者，它由第一个响应者开始，通过nextResponder不断传递一直到UIApplication。</p>
+
+<p>这里需要注意的是nextResponder的处理规则：</p>
+
+<p>UIView的nextResponder属性，如果有管理此view的UIViewController对象，则为此UIViewController对象；否则nextResponder即为其superview。</p>
+
+<p>UIViewController的nextResponder属性为其管理view的superview。</p>
+
+<p>UIWindow的nextResponder属性为UIApplication对象。</p>
+
+<p>UIApplication的nextResponder属性为nil</p>
+
+<p>未完待续…</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/06/01/yi_ge_chuang_jian_zi_ding_yi_shi_jian_yuan_de_li_zi/">一个创建自定义事件源的例子</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/06/01/_yi__guan_yu_shen_du_shen_jing_wang_luo_bi_xu_zhi_dao_de_yi_xie_ji_qiao__shang_/">【译】关于深度神经网络必须知道的一些技巧（上）</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/2017/06/01/ios_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/06/01/ios_shi_jian_ti_xi_zhi_shi_ji_yuan_li_xiao_ji/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
