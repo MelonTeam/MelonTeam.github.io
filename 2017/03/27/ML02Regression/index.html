@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/ML02Regression/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/03/27/ML02Regression/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -176,24 +176,24 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">为什么要先进行案例研究？</a></li>
-  <li><a href="#regression-" id="markdown-toc-regression-">Regression （回归）</a>    <ul>
-      <li><a href="#pokemon-go-" id="markdown-toc-pokemon-go-">应用举例（预测Pokemon Go 进化后的战斗力）</a>        <ul>
-          <li><a href="#section-1" id="markdown-toc-section-1">三个步骤</a></li>
+  <li><a href="#为什么要先进行案例研究" id="markdown-toc-为什么要先进行案例研究">为什么要先进行案例研究？</a></li>
+  <li><a href="#regression-回归" id="markdown-toc-regression-回归">Regression （回归）</a>    <ul>
+      <li><a href="#应用举例预测pokemon-go-进化后的战斗力" id="markdown-toc-应用举例预测pokemon-go-进化后的战斗力">应用举例（预测Pokemon Go 进化后的战斗力）</a>        <ul>
+          <li><a href="#三个步骤" id="markdown-toc-三个步骤">三个步骤</a></li>
           <li><a href="#step1-model" id="markdown-toc-step1-model">Step1: Model</a></li>
-          <li><a href="#step2-" id="markdown-toc-step2-">Step2: 方程的好坏</a></li>
-          <li><a href="#step3" id="markdown-toc-step3">Step3：最好的方程</a></li>
-          <li><a href="#gradient-descent" id="markdown-toc-gradient-descent">Gradient Descent（梯度下降法）</a></li>
+          <li><a href="#step2-方程的好坏" id="markdown-toc-step2-方程的好坏">Step2: 方程的好坏</a></li>
+          <li><a href="#step3最好的方程" id="markdown-toc-step3最好的方程">Step3：最好的方程</a></li>
+          <li><a href="#gradient-descent梯度下降法" id="markdown-toc-gradient-descent梯度下降法">Gradient Descent（梯度下降法）</a></li>
         </ul>
       </li>
-      <li><a href="#section-2" id="markdown-toc-section-2">结果怎么样呢？</a></li>
-      <li><a href="#overfitting" id="markdown-toc-overfitting">Overfitting（过拟合，过度学习）</a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3">如果数据更多会怎样？</a></li>
-      <li><a href="#section-4" id="markdown-toc-section-4">还有其他因素的影响吗？</a></li>
-      <li><a href="#regularization" id="markdown-toc-regularization">Regularization（正则化）</a></li>
+      <li><a href="#结果怎么样呢" id="markdown-toc-结果怎么样呢">结果怎么样呢？</a></li>
+      <li><a href="#overfitting过拟合过度学习" id="markdown-toc-overfitting过拟合过度学习">Overfitting（过拟合，过度学习）</a></li>
+      <li><a href="#如果数据更多会怎样" id="markdown-toc-如果数据更多会怎样">如果数据更多会怎样？</a></li>
+      <li><a href="#还有其他因素的影响吗" id="markdown-toc-还有其他因素的影响吗">还有其他因素的影响吗？</a></li>
+      <li><a href="#regularization正则化" id="markdown-toc-regularization正则化">Regularization（正则化）</a></li>
     </ul>
   </li>
-  <li><a href="#section-5" id="markdown-toc-section-5">总结</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
 </ul>
 <blockquote>
   <p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
@@ -205,31 +205,31 @@
   <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66577532">http://blog.csdn.net/zyq522376829/article/details/66577532</a></p>
 </blockquote>
 
-<h1 id="section">为什么要先进行案例研究？</h1>
+<h1 id="为什么要先进行案例研究">为什么要先进行案例研究？</h1>
 
 <p>没有比较好的数学基础，直接接触深度学习会非常抽象，所以这里我们先通过一个预测 Pokemon Go 的 Combat Power (CP) 值的案例，打开深度学习的大门。</p>
 
-<h1 id="regression-">Regression （回归）</h1>
+<h1 id="regression-回归">Regression （回归）</h1>
 
 <!--more-->
 
 <p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0me8ssa8j20zc0kcn5j.jpg" alt="" /></p>
 
-<h2 id="pokemon-go-">应用举例（预测Pokemon Go 进化后的战斗力）</h2>
+<h2 id="应用举例预测pokemon-go-进化后的战斗力">应用举例（预测Pokemon Go 进化后的战斗力）</h2>
 
-<p>比如估计一只神奇宝贝进化后的 CP 值（战斗力）。<br />
+<p>比如估计一只神奇宝贝进化后的 CP 值（战斗力）。
 下面是一只妙蛙种子，可以进化为妙蛙草，现在的CP值是14，我们想估计进化后的CP值是多少；进化需要糖果，好处就是如果它进化后CP值不满意，那就不用浪费糖果来进化它了，可以选择性价比高的神奇宝贝。</p>
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0mf7rxiij20xo0hgn53.jpg" alt="" /></p>
 
-<p>输入用了一些不同的 $x$ 来代表不同的属性，比如战斗力用 $x_{cp}$ 来表示，物种 $x_{s}$ 来表示…<br />
+<p>输入用了一些不同的 $x$ 来代表不同的属性，比如战斗力用 $x_{cp}$ 来表示，物种 $x_{s}$ 来表示…
 输出就是进化后的CP值</p>
 
-<h3 id="section-1">三个步骤</h3>
-<p>上一篇提到了机器学习的三个步骤：<br />
-Step1.确定一组函数（Model）。<br />
-Step2.将训练集对函数集进行训练。<br />
-Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
+<h3 id="三个步骤">三个步骤</h3>
+<p>上一篇提到了机器学习的三个步骤：
+Step1.确定一组函数（Model）。
+Step2.将训练集对函数集进行训练。
+Step3.挑选出“最好”的函数 $f^{<em>}$ 
 然后就可以使用 $f^{</em>}$ 来对新的测试集进行检测。</p>
 
 <h3 id="step1-model">Step1: Model</h3>
@@ -239,7 +239,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>$w$ 和 $b$ 是参数，可以是任何数值。</p>
 
-<p>可以有<br />
+<p>可以有
 <script type="math/tex">f_{1}: y = 10.0 + 9.0 \cdot x_{cp}</script></p>
 
 <script type="math/tex; mode=display">f_{2}: y = 9.8 + 9.2 \cdot x_{cp}</script>
@@ -254,7 +254,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>$x_{i}$ 就是神奇宝贝的各种不同的属性，身高、体重等等，我们将这些称之为 “feature（特征）”；$w_{i}$ 称为 weight（权重），b 称为 bias（偏差）。</p>
 
-<h3 id="step2-">Step2: 方程的好坏</h3>
+<h3 id="step2-方程的好坏">Step2: 方程的好坏</h3>
 <p>现在就需要搜集训练集，这里的数据集是 Supervised 的，所以需要 function 的输入和输出（数值），举例抓了一只杰尼龟，进化前的CP值为612，用 $x^{1}$ 代表这只杰尼龟进化前的CP值，即用上标标示一个完整对象的编号；进化后的CP值为 979，用 $\hat{y}^{1}$ 表示进化后的CP值，用 hat（字母头顶的上尖符号）来表示这是一个正确的值，是实际观察到function该有的输出。</p>
 
 <p>下面我们来看真正的数据集（来源 Source: <a href="https://www.openintro.org/stat/data/?data=pokemon">https://www.openintro.org/stat/data/?data=pokemon</a>）</p>
@@ -289,7 +289,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>图上每个点都代表一个方程，比如红色的那个点代表 $y=-180-2\cdot x_{cp}$ 。颜色代表用这个点的方程得到的损失函数有多不好，颜色越偏红色，代表数值越大，越偏蓝色蓝色，代表方程越好。最好的方程就是图中叉叉标记的点。</p>
 
-<h3 id="step3">Step3：最好的方程</h3>
+<h3 id="step3最好的方程">Step3：最好的方程</h3>
 
 <p>定好了损失函数，可以衡量每一个方程的好坏，接下来需要从函数集中挑选一个最好的方程。将这个过程数学化：</p>
 
@@ -305,7 +305,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>但这里会使用另外一种做法，<strong>Gradient Descent（最速下降法）</strong>，最速下降法不光能解决式1-3 这一种问题；实际上只要 $L$ 是可微分的，都可以用最速下降法来处理。</p>
 
-<h3 id="gradient-descent">Gradient Descent（梯度下降法）</h3>
+<h3 id="gradient-descent梯度下降法">Gradient Descent（梯度下降法）</h3>
 <p>简单来看一下梯度下降法的做法。</p>
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0mgsxi8wj212i0ocjwj.jpg" alt="" /></p>
@@ -354,7 +354,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>可能只是找到了局部极值，但是对于线性回归，可以保证所选取的损失函数式1-2是 convex（凸的，即只存在唯一极值）。上图右边就是损失函数的等高线图，可以看出是一圈一圈向内减小的。</p>
 
-<h2 id="section-2">结果怎么样呢？</h2>
+<h2 id="结果怎么样呢">结果怎么样呢？</h2>
 
 <p>将求出的结果绘图如下</p>
 
@@ -392,7 +392,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>可以看到测试集的结果非常差。</p>
 
-<h2 id="overfitting">Overfitting（过拟合，过度学习）</h2>
+<h2 id="overfitting过拟合过度学习">Overfitting（过拟合，过度学习）</h2>
 
 <p>将训练集上的Average Error变化进行作图：</p>
 
@@ -412,7 +412,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
   <p>实际生活中典型的学驾照，学驾照的时候在驾校的训练集上人们可以做的很好，但上路之后真正的测试集就完全无法驾驭。这里只是举个训练集很好，而测试集结果很差的例子^_^</p>
 </blockquote>
 
-<h2 id="section-3">如果数据更多会怎样？</h2>
+<h2 id="如果数据更多会怎样">如果数据更多会怎样？</h2>
 
 <p>考虑60只神奇宝贝的数据</p>
 
@@ -434,7 +434,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>不同种类的神奇宝贝用的参数不同，用颜色区分。此时model在训练集上可以做的更好，在测试集上的结果也是比之前的18.1更好。</p>
 
-<h2 id="section-4">还有其他因素的影响吗？</h2>
+<h2 id="还有其他因素的影响吗">还有其他因素的影响吗？</h2>
 
 <p>比如对身高，体重，生命值进行绘图：</p>
 
@@ -448,7 +448,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 
 <p>这么复杂的model，理论上训练集上可以得到更好的结果，实际为1.9，确实是更低。但是测试集的结果就过拟合了。</p>
 
-<h2 id="regularization">Regularization（正则化）</h2>
+<h2 id="regularization正则化">Regularization（正则化）</h2>
 
 <p>对于上面那么多参数结果并不理想的情况，这里进行正则化处理，将之前的损失函数进行修改：</p>
 
@@ -472,7 +472,7 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
   <p>对于Regularization 的时候，多加的一项：$\lambda \sum (w_{i})^{2}$，并没有考虑 $b$ ，是因为期望得到平滑的function，但bias这项并不影响平滑程度，它只是将function上下移动，跟function的平滑程度是没有关系的。</p>
 </blockquote>
 
-<h1 id="section-5">总结</h1>
+<h1 id="总结">总结</h1>
 
 <ul>
   <li><strong>Pokemon</strong>：原始的CP值极大程度的决定了进化后的CP值，但可能还有其他的一些因素。</li>
@@ -646,9 +646,9 @@ Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/03/27/ML02Regression/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/03/27/ML02Regression/' 
+     'url':'http://localhost:4000/2017/03/27/ML02Regression/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/03/27/ML02Regression/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

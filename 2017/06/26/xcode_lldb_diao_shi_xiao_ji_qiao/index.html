@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,26 +180,26 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">基础篇</a>    <ul>
-      <li><a href="#print" id="markdown-toc-print">1.print命令</a></li>
-      <li><a href="#expression" id="markdown-toc-expression">2.expression命令</a></li>
-      <li><a href="#section-1" id="markdown-toc-section-1">3.设置断点</a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2">4.设置观察点</a></li>
-      <li><a href="#viewcontroller" id="markdown-toc-viewcontroller">5.打印当前显示的ViewController</a></li>
-      <li><a href="#view" id="markdown-toc-view">6.打印当前屏幕上的View</a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3">7.沙盒路径</a></li>
-      <li><a href="#print-frame" id="markdown-toc-print-frame">8.某些时候无法print frame</a></li>
-      <li><a href="#thread" id="markdown-toc-thread">9.Thread命令</a></li>
+  <li><a href="#基础篇" id="markdown-toc-基础篇">基础篇</a>    <ul>
+      <li><a href="#1print命令" id="markdown-toc-1print命令">1.print命令</a></li>
+      <li><a href="#2expression命令" id="markdown-toc-2expression命令">2.expression命令</a></li>
+      <li><a href="#3设置断点" id="markdown-toc-3设置断点">3.设置断点</a></li>
+      <li><a href="#4设置观察点" id="markdown-toc-4设置观察点">4.设置观察点</a></li>
+      <li><a href="#5打印当前显示的viewcontroller" id="markdown-toc-5打印当前显示的viewcontroller">5.打印当前显示的ViewController</a></li>
+      <li><a href="#6打印当前屏幕上的view" id="markdown-toc-6打印当前屏幕上的view">6.打印当前屏幕上的View</a></li>
+      <li><a href="#7沙盒路径" id="markdown-toc-7沙盒路径">7.沙盒路径</a></li>
+      <li><a href="#8某些时候无法print-frame" id="markdown-toc-8某些时候无法print-frame">8.某些时候无法print frame</a></li>
+      <li><a href="#9thread命令" id="markdown-toc-9thread命令">9.Thread命令</a></li>
     </ul>
   </li>
-  <li><a href="#section-4" id="markdown-toc-section-4">提高篇</a>    <ul>
-      <li><a href="#image" id="markdown-toc-image">1.image命令使用</a></li>
-      <li><a href="#section-5" id="markdown-toc-section-5">2.野指针调试</a></li>
+  <li><a href="#提高篇" id="markdown-toc-提高篇">提高篇</a>    <ul>
+      <li><a href="#1image命令使用" id="markdown-toc-1image命令使用">1.image命令使用</a></li>
+      <li><a href="#2野指针调试" id="markdown-toc-2野指针调试">2.野指针调试</a></li>
     </ul>
   </li>
-  <li><a href="#section-6" id="markdown-toc-section-6">汇编篇</a>    <ul>
-      <li><a href="#section-7" id="markdown-toc-section-7">1.寄存器</a></li>
-      <li><a href="#x" id="markdown-toc-x">2.X命令</a></li>
+  <li><a href="#汇编篇" id="markdown-toc-汇编篇">汇编篇</a>    <ul>
+      <li><a href="#1寄存器" id="markdown-toc-1寄存器">1.寄存器</a></li>
+      <li><a href="#2x命令" id="markdown-toc-2x命令">2.X命令</a></li>
     </ul>
   </li>
 </ul>
@@ -214,64 +214,69 @@
 
 <p>工欲善其事必先利其器，介绍一些LLDB调试的命令和小技巧~</p>
 
-<h1 id="section">基础篇</h1>
+<h1 id="基础篇">基础篇</h1>
 <!--more-->
 
-<h3 id="print">1.print命令</h3>
+<h3 id="1print命令">1.print命令</h3>
 
-<p>p 输出基本类型，例如double，int  <br />
-po 输出对象类型，例如NSObject  <br />
-当然po也是可以输出基本类型的  <br />
+<p>p 输出基本类型，例如double，int<br />
+po 输出对象类型，例如NSObject<br />
+当然po也是可以输出基本类型的<br />
 p命令默认是按10进制输出的，如果想输出非十进制可以用以下方法</p>
 
 <p>二进制</p>
 
-<pre><code>(lldb) p/t 10
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) p/t 10
 (int) $2 = 0b00000000000000000000000000001010
 </code></pre>
+</div>
 
 <p>八进制</p>
 
-<pre><code>(lldb) p/o 10
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) p/o 10
 (int) $3 = 012
 </code></pre>
+</div>
 
 <p>十六进制</p>
 
-<pre><code>(lldb) p/x 10
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) p/x 10
 (int) $4 = 0x0000000a
 </code></pre>
+</div>
 
 <p>更加详细的格式控制可以点击<a href="https://sourceware.org/gdb/onlinedocs/gdb/Output-
 Formats.html">这里</a>查看</p>
 
-<h3 id="expression">2.expression命令</h3>
+<h3 id="2expression命令">2.expression命令</h3>
 
-<p>顾名思义这个是命令可以在控制台执行一条语句  <br />
-比如  <br />
-expr i = 5，把5赋值给i  <br />
+<p>顾名思义这个是命令可以在控制台执行一条语句<br />
+比如<br />
+expr i = 5，把5赋值给i<br />
 还有一种方式 po i = 5，也是有一样的效果的，都是让i的值变成5</p>
 
-<h3 id="section-1">3.设置断点</h3>
+<h3 id="3设置断点">3.设置断点</h3>
 
-<p>给某个类的某个OC方法下断点  <br />
+<p>给某个类的某个OC方法下断点<br />
 br set -n “方法描述”</p>
 
-<pre><code>(lldb) br set -n "[NSString stringWithFormat:]"
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br set -n "[NSString stringWithFormat:]"
 Breakpoint 2: where = Foundation`+[NSString stringWithFormat:], address = 0x000000010e292832
 </code></pre>
+</div>
 
-<p>给所有类的某一SELECTOR下断点  <br />
+<p>给所有类的某一SELECTOR下断点<br />
 br set -S <strong>selector</strong></p>
 
-<pre><code>(lldb) br set -S initWithFrame:
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br set -S initWithFrame:
 Breakpoint 4: 260 locations.
 </code></pre>
+</div>
 
-<p>断点列表查看  <br />
+<p>断点列表查看<br />
 br list</p>
 
-<pre><code>(lldb) br list
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br list
 Current breakpoints:
 5: name = 'initWithFrame:', locations = 260, resolved = 260, hit count = 0
   5.1: where = UIKit`-[_UIPickerViewTopFrame initWithFrame:], address = x000000010ec60584, resolved, hit count = 0 
@@ -281,87 +286,94 @@ Current breakpoints:
   5.5: where = UIKit`-[UIPickerView initWithFrame:], address = x000000010ec61bdf, resolved, hit count = 0 
   5.6: where = UIKit`-[_UIParallaxDimmingView initWithFrame:], address = x000000010ec70137, resolved, hit count = 0
 </code></pre>
+</div>
 
-<p>删除全部断点  <br />
+<p>删除全部断点<br />
 br del</p>
 
-<pre><code>(lldb) br del
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br del
 About to delete all breakpoints, do you want to do that?: [Y/n] Y
 All breakpoints removed. (4 breakpoints)
 </code></pre>
+</div>
 
-<p>删除某个断点  <br />
+<p>删除某个断点<br />
 br del 断点index（断点list里前面的x.x，例如6.1）</p>
 
-<pre><code>(lldb) br delete 6.1
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br delete 6.1
 0 breakpoints deleted; 1 breakpoint locations disabled.
 </code></pre>
+</div>
 
 <p>也可以按组删除，直接输入组号就可以</p>
 
-<pre><code>(lldb) br delete 6
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) br delete 6
 1 breakpoints deleted; 0 breakpoint locations disabled.
 </code></pre>
+</div>
 
-<h3 id="section-2">4.设置观察点</h3>
+<h3 id="4设置观察点">4.设置观察点</h3>
 
 <p>我们有时候想知道某个变量是否发生改变了，可以通过设置观察点的方式监控</p>
 
-<pre><code>(lldb) watchpoint set var self-&gt;_testA
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) watchpoint set var self-&gt;_testA
 Watchpoint created: Watchpoint 1: addr = 0x7fda62504708 size = 4 state = enabled type = w
     watchpoint spec = 'self-&gt;_testA'
     new value: 0
 </code></pre>
+</div>
 
 <p>这样当有变化的时候便会断下来，控制台会输出如下</p>
 
-<pre><code>Watchpoint 1 hit:
+<div class="highlighter-rouge"><pre class="highlight"><code>Watchpoint 1 hit:
 old value: 0
 new value: 5
 </code></pre>
+</div>
 
 <p>默认的命令只监测write，如果读也想监测的话可以这样</p>
 
-<pre><code>(lldb) watchpoint set var -w read_write self-&gt;_testA
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) watchpoint set var -w read_write self-&gt;_testA
 Watchpoint created: Watchpoint 1: addr = 0x7fc181c04238 size = 4 state = enabled type = rw
     watchpoint spec = 'self-&gt;_testA'
     new value: 0
 </code></pre>
+</div>
 
-<p>当然也可以管理watchpoint  <br />
-watchpoint list //列出所有的watchpoint  <br />
+<p>当然也可以管理watchpoint<br />
+watchpoint list //列出所有的watchpoint<br />
 watchpoint del //删除所有的watchpoint</p>
 
-<h3 id="viewcontroller">5.打印当前显示的ViewController</h3>
+<h3 id="5打印当前显示的viewcontroller">5.打印当前显示的ViewController</h3>
 
 <p>po [[[UIApplication sharedApplication] keyWindow] recursiveDescription]</p>
 
-<h3 id="view">6.打印当前屏幕上的View</h3>
+<h3 id="6打印当前屏幕上的view">6.打印当前屏幕上的View</h3>
 
-<p>po [[[[UIApplication sharedApplication] keyWindow] rootViewController]<br />
+<p>po [[[[UIApplication sharedApplication] keyWindow] rootViewController]
 _printHierarchy]</p>
 
-<h3 id="section-3">7.沙盒路径</h3>
+<h3 id="7沙盒路径">7.沙盒路径</h3>
 
 <p>po NSHomeDirectory()</p>
 
-<h3 id="print-frame">8.某些时候无法print frame</h3>
+<h3 id="8某些时候无法print-frame">8.某些时候无法print frame</h3>
 
 <p>p (CGRect)[self.view frame]</p>
 
-<h3 id="thread">9.Thread命令</h3>
+<h3 id="9thread命令">9.Thread命令</h3>
 
-<p>有时候我们想让某个函数在调试的时候直接返回YES  <br />
-可以断点到函数开头，然后执行以下语句  <br />
+<p>有时候我们想让某个函数在调试的时候直接返回YES<br />
+可以断点到函数开头，然后执行以下语句<br />
 thread return YES</p>
 
-<h1 id="section-4">提高篇</h1>
+<h1 id="提高篇">提高篇</h1>
 
-<h3 id="image">1.image命令使用</h3>
+<h3 id="1image命令使用">1.image命令使用</h3>
 
 <p>平常我们出现crash的时候总会有如下输出</p>
 
-<pre><code>2017-06-24 18:21:49.053 test[2419:11812168] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[NSObject xxx:]: unrecognized selector sent to instance 0x61000000c130'
+<div class="highlighter-rouge"><pre class="highlight"><code>2017-06-24 18:21:49.053 test[2419:11812168] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[NSObject xxx:]: unrecognized selector sent to instance 0x61000000c130'
 *** First throw call stack:
 (
     0   CoreFoundation                      0x000000010c870b0b __exceptionPreprocess + 171
@@ -393,66 +405,72 @@ thread return YES</p>
 )
 libc++abi.dylib: terminating with uncaught exception of type NSException
 </code></pre>
+</div>
 
 <p>我们可能一眼看不出是-[ViewController viewDidLoad]的第几行Crash了，这个时候我们可以使用image lookup命令</p>
 
-<pre><code>(lldb) image lookup -a 0x0000000109e3d74c
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) image lookup -a 0x0000000109e3d74c
       Address: test[0x000000010000174c] (test.__TEXT.__text + 108)
       Summary: test`-[ViewController viewDidLoad] + 108 at ViewController.m:22
 </code></pre>
+</div>
 
 <p>这样子就很容易看出是第22行Crash了</p>
 
-<h3 id="section-5">2.野指针调试</h3>
+<h3 id="2野指针调试">2.野指针调试</h3>
 
-<p>一般野指针调试大家可能都是用Zombie Objects，但AutoreleasePool里面的crash用Zombie可能看不出来问题  <br />
-这里我们介绍另外一种野指针调试方法Malloc History  <br />
-Malloc<br />
+<p>一般野指针调试大家可能都是用Zombie Objects，但AutoreleasePool里面的crash用Zombie可能看不出来问题<br />
+这里我们介绍另外一种野指针调试方法Malloc History<br />
+Malloc
 History可以输出某一地址的malloc和free记录，从中我们可以得到一些有用信息帮助我们定位问题，比如MRC下赋值的时候没有retain导致用的时候野指针了。</p>
 
-<p>首先要打开Malloc Stack选项  <br />
-<img src="/image/XCode_LLDB_diao_shi_xiao_ji_qiao/543f52df5a0c5ca1aa6a8a72a7da82ab108b815a335c3dafe5bb91f9fc3bb86e" alt="" /></p>
+<p>首先要打开Malloc Stack选项<br />
+<img src="/image/xcode_lldb_diao_shi_xiao_ji_qiao/543f52df5a0c5ca1aa6a8a72a7da82ab108b815a335c3dafe5bb91f9fc3bb86e" alt="" /></p>
 
 <p>然后我们写个简单的程序</p>
 
-<pre><code>- (void)viewDidLoad {
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)viewDidLoad {
     [super viewDidLoad];
     NSDate *date = [[NSDate new] autorelease];
     [date release];
 }
 </code></pre>
+</div>
 
-<p>执行一下  <br />
-<img src="/image/XCode_LLDB_diao_shi_xiao_ji_qiao/bf5d97711fda59ef58c90bffd06861a3e0b89ef742e00a5216ea5794bd6f1fa0" alt="" />  <br />
+<p>执行一下<br />
+<img src="/image/xcode_lldb_diao_shi_xiao_ji_qiao/bf5d97711fda59ef58c90bffd06861a3e0b89ef742e00a5216ea5794bd6f1fa0" alt="" /><br />
 如我们所料Crash了，但看堆栈和错误log好像没什么线索</p>
 
 <p>我们查看左边Crash栈的第0帧</p>
 
-<pre><code>#0    0x00000001034abd5b in objc_release ()
+<div class="highlighter-rouge"><pre class="highlight"><code>#0    0x00000001034abd5b in objc_release ()
 </code></pre>
+</div>
 
-<p>在控制台输入  <br />
+<p>在控制台输入<br />
 p/x $rdi（$rdi在x64模拟器上是第一个寄存器，也就是指向OC方法中的Self）</p>
 
-<pre><code>(lldb) p/x $rdi
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) p/x $rdi
 (unsigned long) $1 = 0x0000600000005750
 </code></pre>
+</div>
 
 <p>现在我们拿到Self指针了，然后就可以用Malloc History来追查了</p>
 
-<p>在控制台中输入  <br />
+<p>在控制台中输入<br />
 command script import lldb.macosx.heap，开启相关命令</p>
 
-<pre><code>(lldb) command script import lldb.macosx.heap
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) command script import lldb.macosx.heap
 "malloc_info", "ptr_refs", "cstr_refs", "find_variable", and "objc_refs" commands have been installed, use the "--help" options on these commands for detailed help.
 </code></pre>
+</div>
 
-<p>然后输入  <br />
-malloc_info —stack-history xxxxxxx（xxxx是地址）  <br />
-来查看相应地址的分配记录  <br />
+<p>然后输入<br />
+malloc_info —stack-history xxxxxxx（xxxx是地址）<br />
+来查看相应地址的分配记录<br />
 这里我们输入malloc_info —stack-history 0x0000600000005750</p>
 
-<pre><code>(lldb) malloc_info --stack-history 0x0000600000005750
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) malloc_info --stack-history 0x0000600000005750
 0x0000600000005750: malloc(    16) -&gt; 0x600000005750
 stack[0]: addr = 0x600000005750, type=malloc, frames:
      [0] 0x0000000106a7844a libsystem_malloc.dylib`malloc + 24
@@ -571,10 +589,11 @@ stack[14]: addr = 0x600000005750, type=malloc, frames:
      [26] 0x0000000102ecaac3 test`main + 99 at main.m:14:9
      [27] 0x000000010689d65d libdyld.dylib`start + 1
 </code></pre>
+</div>
 
 <p>我们会发现这个地址的分配记录很多，但我主要关心我们自己程序的</p>
 
-<pre><code>stack[12]: addr = 0x600000005750, type=malloc, frames:
+<div class="highlighter-rouge"><pre class="highlight"><code>stack[12]: addr = 0x600000005750, type=malloc, frames:
      [0] 0x0000000106a78485 libsystem_malloc.dylib`calloc + 30
      [1] 0x00000001034a2ba1 libobjc.A.dylib`class_createInstance + 85
      [2] 0x000000010397ddd1 CoreFoundation`__CFAllocateObject + 17
@@ -600,10 +619,11 @@ stack[14]: addr = 0x600000005750, type=malloc, frames:
      [22] 0x0000000102ecaac3 test`main + 99 at main.m:14:9
      [23] 0x000000010689d65d libdyld.dylib`start + 1
 </code></pre>
+</div>
 
 <p>看[4]可以发现在-[ViewController viewDidLoad]的第21行malloc了一个对象</p>
 
-<pre><code>stack[13]: addr = 0x600000005750, type=free, frames:
+<div class="highlighter-rouge"><pre class="highlight"><code>stack[13]: addr = 0x600000005750, type=free, frames:
      [0] 0x00000001034a2d6e libobjc.A.dylib`object_dispose + 30
      [1] 0x000000010399c4a7 CoreFoundation`-[__NSDate dealloc] + 39
      [2] 0x00000001034acb8e libobjc.A.dylib`objc_object::sidetable_release(bool) + 202
@@ -628,20 +648,21 @@ stack[14]: addr = 0x600000005750, type=malloc, frames:
      [21] 0x0000000102ecaac3 test`main + 99 at main.m:14:9
      [22] 0x000000010689d65d libdyld.dylib`start + 1
 </code></pre>
+</div>
 
 <p>看[3]发现我们在-[ViewController viewDidLoad]的第23行free了</p>
 
-<p>我们看看对应代码  <br />
-<img src="/image/XCode_LLDB_diao_shi_xiao_ji_qiao/58233b5529054bdc766d633797a698e09b43c2f8f30eece3620ccd55bb7c4880" alt="" />  <br />
+<p>我们看看对应代码<br />
+<img src="/image/xcode_lldb_diao_shi_xiao_ji_qiao/58233b5529054bdc766d633797a698e09b43c2f8f30eece3620ccd55bb7c4880" alt="" /><br />
 可以明显看出是21行加了一个autorelease，22行又release了导致出问题的</p>
 
 <p>当然这是个简单的demo，实际情况会复杂的多，使用Malloc History也只是能提供更多信息来追查相应问题，不能保证一定能找出导致野指针的地方。</p>
 
-<h1 id="section-6">汇编篇</h1>
+<h1 id="汇编篇">汇编篇</h1>
 
-<h3 id="section-7">1.寄存器</h3>
+<h3 id="1寄存器">1.寄存器</h3>
 
-<p>在我们在调试的时候有时候查看寄存器会有很多有用的信息，我们先介绍下函数调用约定  <br />
+<p>在我们在调试的时候有时候查看寄存器会有很多有用的信息，我们先介绍下函数调用约定<br />
 x64模拟器：</p>
 
 <ul>
@@ -652,7 +673,7 @@ x64模拟器：</p>
   <li>%r10，%r11 用作数据存储，遵循调用者使用规则，简单说就是使用之前要先保存原值</li>
 </ul>
 
-<p>ARM64：  <br />
+<p>ARM64：<br />
 arm64有32个64bit长度的通用寄存器x0～x30还有一个SP寄存器，因为arm64兼容32位所以可以只使用其中的低32bit别名w0～w30</p>
 
 <ul>
@@ -668,18 +689,18 @@ arm64有32个64bit长度的通用寄存器x0～x30还有一个SP寄存器，因�
   <li>SP：栈寄存器</li>
 </ul>
 
-<p>我们常用的一般都是传递前几个参数的寄存器，在OC方法里，一般第一个参数是Self，第二个参数是Selector，所以我们最常见的寄存器是rdi，rsi，x0，x1。  <br />
+<p>我们常用的一般都是传递前几个参数的寄存器，在OC方法里，一般第一个参数是Self，第二个参数是Selector，所以我们最常见的寄存器是rdi，rsi，x0，x1。<br />
 上面我们在查找野指针的时候po $rdi，也就是查看第一个寄存器也就是Self的值。</p>
 
-<h3 id="x">2.X命令</h3>
+<h3 id="2x命令">2.X命令</h3>
 
 <p>X命令是直接输出内存内容，非常好使</p>
 
-<p>命令格式  <br />
+<p>命令格式<br />
 x/nfu</p>
 
-<p>参数解释：  <br />
-n，表示要显示的内存单元的个数  <br />
+<p>参数解释：<br />
+n，表示要显示的内存单元的个数<br />
 f，表示显示方式, 可取如下值：</p>
 
 <table>
@@ -758,25 +779,26 @@ f，表示显示方式, 可取如下值：</p>
   </tbody>
 </table>
 
-<p>，表示内存地址，可以是变量名，也可以是内存地址。  <br />
+<p>，表示内存地址，可以是变量名，也可以是内存地址。<br />
 更加详细的说明可以看<a href="http://visualgdb.com/gdbreference/commands/x">这里</a></p>
 
-<p>一些常用的组合：  <br />
-x/16xb self  <br />
-会显示 self 指针地址内容，16 个字节，16 进制。  <br />
-x/16cb charArray  <br />
+<p>一些常用的组合：<br />
+x/16xb self<br />
+会显示 self 指针地址内容，16 个字节，16 进制。<br />
+x/16cb charArray<br />
 会显示地址 charArray 地址的内容，16 个字节，按字符格式显示。</p>
 
-<p>比如我们定义  <br />
-char *charArray = “0123456789ABCDEF”;  <br />
+<p>比如我们定义<br />
+char *charArray = “0123456789ABCDEF”;<br />
 分别试下两种输出</p>
 
-<pre><code>(lldb) x/16xb charArray
+<div class="highlighter-rouge"><pre class="highlight"><code>(lldb) x/16xb charArray
 0x10b16155a: 0x30 0x31 0x32 0x33 0x34 0x35 0x36 0x37
 0x10b161562: 0x38 0x39 0x41 0x42 0x43 0x44 0x45 0x46
 (lldb) x/16cb charArray
 0x10b16155a: 0123456789ABCDEF
 </code></pre>
+</div>
 
 <p>可以看出第一种输出的是Ascii码，第二种直接输出字符了。输出查看的时候有一点要注意，arm是小端存储，低地址存放的是低位~</p>
 
@@ -944,9 +966,9 @@ char *charArray = “0123456789ABCDEF”;  <br />
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/' 
+     'url':'http://localhost:4000/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/26/xcode_lldb_diao_shi_xiao_ji_qiao/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,34 +180,34 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">一、方法调用</a></li>
-  <li><a href="#section-1" id="markdown-toc-section-1">二、消息转发</a></li>
+  <li><a href="#一方法调用" id="markdown-toc-一方法调用">一、方法调用</a></li>
+  <li><a href="#二消息转发" id="markdown-toc-二消息转发">二、消息转发</a></li>
 </ul>
 
-<p>| 导语 iOS<br />
+<p>| 导语 iOS
 runtime为开发者提供了很多灵活便捷的方法，使得在运行时也可以改变类的结构。这篇文章主要是从方法调用作为切入点，来学习&amp;记录runtime的理论知识。</p>
 
-<h3 id="section">一、方法调用</h3>
+<h3 id="一方法调用">一、方法调用</h3>
 
 <!--more-->
 <p>      在OC中，运行时贯穿了整个工程的运行过程，每一个方法的调用都离不开运行时的工作。</p>
 
-<p>      在讨论OC时，我们经常说 向对象“发消息”<br />
+<p>      在讨论OC时，我们经常说 向对象“发消息”
 而不是“调用”，原因就在于在整个程序运行过程中，每一次实际上所调用的方法并不是已经完全绑定好的，编译器会把OC方法的调用，转换成objc_msgsend函数，这个函数会动态的寻找下一步要执行的方法。也正是这个函数，完成了动态绑定的整个过程。</p>
 
 <p>     objc_msgsend的大致运行流程如下图，其中需要重点关注的是“寻找方法实现”这一步。</p>
 
-<p><img src="/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/d515fc633024d8f4dd248537f2a8362fa68e82564207a02fe9108e58e289a3d6" alt="" /></p>
+<p><img src="/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/d515fc633024d8f4dd248537f2a8362fa68e82564207a02fe9108e58e289a3d6" alt="" /></p>
 
 <p>寻找方法实现可以概括为以下几步：</p>
 
-<p><img src="/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/49d65bf7c25d01679631572571ba47035cc6ddd790eaae7950b4c32b405703e0" alt="" /></p>
+<p><img src="/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/49d65bf7c25d01679631572571ba47035cc6ddd790eaae7950b4c32b405703e0" alt="" /></p>
 
-<h3 id="section-1">二、消息转发</h3>
+<h3 id="二消息转发">二、消息转发</h3>
 
 <p>    当OC找不到代码中调用的方法时，在crash之前我们还有机会通过重写以下NSObject的四个方法来进行处理:</p>
 
-<pre><code>//当调用一个不存在的类方法时调用
+<div class="highlighter-rouge"><pre class="highlight"><code>//当调用一个不存在的类方法时调用
 + (BOOL)resolveClassMethod:(SEL)sel;
 
 //当调用一个不存在的实例方法时调用
@@ -222,6 +222,7 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
 
 整个流程如下图所示：
 </code></pre>
+</div>
 
 <p>·首先调用resolveInstanceMethod(以调用实例方法来举例)</p>
 
@@ -229,17 +230,18 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
 
 <p>·如果返回nil，那么调用forwardInvocation</p>
 
-<p><img src="/image/iOS_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/e61d9fea2a32c69da6ab6876f3a26add0dfcf4e231ccd171d2ff36e92d99fbe7" alt="" /></p>
+<p><img src="/image/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/e61d9fea2a32c69da6ab6876f3a26add0dfcf4e231ccd171d2ff36e92d99fbe7" alt="" /></p>
 
 <p>我们现在来动手动态的添加一个方法。首先，在viewdidload里调用一个不存在的方法：</p>
 
-<pre><code>TestClass *tstObj = [[TestClass alloc]init];
+<div class="highlighter-rouge"><pre class="highlight"><code>TestClass *tstObj = [[TestClass alloc]init];
 [tstObj performSelector:@selector(lalaLand)];
 </code></pre>
+</div>
 
 <p>再在TestClass.m中添加以下代码：</p>
 
-<pre><code>void addMethod(id self, SEL _cmd){
+<div class="highlighter-rouge"><pre class="highlight"><code>void addMethod(id self, SEL _cmd){
     NSLog(@"addMethod complete.");
 }
 
@@ -261,16 +263,18 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
     NSLog(@"forwardInvocation complete.");
 }
 </code></pre>
+</div>
 
 <p>打印log:</p>
 
-<pre><code>2017-02-28 16:26:12.992 NormalTryTry[12628:28082853] resolveInstanceMethod return.
+<div class="highlighter-rouge"><pre class="highlight"><code>2017-02-28 16:26:12.992 NormalTryTry[12628:28082853] resolveInstanceMethod return.
 2017-02-28 16:26:25.348 NormalTryTry[12628:28082853] addMethod complete.
 </code></pre>
+</div>
 
 <p>上面的代码实际上只运行到了resolveInstanceMethod就成功返回，因为在这个方法中我们已经给到了系统一个方法实现，并返回了TES，这时候系统就不会再向两个forward抛出消息了。</p>
 
-<p>简单说来，这四个方法都是用来添加未处理方法的。区别在于，resolveInstanceMethod是在本类中添加方法，并告诉系统该方法是否执行；forwardingTargetForSelector<br />
+<p>简单说来，这四个方法都是用来添加未处理方法的。区别在于，resolveInstanceMethod是在本类中添加方法，并告诉系统该方法是否执行；forwardingTargetForSelector
 是自己处理不了，转给其它实例做处理；如果经过以上几步还是处理不了，那么就走到了forwardInvocation中，系统会把这个方法的所有信息都打包给我们，做最后的处理。</p>
 
 <p>消息转发有很多灵活的应用，对于crash防崩溃、lua-wax都是很重要的技术点~</p>
@@ -437,9 +441,9 @@ runtime为开发者提供了很多灵活便捷的方法，使得在运行时也�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/' 
+     'url':'http://localhost:4000/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/05/31/ios_runtime_fang_fa_diao_yong_yu_xiao_xi_zhuan_fa/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

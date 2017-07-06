@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,39 +180,40 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">1. 框架设计</a>    <ul>
-      <li><a href="#orm" id="markdown-toc-orm">1.2. ORM内部实现流程</a></li>
-      <li><a href="#javasqlite" id="markdown-toc-javasqlite">1.3. Java数据类型与SQLite数据类型映射表</a></li>
+  <li><a href="#1-框架设计" id="markdown-toc-1-框架设计">1. 框架设计</a>    <ul>
+      <li><a href="#11-总体流程" id="markdown-toc-11-总体流程">1.1. 总体流程</a></li>
+      <li><a href="#12-orm内部实现流程" id="markdown-toc-12-orm内部实现流程">1.2. ORM内部实现流程</a></li>
+      <li><a href="#13-java数据类型与sqlite数据类型映射表" id="markdown-toc-13-java数据类型与sqlite数据类型映射表">1.3. Java数据类型与SQLite数据类型映射表</a></li>
     </ul>
   </li>
-  <li><a href="#section-1" id="markdown-toc-section-1">2. 内部实现的几个重要实现规则</a>    <ul>
-      <li><a href="#sqlitejava" id="markdown-toc-sqlitejava">1. 对于SQLite表字段与Java对象字段映射规则：</a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2">2. 保存数据类型规则：</a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3">3. 表名称生成规则：</a></li>
+  <li><a href="#2-内部实现的几个重要实现规则" id="markdown-toc-2-内部实现的几个重要实现规则">2. 内部实现的几个重要实现规则</a>    <ul>
+      <li><a href="#1-对于sqlite表字段与java对象字段映射规则" id="markdown-toc-1-对于sqlite表字段与java对象字段映射规则">1. 对于SQLite表字段与Java对象字段映射规则：</a></li>
+      <li><a href="#2-保存数据类型规则" id="markdown-toc-2-保存数据类型规则">2. 保存数据类型规则：</a></li>
+      <li><a href="#3-表名称生成规则" id="markdown-toc-3-表名称生成规则">3. 表名称生成规则：</a></li>
     </ul>
   </li>
-  <li><a href="#section-4" id="markdown-toc-section-4">3. 代码实现</a>    <ul>
-      <li><a href="#sqlbuildersql" id="markdown-toc-sqlbuildersql">3.1 SQLBuilder：SQL语句构建器</a>        <ul>
-          <li><a href="#sql" id="markdown-toc-sql">这里以创建表的SQL为例</a></li>
+  <li><a href="#3-代码实现" id="markdown-toc-3-代码实现">3. 代码实现</a>    <ul>
+      <li><a href="#31-sqlbuildersql语句构建器" id="markdown-toc-31-sqlbuildersql语句构建器">3.1 SQLBuilder：SQL语句构建器</a>        <ul>
+          <li><a href="#这里以创建表的sql为例" id="markdown-toc-这里以创建表的sql为例">这里以创建表的SQL为例</a></li>
         </ul>
       </li>
-      <li><a href="#sqlitedbexecutorsql" id="markdown-toc-sqlitedbexecutorsql">3.2 SQLiteDBExecutor：SQL语句执行器</a></li>
-      <li><a href="#lazydborm" id="markdown-toc-lazydborm">3.3 LazyDB：ORM入口的主类</a></li>
-      <li><a href="#section-5" id="markdown-toc-section-5">4. 源码与例子的地址</a></li>
-      <li><a href="#java" id="markdown-toc-java">5. Java反射优化方案</a></li>
+      <li><a href="#32-sqlitedbexecutorsql语句执行器" id="markdown-toc-32-sqlitedbexecutorsql语句执行器">3.2 SQLiteDBExecutor：SQL语句执行器</a></li>
+      <li><a href="#33-lazydborm入口的主类" id="markdown-toc-33-lazydborm入口的主类">3.3 LazyDB：ORM入口的主类</a></li>
+      <li><a href="#4-源码与例子的地址" id="markdown-toc-4-源码与例子的地址">4. 源码与例子的地址</a></li>
+      <li><a href="#5-java反射优化方案" id="markdown-toc-5-java反射优化方案">5. Java反射优化方案</a></li>
     </ul>
   </li>
 </ul>
 
-<p>| 导语<br />
+<p>| 导语
 Java反射机制是一个很好用的东西。反射机制可以帮我们做那些重复的有规则的事情，所以现在很多的自动生成代码的软件就是运用反射机制来完成的。这里重复造个轮子看看。</p>
 
-<h1 id="section">1. 框架设计</h1>
+<h1 id="1-框架设计">1. 框架设计</h1>
 
 <!--more-->
-<p>## 1.1. 总体流程</p>
+<h2 id="11-总体流程">1.1. 总体流程</h2>
 
-<p><img src="/image/ji_yu_Java_fan_she_shi_xian_Android_de_ORM_kuang_jia/65d745851b21df0033d471c5711a9250c21d1764455fab9d4a507932978fa721" alt="" /></p>
+<p><img src="/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/65d745851b21df0033d471c5711a9250c21d1764455fab9d4a507932978fa721" alt="" /></p>
 
 <blockquote>
   <ol>
@@ -230,15 +231,15 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
 
 </blockquote>
 
-<h2 id="orm">1.2. ORM内部实现流程</h2>
+<h2 id="12-orm内部实现流程">1.2. ORM内部实现流程</h2>
 
-<p><img src="/image/ji_yu_Java_fan_she_shi_xian_Android_de_ORM_kuang_jia/6feb82d370385ce74029dc2663bd3bf95a6d54cec65665ef39b4e0d292abf3b2" alt="" /></p>
+<p><img src="/image/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/6feb82d370385ce74029dc2663bd3bf95a6d54cec65665ef39b4e0d292abf3b2" alt="" /></p>
 
 <blockquote>
   <p>构建SQL语句的原理：通过Java反射机制，获取Class的字段和Object字段值，通过字符串拼接构建SQL。</p>
 </blockquote>
 
-<h2 id="javasqlite">1.3. Java数据类型与SQLite数据类型映射表</h2>
+<h2 id="13-java数据类型与sqlite数据类型映射表">1.3. Java数据类型与SQLite数据类型映射表</h2>
 
 <table>
   <thead>
@@ -271,48 +272,48 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
   <p>PS：这里简单起见，将所有的字符串都用TEXT；整数都用INTEGER；</p>
 </blockquote>
 
-<h1 id="section-1">2. 内部实现的几个重要实现规则</h1>
+<h1 id="2-内部实现的几个重要实现规则">2. 内部实现的几个重要实现规则</h1>
 
-<h4 id="sqlitejava">1. 对于SQLite表字段与Java对象字段映射规则：</h4>
+<h4 id="1-对于sqlite表字段与java对象字段映射规则">1. 对于SQLite表字段与Java对象字段映射规则：</h4>
 
-<p>（1）只映射非<code>final</code>和非<code>static</code>的Java字段；  <br />
-（2）Java的字段名即SQLite表的字段名；  <br />
-（3）主键取Java对象中的名字为ID（不区分大小写）或者加了<code>[@ID](https://github.com/ID "@ID"
+<p>（1）只映射非<code class="highlighter-rouge">final</code>和非<code class="highlighter-rouge">static</code>的Java字段；<br />
+（2）Java的字段名即SQLite表的字段名；<br />
+（3）主键取Java对象中的名字为ID（不区分大小写）或者加了<code class="highlighter-rouge">[@ID](https://github.com/ID "@ID"
 )</code>注解的字段，优先查找注解；</p>
 
-<h4 id="section-2">2. 保存数据类型规则：</h4>
+<h4 id="2-保存数据类型规则">2. 保存数据类型规则：</h4>
 
-<p>（1）以Java基本数据类型以及其包装类为主，还有<code>Date</code>；对于其他类不做处理；</p>
+<p>（1）以Java基本数据类型以及其包装类为主，还有<code class="highlighter-rouge">Date</code>；对于其他类不做处理；</p>
 
-<h4 id="section-3">3. 表名称生成规则：</h4>
+<h4 id="3-表名称生成规则">3. 表名称生成规则：</h4>
 
-<p>（1）以Java类的完全限定名来命名（<code>.</code>替换为<code>_</code>），例如：<code>com.andy.Person</code>的代表的表名为<code>com_andy_Person</code>，保证了表名的唯一性；</p>
+<p>（1）以Java类的完全限定名来命名（<code class="highlighter-rouge">.</code>替换为<code class="highlighter-rouge">_</code>），例如：<code class="highlighter-rouge">com.andy.Person</code>的代表的表名为<code class="highlighter-rouge">com_andy_Person</code>，保证了表名的唯一性；</p>
 
-<h1 id="section-4">3. 代码实现</h1>
+<h1 id="3-代码实现">3. 代码实现</h1>
 
-<p>介绍一下几个重要的类  <br />
-（1） 用于构造SQL语句的类<code>SQLBuilder</code>（主要用了Java反射机制）  <br />
-（2） 用于执行SQL语句的类<code>SQLiteDBExecutor</code>  <br />
-（3） 提供给外部使用的ORM主类<code>LazyDB</code></p>
+<p>介绍一下几个重要的类<br />
+（1） 用于构造SQL语句的类<code class="highlighter-rouge">SQLBuilder</code>（主要用了Java反射机制）<br />
+（2） 用于执行SQL语句的类<code class="highlighter-rouge">SQLiteDBExecutor</code><br />
+（3） 提供给外部使用的ORM主类<code class="highlighter-rouge">LazyDB</code></p>
 
-<h2 id="sqlbuildersql">3.1 SQLBuilder：SQL语句构建器</h2>
+<h2 id="31-sqlbuildersql语句构建器">3.1 SQLBuilder：SQL语句构建器</h2>
 
 <blockquote>
   <p>该Class的主要作用是，将外部传进来的Object（对象）或者Class（类），通过Java反射机制，构建成SQL语句。</p>
 </blockquote>
 
-<h4 id="sql">这里以创建表的SQL为例</h4>
+<h4 id="这里以创建表的sql为例">这里以创建表的SQL为例</h4>
 
 <blockquote>
-  <p>代码步骤分解：  <br />
-（1）取出Class中所有Field，即Field数组；  <br />
-（2）遍历Field数组，找出主键的Field，拼到SQL的字符串里；  <br />
+  <p>代码步骤分解：<br />
+（1）取出Class中所有Field，即Field数组；<br />
+（2）遍历Field数组，找出主键的Field，拼到SQL的字符串里；<br />
 （3）再次遍历Field数组，过滤掉主键的Field、final、static，拼到SQL的字符串里；</p>
 </blockquote>
 
 <p>具体代码如下：</p>
 
-<pre><code>    // SQLBuilder类
+<div class="highlighter-rouge"><pre class="highlight"><code>    // SQLBuilder类
     /**
      * 构建创建数据库表的sql语句
      *
@@ -370,21 +371,22 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
         return sql;
     }
 </code></pre>
+</div>
 
-<p><strong>上面代码中用到了几个工具类：</strong>  <br />
-<code>ReflectUtil</code>：用于Java反射的工具类，将所有反射调用的方法都放到这里来，统一管理，方便优化处理；  <br />
-<code>IDUtil</code>：用于主键Field查找的工具类；  <br />
-<code>TableUtil</code>：用于数据库表字段数据与Java数据类型转换、表名生成等；</p>
+<p><strong>上面代码中用到了几个工具类：</strong><br />
+<code class="highlighter-rouge">ReflectUtil</code>：用于Java反射的工具类，将所有反射调用的方法都放到这里来，统一管理，方便优化处理；<br />
+<code class="highlighter-rouge">IDUtil</code>：用于主键Field查找的工具类；<br />
+<code class="highlighter-rouge">TableUtil</code>：用于数据库表字段数据与Java数据类型转换、表名生成等；</p>
 
-<h2 id="sqlitedbexecutorsql">3.2 SQLiteDBExecutor：SQL语句执行器</h2>
+<h2 id="32-sqlitedbexecutorsql语句执行器">3.2 SQLiteDBExecutor：SQL语句执行器</h2>
 
 <blockquote>
-  <p>该Class的主要作用是，用于执行SQL语句，或者通过<code>SQLiteOpenHelper</code>执行一些数据库操作，反正所有数据库操作都在这里面。</p>
+  <p>该Class的主要作用是，用于执行SQL语句，或者通过<code class="highlighter-rouge">SQLiteOpenHelper</code>执行一些数据库操作，反正所有数据库操作都在这里面。</p>
 </blockquote>
 
 <p>（1）数据库非查询操作</p>
 
-<pre><code>    // SQLiteDBExecutor类
+<div class="highlighter-rouge"><pre class="highlight"><code>    // SQLiteDBExecutor类
     /**
      * 执行非查询操作事物
      *
@@ -424,19 +426,21 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
         });
     }
 </code></pre>
+</div>
 
 <p>（2）数据库查询操作</p>
 
-<pre><code>    // SQLiteDBExecutor类
+<div class="highlighter-rouge"><pre class="highlight"><code>    // SQLiteDBExecutor类
     public Cursor rawQuery(String sql, String[] selectionArgs) {
         SQLiteDatabase db = helper.getReadableDatabase();
         return db.rawQuery(sql, null);
     }
 </code></pre>
+</div>
 
 <p>然后看一段比较好看的查询代码：</p>
 
-<pre><code>        List entities = lazyDB
+<div class="highlighter-rouge"><pre class="highlight"><code>        List entities = lazyDB
                 .query(Entity.class)
                 .selectAll()
                 .where("id=? and name=? and age=? and birthday=? and sex=? and money=?",
@@ -449,12 +453,13 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
                 )
                 .findAll();
 </code></pre>
+</div>
 
 <blockquote>
   <p>个人比较钟意这种构建器模式下的代码；看下查询代码，基于Builder模式的实现。</p>
 </blockquote>
 
-<pre><code>public class SelectBuilder&lt;T&gt; {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class SelectBuilder&lt;T&gt; {
     private final SQLiteDBExecutor executor;
 
     final Class objectClass;
@@ -509,13 +514,14 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
     ......
 }
 </code></pre>
+</div>
 
 <blockquote>
-  <p>提供了类似写SQL查询语句的字符串构建器；  <br />
+  <p>提供了类似写SQL查询语句的字符串构建器；<br />
 最后，执行查询；</p>
 </blockquote>
 
-<pre><code>public class SelectBuilder&lt;T&gt; {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class SelectBuilder&lt;T&gt; {
     ......
 
     /**
@@ -601,14 +607,15 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
     }
 }
 </code></pre>
+</div>
 
 <blockquote>
   <p>PS：ObjectUtil用于通过Java反射实例化对象，然后对对象进行赋值；</p>
 </blockquote>
 
-<h2 id="lazydborm">3.3 LazyDB：ORM入口的主类</h2>
+<h2 id="33-lazydborm入口的主类">3.3 LazyDB：ORM入口的主类</h2>
 
-<pre><code>public final class LazyDB {
+<div class="highlighter-rouge"><pre class="highlight"><code>public final class LazyDB {
     /**
      * 阻止通过new来实例化LazyDB
      * 应该使用create方法来创建LazyDB
@@ -770,12 +777,13 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
      */
     public  T queryById(Class clazz, Object idValue) throws Exception {}
 </code></pre>
+</div>
 
-<h2 id="section-5">4. 源码与例子的地址</h2>
+<h2 id="4-源码与例子的地址">4. 源码与例子的地址</h2>
 
 <p><a href="https://github.com/ClaymanTwinkle/LazyDB">https://github.com/ClaymanTwinkle/LazyDB</a></p>
 
-<h2 id="java">5. Java反射优化方案</h2>
+<h2 id="5-java反射优化方案">5. Java反射优化方案</h2>
 
 <p>Java反射机制虽然好用，但是为此会牺牲性能，这里有个优化点，可以在取反射时，加一层内存缓存，先查缓存，找不到再取反射。</p>
 
@@ -964,9 +972,9 @@ Java反射机制是一个很好用的东西。反射机制可以帮我们做那�
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/' 
+     'url':'http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/30/ji_yu_java_fan_she_shi_xian_android_de_orm_kuang_jia/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

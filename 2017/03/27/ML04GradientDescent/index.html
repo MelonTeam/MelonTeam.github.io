@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/ML04GradientDescent/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/03/27/ML04GradientDescent/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -176,43 +176,43 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#gradient-descent" id="markdown-toc-gradient-descent">什么是Gradient Descent（梯度下降法）？</a>    <ul>
-      <li><a href="#review-" id="markdown-toc-review-">Review: 梯度下降法</a></li>
+  <li><a href="#什么是gradient-descent梯度下降法" id="markdown-toc-什么是gradient-descent梯度下降法">什么是Gradient Descent（梯度下降法）？</a>    <ul>
+      <li><a href="#review-梯度下降法" id="markdown-toc-review-梯度下降法">Review: 梯度下降法</a></li>
     </ul>
   </li>
-  <li><a href="#tip1-learning-rates" id="markdown-toc-tip1-learning-rates">Tip1：调整 learning rates（学习速率）</a>    <ul>
-      <li><a href="#learning-rate" id="markdown-toc-learning-rate">小心翼翼地调整 learning rate</a></li>
-      <li><a href="#learning-rate-1" id="markdown-toc-learning-rate-1">自适应 learning rate</a></li>
-      <li><a href="#adagrad-" id="markdown-toc-adagrad-">Adagrad 算法</a>        <ul>
-          <li><a href="#adagrad--1" id="markdown-toc-adagrad--1">Adagrad 是什么？</a></li>
-          <li><a href="#adagrad" id="markdown-toc-adagrad">Adagrad举例</a></li>
-          <li><a href="#adagrad--2" id="markdown-toc-adagrad--2">Adagrad 存在的矛盾？</a></li>
-          <li><a href="#section" id="markdown-toc-section">多参数下结论不一定成立</a></li>
-          <li><a href="#adagrad--3" id="markdown-toc-adagrad--3">Adagrad 进一步的解释</a></li>
+  <li><a href="#tip1调整-learning-rates学习速率" id="markdown-toc-tip1调整-learning-rates学习速率">Tip1：调整 learning rates（学习速率）</a>    <ul>
+      <li><a href="#小心翼翼地调整-learning-rate" id="markdown-toc-小心翼翼地调整-learning-rate">小心翼翼地调整 learning rate</a></li>
+      <li><a href="#自适应-learning-rate" id="markdown-toc-自适应-learning-rate">自适应 learning rate</a></li>
+      <li><a href="#adagrad-算法" id="markdown-toc-adagrad-算法">Adagrad 算法</a>        <ul>
+          <li><a href="#adagrad-是什么" id="markdown-toc-adagrad-是什么">Adagrad 是什么？</a></li>
+          <li><a href="#adagrad举例" id="markdown-toc-adagrad举例">Adagrad举例</a></li>
+          <li><a href="#adagrad-存在的矛盾" id="markdown-toc-adagrad-存在的矛盾">Adagrad 存在的矛盾？</a></li>
+          <li><a href="#多参数下结论不一定成立" id="markdown-toc-多参数下结论不一定成立">多参数下结论不一定成立</a></li>
+          <li><a href="#adagrad-进一步的解释" id="markdown-toc-adagrad-进一步的解释">Adagrad 进一步的解释</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#tip2stochastic-gradient-descent" id="markdown-toc-tip2stochastic-gradient-descent">Tip2：Stochastic Gradient Descent（随机梯度下降法）</a></li>
-  <li><a href="#tip3feature-scaling" id="markdown-toc-tip3feature-scaling">Tip3：Feature Scaling（特征缩放）</a>    <ul>
-      <li><a href="#section-1" id="markdown-toc-section-1">为什么要这样做？</a></li>
-      <li><a href="#scaling" id="markdown-toc-scaling">怎么做 scaling？</a></li>
+  <li><a href="#tip2stochastic-gradient-descent随机梯度下降法" id="markdown-toc-tip2stochastic-gradient-descent随机梯度下降法">Tip2：Stochastic Gradient Descent（随机梯度下降法）</a></li>
+  <li><a href="#tip3feature-scaling特征缩放" id="markdown-toc-tip3feature-scaling特征缩放">Tip3：Feature Scaling（特征缩放）</a>    <ul>
+      <li><a href="#为什么要这样做" id="markdown-toc-为什么要这样做">为什么要这样做？</a></li>
+      <li><a href="#怎么做-scaling" id="markdown-toc-怎么做-scaling">怎么做 scaling？</a></li>
     </ul>
   </li>
-  <li><a href="#section-2" id="markdown-toc-section-2">梯度下降的理论基础</a>    <ul>
-      <li><a href="#section-3" id="markdown-toc-section-3">问题</a></li>
+  <li><a href="#梯度下降的理论基础" id="markdown-toc-梯度下降的理论基础">梯度下降的理论基础</a>    <ul>
+      <li><a href="#问题" id="markdown-toc-问题">问题</a></li>
     </ul>
   </li>
-  <li><a href="#section-4" id="markdown-toc-section-4">数学理论</a>    <ul>
-      <li><a href="#taylor-series" id="markdown-toc-taylor-series">Taylor Series（泰勒展开式）</a>        <ul>
-          <li><a href="#section-5" id="markdown-toc-section-5">定义</a></li>
-          <li><a href="#section-6" id="markdown-toc-section-6">多变量泰勒展开式</a></li>
+  <li><a href="#数学理论" id="markdown-toc-数学理论">数学理论</a>    <ul>
+      <li><a href="#taylor-series泰勒展开式" id="markdown-toc-taylor-series泰勒展开式">Taylor Series（泰勒展开式）</a>        <ul>
+          <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+          <li><a href="#多变量泰勒展开式" id="markdown-toc-多变量泰勒展开式">多变量泰勒展开式</a></li>
         </ul>
       </li>
-      <li><a href="#section-7" id="markdown-toc-section-7">利用泰勒展开式简化</a></li>
+      <li><a href="#利用泰勒展开式简化" id="markdown-toc-利用泰勒展开式简化">利用泰勒展开式简化</a></li>
     </ul>
   </li>
-  <li><a href="#section-8" id="markdown-toc-section-8">梯度下降的限制</a></li>
+  <li><a href="#梯度下降的限制" id="markdown-toc-梯度下降的限制">梯度下降的限制</a></li>
 </ul>
 <blockquote>
   <p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
@@ -224,11 +224,11 @@
   <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66632699">http://blog.csdn.net/zyq522376829/article/details/66632699</a></p>
 </blockquote>
 
-<h1 id="gradient-descent">什么是Gradient Descent（梯度下降法）？</h1>
+<h1 id="什么是gradient-descent梯度下降法">什么是Gradient Descent（梯度下降法）？</h1>
 
 <p>在第二篇文章中有介绍到梯度下降法的做法，传送门：<a href="地址地址地址">机器学习入门系列02，Regression 回归：案例研究</a></p>
 
-<h2 id="review-">Review: 梯度下降法</h2>
+<h2 id="review-梯度下降法">Review: 梯度下降法</h2>
 
 <!--more-->
 
@@ -266,9 +266,9 @@
 
 <p>上图举例将梯度下降法的计算过程进行可视化。</p>
 
-<h1 id="tip1-learning-rates">Tip1：调整 learning rates（学习速率）</h1>
+<h1 id="tip1调整-learning-rates学习速率">Tip1：调整 learning rates（学习速率）</h1>
 
-<h2 id="learning-rate">小心翼翼地调整 learning rate</h2>
+<h2 id="小心翼翼地调整-learning-rate">小心翼翼地调整 learning rate</h2>
 
 <p>举例：</p>
 
@@ -280,7 +280,7 @@
 
 <p>解决方法就是上图右边的方案，将参数改变对损失函数的影响进行可视化。比如 learning rate 太小（蓝色的线），损失函数下降的非常慢；learning rate 太大（绿色的线），损失函数下降很快，但马上就卡住不下降了；learning rate特别大（黄色的线），损失函数就飞出去了；红色的就是差不多刚好，可以得到一个好的结果。</p>
 
-<h2 id="learning-rate-1">自适应 learning rate</h2>
+<h2 id="自适应-learning-rate">自适应 learning rate</h2>
 
 <p>举一个简单的思想：随着次数的增加，通过一些因子来减少 learning rate</p>
 
@@ -292,9 +292,9 @@
 
 <p>但 learning rate 不能是 one-size-fits-all ，不同的参数需要不同的 learning rate</p>
 
-<h2 id="adagrad-">Adagrad 算法</h2>
+<h2 id="adagrad-算法">Adagrad 算法</h2>
 
-<h3 id="adagrad--1">Adagrad 是什么？</h3>
+<h3 id="adagrad-是什么">Adagrad 是什么？</h3>
 
 <p>每个参数的学习率都把它除上之前微分的均方根。解释：</p>
 
@@ -314,7 +314,7 @@
 
 <p>$\sigma^{t}$:之前参数的所有微分的均方根，对于每个参数都是不一样的。</p>
 
-<h3 id="adagrad">Adagrad举例</h3>
+<h3 id="adagrad举例">Adagrad举例</h3>
 
 <p>下图是一个参数的更新过程</p>
 
@@ -324,7 +324,7 @@
 
 <p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0p8x3ggkj20x00hsac3.jpg" alt="" /></p>
 
-<h3 id="adagrad--2">Adagrad 存在的矛盾？</h3>
+<h3 id="adagrad-存在的矛盾">Adagrad 存在的矛盾？</h3>
 
 <p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0p9awbcij21080ikmzo.jpg" alt="" /></p>
 
@@ -358,7 +358,7 @@
 
 <p>这个结论在多个参数的时候就不一定成立了。</p>
 
-<h3 id="section">多参数下结论不一定成立</h3>
+<h3 id="多参数下结论不一定成立">多参数下结论不一定成立</h3>
 
 <p><strong>对比不同的参数</strong></p>
 
@@ -388,7 +388,7 @@
 
 <p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pb38dvnj212e0lu4d7.jpg" alt="" /></p>
 
-<h3 id="adagrad--3">Adagrad 进一步的解释</h3>
+<h3 id="adagrad-进一步的解释">Adagrad 进一步的解释</h3>
 
 <p>再回到之前的 Adagrad</p>
 
@@ -396,7 +396,7 @@
 
 <p>对于$\sqrt{\sum^{t}_{i=0} (g^{i})^{2} }$ 就是希望再尽可能不增加过多运算的情况下模拟二次微分。（如果计算二次微分，在实际情况中可能会增加很多的时间消耗）</p>
 
-<h1 id="tip2stochastic-gradient-descent">Tip2：Stochastic Gradient Descent（随机梯度下降法）</h1>
+<h1 id="tip2stochastic-gradient-descent随机梯度下降法">Tip2：Stochastic Gradient Descent（随机梯度下降法）</h1>
 
 <p>之前的梯度下降：</p>
 
@@ -420,7 +420,7 @@
 
 <p>常规梯度下降法走一步要处理到所有二十个examples，但Stochastic 此时已经走了二十步（没处理一个example就更新）</p>
 
-<h1 id="tip3feature-scaling">Tip3：Feature Scaling（特征缩放）</h1>
+<h1 id="tip3feature-scaling特征缩放">Tip3：Feature Scaling（特征缩放）</h1>
 
 <p>比如有个function：</p>
 
@@ -430,7 +430,7 @@
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pcmc0lcj20zk0iuq8m.jpg" alt="" /></p>
 
-<h2 id="section-1">为什么要这样做？</h2>
+<h2 id="为什么要这样做">为什么要这样做？</h2>
 
 <p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0pd1h0xtj213c0m00x5.jpg" alt="" /></p>
 
@@ -442,7 +442,7 @@
 
 <p>对于左边的情况，上面讲过这种狭长的情形不过不用Adagrad的话是比较难处理的，两个方向上需要不同的学习率，同一组学习率会搞不定它。而右边情形更新参数就会变得比较容易。左边的梯度下降并不是向着最低点方向走的，而是顺着等高线切线法线方向走的。但绿色就可以向着圆心（最低点）走，这样做参数更新也是比较有效率。</p>
 
-<h2 id="scaling">怎么做 scaling？</h2>
+<h2 id="怎么做-scaling">怎么做 scaling？</h2>
 
 <p>方法非常多，这里举例一种常见的做法：</p>
 
@@ -454,9 +454,9 @@
 
 <p>然后用第r个例子中的第i个输入，减掉平均数$m_{i}$，然后除以标准差$\sigma_{i}$，得到的结果是所有的维数都是0，所有的方差都是1</p>
 
-<h1 id="section-2">梯度下降的理论基础</h1>
+<h1 id="梯度下降的理论基础">梯度下降的理论基础</h1>
 
-<h2 id="section-3">问题</h2>
+<h2 id="问题">问题</h2>
 
 <p>当用梯度下降解决问题：</p>
 
@@ -470,7 +470,7 @@
 
 <p>结论是不正确的。。。</p>
 
-<h1 id="section-4">数学理论</h1>
+<h1 id="数学理论">数学理论</h1>
 
 <p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0pdwqnqzj212a0mingb.jpg" alt="" /></p>
 
@@ -478,11 +478,11 @@
 
 <p>接下来就是如果在小圆圈内快速的找到最小值？</p>
 
-<h2 id="taylor-series">Taylor Series（泰勒展开式）</h2>
+<h2 id="taylor-series泰勒展开式">Taylor Series（泰勒展开式）</h2>
 
 <p>先介绍一下泰勒展开式</p>
 
-<h3 id="section-5">定义</h3>
+<h3 id="定义">定义</h3>
 
 <p>若$h(x)$在$x = x_{0}$点的某个领域内有无限阶导数（即无限可微分，infinitely differentiable），那么在此领域内有：</p>
 
@@ -500,13 +500,13 @@
 
 <p>图中3条蓝色线是把前3项作图，橙色线是 $sin(x)$。</p>
 
-<h3 id="section-6">多变量泰勒展开式</h3>
+<h3 id="多变量泰勒展开式">多变量泰勒展开式</h3>
 
 <p>下面是两个变量的泰勒展开式</p>
 
 <p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0pf85k6hj212s0jsdic.jpg" alt="" /></p>
 
-<h2 id="section-7">利用泰勒展开式简化</h2>
+<h2 id="利用泰勒展开式简化">利用泰勒展开式简化</h2>
 
 <p>回到之前如何快速在圆圈内找到最小值。基于泰勒展开式，在$(a,b)$ 点的红色圆圈范围内，可以将损失函数用泰勒展开式进行简化：</p>
 
@@ -534,7 +534,7 @@
   <p>式1-2只考虑了泰勒展开式的一次项，如果考虑到二次项（比如牛顿法），在实际中不是特别好，会涉及到二次微分等，多很多的运算，性价比不好。</p>
 </blockquote>
 
-<h1 id="section-8">梯度下降的限制</h1>
+<h1 id="梯度下降的限制">梯度下降的限制</h1>
 
 <p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0phhfnifj21200s0qet.jpg" alt="" /></p>
 
@@ -710,9 +710,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/03/27/ML04GradientDescent/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/03/27/ML04GradientDescent/' 
+     'url':'http://localhost:4000/2017/03/27/ML04GradientDescent/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/03/27/ML04GradientDescent/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

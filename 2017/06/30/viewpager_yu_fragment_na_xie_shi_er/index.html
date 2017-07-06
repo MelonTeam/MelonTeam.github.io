@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,17 +180,17 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">本文会讲解：</a>    <ul>
-      <li><a href="#section-1" id="markdown-toc-section-1"><strong>一：背景</strong><em>**</em></a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2"><strong>二：问题</strong><em>**</em></a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3"><strong>三：回顾与再优化</strong><em>**</em></a></li>
+  <li><a href="#本文会讲解" id="markdown-toc-本文会讲解">本文会讲解：</a>    <ul>
+      <li><a href="#一背景" id="markdown-toc-一背景"><strong>一：背景</strong><em>**</em></a></li>
+      <li><a href="#二问题" id="markdown-toc-二问题"><strong>二：问题</strong><em>**</em></a></li>
+      <li><a href="#三回顾与再优化" id="markdown-toc-三回顾与再优化"><strong>三：回顾与再优化</strong><em>**</em></a></li>
     </ul>
   </li>
 </ul>
 
-<h1 id="section">本文会讲解：</h1>
+<h1 id="本文会讲解">本文会讲解：</h1>
 
-<p>1.viewPager与Fragment使用过程中，偶现页面混乱问题的可能原因以及解决方案。<br />
+<p>1.viewPager与Fragment使用过程中，偶现页面混乱问题的可能原因以及解决方案。
 <!--more--></p>
 
 <p>2.notifyDataSetChange方法在viewPager中不起作用的问题的解决方案。</p>
@@ -199,11 +199,11 @@
 
 <p>4.探讨viewPager中mOffscreenPageLimit的作用。</p>
 
-<h2 id="section-1"><strong>一：背景</strong><em>**</em></h2>
+<h2 id="一背景"><strong>一：背景</strong><em>**</em></h2>
 
 <p>最近开发一个需求，页面UI大致如下:</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/4fac17b8541bcfd39fb6962a6e2c9fcddfbfe6a57e473144c542654e0bbe4a7b" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/4fac17b8541bcfd39fb6962a6e2c9fcddfbfe6a57e473144c542654e0bbe4a7b" alt="" /></p>
 
 <p>要求每一个tab都可以对应一个全新的子页面。很自然的想到使用ViewPager+Fragment这一对组合，其中Fragment复用于子页面和主页面中的tab内容。</p>
 
@@ -213,27 +213,27 @@
 
 <p>当触发网络搜索有回包之后，会出现上方的tabHost。下方内容区域展示可滑动。tabHost可点击。</p>
 
-<p>2.用户场景：用户可能会在这个页面输入很多词，可能用户输入的过程是”王” -&gt; “王者” -&gt;<br />
+<p>2.用户场景：用户可能会在这个页面输入很多词，可能用户输入的过程是”王” -&gt; “王者” -&gt;
 “王者荣耀”。可能用户刚刚搜”王”，没来得及输入完”王者荣耀”四个字，就已经触发了网络搜索，并且产生回包，展示tabHost。</p>
 
-<p>考虑到两个问题之后，认为需要对Fragment做重用处理，如果在搜第一个字的时候产生多个Fragment，那么搜王者荣耀的时候，应该能够复用第一次产生的Fragment，否则可能会导致new<br />
+<p>考虑到两个问题之后，认为需要对Fragment做重用处理，如果在搜第一个字的时候产生多个Fragment，那么搜王者荣耀的时候，应该能够复用第一次产生的Fragment，否则可能会导致new
 过多的Fragment对象，导致性能问题。</p>
 
 <p>首先我对要进行复用的Fragment建立了一个软引用缓存：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/09cc031f8a48a1744f22d04cd3372ff6426d433e6887ca0afb90e421416d82aa" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/09cc031f8a48a1744f22d04cd3372ff6426d433e6887ca0afb90e421416d82aa" alt="" /></p>
 
 <p>备为后续重用Fragment时取用的容器。</p>
 
 <p>当无缓存时，才会去重新new一个。否则只是对Fragment中必要的参数重新设置即可。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/1986df717c682d0abebe864d3139ce20211f5f8512d012afc18b0ab5c9d2edb6" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/1986df717c682d0abebe864d3139ce20211f5f8512d012afc18b0ab5c9d2edb6" alt="" /></p>
 
-<h2 id="section-2"><strong>二：问题</strong><em>**</em></h2>
+<h2 id="二问题"><strong>二：问题</strong><em>**</em></h2>
 
 <p>需求开发阶段，自测时经常发生页面错乱的问题，类似这样：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/695774d225c733671a5c0248b30a19c3f2ea68a0b5078140fccd959956ceaa49" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/695774d225c733671a5c0248b30a19c3f2ea68a0b5078140fccd959956ceaa49" alt="" /></p>
 
 <p>这可是严重问题，必须解决！于是开始了漫长的定位过程~</p>
 
@@ -247,19 +247,19 @@
 
 <p>考虑自定义的adapter中取item的方法：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/d770a1ed0c791403b24cfd2f7cbae1b1aef654fc13446991b8481cbc52b3c42e" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/d770a1ed0c791403b24cfd2f7cbae1b1aef654fc13446991b8481cbc52b3c42e" alt="" /></p>
 
 <p>代码比较简单，看不出问题所在。</p>
 
 <p>于是考虑adapter在什么情况下会调用getItem方法，通过阅读源码得知：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/d5e1eec2b8a003a891441ccc97b68c21cbabf99d3e718d02d79a6d1dcf37579f" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/d5e1eec2b8a003a891441ccc97b68c21cbabf99d3e718d02d79a6d1dcf37579f" alt="" /></p>
 
 <p>只有在mFragmentManager.findFragmentByTag(name)不为空的时候，才会走到我们的getItem逻辑。</p>
 
 <p>那么什么时候findFragmentByTag不为空？经过验证，只要对应name的Fragment之前已经被加入过mFragmentManager，即调用了图中方法</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/ff98ef45d8426c36a43181da439bb864aa13c5e5c5aae5535533477833d802c8" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/ff98ef45d8426c36a43181da439bb864aa13c5e5c5aae5535533477833d802c8" alt="" /></p>
 
 <p>并且没有调用remove方法，后续mFragment都是可以从其中获取到对应name的Fragment的。</p>
 
@@ -267,17 +267,17 @@
 
 <p>其中container.getId()固定为一个默认值，于是去看getItemId的具体实现：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/3fbb4210925b576940355a7b6fc927a0b8404ac238d6b9c20af0bfef67a19082" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/3fbb4210925b576940355a7b6fc927a0b8404ac238d6b9c20af0bfef67a19082" alt="" /></p>
 
 <p>很简单，只是传回一个position，但是问题就来了：</p>
 
 <p>用户在第一次搜索回包，建立FragmentList，此时Fragment的itemId和Fragment展示内容的关系可能是这样</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/bf0dae7e35fe81672ea6236e28f606421335cfee36a701ca4c07234d287289a5" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/bf0dae7e35fe81672ea6236e28f606421335cfee36a701ca4c07234d287289a5" alt="" /></p>
 
 <p>而第二次搜索回包时，后台要求的顺序未必按照音乐，电影，部落来。经过重用之后，可能变成这样：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/5e0cf91491ee806d9732c621841f7081c8689fa75f95ce6d4e3d62fab0c6afbe" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/5e0cf91491ee806d9732c621841f7081c8689fa75f95ce6d4e3d62fab0c6afbe" alt="" /></p>
 
 <p>这个时候如果在instantiateItem方法中还去用position去获取对应的Fragment，这里可能导致新取出来的用来展示”电影”tab的Fragment，实际上是之前用来展示”音乐”tab的Fragment。</p>
 
@@ -289,34 +289,34 @@
 
 <p>于是通过不断打log以及利用搜索引擎，想找到一点蛛丝马迹，倒是搜到了一些反映FragmentPagerAdapter的notifyDataSetChange不生效的问题：</p>
 
-<p>有人说只要在getItemPostion方法的实现中返回这个值，就可以保证notifyDataSetChange生效。  <br />
-public int getItemPosition(Object object) {  <br />
-return PagerAdapter.POSITION_NONE;  <br />
+<p>有人说只要在getItemPostion方法的实现中返回这个值，就可以保证notifyDataSetChange生效。<br />
+public int getItemPosition(Object object) {<br />
+return PagerAdapter.POSITION_NONE;<br />
 }</p>
 
 <p>看起来不生效这个问题很严重啊，在自己的代码中也多处使用到adapter的notifyDatasetChange方法，会不会也有这个所谓不生效的问题？</p>
 
 <p>那么为什么返回这个参数能保证数据集正确更新到？看看源码咯：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/a9035b6cb90d817b691e1fbb8084b9cb87c45222d62adf417c9911c485a825c4" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/a9035b6cb90d817b691e1fbb8084b9cb87c45222d62adf417c9911c485a825c4" alt="" /></p>
 
 <p>这里可以发现，当返回的postion为NONE时，mItems会remove掉对应位置保存的item，同时也会通知adapter调用destroyItem方法，其中传入的第三个参数ii.object就是我们的Fragment对象。</p>
 
 <p>问题来了：为什么一定要传POSITION_NONE，传别的不行吗，这个方法不应该是只为返回NONE来设计的吧，不然要他何用。继续看源码~</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/3244c3e33bfca2c3e15bbec94c58e254a9deb68b80e74799166c750f71e5cecb" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/3244c3e33bfca2c3e15bbec94c58e254a9deb68b80e74799166c750f71e5cecb" alt="" /></p>
 
 <p>当我传入一个&gt;0的数，会走到这里的逻辑，也就是简单的进行赋值操作。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/34f9d1fed258945330ed5f9adb3f80a3ad03b3c66622472fd41672b94c841f70" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/34f9d1fed258945330ed5f9adb3f80a3ad03b3c66622472fd41672b94c841f70" alt="" /></p>
 
 <p>随后会调用sort方法进行排序，并走进这里的判断，辗转调用到populate方法。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/f309c1a0c82c48f54d68d59a0603d044877c94400e0d9de906f05b037efaa887" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/f309c1a0c82c48f54d68d59a0603d044877c94400e0d9de906f05b037efaa887" alt="" /></p>
 
 <p>在populate方法中，如果当前位置的item找不到，则会调用addNewItem方法，其中会调用adapter的instantiateItem方法，来重新”生成”一个Fragment。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/ba877801be17ac6ecc8cdc6f05fa93c97836dd33e8f2c8251905112b37eb5534" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/ba877801be17ac6ecc8cdc6f05fa93c97836dd33e8f2c8251905112b37eb5534" alt="" /></p>
 
 <p>由此可见，所谓notifyDataSetChange不生效的原因，并不是一定要在getItemPostion中返回POSITION_NONE，而是要为每一个Fragment赋予正确的位置。</p>
 
@@ -324,14 +324,14 @@ return PagerAdapter.POSITION_NONE;  <br />
 
 <p>所以正确的修改方式如下：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/b90fb641ee15fbf7eac78dbe6864a6a5feecd6a0f9cd67d2dfe90fd74939cb52" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/b90fb641ee15fbf7eac78dbe6864a6a5feecd6a0f9cd67d2dfe90fd74939cb52" alt="" /></p>
 
-<p>由于fragments的顺序和我们的tab展示的顺序是一致的，所以只要把object在fragments中的位置传递回去即可，如果object的位置不在list中，就可以return<br />
+<p>由于fragments的顺序和我们的tab展示的顺序是一致的，所以只要把object在fragments中的位置传递回去即可，如果object的位置不在list中，就可以return
 POSTION_NONE，通知组件删除啦~</p>
 
 <p>经过这样的修改，发现问题迎刃而解~</p>
 
-<h2 id="section-3"><strong>三：回顾与再优化</strong><em>**</em></h2>
+<h2 id="三回顾与再优化"><strong>三：回顾与再优化</strong><em>**</em></h2>
 
 <p>1.软引用缓存失效问题</p>
 
@@ -341,28 +341,28 @@ POSTION_NONE，通知组件删除啦~</p>
 
 <p>观察adapter的默认destroyItem实现：</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/f3f26b49fb6e0b16771cb2da3d10c3a745f4132882f65d5b087890c9f115fc00" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/f3f26b49fb6e0b16771cb2da3d10c3a745f4132882f65d5b087890c9f115fc00" alt="" /></p>
 
 <p>仅仅是做了detach操作，这还不够，于是我改了一行，变成了</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/2a2aa369c9879dcde5ab99a02f02927914352fc8d865fb5e31f31ceabe6fc51a" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/2a2aa369c9879dcde5ab99a02f02927914352fc8d865fb5e31f31ceabe6fc51a" alt="" /></p>
 
 <p>同样的，在instantiateItem方法里的</p>
 
-<p>都只会返回null了，因为当destroyItem后需要重新instantiateItem时，已经没有保存在mFragmentManager的fragment对象了~<br />
+<p>都只会返回null了，因为当destroyItem后需要重新instantiateItem时，已经没有保存在mFragmentManager的fragment对象了~
 事实上我们重新去getItem的成本也很低，只是去从list集合中取了一个对象而已。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/ae88799e696c17a82f182681f400f884337e0196080913fa1c5850af7c4223b1" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/ae88799e696c17a82f182681f400f884337e0196080913fa1c5850af7c4223b1" alt="" /></p>
 
 <p>2.Fragment自动预加载问题：</p>
 
 <p>在查看DatasetChange的代码时，发现一个很有意思的方法和常量</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/24b6ea6fddab357783bb91191edaa2eb4c287bf434c08690610ebbcd767246b5" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/24b6ea6fddab357783bb91191edaa2eb4c287bf434c08690610ebbcd767246b5" alt="" /></p>
 
 <p>通过查看注释和调试，发现他是用来控制展示一个fragment之后，自动预加载两边fragment的数量，默认和最小值都为1。</p>
 
-<p>问题来了，为什么不能为0？<br />
+<p>问题来了，为什么不能为0？
 因为之前看到微码上有人分享了一个在这种viewpager场景下懒加载fragment的代码，会想到为什么不在这个地方对组件进行微调，以达到每次都只加载一个fragment的效果？</p>
 
 <p>于是debug进行调试，强行将mOffscreenPageLimit赋值为0，发现并没有生效~</p>
@@ -371,11 +371,11 @@ POSTION_NONE，通知组件删除啦~</p>
 
 <p>首先根据mOffscreenPageLimit计算startPos的值。</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/d1c4358fa9a6681b37c677ab134a5acec297a1a25a8b8966c8fdd0cdf2d2875d" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/d1c4358fa9a6681b37c677ab134a5acec297a1a25a8b8966c8fdd0cdf2d2875d" alt="" /></p>
 
 <p>然后查看这部分循环，针对mCurItem左边做处理的代码</p>
 
-<p><img src="/image/ViewPager_yu_Fragment_na_xie_shi_er/7e0acf691fe79809f988aa7f2aa5d93ed3d50337c6484ebc243409a95d8f0000" alt="" /></p>
+<p><img src="/image/viewpager_yu_fragment_na_xie_shi_er/7e0acf691fe79809f988aa7f2aa5d93ed3d50337c6484ebc243409a95d8f0000" alt="" /></p>
 
 <p>这部分是对viewPager当前展示页面左边数据内容进行处理的代码，可以看到extraWidthLeft被赋初值为0。</p>
 
@@ -551,9 +551,9 @@ POSTION_NONE，通知组件删除啦~</p>
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/' 
+     'url':'http://localhost:4000/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/06/30/viewpager_yu_fragment_na_xie_shi_er/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>

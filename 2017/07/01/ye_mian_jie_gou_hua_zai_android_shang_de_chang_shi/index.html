@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://MelonTeam.com/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
 
 
 
@@ -180,15 +180,15 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         
-<p>| 导语<br />
+<p>| 导语
 MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手Q项目并不很适合。参考之前Web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲Lego在Android上一次小小尝试</p>
 
 <p><strong>一，MVP简介</strong></p>
 
 <!--more-->
-<p><strong><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/d8b32fbd6fe4df60eab0f0a9c483c207cd9f0c32f2c89197af5529da6c3ca0d5" alt="" /></strong></p>
+<p><strong><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/d8b32fbd6fe4df60eab0f0a9c483c207cd9f0c32f2c89197af5529da6c3ca0d5" alt="" /></strong></p>
 
-<p>MVC太过常见这里不啰嗦。实际应用MVC当中，Activity占据打部分的工作，View和Controller的身份分不清。而MVP则是一种设计模式专门优化Activity<br />
+<p>MVC太过常见这里不啰嗦。实际应用MVC当中，Activity占据打部分的工作，View和Controller的身份分不清。而MVP则是一种设计模式专门优化Activity
 / Fragment。</p>
 
 <p>先来看看MVP模式的核心思想：<strong>View不直接与Model交互</strong></p>
@@ -209,10 +209,10 @@ MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加�
 
 <p>【Mode层】我们直接忽略</p>
 
-<p>【View<br />
+<p>【View
 Interface】首页的View接口，抽离出view和presnter交互的接口。由Activity继承实现（Now.java，QQStoryMainActivity.java）</p>
 
-<pre><code>public interface IMyStoryListView {
+<div class="highlighter-rouge"><pre class="highlight"><code>public interface IMyStoryListView {
     public void setData(MyStorys myStoryList, RecentStory recentStoryList);
     public void setSegmentData(String key, Object data,boolean needRefreshUi);
     /**
@@ -232,10 +232,11 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
     public void openMyStoryListView(boolean open);
 }
 </code></pre>
+</div>
 
 <p>【View】我们的Activity实现了View接口，并且实现生命周期</p>
 
-<pre><code>public class QQStoryMainAcitivty extends QQStoryBaseActivity implements IMyStoryListView {
+<div class="highlighter-rouge"><pre class="highlight"><code>public class QQStoryMainAcitivty extends QQStoryBaseActivity implements IMyStoryListView {
 
     protected StoryHomePushYellowBarHandler mStoryHomePushYellowBarHandler = new StoryHomePushYellowBarHandler();
     protected MystoryListView mainListView;
@@ -264,6 +265,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
     }
 }
 </code></pre>
+</div>
 
 <p>举个例子，用户下拉刷新一下。触发到Activity的onStartAutoRequestFromeNet。View逻辑在Activity。</p>
 
@@ -273,7 +275,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>必要是可以抽出Presenter接口（其实日迹这里没有必要）</p>
 
-<pre><code>public class StoryListPresnter implements IMyStroyPresenter{
+<div class="highlighter-rouge"><pre class="highlight"><code>public class StoryListPresnter implements IMyStroyPresenter{
     protected IMyStoryListView mIView;
     protected FeedItem mFeedItem;
     protected ParallelStepExecutor mRequestNetDataExecutor;
@@ -305,6 +307,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 }
 </code></pre>
+</div>
 
 <p>MVP的优缺点：</p>
 
@@ -330,7 +333,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>4. 在手Q项目里，MVP会激增很多方法数，</p>
 
-<p><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/c7712fbf9c37de4ed1d2b697d12dbcce00b329c7dfaf1c7c86b197e60f37c7fa" alt="" /></p>
+<p><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/c7712fbf9c37de4ed1d2b697d12dbcce00b329c7dfaf1c7c86b197e60f37c7fa" alt="" /></p>
 
 <p>三，Lego页面结构化</p>
 
@@ -338,7 +341,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>前面铺垫这么多，终于到我要吹水的时候了。MVC，MVP，还有MVVM等MVX系列的设计模式，都是一种大而全的统一管理。在项目结构中最为关键其实是：分模块！</p>
 
-<p><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/33a461966937ac209e4478fedf4506c21f5a889c4464a54d4ab01b817f7c3f4a" alt="" /></p>
+<p><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/33a461966937ac209e4478fedf4506c21f5a889c4464a54d4ab01b817f7c3f4a" alt="" /></p>
 
 <p>看看某宝的首页，顶部搜索栏，banner，导航分类，抢购，特价，底部Tab。这是一个Activity的话，你再怎么MVP，也是需要划分模块，然后分而治之。</p>
 
@@ -346,11 +349,11 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>页面结构化，并不是新玩意，是当时做web的一套代码风格。下图是当时做Web总结组件化的一张图。现在看来，也就并没有过时</p>
 
-<p><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/fa1f198b6ca44df1b81968f2c20928e7b1aced3457b77dc973202d4ec4da29e6" alt="" /></p>
+<p><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/fa1f198b6ca44df1b81968f2c20928e7b1aced3457b77dc973202d4ec4da29e6" alt="" /></p>
 
 <p>页面被划分问一个个区域的模块，有自身的逻辑和规划。有人说，这不就是一个个组件嘛。然后“页面结构化”并不是指组件。</p>
 
-<p>例如上图的tabContainer，imgsContainer，listContainer，每一个模块都有自己的渲染模板（xml），请求的数据的CGI（数据源），自身的事件绑定（listener）<br />
+<p>例如上图的tabContainer，imgsContainer，listContainer，每一个模块都有自己的渲染模板（xml），请求的数据的CGI（数据源），自身的事件绑定（listener）
 ，状态机（生命周期），并不只是一个组件，而是一个个有自己生命力，能自己管理的小页面。</p>
 
 <p><strong>根据页面结构，划分出一个个独立维护模块，这就是页面结构化。</strong></p>
@@ -377,9 +380,9 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>日迹首页评论赞</p>
 
-<p><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/6c6ab3ada2ff3727941c4a7deaf4b931c2a2cfa102e64d5a191deb9ecf42261f" alt="" /></p>
+<p><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/6c6ab3ada2ff3727941c4a7deaf4b931c2a2cfa102e64d5a191deb9ecf42261f" alt="" /></p>
 
-<pre><code>public FeedCommentLikeLego(Context context, Activity activity, ViewGroup parentView, HomeFeedItem feedItem, int feedType) {
+<div class="highlighter-rouge"><pre class="highlight"><code>public FeedCommentLikeLego(Context context, Activity activity, ViewGroup parentView, HomeFeedItem feedItem, int feedType) {
     super(context, parentView);
     mHomeFeedItem = feedItem;
     mFeedItem = feedItem.mFeedBasicItem;
@@ -398,6 +401,7 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
     boot();
 }
 </code></pre>
+</div>
 
 <p> 从FeedCommentLikeLego的构造方法，我们得知</p>
 
@@ -411,25 +415,27 @@ Interface】首页的View接口，抽离出view和presnter交互的接口。由A
 
 <p>【首页】出于性能优化，都会做请求合并。返回多个Feed的视频列表，评论赞列表数据。</p>
 
-<pre><code> commentLego.feed(mHomeFeedItem.getCommentList());  
+<div class="highlighter-rouge"><pre class="highlight"><code> commentLego.feed(mHomeFeedItem.getCommentList());  
  likeLego.feed(mHomeFeedItem.getLikeEntryList());
 </code></pre>
+</div>
 
 <p>被喂养数据后，Lego内部的DataProvider将不启动</p>
 
 <p>【详情页】同一Lego，默认情况就会启动资金的DataProvider，会自己拉数据</p>
 
-<pre><code>@Override  
+<div class="highlighter-rouge"><pre class="highlight"><code>@Override  
 public LegoDataProvider getDataProvider() {  
     return new FeedLikeDataProvider(this, mIsDetailPage);  
 }
 </code></pre>
+</div>
 
 <p><strong>## 一个Lego类是究竟是什么？Lego类之间的纽带？</strong></p>
 
 <p>大部分页面的渲染流程线，如下图</p>
 
-<p><img src="/image/ye_mian_jie_gou_hua_zai_Android_shang_de_chang_shi/bec1f8d682b167b63cc66af68ed6aeeabe8953f988245a96df99a0b63ae55dec" alt="" /></p>
+<p><img src="/image/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/bec1f8d682b167b63cc66af68ed6aeeabe8953f988245a96df99a0b63ae55dec" alt="" /></p>
 
 <p>我们把这些常用的网络请求，处理数据，事件绑定，上报，容错处理等一系列逻辑方法，以页面块为单位封装成一个Lego模块。</p>
 
@@ -645,7 +651,7 @@ public LegoDataProvider getDataProvider() {
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2017/07/01/_yi_android_instant_apps_jian_jie/">[译]Android Instant Apps简介</a></p>
+        <p><strong>上一篇</strong> <a href="/2017/07/01/yi_android_instant_apps_jian_jie/">[译]Android Instant Apps简介</a></p>
         
     </div>
     <div class="nex">
@@ -664,9 +670,9 @@ public LegoDataProvider getDataProvider() {
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://MelonTeam.com/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/',
-     'du':'http://MelonTeam.com', 
-     'su':'http://MelonTeam.com/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/' 
+     'url':'http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/',
+     'du':'http://localhost:4000', 
+     'su':'http://localhost:4000/2017/07/01/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
