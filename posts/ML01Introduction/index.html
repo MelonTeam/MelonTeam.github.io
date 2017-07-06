@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>机器学习入门系列01，Introduction 简介</title>
+    <meta name="description" content="  我们将要学习什么东东？          什么是机器学习？        引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）  CSD...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ML01Introduction/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>机器学习入门系列01，Introduction 简介</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-03-27
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" title="Tag: 机器学习" rel="tag">机器学习</a-->
+        <a href="/tag/#机器学习" title="Tag: 机器学习" rel="tag">机器学习</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0" title="Tag: 机器学习入门笔记" rel="tag">机器学习入门笔记</a-->
+        <a href="/tag/#机器学习入门笔记" title="Tag: 机器学习入门笔记" rel="tag">机器学习入门笔记</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">我们将要学习什么东东？</a>    <ul>
+      <li><a href="#section-1" id="markdown-toc-section-1">什么是机器学习？</a>        <ul>
+          <li><a href="#approx-" id="markdown-toc-approx-">机器学习 $\approx$ 寻找一个函数</a></li>
+          <li><a href="#framework-" id="markdown-toc-framework-">Framework 框架</a></li>
+        </ul>
+      </li>
+      <li><a href="#learning-map" id="markdown-toc-learning-map">整体都学习哪些知识（Learning Map）</a>        <ul>
+          <li><a href="#regression" id="markdown-toc-regression">Regression（回归）是什么?</a></li>
+          <li><a href="#classification" id="markdown-toc-classification">Classification（分类）</a>            <ul>
+              <li><a href="#binary-classification" id="markdown-toc-binary-classification">Binary Classification（二元分类）</a></li>
+              <li><a href="#multi-class-classification" id="markdown-toc-multi-class-classification">Multi-class Classification（多元分类）</a></li>
+              <li><a href="#deep-learning" id="markdown-toc-deep-learning">Deep Learning（深度学习）</a></li>
+            </ul>
+          </li>
+          <li><a href="#supervised-learning" id="markdown-toc-supervised-learning">Supervised Learning（有监督学习）</a></li>
+          <li><a href="#semi-supervised-learning" id="markdown-toc-semi-supervised-learning">Semi-supervised Learning（半监督学习）</a></li>
+          <li><a href="#transfer-learning" id="markdown-toc-transfer-learning">Transfer Learning（迁移学习）</a></li>
+          <li><a href="#unsupervised-learning" id="markdown-toc-unsupervised-learning">Unsupervised Learning（无监督学习）</a></li>
+          <li><a href="#structured-learning" id="markdown-toc-structured-learning">Structured Learning（结构化学习）</a></li>
+          <li><a href="#reinforcement-learning" id="markdown-toc-reinforcement-learning">Reinforcement Learning（增强学习）</a></li>
+        </ul>
+      </li>
+      <li><a href="#learning-map-1" id="markdown-toc-learning-map-1">理解Learning Map颜色的意义</a></li>
+    </ul>
+  </li>
+</ul>
+<blockquote>
+  <p>引用课程：<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html</a></p>
+</blockquote>
+
+<p>先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸）</p>
+
+<blockquote>
+  <p>CSDN博客文章地址：<a href="http://blog.csdn.net/zyq522376829/article/details/66478149">http://blog.csdn.net/zyq522376829/article/details/66478149</a></p>
+</blockquote>
+
+<h1 id="section">我们将要学习什么东东？</h1>
+
+<h2 id="section-1">什么是机器学习？</h2>
+
+<!--more-->
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0endla38j210e0lsn5o.jpg" alt="" /><br />
+有右边这样非常大的音频数据集，写程序来进行学习，然后可以输出音频“Hello”</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0esd0he0j20zw0mc49q.jpg" alt="" /><br />
+有右边这样非常大的图片数据集，写程序来进行学习，然后可以识别左边这样图，识别为正确的物种。</p>
+
+<h3 id="approx-">机器学习 $\approx$ 寻找一个函数</h3>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0euzrz3uj21360lowla.jpg" alt="" /></p>
+
+<h3 id="framework-">Framework 框架</h3>
+<ul>
+  <li>Image Recognition 图像识别</li>
+</ul>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0evuvwccj20ng042gn5.jpg" alt="" /></p>
+
+<p>函数集($f_{1},f_{2},\ldots $)，通常将一个函数称为Model（模型）</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0ewlwd1yj20vw0byn3v.jpg" alt="" /></p>
+
+<p>为了找到最好的函数 $f$ ，将训练集图像放入函数集的输入中，函数集输出识别结果。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0exn3ri5j21080legwh.jpg" alt="" /></p>
+
+<p>下面来看具体步骤</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0eyillqbj212k0lythh.jpg" alt="" /></p>
+
+<p>Step1.确定一组函数（Model），函数集怎么找后面会再介绍。<br />
+Step2.将训练集对函数集进行训练。<br />
+Step3.挑选出“最好”的函数 $f^{<em>}$ <br />
+然后就可以使用 $f^{</em>}$ 来对新的测试集进行检测。</p>
+
+<h2 id="learning-map">整体都学习哪些知识（Learning Map）</h2>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ezk7m7kj210c0qqtcg.jpg" alt="" /></p>
+
+<h3 id="regression">Regression（回归）是什么?</h3>
+
+<p>Regression 意思是，我们要找到这样一个函数 $f$，使得输出为 scalar（标量，数值）</p>
+
+<blockquote>
+  <p>这里说法当然是比较不严谨，数学上简单的线性，一元或多元回归的知识可以在概率论与数理统计课本中进行学习。《概率论与数理统计》，浙江大学，第九章，P244。</p>
+</blockquote>
+
+<p>举个例子，比如预测PM2.5.</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f0l1hi0j20oe04gwf0.jpg" alt="" /></p>
+
+<p>输入就是之前每一天的PM2.5数值，输出是明天的PM2.5，是个标量。<br />
+具体做法：</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f1e0somj211y0ag3zn.jpg" alt="" /></p>
+
+<h3 id="classification">Classification（分类）</h3>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f2vi19lj20z00l8dgm.jpg" alt="" /></p>
+
+<p>分类比较容易理解，比如二元分类或者多元分类。</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f3jd278j20xo0j8jsp.jpg" alt="" /></p>
+
+<h4 id="binary-classification">Binary Classification（二元分类）</h4>
+
+<p>比如垃圾邮件过滤，就是要找到一个Function，输入为一封邮件，输出是二元的，是或者不是垃圾邮件。训练集就是很多封邮件，每一封邮件知道它是否是垃圾邮件，让Function进行学习。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f49759tj20zq0jwgy4.jpg" alt="" /></p>
+
+<h4 id="multi-class-classification">Multi-class Classification（多元分类）</h4>
+
+<p>多元分类；例如下面的新闻分类系统，找一个Function，输入就是新闻的内容，输出则是新闻的类型（政治，经济，体育等等）</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f4uqylgj21160nawt0.jpg" alt="" /></p>
+
+<h4 id="deep-learning">Deep Learning（深度学习）</h4>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5g8hvdj20qs0jeq49.jpg" alt="" /></p>
+
+<p>上面讲过，机器学习的第一个步骤就是确定一个函数集，可以选择Linear Model（线性模型），但是 Linear Model 比较有限。更多的则是 Non-lilnear Model（非线性模型）。比如深度学习就是 Non-lilnear Model 。</p>
+
+<p>举个例子，比如图像识别：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f5zur6pj211g0lik15.jpg" alt="" /></p>
+
+<p>这里举例深度学习中的一种，Convolutional Neural Network（CNN，卷积神经网络），输入就是很多的图像，输出为图像的类型，这里将每个对象都当作一个类别。训练集就是很多张图片，并告诉机器每张图片对应的是什么类型。深度学习的Function非常复杂。</p>
+
+<p>再举一个例子，下围棋：</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0f6o89p0j211e08on2j.jpg" alt="" /></p>
+
+<p>输入就是黑白子在19<em>19棋盘上的位置，输出就是下一步应该下在哪里。这也就是一个选择题，可能的选项有19</em>19个。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f781j5vj212s0cwdpw.jpg" alt="" /></p>
+
+<p>训练集就是一堆棋谱，每一步是怎么走的。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f7s2pkfj210e0dmjx5.jpg" alt="" /></p>
+
+<h3 id="supervised-learning">Supervised Learning（有监督学习）</h3>
+<p>Non-lilnear Model 不只Deep Learning，后面还会接触到SVM，decision tree等。<br />
+上面提到这些我们都叫做Supervised Learning（有监督学习），所谓 Supervised Learning 就是说训练集的输入和输出对于目标函数是成对的，目标函数看到一个输入，就应该对应有一个输出。也把这样的输出叫做 label。<br />
+见到说需要 Labelled data 的情况，就是指我们要告诉机器看到一个输入，要有一个输出。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0f8g4v9sj21040o241r.jpg" alt="" /></p>
+
+<p>其他的比如还有Semi-supervised Learning（半监督学习）</p>
+
+<h3 id="semi-supervised-learning">Semi-supervised Learning（半监督学习）</h3>
+
+<p>比如图像识别一些猫和狗，Labelled data 就是训练集中每个图片知道它对应的是什么类型。而Unlabelled data 就是不知道图片对应的类型。这种其实也是可以让机器学习的比较好的，后面也会介绍。</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9310jsj20z20jytki.jpg" alt="" /></p>
+
+<h3 id="transfer-learning">Transfer Learning（迁移学习）</h3>
+
+<p>举例说一下迁移学习：</p>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0f9xlbl6j21040mawum.jpg" alt="" /></p>
+
+<p>比如有 Labelled data ，但我们还有一些labelled 或者 unlabelled 数据，这些数据和 Labelled data 中识别猫和狗都没有关系，但它也是怎么帮助Labelled data 更好的识别。这就是 Transfer Learning 要做的事情。</p>
+
+<h3 id="unsupervised-learning">Unsupervised Learning（无监督学习）</h3>
+<p>举一个Unsupervised Learning 的例子：让机器阅读非常多的文章，然后机器就可以学习单词的含义。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0fahrm70j21040lk7ll.jpg" alt="" /></p>
+
+<p>这个Unsupervised Learning 的例子中，训练集只有输入（很多的文章），没有输出。假设通过Neural Network（神经网络）学习之后，给一个单词，就可以输出一个向量。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g0n0om7j21d40t41ki.jpg" alt="" /></p>
+
+<p>再举一个例子：比如想要让机器绘制一下自己的内心世界。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g196w8zj210i0k61kx.jpg" alt="" /></p>
+
+<p>具体说就是给机器一堆数字，他就能自己绘制一张图片，此时训练集只有输出（很多的图片），没有输入。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g1tadjsj21do0syb29.jpg" alt="" /></p>
+
+<h3 id="structured-learning">Structured Learning（结构化学习）</h3>
+
+<p>比如看下面例子：第一个是语音识别，假设我们想要找的function是输入一段语音，然后输出语音的文字。如果把世界上不同的句子当作一个类别，这样是没有办法穷举所有类型的，所以这种超越分类的问题，就需要另外一套完整的思想来解决。<br />
+还有例子就是机器翻译，将中文翻译成英文，也是没有办法穷举所有的句子。再或者人脸识别，没有办法穷举所有人脸框。</p>
+
+<p><img src="http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2cnb63j20zu0s8tjh.jpg" alt="" /></p>
+
+<h3 id="reinforcement-learning">Reinforcement Learning（增强学习）</h3>
+<p>举个Reinforcement Learning 的例子：AlphaGo。<br />
+举例来比较 Supervised 和 Reinforcement：比如学习对话，Supervised 训练集每句话，都有对应的输出；但是Reinforcement就只是不断的对话，机器只能知道它做的好或者不好，没有其他更多的信息。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g2x9gqrj212i0q044l.jpg" alt="" /></p>
+
+<p>再举一个围棋的例子，比如 Supervised 情况就是机器看到一个棋局，告诉它下一步应该走什么。Reinforcement 的情况就是走了很多步，输了或者赢了，就是知道一个结果。AlphaGo 就是两个都用到了，先看棋谱学习，但是棋谱的数量是有限的，然后再进行增强型学习。所以 AlphaGo 第一轮和世界高手对局时还捉襟见肘，第二轮就基本横扫了。</p>
+
+<p><img src="http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0g3h5048j21340l27cv.jpg" alt="" /></p>
+
+<h2 id="learning-map-1">理解Learning Map颜色的意义</h2>
+
+<p><img src="http://wx4.sinaimg.cn/mw690/a9c4d5f6gy1fe0g40v56nj211y0s8wil.jpg" alt="" /></p>
+
+<p>蓝色的都是代表Scenario（方案），红色部分指的是你要找的function的样子，可以在Semi-supervised Learning 的情况下做红色的task，也可以在 Transfer Learning下做红色task，就是右上角的4个虽然是小方块，但是 Supervised Learning 里面的 task 都可以在其他蓝色 scenario 中做。绿色的部分就是方法或者说模型，绿色的内容虽然写在 Classification 里面，但是可以放在 Regression 或者 Structured Learning 中。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/Protocol_design_for_mobile_Internet_IM/">移动互联网IM之协议设计</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ML02Regression/">机器学习入门系列02，Regression 回归：案例研究</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ML01Introduction/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ML01Introduction/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

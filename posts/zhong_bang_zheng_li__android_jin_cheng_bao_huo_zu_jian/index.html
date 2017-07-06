@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>重磅整理---Android进程保活组件</title>
+    <meta name="description" content="            导语 Android进程保活的文章很多，但是基本没有一个完整的工程化的东西。所以在这里整理主流的保活方案，将其工程化到github上供大家直接使用。      github地址： https://github.com/stephen8341/KeepProcLive这里面集成的方案包括：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/zhong_bang_zheng_li__android_jin_cheng_bao_huo_zu_jian/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>重磅整理---Android进程保活组件</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-06
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>henrikwu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%B4%BB" title="Tag: 进程保活" rel="tag">进程保活</a-->
+        <a href="/tag/#进程保活" title="Tag: 进程保活" rel="tag">进程保活</a>&nbsp;
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 Android进程保活的文章很多，但是基本没有一个完整的工程化的东西。所以在这里整理主流的保活方案，将其工程化到github上供大家直接使用。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>github地址： <a href="https://github.com/stephen8341/KeepProcLive">https://github.com/stephen8341/KeepProcLive</a></p>
+
+<p>这里面集成的方案包括：<br />
+<!--more--></p>
+
+<p>1.  Service指定为START_STICKY 被系统回收的进程会被系统重新拉起</p>
+
+<p>2.  Service设置为前台进程 将后台进程设置为前台进程，提高进程优先级</p>
+
+<p><img src="/image/zhong_bang_zheng_li__android_jin_cheng_bao_huo_zu_jian/17035b806bd0b12889624d692c4215756b8b697de87ea9af0deb916c80db5290" alt="" /></p>
+
+<p>3.  1像素Activity方案 关屏后加载1个像素的Activity到Window，提高锁屏 后的进程优先级</p>
+
+<p>4.  静态广播自启 利用监听开机启动广播、网络变化广播、应用安装删 除等广播，接收到广播后实现自启</p>
+
+<p>5.  JobSchedule (5.0以上)和AlarmManager 利用Android的API某些机制去实现自启</p>
+
+<p>6.   账号同步拉活 利用Android自身的账号同步机制周期拉活</p>
+
+<p>7.   守护进程 :<br />
+这块为了解决5.0以上系统强杀的时候会连同同group中的所有进程也一起干掉，采用了两个独立的Java守护进程同时在c层用文件锁监听进程死亡的机制，具体参考：<a href="http://blog.csdn.net/marswin89/article/details/50916631">http://blog.csdn.net/marswin89/article/details/50916631</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/qian_xi_android_zhong_de_threadlocal/">浅析Android中的ThreadLocal
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/">OpenGL ES读书笔记（一）—初始庐山真面目
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_bitmap_de_huan_cun_ce_lve/">android bitmap的缓存策略</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/runloop_jie_du/">RunLoop解读</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/zhong_bang_zheng_li__android_jin_cheng_bao_huo_zu_jian/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/zhong_bang_zheng_li__android_jin_cheng_bao_huo_zu_jian/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>开发中容易忽略和挖坑的场景总结</title>
+    <meta name="description" content="  Model            导语 总结代码设计时容易忽略的场景，需求启动阶段就考虑好各个场景，可以提高代码的健壮性，有效减少bug数      Model">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>开发中容易忽略和挖坑的场景总结</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-27
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>lilinli
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%9D%91%E7%B3%BB%E5%88%97" title="Tag: 坑系列" rel="tag">坑系列</a-->
+        <a href="/tag/#坑系列" title="Tag: 坑系列" rel="tag">坑系列</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#model" id="markdown-toc-model">Model</a></li>
+  <li><a href="#view" id="markdown-toc-view">View</a></li>
+  <li><a href="#controller" id="markdown-toc-controller">Controller</a></li>
+  <li><a href="#section" id="markdown-toc-section">性能</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 总结代码设计时容易忽略的场景，需求启动阶段就考虑好各个场景，可以提高代码的健壮性，有效减少bug数</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="model">Model</h3>
+
+<!--more-->
+
+<pre><code>设计协议时，没有考虑数据无更新的场景，不考虑seq存在的必要性
+写发送请求代码时，没有考虑频率限制，重入问题
+对于高频场景，没有考虑做数据缓存
+对于列表数据没有去重逻辑
+即发即看的数据（比如帖子，视频），要考虑好假数据的key问题，以及回包后刷新这个临时key的逻辑
+忘了考虑超时，重试，网络切换，切后台/前台等等场景
+往枚举类型中间插入新值时，要考虑旧版本的数据兼容性
+数据量大时，没有考虑分页拉取
+数据异步返回时，没有考虑账号已经切换的场景
+</code></pre>
+
+<h3 id="view">View</h3>
+
+<pre><code>动不动就reload整个tableview
+把数据请求代码写到view里面
+    这里不是不可以，而是不好，因为view的生命周期系统提供相应的回调，所以很多同学都把数据请求写到view的init方法里，这不仅仅引起代码耦合问题，一些性能问题也难以规避
+    没考虑点击的频率限制
+动画只会简单实用UIView提供的接口，一些序列动画请直接使用coreAnimatino接口
+尽量不要在一个动画的completion里启动另外一个动画。为什么？
+    动画一旦启动，无法直接中断。一些放大动画会先记录原来的值，等动画结束再还原回来，这个值很可能在其他地方被修改，导致还原回去的是个错误的值。
+随处可见的魔法数字
+随处可见的重复布局代码
+</code></pre>
+
+<h3 id="controller">Controller</h3>
+
+<pre><code>动不动就继承系统的VC
+    请多组合，少继承
+willAppear/didAppear 一定要考虑重入问题
+如果一个函数能改成静态的，说明这个函数与VC无关，请放到VC外面去，即使只有一行代码
+
+上报
+
+尽量把上报放到功能实现类的外面
+</code></pre>
+
+<h3 id="section">性能</h3>
+
+<pre><code>tableview里设置了Cornerradio，boundtomask等属性，生成圆角图片
+tableview上的label使用sizetofit方法
+这方法有严重的性能问题，请异步使用coretext里的接口来计算size，以免阻塞主线程
+上传队列里如果有很多的UIImage，请考虑先存到本地，到真正上传时再从io读进来
+上传队列每个task都应嵌套在autoreleasepool中
+</code></pre>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/bu_gai_que_shao_de_error_ti_xi/">不该缺少的Error体系</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/flipagram_tu_ya_te_xiao_ni_xiang_fen_xi/">Flipagram 涂鸦特效逆向分析</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/kai_fa_zhong_rong_yi_hu_lve_he_wa_keng_de_chang_jing_zong_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

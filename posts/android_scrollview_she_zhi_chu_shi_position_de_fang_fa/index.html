@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android ScrollView设置初始position的方法</title>
+    <meta name="description" content="最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Android ScrollView设置初始position的方法</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-01
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>freedeng
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%8F%8D%E5%B0%84" title="Tag: 反射" rel="tag">反射</a-->
+        <a href="/tag/#反射" title="Tag: 反射" rel="tag">反射</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%88%9D%E5%A7%8B%E4%BD%8D%E7%BD%AE" title="Tag: 初始位置" rel="tag">初始位置</a-->
+        <a href="/tag/#初始位置" title="Tag: 初始位置" rel="tag">初始位置</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section"><strong>总结</strong></a></li>
+</ul>
+
+<p>最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。</p>
+
+<p>刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。<br />
+<!--more--></p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/3a5832dc8e74b645359271cf53e31801f71136f1666c5db5b34f161eaf55e843" alt="" /></p>
+
+<p>这个就是需求的效果图。</p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/d2591a465262382394b168bf56c8e25549b540f2a6ae6540bb88050b12904aa8" alt="" /></p>
+
+<p>这个是产品的要求，第一次进入的时候先展示标题，然后慢慢的向上滚动，最终隐藏。之后进入发表页都默认不展示标题栏，但是要支持用户可以下拉拉出标题栏。</p>
+
+<p>动画的实现方案比较简单，进来之后等待一段时间，然后通过smoothScrollTo方法一点点的滚动ScrollView。然而，实验之后发现这个方法并不好用，没办法控制动画时间。后来改用Animator来实现，具体实现代码如下：</p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/d97c4051208501a60aebaf4888f1c04bd173f76cc09c0d37b718e65f3fd14f02" alt="" /></p>
+
+<p>但是为难的是如何做到初始化ScrollView的默认滚动值。如果在onCreate里面调用scrollTo是无效的，因为这时候ScrollView都没有布局好。如果延时200ms之后再调用scrollTo，则用户会先看到标题然后再看到标题消失，体验不好。看起来似乎无解，难道一定要自己重载ScrollView来提供相关接口吗？</p>
+
+<p>当我看着上面动画的代码发呆的时候，突然注意到了scrollY这个值，为什么Animator能够通过这个值来调整ScrollView的滚动位置呢？难道是通过反射scrollY这个成员变量动态修改它的value？</p>
+
+<p>于是自己动手在onCreate的时候通过反射修改ScrollView的scollY属性。结果调试发现ScrollView压根没有这个属性。为什么呢？</p>
+
+<p>查看了一下Animator的底层实现，发现scrollY并不是一个具体的属性成员</p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/8aafd4a04cc50390bd8d038fde2560a7a2c859f76bb0ffccb32b2af4e973dfa2" alt="" /></p>
+
+<p>Animator建立了一个映射表，scrollY对应的PreHoneycombCompat.SCROLL_Y的具体值如下：</p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/6646bda48641f198a5a4c5ab61f19eca748cae6a8ba6f238f7a84c049f0af7a0" alt="" /></p>
+
+<p>也就是说其实Animator是通过setScollY这个方法来实现动态滚动ScrollView的。而setScrollY的底层其实就是调用scrollTo。</p>
+
+<p><img src="/image/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/8fa8cc9b096bfe29e661dab192a89cafb6beee270e858aff04b59fcf739d0472" alt="" /></p>
+
+<p>到此似乎饶了个大圈子又回到了起点。前面已经尝试scrollTo在onCreate的时候就设置的话是无效的。</p>
+
+<p>当我感到绝望的时候，看到了上图中的view.getScrollX()，既然有getScroolX那一定有getScrollY，既然有getScrollY那么一定有一个属性成员保存这个scrollY。一定！</p>
+
+<p>通过断点和查看源码确认，这个保存ScrollView当前滚动位置的scrollY属性全名叫做mScrollY，而这个mScrollY并不是ScrollView的成员，而是其父类View的属性成员。</p>
+
+<p>发现这个之后，将之前的反射代码直接修改成获取View的mScrollY变量，然后直接反射设置其初始高度。</p>
+
+<p>编包后自测OK。</p>
+
+<h3 id="section"><strong>总结</strong></h3>
+
+<p>一个小小的需求，暴露了自己对View的成员的不够了解，记录一下，提醒自己也方便大家。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/">Kotlin 初体验: 用 Kotlin 写命令行工具</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/yi_android_instant_apps_jian_jie/">[译]Android Instant Apps简介</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

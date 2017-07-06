@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>从一个小任务开始——Python学习笔记</title>
+    <meta name="description" content="  前记 前记 之前随着阿米尔·汗的电影《摔跤吧，爸爸》大热，本人对这部电影产生了浓厚兴趣。但网上关于这部电影的资源实在太少，于是我把目光转向了公司的SMB服务器。对喜欢看电影的同学来说，这里有大量的“福利”，很多稀有资源都能在第一时间上传，对于伸手党而言简直是个天堂。但是，由于资源众多，在服务器上寻找到我们想要...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>从一个小任务开始——Python学习笔记</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-24
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>jakchen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a-->
+        <a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%8B%93%E5%B1%95%E7%9F%A5%E8%AF%86..." title="Tag: 拓展知识..." rel="tag">拓展知识...</a-->
+        <a href="/tag/#拓展知识..." title="Tag: 拓展知识..." rel="tag">拓展知识...</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section"><strong>前记 </strong></a></li>
+  <li><a href="#python" id="markdown-toc-python">关于Python</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">关于爬虫</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">数据的抓取</a></li>
+  <li><a href="#section-3" id="markdown-toc-section-3">分词器的选型</a></li>
+  <li><a href="#fts" id="markdown-toc-fts">FTS方案的选择</a></li>
+  <li><a href="#section-4" id="markdown-toc-section-4">本地搜索</a></li>
+  <li><a href="#section-5" id="markdown-toc-section-5">后记</a></li>
+</ul>
+
+<h3 id="section"><strong>前记 </strong></h3>
+
+<p>之前随着阿米尔·汗的电影《摔跤吧，爸爸》大热，本人对这部电影产生了浓厚兴趣。但网上关于这部电影的资源实在太少，于是我把目光转向了公司的SMB服务器。对喜欢看电影的同学来说，这里有大量的“福利”，很多稀有资源都能在第一时间上传，对于伸手党而言简直是个天堂。但是，由于资源众多，在服务器上寻找到我们想要的资源并不是一件容易的事情，尤其是在Mac上，搜索极为缓慢，经常十几二十分钟后仍一无所获，让人大为光火。但在window上该情况有所好转，大胆猜测，是否是由于文件系统的不同，在win上建有索引呢？换而言之，在Mac上如果能把内网搜索改为本地搜索，那么搜索速度和准确率将直线提升，这个问题就能很好解决。<br />
+<!--more--></p>
+
+<p>说干就干，既然要把内网搜索变为本地搜索，首先要有数据，所谓巧妇难为无米之炊。遗憾的是，目前服务器似乎没有提供任何数据下载的渠道，或者提供可访问的接口。人工收集显然不现实，因而，我们需要借助网络爬虫，利用计算机的特性，来自动获取我们想要的数据。</p>
+
+<p>当然，实现一个爬虫很多语言都能做到，但伟大的Bruce Eckel曾言：”Life is short, you need<br />
+Python”。作为仅次于PHP的第二大语言，网络爬虫正是Python的拿手好戏。由于存在许多优秀的轮子，Python可以用最简洁的代码，实现其它语言繁琐的操作。而本次的任务正是学习Python的一个绝佳机会。</p>
+
+<h3 id="python">关于Python</h3>
+
+<p>虽然之前并没有接触过Python，但这门语言本身并不复杂，任何有语言基础的人，只需花两个小时了解下基本语法，即可快速上手。鉴于网上有大把的学习资料，这里不对语言本身做过多描述。值得一提的是，和OC相比，Python有两大有趣的特性：lambda和tuple，lambda表达式有点像匿名函数，而tuple作为返回值则省去了大量一次性类的创建，通过搭配使用，在一定程度上可以简化编程，十分灵活。</p>
+
+<p>目前，Python的最新版本是3.5，它和2.x版本相比，差别还是比较大的，而且不向下兼容。鉴于目前Mac OS<br />
+10.12自带的Python版本是2.7.1，为了避免冲突，也为了代码可移植，这里暂时采用2.7版本进行编写。尽管Python3解决了Python2的许多坑，例如字符编码问题，本人就花了不少时间来处理。实际上，日常练习Python时我们完全可以使用Python3.X版本，通过安装Pyenv，我们可以自由管理Python的版本切换，而不会对系统产生干扰。另一种方案来自Cirolong的推荐，安装Virtualenv可以创建一个独立的Python运行环境，这样不仅可以兼容版本，还可以在环境中自由地安装各种第三方包，但使用时需要手动切换环境。两种方案各有优劣，目前本人采用的是第一种，具体做法可以参考文章：<a href="http://www.jianshu.com/p/1927349cb6a2">http://www.jianshu.com/p/1927349cb6a2</a><br />
+；</p>
+
+<h3 id="section-1">关于爬虫</h3>
+
+<p>众所周知，爬虫的基本原理，正是绕过浏览器或其它客户端工具，直接向服务器发起请求，并对服务器返回的数据进行解析，提取我们需要的信息。但有时服务器为了安全，会对请求进行相关校检，判断是否合法，对于非法请求则拒绝返回数据。基于此原因，我们往往需要进行“伪装”，带上必要的Header和Cookie信息，模拟用户的正常操作，防止被打回。而有些严谨的服务器甚至会设置防爬措施，对IP访问进行限频，对于这种，我们就需要人为降低访问频率，或者通过设置代理服务器来变更IP地址。当然，访问Smb服务器并没有访问网站那么复杂，且幸运的是，本人在测试时发现，公司的Smb服务器目前还没有对访问频率做限制，这无疑大大降低了我们操作的难度。</p>
+
+<p>在通过Google搜索简单了解一些相关知识后，一个项目的雏形就建立了，基本流程如下：</p>
+
+<ol>
+  <li>
+    <p> 学习Python语法，编写一个网络爬虫； </p>
+  </li>
+  <li>
+    <p> 利用网络爬虫，连接Smb服务器，爬取相关的数据； </p>
+  </li>
+  <li>
+    <p> 对数据进行处理，分词并建立索引库； </p>
+  </li>
+  <li>
+    <p> 利用本地索引库搜索关键词，获取想要的信息； </p>
+  </li>
+</ol>
+
+<h3 id="section-2">数据的抓取</h3>
+
+<p>由于搜索Python官网找不到关于连接Smb文件服务器的相关API（如果有的话，麻烦大神指点一下），这里采用了一个第三方库Pysmb，官网链接如下：<a href="https://miketeo.net/wp/index.php/projects/pysmb">https://miketeo.net/wp/index.php/projects/pysmb</a>，上面有详细的wiki文档；</p>
+
+<p>至于Pysmb库的安装则十分简单，直接在Terminal输入以下命令即可：</p>
+
+<pre><code>sudo pip install pysmb
+</code></pre>
+
+<p> 当然，对于还没有安装pip的Mac用户，我们可以通过以下命令快速安装：</p>
+
+<pre><code>Sudo easy_install pip
+</code></pre>
+
+<p> 在引入必要头文件后，我们就可以通过以下几行代码，轻松连接Smb服务器：</p>
+
+<pre><code>def _search_server() :
+    conn = SMBConnection(Config.Username, Config.Password, Config.Hostname, Config.ServerName, domain = Config.Domain, use_ntlm_v2=True, is_direct_tcp=True)
+    try :
+        print 'Start connecting...';
+        result = conn.connect(Config.ServerIP, 445);
+        print 'Connect result : '+ str(result);
+    except Exception :
+        print 'Connect fail.';
+    else :
+        print 'Connect success.';
+        _run_search(conn);
+        conn.close();
+</code></pre>
+
+<p>这里涉及几个重要参数，这些参数目前都配置在Config.py文件中：Username和Password，顾名思义，就是我们的Outlook账号；Hostname，这个也很好拿到，在Terminal中输入hostname即可；但ServerName却实在不好获取；抱着试一试的心态，随便糊弄了一个，最终果然成功。。。被拒绝了。。</p>
+
+<p>查看Pysmb文档关于SMBConnection方法的说明，该参数和remote<br />
+server的配置名称必须严格一致，否则会被拒绝，看起来这个点无法简单绕过；</p>
+
+<p><img src="/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/ca74fc2d0e1ce6af9dc9c2e6d70af8a58e2287763d50edf7f524cbb2a9d182cd" alt="" /></p>
+
+<p>解决这个问题花了我一些时间，通过查询资料可知，腾讯的文件系统TFS是一个分布式的文件系统，采用DFS技术，虽然访问时并无明显差别，但不同的目录很可能存在于不同的主机上；在Mac上尝试获取无果后，偶然发现了一个取巧的方法，可以进行“曲线救国”：在Window上，对于共享文件，我们可以通过右键属性，查看其DFS选项，这里可以获取该目录所在的服务器路径，如下所示：</p>
+
+<p>举个栗子，我们关心的目录“腾讯电影协会-影音博物馆”，右键其属性可以看到服务器路径为：\\FS-gk27a\腾讯电影协会-影音博物馆$，如预想的一样<br />
+，其中的FS-gk27a，正是我们所需要的服务器域名；而有了服务器域名，获取其IP则很简单了，在CMD中ping一下，便可得到服务器真实域名为 FS-<br />
+gk27a.tencent.com，IP地址为10.14.37.68；</p>
+
+<p><img src="/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/05d882dc50020347a8a9c3db1df8690aded4c9009586f21b0bab085f678f0773" alt="" /></p>
+
+<p><img src="/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/5acc0f805fafda8a88e31167ba3e0be6a3ebf3f35e1269eff8f7c84ab907d81d" alt="" /></p>
+
+<p>有了这些参数，便可顺利连接服务器；”腾讯电影协会-<br />
+影音博物馆”目录下有四个文件夹，其中“★书籍”和“★游戏”不是我们所需要的，可以直接过滤，剩下的可以通过一个递归的方法，循环获取文件信息，精简后的代码如下：</p>
+
+<pre><code>def _searchPath(conn, path, folderName) :
+    for subPath in conn.listPath(Config.RootPath.decode('utf-8'), path.decode('utf-8')) :
+        # Process
+        if subPath.filename.startswith('.') :
+            print 'Hidden file, pass.';
+        elif subPath.filename == 'DfsrPrivate' :
+            pass;
+        elif subPath.isDirectory :
+            print '[Directory] : ' + subPath.filename;
+            subDicPath = path + subPath.filename.encode('utf-8') + '/';
+            _searchPath(conn, subDicPath, subPath.filename.encode('utf-8'));
+        else :
+            print '[File] name = : ' + subPath.filename + ' folderName = ' + folderName.decode('utf-8') + ' path = ' + path.decode('utf-8');
+            _record(subPath.filename, folderName.decode('utf-8'), path.decode('utf-8'));
+</code></pre>
+
+<p> 抓包大约会持续10分钟，最后我们可以得到一份全量数据；从日志上看，共有26万多个文件，我的天，终于明白为何在Mac上搜索如此缓慢了；</p>
+
+<p><img src="/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/6175a27d51c2eda5f51c99bef3ff6927456d09994ea3064dd99d86f0a45ba635" alt="" /></p>
+
+<h3 id="section-3">分词器的选型</h3>
+
+<p>既然有了原始数据，剩下的便是分词并建立索引库了；对于英文，分词比较简单，我们往往以空格作为分词标志，对字符串做简单处理即可；但服务器上大多数的电影名称都是中文，中文的分词可要复杂得多，即使同一个单词，是否需要拆分也要视语境而定。而中文分词的策略，在我看来又可简单分为两种，基于词典的分词，以及暴力分词；根据我们的场景，我搜索比较了几种常见的分词器，最终选定了Jieba分词器。</p>
+
+<p>Jieba分词器是一个开源的基于词典的中文分词库，优点是搜索速度快，且自带中文词库，可以提高中文搜索的成功率；但缺点也有，Jieba分词器在初始化时需要加载这些数据，因而启动较慢；鉴于我们对单次搜索的时间要求并没有严格的要求，相比于优点，其不足之处是可以接受的；</p>
+
+<p>此外，在测试时发现，对于有些剧集，其文件夹的名称才具有实际意义，子文件则往往以01、02等无意义的下标作为名称，用户搜索时根本不会输入这些关键字。这就导致，如果不做处理，这类电影会被间接过滤，如搜索”神探夏洛克”，基本难以找到匹配的结果。为了较大程度地规避此问题，对于Keyword的选取，不再简单地使用文件名，而是绑定其文件夹，将FolderName_FileName作为一个整体的方式进行分词处理，提高匹配的成功率；至于英文，原本计划对字母做统一的小写化处理，但Jieba本身做了这部分工作，所以这个步骤可以跳过；</p>
+
+<h3 id="fts">FTS方案的选择</h3>
+
+<p>目前市面上主流的FTS方案很多，这里主要对比了下Pylucene和Whoosh。作为鼎鼎大名的Lucene的Python实现，我对Pylucene一开始是充满向往的，然而实际使用起来却不尽人意，过程略显繁琐，最终不得不放弃。相比之下，纯Python实现的Whoosh则简洁有效得多。由于Whoosh使用并不复杂，且FTS不是本次学习的重点，这里就不做过多赘述，有兴趣的同学可以到官网学习一下，上面有许多详细的Demo：<a href="https://pypi.python.org/pypi/Whoosh">https://pypi.python.org/pypi/Whoosh</a>；</p>
+
+<h3 id="section-4">本地搜索</h3>
+
+<p>利用Whoosh+Jieba，我们轻松完成了分词和索引库建立的工作，至此，我们离成功仅有一步之遥了；搜索依旧采用Whoosh的API，这里补充下前面关于这两个库的安装，打开我们的Terminal，输入以下命令即可：</p>
+
+<pre><code>sudo pip install Whoosh
+sudo pip install Jieba
+</code></pre>
+
+<p>至于代码比较简单，这里就不列出来了，有兴趣的可以看下源码；</p>
+
+<p>我们直接进入体验环节，通过运行Search.py，搜索”摔跤吧“，结果如下：</p>
+
+<p><img src="/image/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/b9b20cc4b7bfde2966c2c44161fe5dafdc4c53c2d7236f38cf045efcf7f713c9" alt="" /></p>
+
+<p>Perfect，成功获得了我们想要的结果；在Finder中用CMD+K快捷键，输入上面的SMB链接，即可跳到对应的文件夹；而更重要的是，有了本地的索引库，以后终于不用忍受龟速般的搜索了，简直是我等伸手党的福音啊；虽然目前由于时间缘故，还未做到对索引库进行增量更新乃至自动更新，但从技术上分析是可行的，这里留待以后完成。</p>
+
+<h3 id="section-5">后记</h3>
+
+<p>关于这个小项目，从萌生这一想法，到学习Python、抓取数据以及建立本地索引库，总共花了1天多的时间，代码总行数不超过300，不得不说这正是Python的魅力所在。当然，由于时间有限，这只是一个简单的雏形版本，勉强算得上V1.0，很多方案和实现并未达到最优，需要后续进行调试改进。此外，由于对Python不熟悉，在编写过程中，自然免不了踩坑，一边查阅文档以了解其语法和使用，一边Google原理，最终磕磕绊绊地写完。但我始终认为，学习一门语言，最好的方式还是写一个小Demo，这样理解起来才会更加深刻。由于某些不可描述的原因，最近恰好需要写一篇文章，这里我将Python入门的经历简单记录下来，希望能对那些有感于此的同事有所帮助和启发，毕竟原理是相通的。</p>
+
+<p>最后，文章的末尾附上源码，有兴趣的朋友可以根据 README.md<br />
+中的说明，配置参数后，自己抓包尝试一下，或者修改源码实现，以贴合自己的需求；当然，如果你对Python没有兴趣，也没关系，可以直接下载抓包后的Index库，按照<br />
+README.md 的说明简单安装几个Python库，即可以开始使用，很惭愧，只是做了一些微小的工作。。。</p>
+
+<p><strong>[ P.S. 如果该行为违反了相关规定，麻烦8000知会一声，本人会立即停止一切行为，并删除相关文章和代码 ！！！ ] </strong></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/runloop_jie_du/">RunLoop解读</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/make_wechat_great_again/">Make WeChat Great Again</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/cong_yi_ge_xiao_ren_wu_kai_shi__python_xue_xi_bi_ji/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

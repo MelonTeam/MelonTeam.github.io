@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>WWDC2017小结</title>
+    <meta name="description" content="  WWDC 2017          硬件      WWDC 2017硬件">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/wwdc2017_xiao_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>WWDC2017小结</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-06-24
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>maxsezhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#COREML" title="Tag: COREML" rel="tag">COREML</a-->
+        <a href="/tag/#COREML" title="Tag: COREML" rel="tag">COREML</a>&nbsp;
+    
+        <!--a href="/tag/#ARKit" title="Tag: ARKit" rel="tag">ARKit</a-->
+        <a href="/tag/#ARKit" title="Tag: ARKit" rel="tag">ARKit</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#wwdc-2017" id="markdown-toc-wwdc-2017">WWDC 2017</a>    <ul>
+      <li><a href="#section" id="markdown-toc-section">硬件</a>        <ul>
+          <li><a href="#imac-pro" id="markdown-toc-imac-pro">iMac Pro</a></li>
+          <li><a href="#homepod" id="markdown-toc-homepod">Homepod</a></li>
+        </ul>
+      </li>
+      <li><a href="#ios-11" id="markdown-toc-ios-11">iOS 11</a>        <ul>
+          <li><a href="#app" id="markdown-toc-app">文件 App</a></li>
+          <li><a href="#app-1" id="markdown-toc-app-1">相机 App，既是照相机，也是扫码器</a></li>
+          <li><a href="#app-store" id="markdown-toc-app-store">焕然一新的 App Store</a></li>
+          <li><a href="#app-2" id="markdown-toc-app-2">信息 App</a></li>
+          <li><a href="#apple-id" id="markdown-toc-apple-id">Apple ID</a></li>
+          <li><a href="#section-1" id="markdown-toc-section-1">勿扰模式</a></li>
+        </ul>
+      </li>
+      <li><a href="#ios-11-sdk" id="markdown-toc-ios-11-sdk">iOS 11 SDK</a>        <ul>
+          <li><a href="#arkit" id="markdown-toc-arkit">ARKit</a></li>
+          <li><a href="#core-ml" id="markdown-toc-core-ml">Core ML</a></li>
+          <li><a href="#section-2" id="markdown-toc-section-2">拖拽</a></li>
+          <li><a href="#navigation-title-" id="markdown-toc-navigation-title-">新的 Navigation title 设计</a></li>
+          <li><a href="#fileprovider--fileproviderui" id="markdown-toc-fileprovider--fileproviderui">FileProvider 和 FileProviderUI</a></li>
+          <li><a href="#app-3" id="markdown-toc-app-3">不再支持 32 位 app</a></li>
+          <li><a href="#devicecheck" id="markdown-toc-devicecheck">DeviceCheck</a></li>
+          <li><a href="#pdfkit" id="markdown-toc-pdfkit">PDFKit</a></li>
+          <li><a href="#identitylookup" id="markdown-toc-identitylookup">IdentityLookup</a></li>
+          <li><a href="#core-nfc" id="markdown-toc-core-nfc">Core NFC</a></li>
+          <li><a href="#auto-fill" id="markdown-toc-auto-fill">Auto Fill</a></li>
+        </ul>
+      </li>
+      <li><a href="#xcode" id="markdown-toc-xcode">Xcode</a></li>
+      <li><a href="#swift-40" id="markdown-toc-swift-40">Swift 4.0</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="wwdc-2017">WWDC 2017</h2>
+
+<h3 id="section">硬件</h3>
+<!--more-->
+
+<h4 id="imac-pro">iMac Pro</h4>
+
+<p><img src="/image/wwdc2017_xiao_jie/e48bda85df5ce48d97b488a3a3b916ba85ec1a583436abf0622faf922941b3af" alt="" /></p>
+
+<p>这款深空灰色的设备被称为至今为止的最强 Mac，它将搭载最高 18 核心的 Intel Xeon 处理器和 AMD Radeon Pro Vega<br />
+显卡，单精度和「半精度」运算峰值分别可达 11 Teraflops 和 22 Teraflops。除此之外，它还配备了最高 4TB SSD，在 27 吋的<br />
+Retina 5K 屏幕背后有 4 个 Thunderbolt 3 插口和多个 USB 接口。设备内部采用了双风扇设计，散热效率据称可提高 80%。</p>
+
+<p>看到上面这些，你应该也能够踩到 iMac Pro 的价格不会便宜，它的价格最终落在 US$4,999 起，显然瞄准的是专业级的使用者了。</p>
+
+<h4 id="homepod">Homepod</h4>
+
+<p><img src="/image/wwdc2017_xiao_jie/1d0f690ce4abb68f9ccd7bb9c19c5e4a054f8874047628a725a99936d33a5c82" alt="" /></p>
+
+<p>Siri智能音箱HomePod。搭载6个麦克风阵列，4英寸低音炮，底部配有7个扬声器阵列，内置Apple A8处理器。</p>
+
+<p>用户可以利用“Hey Siri”唤醒HomePod，获取各种信息。也可以连接其它HomeKit智能家居产品。</p>
+
+<h3 id="ios-11">iOS 11</h3>
+
+<h4 id="app">文件 App</h4>
+
+<p>全新文件 app 会把各类文件汇集在一起。不仅包括iPad 上的文件，还有用户存放在各种app、其他iOS设备、iCloud Drive<br />
+和其他云服务中的文件。</p>
+
+<h4 id="app-1">相机 App，既是照相机，也是扫码器</h4>
+
+<p>iOS 11 进一步让 iPhone 和 iPad<br />
+的相机功能提升至一个新高度。它不仅能便捷地读取二维码，还让人像摄影也变得更富表现力。新一代的压缩技术让拍摄的照片在保有和以往相同图像质量的前提下，文件大小只是以往的一半。</p>
+
+<h4 id="app-store">焕然一新的 App Store</h4>
+
+<p>苹果对 App Store 进行了重新设计，来帮用户发掘自己爱不释手的各类新款 app<br />
+和游戏。你还可以查看由专业人士编撰的每日故事、专门的游戏标签页，汇集了各类 app 的列表等等。这可以说是自 app 问世以来，App Store<br />
+的一次重大更新。</p>
+
+<h4 id="app-2">信息 App</h4>
+
+<p>信息 App 抽屉经过重新设计，便于用户打开自己想要的 app。新一代过滤技术可更准确地识别并屏蔽可能的垃圾信息。</p>
+
+<h4 id="apple-id">Apple ID</h4>
+
+<p>现在用户可以将自己的电话号码用作 Apple ID 了。另外Apple ID 的密码规则变得更简单。双重认证也将自动打开以提高安全性。</p>
+
+<h4 id="section-1">勿扰模式</h4>
+
+<p>iPhone 如果感应到你可能正在开车，就会暂时屏蔽来电、短信和通知，以防分散你的注意力。同时，联系你的人也可以收到自动通知，知道你正在开车。</p>
+
+<h3 id="ios-11-sdk">iOS 11 SDK</h3>
+
+<p>要用一句话来评价今年iOS SDK的变化的话，就是小步革新。</p>
+
+<h4 id="arkit">ARKit</h4>
+
+<p><img src="/image/wwdc2017_xiao_jie/947450244ab8c66dc4b65328f0ec722e7c38fee6192890f5760719d12982d972" alt="" /></p>
+
+<p>ARKit 利用单镜头和陀螺仪，在对平面的识别和虚拟物体的稳定上做得相当出色。几乎可以肯定不做最早，只做最好的 Apple 似乎在这一刻回到了舞台上。</p>
+
+<p>ARKit 极大降低了普通开发者玩 AR 的门槛，也是 Apple 现阶段用来抗衡 VR 的选项。而与之相应的，是一套并不很复杂的 API。</p>
+
+<p>开发者需要做的大抵就是将虚拟物体放在屏幕的合适位置，并让物体之间互动。然后利用 Core ML 来对相机内的实际物体进行识别和交互。</p>
+
+<h4 id="core-ml">Core ML</h4>
+
+<p><img src="/image/wwdc2017_xiao_jie/9f80f167e2729df5dc548195f5de363a4b3ccd58c1f7fc84a924b79255e7b664" alt="" /></p>
+
+<p>Core ML 所扮演的角色更多的是将已经训练好的模型转换为 iOS 可以理解的形式，并且将新的数据“喂给”模型，获取输出。</p>
+
+<p>Core ML 在背后驱动了 iOS 的视觉识别的 Vision 框架和 Foundation 中的语义分析相关 API。</p>
+
+<p>Google 或者 Samsung 在 Android AI 上的努力，大多是在自带的应用中集成服务。相比起来，Apple<br />
+基于对自己生态和硬件的控制，将更多的选择权交给了第三方开发者。</p>
+
+<h4 id="section-2">拖拽</h4>
+
+<p>开发者可以对任意 UIView 子类定义拖拽行为。iOS 系统帮助你处理了绝大部分工作，你几乎只需要处理结果。</p>
+
+<h4 id="navigation-title-">新的 Navigation title 设计</h4>
+
+<p>iOS 11 的大多数系统 app 都采用了新的设计，放大了导航栏的标题字体。如果你想采用这项设计的话也非常简单，设置 navigation bar 的<br />
+prefersLargeTitles 即可。</p>
+
+<h4 id="fileprovider--fileproviderui">FileProvider 和 FileProviderUI</h4>
+
+<p>提供一套类似 Files app 的界面，让你可以获取用户设备上或者云端的文件。相信会成为以后文档相关类 app 的标配。</p>
+
+<h4 id="app-3">不再支持 32 位 app</h4>
+
+<p>虽然在 beta 1 中依然可以运行 32 位 app，但是 Apple 明确指出了将在后续的 iOS 11 beta<br />
+中取消支持。所以如果你想让自己的程序运行在 iOS 11 的设备上，进行 64 位的重新编译是必须步骤。</p>
+
+<h4 id="devicecheck">DeviceCheck</h4>
+
+<p>DeviceCheck 允许你通过你的服务器与 Apple 服务器通讯，并为单个设备设置两个 bit 的数据。</p>
+
+<p>简单说，你在设备上用 DeviceCheck API 生成一个 token，然后将这个 token 发给自己的服务器，再由自己的服务器与 Apple 的<br />
+API 进行通讯，来更新或者查询该设备的bit值。</p>
+
+<h4 id="pdfkit">PDFKit</h4>
+
+<p>这是一个在 macOS 上已经长期存在的框架，但却在 iOS 上姗姗来迟。你可以使用这个框架显示和操作 pdf 文件。</p>
+
+<h4 id="identitylookup">IdentityLookup</h4>
+
+<p>开发者利用IdentityLookup可以自己开发一个 app extension 来拦截系统 SMS 和 MMS 的信息。</p>
+
+<p>系统的信息 app 在接到未知的人的短信时，会询问所有开启的过滤扩展，如果扩展表示该消息应当被拦截，那么这则信息将不会传递给用户。</p>
+
+<h4 id="core-nfc">Core NFC</h4>
+
+<p>在 iPhone 7 和 iPhone 7 Plus 上提供基础的近场通讯读取功能。只要你有合适的 NFC<br />
+标签，手机就可以进行读取。但是考虑到无法后台常驻，实用性就打了折扣。</p>
+
+<h4 id="auto-fill">Auto Fill</h4>
+
+<p>从 iCloud Keychain 中获取密码，然后自动填充的功能现在开放给第三方开发者了。</p>
+
+<p>Auto Fill可以在要求输入用户名密码时获取键盘上方的自动填充，帮助用户快速登录。</p>
+
+<h3 id="xcode">Xcode</h3>
+
+<ul>
+  <li>从启动速度、编译速度、搜索和静态分析速度等几个方面都有了极大的提升。</li>
+  <li>添加了 GitHub 集成，可以进行同局域网的无线部署和调试。</li>
+  <li>多开模拟器</li>
+  <li>更多的静态分析</li>
+  <li>可以在 xcassets 里添加颜色，然后在代码或者 IB 中引用这个颜色</li>
+</ul>
+
+<h3 id="swift-40">Swift 4.0</h3>
+
+<p>Swift 语言仍然是不得不说的一个主题，本次的 Swift 4.0<br />
+较之前变化不再那么大，细节上做了很多更优秀的微调。性能得到了很大的优化，甚至对字符串做了特殊的优化，连中文字符串都有 2.5 倍的性能加速，由此可见<br />
+Apple 对中国市场的重视已经从产品转而到研发套件上来了。</p>
+
+<p>另外值得一提的是，利用新版的 Xcode 工具 Swift 3.2 可以和 Swift 4.0 进行无缝的切换，保留部分源代码的风格，只区别性能。感觉<br />
+Swift 终于可以进入到一种稳定的状态了。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/yi_zhong_xia_zai_guan_li_fang_an_de_she_ji_yu_shi_xian/">一种下载管理方案的设计与实现</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_jni_dui_zhan_fen_xi_gong_ju_jian_jie/">Android JNI堆栈分析工具简介</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/wwdc2017_xiao_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/wwdc2017_xiao_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>
