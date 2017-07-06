@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,19 +180,19 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#结论" id="markdown-toc-结论">结论:</a></li>
-  <li><a href="#上面可以不记只要记住下面的要点就够了" id="markdown-toc-上面可以不记只要记住下面的要点就够了">上面可以不记,只要记住下面的要点就够了</a></li>
-  <li><a href="#" id="markdown-toc-">#</a></li>
-  <li><a href="#-1" id="markdown-toc--1">#</a>    <ul>
-      <li><a href="#重要的事情说三遍" id="markdown-toc-重要的事情说三遍">重要的事情说三遍：</a></li>
-      <li><a href="#和layout_weight搭配的layout_width或layout_height一定要用0dp" id="markdown-toc-和layout_weight搭配的layout_width或layout_height一定要用0dp">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
-      <li><a href="#和layout_weight搭配的layout_width或layout_height一定要用0dp-1" id="markdown-toc-和layout_weight搭配的layout_width或layout_height一定要用0dp-1">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
-      <li><a href="#和layout_weight搭配的layout_width或layout_height一定要用0dp-2" id="markdown-toc-和layout_weight搭配的layout_width或layout_height一定要用0dp-2">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
+  <li><a href="#section" id="markdown-toc-section">结论:</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">上面可以不记,只要记住下面的要点就够了</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">#</a></li>
+  <li><a href="#section-3" id="markdown-toc-section-3">#</a>    <ul>
+      <li><a href="#section-4" id="markdown-toc-section-4">重要的事情说三遍：</a></li>
+      <li><a href="#layoutweightlayoutwidthlayoutheight0dp" id="markdown-toc-layoutweightlayoutwidthlayoutheight0dp">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
+      <li><a href="#layoutweightlayoutwidthlayoutheight0dp-1" id="markdown-toc-layoutweightlayoutwidthlayoutheight0dp-1">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
+      <li><a href="#layoutweightlayoutwidthlayoutheight0dp-2" id="markdown-toc-layoutweightlayoutwidthlayoutheight0dp-2">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</a></li>
     </ul>
   </li>
 </ul>
 
-<p>| 导语 当需要某个View自动占满剩余空间,或者多个View平分空间时,你会想到使用layout_weight,但如果想按比例使用空间,
+<p>| 导语 当需要某个View自动占满剩余空间,或者多个View平分空间时,你会想到使用layout_weight,但如果想按比例使用空间,<br />
 你会怎么用呢,又有什么坑呢?</p>
 
 <p>layout_weight是LinearLayout中的一个属性,通常我们用途是</p>
@@ -210,7 +210,7 @@
 
 <p>比如你有3个TextView,你想将这3个TextView按1:2:3的比例使用横向空间,你就可以把这3个View的layout_weight设成1,2,3.如下面的xml</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;LinearLayout 
+<pre><code>&lt;LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -235,7 +235,6 @@
             android:text="123456789" /&gt;
     LinearLayout&gt;
 </code></pre>
-</div>
 
 <p> 实际的效果</p>
 
@@ -249,7 +248,7 @@
 
 <p><img src="/image/shen_ru_le_jie_layout_weight_de_yong_tu/9109b7280eb2bcf6639d8cd18ee243a1981f1eb763850bcb9362eba1dcb9703e" alt="" /></p>
 
-<p>这里给出6个例子,每个都是一行有3个TextView,
+<p>这里给出6个例子,每个都是一行有3个TextView,<br />
 每个TextView的layout_weight都如图所示,还有差别就是每个例子的layout_width是不一样的，xml的源代码见附件</p>
 
 <p>其中对于layout_weight是1,2,3的例子,只有b和c是按比例占空间的.</p>
@@ -262,17 +261,15 @@
 
 <p>例如:</p>
 
-<p>a由于layout_width是wrap_content,他先把”123456789”所占的空间w1占了，剩下的空间w2=屏幕的宽度- 3*w1,
+<p>a由于layout_width是wrap_content,他先把”123456789”所占的空间w1占了，剩下的空间w2=屏幕的宽度- 3*w1,<br />
 然后再对w2分成6份，按layout_weight分给3个TextView.</p>
 
 <p>b虽然layout_width是wrap_content，但他的text是空，所以根据layout_width占的空间是0dp，剩下的空间就是屏幕的宽度，然后再按layout_weight分就是1：2：3</p>
 
 <p>c由于layout_width是0dp,所以根据layout_width占的空间是0dp，剩下的空间就是屏幕的宽度，然后再按layout_weight分就是1：2：3</p>
 
-<p>d由于layout_width是match_parent,根据layout_width每个TextView占的空间是屏幕的宽度w，这样剩下的空间w2 = w</p>
-<ul>
-  <li>3w = -2w,再按layout_weight对w2进行分配，</li>
-</ul>
+<p>d由于layout_width是match_parent,根据layout_width每个TextView占的空间是屏幕的宽度w，这样剩下的空间w2 = w<br />
+- 3w = -2w,再按layout_weight对w2进行分配，</p>
 
 <p>第一个View的实际分配的宽度tw1 = w + (1/6) * (-2w) = w - 1/3 * w = 2/3 * w</p>
 
@@ -284,10 +281,8 @@
 
 <p>（注：有点奇葩的是，这个Linearlayout的高度变成“123456789”的纵向9行的高度，但又没任何和内容显示）</p>
 
-<p>e由于layout_width是match_parent,根据layout_width每个TextView占的空间是屏幕的宽度w，这样剩下的空间w2 = w</p>
-<ul>
-  <li>3w = -2w,再按layout_weight对w2进行分配，</li>
-</ul>
+<p>e由于layout_width是match_parent,根据layout_width每个TextView占的空间是屏幕的宽度w，这样剩下的空间w2 = w<br />
+- 3w = -2w,再按layout_weight对w2进行分配，</p>
 
 <p>第一个View的实际分配的宽度tw1 = w + (1/3) * (-2w) = w - 2/3 * w = 1/3 * w</p>
 
@@ -299,22 +294,22 @@
 
 <p>f的效果等同于a的效果</p>
 
-<h3 id="结论">结论:</h3>
+<h3 id="section">结论:</h3>
 
-<h3 id="上面可以不记只要记住下面的要点就够了">上面可以不记,只要记住下面的要点就够了</h3>
+<h3 id="section-1">上面可以不记,只要记住下面的要点就够了</h3>
 
-<h2>#</h2>
+<h2 id="section-2">#</h2>
 <p>和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”,绝对不要用”match_parent”,也不要用”wrap_content”和固定长度</p>
 
-<h2 id="-1">#</h2>
+<h2 id="section-3">#</h2>
 
-<h3 id="重要的事情说三遍">重要的事情说三遍：</h3>
+<h3 id="section-4">重要的事情说三遍：</h3>
 
-<h3 id="和layout_weight搭配的layout_width或layout_height一定要用0dp">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
+<h3 id="layoutweightlayoutwidthlayoutheight0dp">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
 
-<h3 id="和layout_weight搭配的layout_width或layout_height一定要用0dp-1">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
+<h3 id="layoutweightlayoutwidthlayoutheight0dp-1">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
 
-<h3 id="和layout_weight搭配的layout_width或layout_height一定要用0dp-2">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
+<h3 id="layoutweightlayoutwidthlayoutheight0dp-2">和layout_weight搭配的layout_width（或layout_height）一定要用”0dp”</h3>
 
 
         </article>
@@ -478,9 +473,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/' 
+     'url':'http://MelonTeam.com/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/06/07/shen_ru_le_jie_layout_weight_de_yong_tu/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -545,6 +540,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -560,7 +556,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

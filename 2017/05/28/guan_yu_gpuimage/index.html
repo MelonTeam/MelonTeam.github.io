@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/05/28/guan_yu_gpuimage/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/05/28/guan_yu_gpuimage/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -177,23 +177,23 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#" id="markdown-toc-"><em>**</em></a>    <ul>
-      <li><a href="#关于gpuimage" id="markdown-toc-关于gpuimage">关于GPUImage</a></li>
-      <li><a href="#gpuimage框架" id="markdown-toc-gpuimage框架">GPUImage框架</a></li>
-      <li><a href="#录制滤镜视频" id="markdown-toc-录制滤镜视频">录制滤镜视频</a></li>
+  <li><a href="#section" id="markdown-toc-section"><em>**</em></a>    <ul>
+      <li><a href="#gpuimage" id="markdown-toc-gpuimage">关于GPUImage</a></li>
+      <li><a href="#gpuimage-1" id="markdown-toc-gpuimage-1">GPUImage框架</a></li>
+      <li><a href="#section-1" id="markdown-toc-section-1">录制滤镜视频</a></li>
     </ul>
   </li>
-  <li><a href="#-1" id="markdown-toc--1">#</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">#</a></li>
 </ul>
 
-<p>本文内容参考自以下文章：KM文章<a href="http://km.oa.com/group/22128/articles/show/272905?kmref=search&amp;from_page=1&amp;no=1">一张图教你看懂GPUImage</a>、<a href="http://km.oa.com/group/29501/articles/show/284686?kmref=author_post">iOS
-图像处理系列 -
-GPUImage源码解读（一）</a>，博文<a href="http://www.jianshu.com/nb/4268718">GPUImage文集</a>。文中不再详细标注引用来源。
+<p>本文内容参考自以下文章：KM文章<a href="http://km.oa.com/group/22128/articles/show/272905?kmref=search&amp;from_page=1&amp;no=1">一张图教你看懂GPUImage</a>、<a href="http://km.oa.com/group/29501/articles/show/284686?kmref=author_post">iOS<br />
+图像处理系列 -<br />
+GPUImage源码解读（一）</a>，博文<a href="http://www.jianshu.com/nb/4268718">GPUImage文集</a>。文中不再详细标注引用来源。<br />
 <!--more--></p>
 
-<h1><em>**</em></h1>
+<h1 id="section"><em>**</em></h1>
 
-<h2 id="关于gpuimage">关于GPUImage</h2>
+<h2 id="gpuimage">关于GPUImage</h2>
 
 <p>GPUImage框架是一个开源iOS类库，基于OpenGL进行图像和视频处理，借助GPU加速实现各种滤镜效果，并支持摄像头拍摄实时渲染。</p>
 
@@ -207,7 +207,7 @@ GPUImage源码解读（一）</a>，博文<a href="http://www.jianshu.com/nb/426
 
 <p>·             可继承GPUImageFilter实现自定义滤镜效果，扩展非常方便。</p>
 
-<h2 id="gpuimage框架">GPUImage框架</h2>
+<h2 id="gpuimage-1">GPUImage框架</h2>
 
 <p>GPUImage功能的实现依赖四个部分：资源管理、Sources、Filters、Outputs。核心架构用下图概括：</p>
 
@@ -217,10 +217,10 @@ GPUImage源码解读（一）</a>，博文<a href="http://www.jianshu.com/nb/426
 
 <p><strong>      <img src="/image/guan_yu_gpuimage/5f3a90fe2b66fa08a16e62fbc9bde6dc18c3de82aab39c04749bd4220ca34daa" alt="" /></strong></p>
 
-<p>GLProgram是GPUImage对OpenGL
+<p>GLProgram是GPUImage对OpenGL<br />
 ES中的program的封装，可用vertexShader和fragmentShader创建GLProgram对象，实现自定义滤镜效果。</p>
 
-<p>GPUImageContext是GPUImage对OpenGL
+<p>GPUImageContext是GPUImage对OpenGL<br />
 ES上下文的封装，并添加GPUImge相关的上下文，如上下文队列(contextQueue，解决OpenGLContext不是多线程安全的问题)、CV纹理缓存(coreVideoTexttureCache)、framebuffer缓存、program使用的缓存等。</p>
 
 <p>GPUImageFramebuffer是管理纹理缓存格式、帧缓存的buffer，完成缓存创建、指定渲染目标、调整视口、解锁等。其中，newCGImageFromFramebufferContents函数从缓存中获取图像数据，创建CGImageRef并返回。</p>
@@ -241,10 +241,10 @@ ES上下文的封装，并添加GPUImge相关的上下文，如上下文队列(c
 
 <p>      流程概述如下：</p>
 
-<p>1)
+<p>1)<br />
 找到摄像头设备_inoutCamera、麦克风_microphone，创建摄像头输入videoInput和麦克风输入audioInput，设置为_captureSession的输入。</p>
 
-<p>2)
+<p>2)<br />
 创建摄像头输出videoOutput和麦克风输出audioOutput，设置为_captureSession的输出，设置二者的输出delegate。</p>
 
 <p>3)     调用[_captureSessionstartRunning]开始获取音视频数据。</p>
@@ -305,7 +305,7 @@ ES上下文的封装，并添加GPUImge相关的上下文，如上下文队列(c
 
 <p><strong><img src="/image/guan_yu_gpuimage/a07c4d718ee9adc3feb43a7bef1d9052617307be0ab3af0e0e762415a695b5ed" alt="" /></strong></p>
 
-<h2 id="录制滤镜视频">录制滤镜视频</h2>
+<h2 id="section-1">录制滤镜视频</h2>
 
 <p>下面的例子利用GPUImage录制视频、实现实时的滤镜效果渲染并将视频文件保存到本地。</p>
 
@@ -351,7 +351,7 @@ ES上下文的封装，并添加GPUImge相关的上下文，如上下文队列(c
 
 <p>__</p>
 
-<h1 id="-1">#</h1>
+<h1 id="section-2">#</h1>
 
 
         </article>
@@ -481,9 +481,9 @@ ES上下文的封装，并添加GPUImge相关的上下文，如上下文队列(c
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/05/28/guan_yu_gpuimage/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/05/28/guan_yu_gpuimage/' 
+     'url':'http://MelonTeam.com/2017/05/28/guan_yu_gpuimage/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/05/28/guan_yu_gpuimage/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -548,6 +548,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -563,7 +564,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

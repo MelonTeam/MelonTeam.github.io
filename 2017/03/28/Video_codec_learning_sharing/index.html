@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/03/28/Video_codec_learning_sharing/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -176,49 +176,49 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#1为什么视频要编解码" id="markdown-toc-1为什么视频要编解码">1.为什么视频要编解码？</a></li>
-  <li><a href="#2视频是否可以压缩" id="markdown-toc-2视频是否可以压缩">2.视频是否可以压缩？</a>    <ul>
-      <li><a href="#视频冗余信息" id="markdown-toc-视频冗余信息">视频冗余信息</a>        <ul>
-          <li><a href="#空间冗余图像相邻像素之间有较强的相关性" id="markdown-toc-空间冗余图像相邻像素之间有较强的相关性">空间冗余：图像相邻像素之间有较强的相关性</a></li>
-          <li><a href="#时间冗余视频序列的相邻图像之间内容相似" id="markdown-toc-时间冗余视频序列的相邻图像之间内容相似">时间冗余：视频序列的相邻图像之间内容相似</a></li>
-          <li><a href="#编码冗余不同像素值出现的概率不同" id="markdown-toc-编码冗余不同像素值出现的概率不同">编码冗余：不同像素值出现的概率不同</a></li>
+  <li><a href="#section" id="markdown-toc-section">1.为什么视频要编解码？</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">2.视频是否可以压缩？</a>    <ul>
+      <li><a href="#section-2" id="markdown-toc-section-2">视频冗余信息</a>        <ul>
+          <li><a href="#section-3" id="markdown-toc-section-3">空间冗余：图像相邻像素之间有较强的相关性</a></li>
+          <li><a href="#section-4" id="markdown-toc-section-4">时间冗余：视频序列的相邻图像之间内容相似</a></li>
+          <li><a href="#section-5" id="markdown-toc-section-5">编码冗余：不同像素值出现的概率不同</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#3编解码实现原理" id="markdown-toc-3编解码实现原理">3.编解码实现原理</a>    <ul>
-      <li><a href="#pbi帧" id="markdown-toc-pbi帧">PBI帧</a></li>
-      <li><a href="#i帧" id="markdown-toc-i帧">I帧</a></li>
-      <li><a href="#p帧" id="markdown-toc-p帧">P帧</a></li>
-      <li><a href="#b帧" id="markdown-toc-b帧">B帧</a></li>
-      <li><a href="#码流层次结构" id="markdown-toc-码流层次结构">码流层次结构</a></li>
-      <li><a href="#视频编解码主要流程和关键技术" id="markdown-toc-视频编解码主要流程和关键技术">视频编解码主要流程和关键技术</a>        <ul>
-          <li><a href="#变换编码的目的" id="markdown-toc-变换编码的目的">变换编码的目的</a></li>
-          <li><a href="#变换原理" id="markdown-toc-变换原理">变换原理</a></li>
-          <li><a href="#dct变换" id="markdown-toc-dct变换">DCT变换</a></li>
+  <li><a href="#section-6" id="markdown-toc-section-6">3.编解码实现原理</a>    <ul>
+      <li><a href="#pbi" id="markdown-toc-pbi">PBI帧</a></li>
+      <li><a href="#i" id="markdown-toc-i">I帧</a></li>
+      <li><a href="#p" id="markdown-toc-p">P帧</a></li>
+      <li><a href="#b" id="markdown-toc-b">B帧</a></li>
+      <li><a href="#section-7" id="markdown-toc-section-7">码流层次结构</a></li>
+      <li><a href="#section-8" id="markdown-toc-section-8">视频编解码主要流程和关键技术</a>        <ul>
+          <li><a href="#section-9" id="markdown-toc-section-9">变换编码的目的</a></li>
+          <li><a href="#section-10" id="markdown-toc-section-10">变换原理</a></li>
+          <li><a href="#dct" id="markdown-toc-dct">DCT变换</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#4编解码标准和国际组织" id="markdown-toc-4编解码标准和国际组织">4.编解码标准和国际组织</a>    <ul>
-      <li><a href="#国际标准组织" id="markdown-toc-国际标准组织">国际标准组织</a></li>
-      <li><a href="#视频编码专家组video-coding-experts-groupvceg" id="markdown-toc-视频编码专家组video-coding-experts-groupvceg">视频编码专家组(Video Coding Experts Group—VCEG)</a></li>
-      <li><a href="#动态图像专家组moving-picture-experts-groupmpeg" id="markdown-toc-动态图像专家组moving-picture-experts-groupmpeg">动态图像专家组(Moving Picture Experts Group—MPEG)</a></li>
-      <li><a href="#视频编码标准发展历程" id="markdown-toc-视频编码标准发展历程">视频编码标准发展历程</a></li>
-      <li><a href="#视频编码标准的应用场景" id="markdown-toc-视频编码标准的应用场景">视频编码标准的应用场景</a></li>
+  <li><a href="#section-11" id="markdown-toc-section-11">4.编解码标准和国际组织</a>    <ul>
+      <li><a href="#section-12" id="markdown-toc-section-12">国际标准组织</a></li>
+      <li><a href="#video-coding-experts-groupvceg" id="markdown-toc-video-coding-experts-groupvceg">视频编码专家组(Video Coding Experts Group—VCEG)</a></li>
+      <li><a href="#moving-picture-experts-groupmpeg" id="markdown-toc-moving-picture-experts-groupmpeg">动态图像专家组(Moving Picture Experts Group—MPEG)</a></li>
+      <li><a href="#section-13" id="markdown-toc-section-13">视频编码标准发展历程</a></li>
+      <li><a href="#section-14" id="markdown-toc-section-14">视频编码标准的应用场景</a></li>
     </ul>
   </li>
-  <li><a href="#5视频文件封装容器" id="markdown-toc-5视频文件封装容器">5.视频文件封装（容器）</a>    <ul>
-      <li><a href="#封装格式" id="markdown-toc-封装格式">封装格式</a></li>
+  <li><a href="#section-15" id="markdown-toc-section-15">5.视频文件封装（容器）</a>    <ul>
+      <li><a href="#section-16" id="markdown-toc-section-16">封装格式</a></li>
     </ul>
   </li>
-  <li><a href="#6视频质量评价体系" id="markdown-toc-6视频质量评价体系">6.视频质量评价体系</a>    <ul>
-      <li><a href="#客观评价方法" id="markdown-toc-客观评价方法">客观评价方法</a></li>
-      <li><a href="#主观评价方法" id="markdown-toc-主观评价方法">主观评价方法</a></li>
-      <li><a href="#基于视觉的视频质量客观评价方法" id="markdown-toc-基于视觉的视频质量客观评价方法">基于视觉的视频质量客观评价方法</a></li>
+  <li><a href="#section-17" id="markdown-toc-section-17">6.视频质量评价体系</a>    <ul>
+      <li><a href="#section-18" id="markdown-toc-section-18">客观评价方法</a></li>
+      <li><a href="#section-19" id="markdown-toc-section-19">主观评价方法</a></li>
+      <li><a href="#section-20" id="markdown-toc-section-20">基于视觉的视频质量客观评价方法</a></li>
     </ul>
   </li>
-  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+  <li><a href="#section-21" id="markdown-toc-section-21">参考文献</a></li>
 </ul>
 
 <p><strong>目录</strong></p>
@@ -234,7 +234,7 @@
 
 <!--more-->
 
-<h2 id="1为什么视频要编解码">1.为什么视频要编解码？</h2>
+<h2 id="section">1.为什么视频要编解码？</h2>
 
 <p>未经过压缩的视频数据量非常大，存储困难，同时也不便于在网络中传输。</p>
 
@@ -294,28 +294,28 @@
 
 <p><strong>要解决视频存储难、传输难的问题，综合考虑软硬件成本，最有效的办法应该是压缩视频体积！</strong></p>
 
-<h2 id="2视频是否可以压缩">2.视频是否可以压缩？</h2>
+<h2 id="section-1">2.视频是否可以压缩？</h2>
 
 <p>答案是肯定的，因为原始视频包含大量的冗余信息，比如：人的视觉系统有一些先天的特性，对某些细节不敏感。所以从理论上分析，基于人的视觉特性去掉视频冗余信息既可以保证视频质量又可以压缩视频体积。除此之外视频还有很多其他冗余信息可以去除，接下来我们详细介绍一下视频冗余信息。</p>
 
-<h4 id="视频冗余信息">视频冗余信息</h4>
+<h4 id="section-2">视频冗余信息</h4>
 
 <p>原始视频至少存在5个方面的信息冗余：空间冗余、时间冗余、编码冗余、视觉冗余、知识冗余，接下来详细讲解一下这5个方面的冗余。</p>
 
-<h5 id="空间冗余图像相邻像素之间有较强的相关性">空间冗余：图像相邻像素之间有较强的相关性</h5>
+<h5 id="section-3">空间冗余：图像相邻像素之间有较强的相关性</h5>
 
 <p>由图可知，在颜色接近的色块区域，相邻像素是非常接近的有较强的相关性，这部分信息其实是冗余的，下文将的条、块编码就是去除这种空间冗余数据。</p>
 
 <p><img src="/image/Video_codec_learning_sharing/1.png" alt="Alt text" /></p>
 
-<h5 id="时间冗余视频序列的相邻图像之间内容相似">时间冗余：视频序列的相邻图像之间内容相似</h5>
+<h5 id="section-4">时间冗余：视频序列的相邻图像之间内容相似</h5>
 
-<p>视频一般由时间轴区间内一组连续画面组成，其中的相邻帧往往包含相同的背景和移动物体，只不过移动物体所在的空间位置略有不同，所以后一帧的数据与前一帧的数据有许多共同的地方，这就称为时间冗余。
+<p>视频一般由时间轴区间内一组连续画面组成，其中的相邻帧往往包含相同的背景和移动物体，只不过移动物体所在的空间位置略有不同，所以后一帧的数据与前一帧的数据有许多共同的地方，这就称为时间冗余。<br />
 如下图所示，或许只有人的嘴巴和手在动，其他大部分的像素都是没有变化的。</p>
 
 <p><img src="/image/Video_codec_learning_sharing/2.png" alt="Alt text" /></p>
 
-<h5 id="编码冗余不同像素值出现的概率不同">编码冗余：不同像素值出现的概率不同</h5>
+<h5 id="section-5">编码冗余：不同像素值出现的概率不同</h5>
 
 <p>先介绍一下等长编码和变长编码的概念</p>
 
@@ -385,7 +385,7 @@
   </tbody>
 </table>
 
-<p>根据计算公式：451+133+123+163+9*4+584=224
+<p>根据计算公式：451+133+123+163+9*4+584=224<br />
 整个文件被编码为224bits，比定长编码方式节约了约25％的存储空间。</p>
 
 <p>由此可知，在图像编码中，不同的像素值出现的概率不同，采用定长编码相对变长编码需要更多的存储空间，这一部分冗余就称之为编码冗余。</p>
@@ -410,30 +410,30 @@
 
 <p><strong>知识冗余：规律性的结构可由先验知识和背景知识得到</strong></p>
 
-<p>有许多图像的理解与某些基础知识有相当大的相关性。 例如：人脸的图像有固定的结构，嘴的上方有鼻子。鼻子的上方有眼睛，鼻子位于正脸图像的中线上等等。这类规律
+<p>有许多图像的理解与某些基础知识有相当大的相关性。 例如：人脸的图像有固定的结构，嘴的上方有鼻子。鼻子的上方有眼睛，鼻子位于正脸图像的中线上等等。这类规律<br />
 性的结构可由先验知识相背景知识得到，我们称此类冗余为知识冗余。</p>
 
-<h2 id="3编解码实现原理">3.编解码实现原理</h2>
+<h2 id="section-6">3.编解码实现原理</h2>
 
-<h4 id="pbi帧">PBI帧</h4>
+<h4 id="pbi">PBI帧</h4>
 
 <p>视频中每帧代表一幅静止的图像，而在实际压缩时，会采取各种算法减少数据的容量，其中IPB就是最常见的。简单地说，I帧是关键帧，属于帧内压缩。就是和AVI的压缩是一样的。 P是向前搜索的意思。B是双向搜索。他们都是基于I帧来压缩数据。</p>
 
-<h4 id="i帧">I帧</h4>
+<h4 id="i">I帧</h4>
 
 <p>I帧表示关键帧，你可以理解为这一帧画面的完整保留；解码时只需要本帧数据就可以完成，因为包含完整画面。</p>
 
-<h4 id="p帧">P帧</h4>
+<h4 id="p">P帧</h4>
 
 <p>P帧表示的是这一帧跟之前的一个关键帧（或P帧）的差别，解码时需要用之前缓存的画面叠加上本帧定义的差别，生成最终画面。也就是差别帧，P帧没有完整画面数据，只有与前一帧的画面差别的数据。</p>
 
-<h4 id="b帧">B帧</h4>
+<h4 id="b">B帧</h4>
 
 <p>B帧是双向差别帧，也就是B帧记录的是本帧与前后帧的差别，换言之，要解码B帧，不仅要取得之前的缓存画面，还要解码之后的画面，通过前后画面的与本帧数据的叠加取得最终的画面。B帧压缩率高，但是解码时CPU会比较累。</p>
 
 <p><img src="/image/Video_codec_learning_sharing/3.png" alt="Alt text" /></p>
 
-<h4 id="码流层次结构">码流层次结构</h4>
+<h4 id="section-7">码流层次结构</h4>
 
 <p>视频的二进制码流有一个固定的组织结构，从上到下层依次是：序列层、图像组层、图像层、条带层、宏块层、块层。</p>
 
@@ -443,9 +443,9 @@
 
 <p><img src="/image/Video_codec_learning_sharing/5.png" alt="Alt text" /></p>
 
-<p>序列：一段连续编码的并具有相同参数的视频图像。
-序列起始码：专有的一段比特串，标识一个序列的压缩数据的开始MPEG-2的序列起始码为十六进制数000001(B3)。
-序列头：记录序列信息档次（Profile），级别（Level），宽度，高度，是否是逐行序列，帧率等。
+<p>序列：一段连续编码的并具有相同参数的视频图像。<br />
+序列起始码：专有的一段比特串，标识一个序列的压缩数据的开始MPEG-2的序列起始码为十六进制数000001(B3)。<br />
+序列头：记录序列信息档次（Profile），级别（Level），宽度，高度，是否是逐行序列，帧率等。<br />
 序列结束码：专有的一段比特串，标识该序列的压缩数据的结束,MPEG-2的序列结束码为十六进制数000001(B7)。</p>
 
 <p><strong>图像组编码</strong></p>
@@ -487,7 +487,7 @@
   <li>每个块的变换量化系数的最后用一个EOB (End of Block)符号来标识。</li>
 </ul>
 
-<h4 id="视频编解码主要流程和关键技术">视频编解码主要流程和关键技术</h4>
+<h4 id="section-8">视频编解码主要流程和关键技术</h4>
 
 <p><img src="/image/Video_codec_learning_sharing/10.png" alt="Alt text" /></p>
 
@@ -556,7 +556,7 @@
 
 <p><strong>变换</strong></p>
 
-<h6 id="变换编码的目的">变换编码的目的</h6>
+<h6 id="section-9">变换编码的目的</h6>
 
 <ul>
   <li>去除空间信号的相关性</li>
@@ -566,7 +566,7 @@
 
 <p>视频编码中常见的变换类型有：K-L变换、傅里叶变换、余弦变换、小波变换。</p>
 
-<h6 id="变换原理">变换原理</h6>
+<h6 id="section-10">变换原理</h6>
 
 <p>我们以傅立叶变换为例子来讲述一下变换的实现原理。关于傅立叶变换，可以用果汁牛奶打一个比方：</p>
 
@@ -603,7 +603,7 @@
 
 <p><a href="http://joeshang.github.io/2014/03/11/signal-and-fft/">了解更多傅里叶变换</a></p>
 
-<h6 id="dct变换">DCT变换</h6>
+<h6 id="dct">DCT变换</h6>
 
 <p>DCT(Discrete Cosine Transform)，又叫离散余弦变换,是与傅里叶变换相关的一种变换，类似于离散傅里叶变换，但是只使用实数，经常用于信号和图像数据的压缩。经过DCT变换后的数据能量非常集中，一般只有左上角的数值是非零的，也就是能量都集中在离散余弦变换后的直流和低频部分。能量集中是DCT最显著的特征，如下图：</p>
 
@@ -681,17 +681,17 @@
 
 <p><img src="/image/Video_codec_learning_sharing/28.png" alt="Alt text" /></p>
 
-<p><strong>**编码</strong>
-用一句话概括就是，把信源用二进制表示。**
+<p><strong>**编码</strong><br />
+用一句话概括就是，把信源用二进制表示。**<br />
 在视频编解码领域用到比较多的有：Huffman编码、行程编码、游程编码、二值算术编码、字典编码、等等…..</p>
 
 <p>以大名鼎鼎的Huffman编码为例：</p>
 
 <p><img src="/image/Video_codec_learning_sharing/29.png" alt="Alt text" /></p>
 
-<h2 id="4编解码标准和国际组织">4.编解码标准和国际组织</h2>
+<h2 id="section-11">4.编解码标准和国际组织</h2>
 
-<h4 id="国际标准组织">国际标准组织</h4>
+<h4 id="section-12">国际标准组织</h4>
 
 <ol>
   <li>ITU (International Telecommunications Union)：国际电信联盟</li>
@@ -699,7 +699,7 @@
   <li>IEC (International Electrotechnical Commission)：国际电工委员会</li>
 </ol>
 
-<h4 id="视频编码专家组video-coding-experts-groupvceg">视频编码专家组(Video Coding Experts Group—VCEG)</h4>
+<h4 id="video-coding-experts-groupvceg">视频编码专家组(Video Coding Experts Group—VCEG)</h4>
 
 <p>VCEG (Video Coding Experts Group)：视频编码专家组，属于ITU-T (Telecommunication)即<strong>电信标准化部门</strong>的Study Group 16/Question 6 (ITU-T SG16/Q.6)</p>
 
@@ -713,7 +713,7 @@
   <li>H.264 (MPEG-4 AVC)：目前编码效率最高的标准</li>
 </ol>
 
-<h4 id="动态图像专家组moving-picture-experts-groupmpeg">动态图像专家组(Moving Picture Experts Group—MPEG)</h4>
+<h4 id="moving-picture-experts-groupmpeg">动态图像专家组(Moving Picture Experts Group—MPEG)</h4>
 
 <p>MPEG（Moving Picture Experts Group，动态图像专家组）是ISO（International Standardization Organization，国际标准化组织）与IEC（International Electrotechnical Commission，国际电工委员会）于1988年成立的专门针对运动图像和语音压缩制定国际标准的组织。</p>
 
@@ -732,17 +732,17 @@
 
 <p><a href="http://kazus.ru/nuke/modules/Downloads/pub/144/0/ISO-IEC-14496-2-2001.pdf">免费下载MPEG-4 AVC</a></p>
 
-<h4 id="视频编码标准发展历程">视频编码标准发展历程</h4>
+<h4 id="section-13">视频编码标准发展历程</h4>
 
 <p><img src="/image/Video_codec_learning_sharing/31.png" alt="Alt text" /></p>
 
-<h4 id="视频编码标准的应用场景">视频编码标准的应用场景</h4>
+<h4 id="section-14">视频编码标准的应用场景</h4>
 
 <p><img src="/image/Video_codec_learning_sharing/32.png" alt="Alt text" /></p>
 
-<h2 id="5视频文件封装容器">5.视频文件封装（容器）</h2>
+<h2 id="section-15">5.视频文件封装（容器）</h2>
 
-<h4 id="封装格式">封装格式</h4>
+<h4 id="section-16">封装格式</h4>
 
 <p>所谓封装格式就是将已经编码压缩好的视频轨和音频轨按照一定的格式放到一个文件中，这个文件也就相当于一个容器。采用不同的方式把视频编码和音频编码打包成一个完整的多媒体文件，也就出现了不同的后缀。</p>
 
@@ -818,17 +818,17 @@
 
 <p><a href="http://www.cnblogs.com/xkfz007/articles/2612932.html">了解更多视频文件封装</a></p>
 
-<h2 id="6视频质量评价体系">6.视频质量评价体系</h2>
+<h2 id="section-17">6.视频质量评价体系</h2>
 
-<h4 id="客观评价方法">客观评价方法</h4>
+<h4 id="section-18">客观评价方法</h4>
 
 <p><img src="/image/Video_codec_learning_sharing/33.png" alt="Alt text" /></p>
 
-<h4 id="主观评价方法">主观评价方法</h4>
+<h4 id="section-19">主观评价方法</h4>
 
 <p><img src="/image/Video_codec_learning_sharing/34.png" alt="Alt text" /></p>
 
-<h4 id="基于视觉的视频质量客观评价方法">基于视觉的视频质量客观评价方法</h4>
+<h4 id="section-20">基于视觉的视频质量客观评价方法</h4>
 
 <p>将人的视觉特性用数学方法描述并用于视频质量评价的方式，结合了主观质量评价和客观质量评价两方面优点。</p>
 
@@ -836,7 +836,7 @@
 
 <p><img src="/image/Video_codec_learning_sharing/35.png" alt="Alt text" /></p>
 
-<h2 id="参考文献">参考文献</h2>
+<h2 id="section-21">参考文献</h2>
 
 <p><a href="http://www.cnblogs.com/xkfz007/archive/2012/07/29/2613824.html">视频编解码学习</a></p>
 
@@ -1025,9 +1025,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/03/28/Video_codec_learning_sharing/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/03/28/Video_codec_learning_sharing/' 
+     'url':'http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/03/28/Video_codec_learning_sharing/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -1092,6 +1092,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -1107,7 +1108,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

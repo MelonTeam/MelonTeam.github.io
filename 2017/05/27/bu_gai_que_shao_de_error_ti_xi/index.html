@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/05/27/bu_gai_que_shao_de_error_ti_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -177,27 +177,27 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#前言" id="markdown-toc-前言">前言</a></li>
-  <li><a href="#nserror包括什么" id="markdown-toc-nserror包括什么">NSError包括什么</a>    <ul>
+  <li><a href="#section" id="markdown-toc-section">前言</a></li>
+  <li><a href="#nserror" id="markdown-toc-nserror">NSError包括什么</a>    <ul>
       <li><a href="#domain" id="markdown-toc-domain">Domain</a></li>
       <li><a href="#code" id="markdown-toc-code">Code</a></li>
       <li><a href="#user-info-dictionary" id="markdown-toc-user-info-dictionary">User Info Dictionary</a></li>
     </ul>
   </li>
-  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">总结</a></li>
 </ul>
 
-<p>| 导语
+<p>| 导语<br />
 几乎所有APP在开发过程中都会遇到错误，一些错误是在控制之外，例如磁盘空间不足或网络连接失败。而一些错误是可以预料得到的，例如视频正在处理中无法播放、传入的参数非法等。而这些错误的信息如果友好的告诉业务方或者用户呢？</p>
 
-<h2 id="前言">前言</h2>
+<h2 id="section">前言</h2>
 
 <!--more-->
 <p>几乎所有APP在开发过程中都会遇到错误，一些错误是在控制之外，例如磁盘空间不足或网络连接失败。而一些错误是可以预料得到的，例如视频正在处理中无法播放、传入的参数非法等。而这些错误的信息如果友好的告诉业务方或者用户呢？</p>
 
-<p>在iOS开发中最常见的方式之一是使用<code class="highlighter-rouge">NSError</code>，比如使用很广的<code class="highlighter-rouge">AFNetworking</code>，它就会常常返回一些错误信息告诉用户。而在手Q或者兴趣部落的项目中都没有一套整齐的<code class="highlighter-rouge">Error</code>体系，所以我们得需要进一步了解<code class="highlighter-rouge">NSerror</code>是什么东西才能制定出我们想要的东西。</p>
+<p>在iOS开发中最常见的方式之一是使用<code>NSError</code>，比如使用很广的<code>AFNetworking</code>，它就会常常返回一些错误信息告诉用户。而在手Q或者兴趣部落的项目中都没有一套整齐的<code>Error</code>体系，所以我们得需要进一步了解<code>NSerror</code>是什么东西才能制定出我们想要的东西。</p>
 
-<h2 id="nserror包括什么">NSError包括什么</h2>
+<h2 id="nserror">NSError包括什么</h2>
 
 <p>在整个Error体系中主要包括三块内容，如下：</p>
 
@@ -209,17 +209,17 @@
 
 <h3 id="domain">Domain</h3>
 
-<p>Error Domain是指区域，它是由一个字符串组成的。比如OS
-X系统<code class="highlighter-rouge">Carbon</code>框架的<code class="highlighter-rouge">domain</code>为<code class="highlighter-rouge">（NSOSStatusErrorDomain）</code>，<code class="highlighter-rouge">POSIX</code>框架为<code class="highlighter-rouge">（NSPOSIXErrorDomain）</code>，除此之外不同的<code class="highlighter-rouge">framework</code>也定义了自己的domain，比如对于<code class="highlighter-rouge">Web
-Kit framework</code>，定义了<code class="highlighter-rouge">WebKitErrorDomain</code>。</p>
+<p>Error Domain是指区域，它是由一个字符串组成的。比如OS<br />
+X系统<code>Carbon</code>框架的<code>domain</code>为<code>（NSOSStatusErrorDomain）</code>，<code>POSIX</code>框架为<code>（NSPOSIXErrorDomain）</code>，除此之外不同的<code>framework</code>也定义了自己的domain，比如对于<code>Web
+Kit framework</code>，定义了<code>WebKitErrorDomain</code>。</p>
 
-<p>而我们也应该在自己的项目中定义属于自己Error区域，官方推荐的命名规则如下：<br />
+<p>而我们也应该在自己的项目中定义属于自己Error区域，官方推荐的命名规则如下：  <br />
 com.company.XXX.ErrorDomain</p>
 
 <h3 id="code">Code</h3>
 
-<p>而<code class="highlighter-rouge">code</code>就是我们俗称的错误码了，比如访问文件资源时返回的<code class="highlighter-rouge">NSFileNoSuchFileError（4）</code>等的错误码。<br />
-oc开发时使用到的系统库对应的各个<code class="highlighter-rouge">error code</code>可以到相应的地方查，他们所在的位置都有一个相应规范：</p>
+<p>而<code>code</code>就是我们俗称的错误码了，比如访问文件资源时返回的<code>NSFileNoSuchFileError（4）</code>等的错误码。  <br />
+oc开发时使用到的系统库对应的各个<code>error code</code>可以到相应的地方查，他们所在的位置都有一个相应规范：</p>
 
 <ul>
   <li>Foundation/FoundationErrors.h - Generic Foundation error codes</li>
@@ -233,43 +233,41 @@ oc开发时使用到的系统库对应的各个<code class="highlighter-rouge">e
 
 <p>User info可以包含很多自定义信息，系统给定义好了一些键名：</p>
 
-<p>键名作用 | 键名定义 | 获取值方法<br />
-—|—|—<br />
-通用键 | NSUnderlyingErrorKey |<br />
-详细描述键 | NSLocalizedDescriptionKey | - (NSString *)localizedDescription;<br />
-失败原因键 | NSLocalizedFailureReasonErrorKey | - (NSString
-*)localizedFailureReason;<br />
-恢复建议键 | NSLocalizedRecoverySuggestionErrorKey | - (NSString
-*)localizedRecoverySuggestion;<br />
-恢复选项键 | NSLocalizedRecoveryOptionsErrorKey | - (NSArray
-*)localizedRecoveryOptions;<br />
-其他键 | NSRecoveryAttempterErrorKey |<br />
-其他键 | NSHelpAnchorErrorKey |<br />
-其他键 | NSStringEncodingErrorKey |<br />
-其他键 | NSURLErrorKey |<br />
+<p>键名作用 | 键名定义 | 获取值方法  <br />
+—|—|—  <br />
+通用键 | NSUnderlyingErrorKey |  <br />
+详细描述键 | NSLocalizedDescriptionKey | - (NSString *)localizedDescription;  <br />
+失败原因键 | NSLocalizedFailureReasonErrorKey | - (NSString<br />
+*)localizedFailureReason;  <br />
+恢复建议键 | NSLocalizedRecoverySuggestionErrorKey | - (NSString<br />
+*)localizedRecoverySuggestion;  <br />
+恢复选项键 | NSLocalizedRecoveryOptionsErrorKey | - (NSArray<br />
+*)localizedRecoveryOptions;  <br />
+其他键 | NSRecoveryAttempterErrorKey |  <br />
+其他键 | NSHelpAnchorErrorKey |  <br />
+其他键 | NSStringEncodingErrorKey |  <br />
+其他键 | NSURLErrorKey |  <br />
 其他键 | NSFilePathErrorKey |</p>
 
 <p>基础用法：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>NSDictionary *userInfo ＝ [NSDictionary dictionaryWithObjectsAndKeys:@"这是错误详细的描述信息", NSLocalizedDescriptionKey, error, NSUnderlyingErrorKey, nil]];
+<pre><code>NSDictionary *userInfo ＝ [NSDictionary dictionaryWithObjectsAndKeys:@"这是错误详细的描述信息", NSLocalizedDescriptionKey, error, NSUnderlyingErrorKey, nil]];
 </code></pre>
-</div>
 
 <p>NSError主要的初始化方法：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (id)initWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict;
+<pre><code>- (id)initWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict;
 + (id)errorWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict;
 </code></pre>
-</div>
 
-<h2 id="总结">总结</h2>
+<h2 id="section-1">总结</h2>
 
 <p>在了解到NSError的强大之后，我们的项目也应该有一套Error体系，为了能在开发期就能定位问题，那么在项目中就需要做到以下几点：</p>
 
 <ol>
-  <li>建立属于项目的错误码表 <code class="highlighter-rouge">XXXErrors.h</code></li>
-  <li>定义属于项目的错误区域 <code class="highlighter-rouge">com.company.XXX.ErrorDomain</code></li>
-  <li>在一些数据接口或者更底层的一些接口都应该提供<code class="highlighter-rouge">NSError</code>的结果返回参数，以便业务层能更快定位问题</li>
+  <li>建立属于项目的错误码表 <code>XXXErrors.h</code></li>
+  <li>定义属于项目的错误区域 <code>com.company.XXX.ErrorDomain</code></li>
+  <li>在一些数据接口或者更底层的一些接口都应该提供<code>NSError</code>的结果返回参数，以便业务层能更快定位问题</li>
 </ol>
 
 
@@ -400,9 +398,9 @@ oc开发时使用到的系统库对应的各个<code class="highlighter-rouge">e
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/05/27/bu_gai_que_shao_de_error_ti_xi/' 
+     'url':'http://MelonTeam.com/2017/05/27/bu_gai_que_shao_de_error_ti_xi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/05/27/bu_gai_que_shao_de_error_ti_xi/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -467,6 +465,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -482,7 +481,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

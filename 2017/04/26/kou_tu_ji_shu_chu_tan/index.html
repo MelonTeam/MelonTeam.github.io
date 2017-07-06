@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -194,7 +194,7 @@
 
 <p>看了这些对比图是不是再也不敢相信自己的眼睛了，同时也要佩服这些演员丰富的想象力。<br /><br />上面说的就是抠图中最原始的“绿幕”或者“蓝幕”抠图技术，之所以选择绿色和蓝色，是因为这两种颜色和肤色相差最远，同时做为rgb三原色之一也更容易处理。欧美多用绿色，是因为他们有人是蓝眼睛。理论上用其他的纯色背景也是可以的，只是要确保背景和前景不要有重叠的颜色，否则前景中相同颜色的部分也会被扣掉。<br />下面的代码就用opencv实现了一个最简单的绿幕抠图：  </p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>        mat src = imread("d:\\samplepic\\g1.png");
+<pre><code>        mat src = imread("d:\\samplepic\\g1.png");
 
         mat hsvsrc;
 
@@ -248,7 +248,6 @@
 
         }&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;&lt;/vec3b&gt;
 </code></pre>
-</div>
 
 <p>原理是首先将图像的颜色从rgb转换到hsv空间，hsv分别表示：色调（h），饱和度（s），明度（v），通过h来判断大致的绿色的范围，然后将原图中判断为绿色背景的像素点rgb都置为0。</p>
 
@@ -258,11 +257,10 @@
 
 <p><strong>自然图像抠图</strong><br />绿幕抠图对图像背景有苛刻的要求，现实中蓝绿纯色背景的图片太少，更多的是平时用手机或者相机拍摄的复杂背景的图片，这时候要想分离前景，就需要用到自然图像抠图技术。</p>
 
-<p>自然图像抠图基本都基于这样一种模型：<br /><strong>c = αf + (1-α)b</strong><br />这个模型把原始的图像看成了由前景和背景叠加合成所组成的图，其中：</p>
+<p>自然图像抠图基本都基于这样一种模型：<br /><strong>c = αf + (1-α)b</strong><br />这个模型把原始的图像看成了由前景和背景叠加合成所组成的图，其中：<br />
+- c 为图像当前可观察到的颜色，是已知的</p>
+
 <ul>
-  <li>
-    <p>c 为图像当前可观察到的颜色，是已知的</p>
-  </li>
   <li>
     <p>f 是前景色，</p>
   </li>
@@ -453,9 +451,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/04/26/kou_tu_ji_shu_chu_tan/' 
+     'url':'http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/04/26/kou_tu_ji_shu_chu_tan/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -520,6 +518,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -535,7 +534,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

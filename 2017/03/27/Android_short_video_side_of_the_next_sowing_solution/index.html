@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -136,7 +136,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Android" title="Category: Android" rel="category">Android</a>
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
     
   
 
@@ -175,51 +175,49 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>       短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。
-<strong>【视频格式】</strong>
+        <p>       短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。<br />
+<strong>【视频格式】</strong><br />
        想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：</p>
 
 <!--more-->
 
 <p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/1.png" alt="视频文件结构" /></p>
 
-<p>内容元素主要包括：</p>
-<ul>
-  <li>图像(image)</li>
-  <li>音频(audio)</li>
-  <li>元信息(metadata)
-编码格式(codec)主要包括：</li>
-  <li>video:H.264、H.265、…</li>
-  <li>audio:AAC、HE-AAC、…
-容器封装(container)主要包括：</li>
-  <li>MP4、FLV、AVI、MOV、RMVB、…</li>
-</ul>
+<p>内容元素主要包括：<br />
+* 图像(image)<br />
+* 音频(audio)<br />
+* 元信息(metadata)<br />
+编码格式(codec)主要包括：<br />
+* video:H.264、H.265、…<br />
+* audio:AAC、HE-AAC、…<br />
+容器封装(container)主要包括：<br />
+* MP4、FLV、AVI、MOV、RMVB、…</p>
 
-<p>       播放器在播放视频文件时，之所以知道该怎么去解码，以什么样的时间间隔去显示每一帧，是因为metadata记录了当前视频文件的图像尺寸、编码格式、帧率、码率等等信息，播放器通过解析metadata得到了这些信息，才能控制视频的显示，也就是说播放器要先解析完metadata才会开始播放。
+<p>       播放器在播放视频文件时，之所以知道该怎么去解码，以什么样的时间间隔去显示每一帧，是因为metadata记录了当前视频文件的图像尺寸、编码格式、帧率、码率等等信息，播放器通过解析metadata得到了这些信息，才能控制视频的显示，也就是说播放器要先解析完metadata才会开始播放。<br />
        我们拿MP4作为例子来说明，不同容器的封装在数据存储上会存在一些差异，MP4视频文件结构如下所示：</p>
 
 <p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/2.png" alt="MP4文件结构" /></p>
 
-<p>       它对应的metadata信息称为moov，mdat包含了音频和视频数据。MP4在实际制作中，moov有可能被放到了mdat后面，所以我们要保证制作出来的MP4的moov是放置在mdat前面的，这样才可以实现边下边播功能。如果不是这样，可以用FFmpeg的faststart命令（ffmpeg -i input.mp4 -movflags +faststart output.mp4）处理一下。
+<p>       它对应的metadata信息称为moov，mdat包含了音频和视频数据。MP4在实际制作中，moov有可能被放到了mdat后面，所以我们要保证制作出来的MP4的moov是放置在mdat前面的，这样才可以实现边下边播功能。如果不是这样，可以用FFmpeg的faststart命令（ffmpeg -i input.mp4 -movflags +faststart output.mp4）处理一下。<br />
        另外值得一提的是，如果moov比较大，播放器需要较多的时间去解析，所以在播放之前可能会出现较长的缓冲时间，特别是视频文件较大的情况下，所以现在有些点播网站会采用每段mdat都有自己独立的metadata的封装方式，这样就可实现渐进式下载和快速缓冲的效果。</p>
 
 <p><strong>【本地代理】</strong></p>
 
-<p>       在确保视频文件的metadata在头部后，我们只要完整下载metadata，再加上少许音视频数据，就可以开始播放视频了，那么如何实现“边下”呢？我们都知道，Android平台上要播放视频，最基本的方式就是实例化一个MediaPlayer, 将视频的URL通过setDataSource()设置给播放器，之后调用prepare()或prepareAsync()和start()就可以开始播放视频了。于是我们很容易想到将MediaPlayer的视频源设置为本地文件，然后通过子线程不断将下载数据追加到该文件，但笔者经过验证，这种做法会经常导致MediaPlayer各种报错，无法顺利播放。
+<p>       在确保视频文件的metadata在头部后，我们只要完整下载metadata，再加上少许音视频数据，就可以开始播放视频了，那么如何实现“边下”呢？我们都知道，Android平台上要播放视频，最基本的方式就是实例化一个MediaPlayer, 将视频的URL通过setDataSource()设置给播放器，之后调用prepare()或prepareAsync()和start()就可以开始播放视频了。于是我们很容易想到将MediaPlayer的视频源设置为本地文件，然后通过子线程不断将下载数据追加到该文件，但笔者经过验证，这种做法会经常导致MediaPlayer各种报错，无法顺利播放。<br />
        经过深入调研，很遗憾MediaPlayer并没有提供类似可以拦截URL或文件流的API可以让我们将视频文件保存到本地（然而，iOS视频播放器有提供了类似接口）。所以我们换了一个思路，就是当播放器请求播放远程视频文件时，我们将远程URL篡改成本地URL，播放器播放视频时不再是直接访问远程视频文件，而是先访问本地代理，本地代理再去下载远程视频，下载多少就给播放器输送多少，这样就实现了边下边播，我们将这种做法称之为本地代理服务器。</p>
 
-<p><strong>【数据流程】</strong>
+<p><strong>【数据流程】</strong><br />
 播放器请求本地代理服务器的数据流程如下图：</p>
 
 <p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/3.png" alt="播放器请求本地代理的数据流程" /></p>
 
-<p>1、播放器播放之前，先把网络视频的远程url替换成本地的url（类似http://127.0.0.1/xxx）；
-2、播放器开始播放时将本地url请求发给proxy server；
-3、proxy server根据本地url在本地缓存中查找是否存在该视频，如果存在则直接跳到步骤7，如果不存在，则进入步骤4；
-4、proxy server根据视频远程url向视频server请求下载视频数据；
-5、视频server返回给proxy server视频数据；
-6、proxy server将返回的视频数据缓存到本地，并且处理其他业务逻辑；
-7、proxy server将视频数据返回给播放器，播放器开始播放。
+<p>1、播放器播放之前，先把网络视频的远程url替换成本地的url（类似http://127.0.0.1/xxx）；<br />
+2、播放器开始播放时将本地url请求发给proxy server；<br />
+3、proxy server根据本地url在本地缓存中查找是否存在该视频，如果存在则直接跳到步骤7，如果不存在，则进入步骤4；<br />
+4、proxy server根据视频远程url向视频server请求下载视频数据；<br />
+5、视频server返回给proxy server视频数据；<br />
+6、proxy server将返回的视频数据缓存到本地，并且处理其他业务逻辑；<br />
+7、proxy server将视频数据返回给播放器，播放器开始播放。<br />
 比起播放器直接播放网络视频，Proxy的做法使得视频的播放和下载在一定程度上变得可控，除了能够提供边下边播能力以外，还可以增加额外的视频相关业务逻辑，比如缓存、预下载、防盗链等等。</p>
 
 <p><strong>【技术架构】</strong></p>
@@ -235,7 +233,7 @@
   <li>由于SD卡空间有限，下载后的视频采用LRU算法进行淘汰。</li>
 </ul>
 
-<p><strong>【缓存淘汰】</strong>
+<p><strong>【缓存淘汰】</strong><br />
        关于Proxy Server下载的视频缓存路径，由于手机内部存储空间有限，视频又比较大，不建议内部存储，所以可以放到SD卡上的路径/sdcard/Android/data/<application package="">/cache下，并且为了唯一标识文件，可以使用MD5(url)作为文件名。选择在这个位置有两点好处：第一，这是存储在SD卡上的，因此即使缓存再多的数据也不会对手机的内置存储空间有任何影响，只要SD卡空间足够。第二，这个路径被Android系统认定为应用程序的缓存路径，当程序被卸载的时候，这里的数据也会一起被清除掉，这样就不会出现卸载应用之后手机上还有残留数据的问题。
 &#160; &#160; &#160; &#160;由于SD卡存储空间有限，下载的视频如果不清除很快就会爆满。或许我们可以在达到爆满之前给用户提醒要手动清除，但用户自己可能也很难做出正确的淘汰判断，而且经常提醒会让用户容易厌烦，所以我们可以使用LRU（Least Recently Used，近期最少使用算法）来实现视频的自动清除，它是一种较为常见的缓存淘汰算法，其核心思想是“如果数据最近经常被访问过，那么将来被访问的几率也更高，反之就应该被淘汰”。缓存淘汰的逻辑流程如下所示：</application></p>
 
@@ -246,12 +244,12 @@
   <li>淘汰条件：视频总数超过300个，视频总大小超过500M，视频过期 （未使用超过1周），具体数值可根据需求动态配置。</li>
 </ul>
 
-<p><strong>【安全设计】</strong>
-       手机连接网络，实际上是通过运营商网关（SGSN和GGSN）做一个网络地址转换(Network Address Translation，NAT)，实现内网IP和外网IP的映射，从而连接上了Internet，所以手机移动网络实际上是一个大型的“局域网”。
-       由于Proxy Server本质是一个http服务器，启动时会随机开放一个端口，如此一来，就相当于将本地服务端口暴露给整个手机网络，在这种情况下，黑客可以在这个大“局域网”内扫描出开放的端口，然后再伪造非法url模拟请求。臭名昭著的“WormHole虫洞漏洞”就是该漏洞的典型，其根本原因就是没有对请求进行限制和验证，而本身又提供了敏感服务，让黑客有机可乘。明白了攻击原理，我们就知道如何预防，措施如下：
-1、对请求url进行规则限制，只接受特定的url请求；
-2、对请求者进行身份验证，只接受播放器发起的请求，这里使用了消息摘要算法HMAC-MD5或HMAC-SHA1，并对其稍作改造：
-1).播放器请求时，生成一个随机数random_key；
+<p><strong>【安全设计】</strong><br />
+       手机连接网络，实际上是通过运营商网关（SGSN和GGSN）做一个网络地址转换(Network Address Translation，NAT)，实现内网IP和外网IP的映射，从而连接上了Internet，所以手机移动网络实际上是一个大型的“局域网”。<br />
+       由于Proxy Server本质是一个http服务器，启动时会随机开放一个端口，如此一来，就相当于将本地服务端口暴露给整个手机网络，在这种情况下，黑客可以在这个大“局域网”内扫描出开放的端口，然后再伪造非法url模拟请求。臭名昭著的“WormHole虫洞漏洞”就是该漏洞的典型，其根本原因就是没有对请求进行限制和验证，而本身又提供了敏感服务，让黑客有机可乘。明白了攻击原理，我们就知道如何预防，措施如下：<br />
+1、对请求url进行规则限制，只接受特定的url请求；<br />
+2、对请求者进行身份验证，只接受播放器发起的请求，这里使用了消息摘要算法HMAC-MD5或HMAC-SHA1，并对其稍作改造：<br />
+1).播放器请求时，生成一个随机数random_key；<br />
 2).将random_key作为密钥，url和timestamp作为输入，使用HMAC-MD5/SHA1生成一个hash值sign，然后将该字符串追加到url后面，向proxy发起请求，如下图所示：</p>
 
 <p><img src="/image/Android_short_video_side_of_the_next_sowing_solution/6.png" alt="client生成url流程" /></p>
@@ -423,9 +421,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/' 
+     'url':'http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/03/27/Android_short_video_side_of_the_next_sowing_solution/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -490,6 +488,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -505,7 +504,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

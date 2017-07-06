@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,24 +180,21 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#step1-逻辑回归的函数集" id="markdown-toc-step1-逻辑回归的函数集"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</a></li>
-  <li><a href="#step2-定义损失函数" id="markdown-toc-step2-定义损失函数"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</a></li>
-  <li><a href="#step3-寻找最好的function" id="markdown-toc-step3-寻找最好的function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</a></li>
-  <li><a href="#为什么不学线性回归用平方误差" id="markdown-toc-为什么不学线性回归用平方误差"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</a></li>
-  <li><a href="#discriminative判别vs-generative生成" id="markdown-toc-discriminative判别vs-generative生成"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</a>    <ul>
-      <li><a href="#一个好玩的例子" id="markdown-toc-一个好玩的例子"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</a></li>
-      <li><a href="#判别discriminative方法不一定比生成generative方法好" id="markdown-toc-判别discriminative方法不一定比生成generative方法好"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</a></li>
+  <li><a href="#a-namestep1--classreference-linkstep1-" id="markdown-toc-a-namestep1--classreference-linkstep1-"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</a></li>
+  <li><a href="#a-namestep2--classreference-linkstep2-" id="markdown-toc-a-namestep2--classreference-linkstep2-"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</a></li>
+  <li><a href="#a-namestep3-function-classreference-linkstep3-function" id="markdown-toc-a-namestep3-function-classreference-linkstep3-function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</a></li>
+  <li><a href="#a-name-classreference-link" id="markdown-toc-a-name-classreference-link"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</a></li>
+  <li><a href="#a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative" id="markdown-toc-a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</a>    <ul>
+      <li><a href="#a-name-classreference-link-1" id="markdown-toc-a-name-classreference-link-1"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</a></li>
+      <li><a href="#a-namediscriminativegenerative-classreference-linkdiscriminativegenerative" id="markdown-toc-a-namediscriminativegenerative-classreference-linkdiscriminativegenerative"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</a></li>
+      <li><a href="#a-namesoftmax-classreference-linksoftmax" id="markdown-toc-a-namesoftmax-classreference-linksoftmax"><a name="softmax" class="reference-link"></a>softmax</a></li>
+      <li><a href="#a-namesoftmax-classreference-linksoftmax-1" id="markdown-toc-a-namesoftmax-classreference-linksoftmax-1"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</a></li>
+      <li><a href="#a-nametarget-classreference-linktarget" id="markdown-toc-a-nametarget-classreference-linktarget"><a name="定义target" class="reference-link"></a>定义target</a></li>
     </ul>
   </li>
-  <li><a href="#multi-class-classification多类别分类" id="markdown-toc-multi-class-classification多类别分类"><a name="multi-class classification（多类别分类）" class="reference-link"></a>multi-class classification（多类别分类）</a>    <ul>
-      <li><a href="#softmax" id="markdown-toc-softmax"><a name="softmax" class="reference-link"></a>softmax</a></li>
-      <li><a href="#为什么softmax的输出可以用来估计后验概率" id="markdown-toc-为什么softmax的输出可以用来估计后验概率"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</a></li>
-      <li><a href="#定义target" id="markdown-toc-定义target"><a name="定义target" class="reference-link"></a>定义target</a></li>
-    </ul>
-  </li>
-  <li><a href="#逻辑回归的限制" id="markdown-toc-逻辑回归的限制"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</a>    <ul>
-      <li><a href="#feature-transformation特征转换" id="markdown-toc-feature-transformation特征转换"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</a></li>
-      <li><a href="#cascading-logistic-regression-models级联逻辑回归模型" id="markdown-toc-cascading-logistic-regression-models级联逻辑回归模型"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</a></li>
+  <li><a href="#a-name-classreference-link-2" id="markdown-toc-a-name-classreference-link-2"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</a>    <ul>
+      <li><a href="#a-namefeature-transformation-classreference-linkfeature-transformation" id="markdown-toc-a-namefeature-transformation-classreference-linkfeature-transformation"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</a></li>
+      <li><a href="#a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models" id="markdown-toc-a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</a></li>
     </ul>
   </li>
 </ul>
@@ -218,7 +215,7 @@
 
 <!--more-->
 
-<h1 id="step1-逻辑回归的函数集"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</h1>
+<h1 id="a-namestep1--classreference-linkstep1-"><a name="step1 逻辑回归的函数集" class="reference-link"></a>step1 逻辑回归的函数集</h1>
 
 <p>上一篇讲到分类问题的解决方法，推导出函数集的形式为：</p>
 
@@ -232,7 +229,7 @@
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/79dba25ed0ed9c791d5cf6d7886a1bcfd4c5098689b2e45926e5999659526859" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu0gmykvj213o094gn8.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu0gmykvj213o094gn8.jpg';}" alt="" /></p>
 
-<h1 id="step2-定义损失函数"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</h1>
+<h1 id="a-namestep2--classreference-linkstep2-"><a name="step2 定义损失函数" class="reference-link"></a>step2 定义损失函数</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/2900afdd595cfabd8be3d0858662b100cee136f7cb8874514e86049779c28acb" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu1tsbvxj20sm06waad.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu1tsbvxj20sm06waad.jpg';}" alt="" /></p>
 
@@ -277,7 +274,7 @@
 
 <p>此时直观上的理解：如果把function的输出和target（真正的function y^n\hat{y}^{n}​y​^​​​n​​）都看作是两个伯努利分布，所做的事情就是希望这两个分布越接近越好。</p>
 
-<h1 id="step3-寻找最好的function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</h1>
+<h1 id="a-namestep3-function-classreference-linkstep3-function"><a name="step3 寻找最好的function" class="reference-link"></a>step3 寻找最好的function</h1>
 
 <p>下面用梯度下降法求：</p>
 
@@ -301,7 +298,7 @@
 
 <p>对于逻辑回归，target y^n\hat{y}^{n}​y​^​​​n​​ 是0或者1，输出是介于0和1之间。而线性回归的target可以是任何实数，输出也可以是任何值。</p>
 
-<h1 id="为什么不学线性回归用平方误差"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</h1>
+<h1 id="a-name-classreference-link"><a name="为什么不学线性回归用平方误差？" class="reference-link"></a>为什么不学线性回归用平方误差？</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/922de6c7d31ad5910c481b0ff949f5534eb9c6dea524f5775eccc34a032e23bb" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7u3y64j211o0sgtdx.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu7u3y64j211o0sgtdx.jpg';}" alt="" /></p>
 
@@ -313,7 +310,7 @@
 
 <p>如果是交叉熵，距离target越远，微分值就越大，就可以做到距离target越远，更新参数越快。而平方误差在距离target很远的时候，微分值非常小，会造成移动的速度非常慢，这就是很差的效果了。</p>
 
-<h1 id="discriminative判别vs-generative生成"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</h1>
+<h1 id="a-namediscriminativevs-generative-classreference-linkdiscriminativevs-generative"><a name="discriminative（判别）v.s. generative（生成）" class="reference-link"></a>discriminative（判别）v.s. generative（生成）</h1>
 
 <p>逻辑回归的方法称为<strong>discriminative（判别）</strong> 方法；上一篇中用高斯来描述后验概率，称为 <strong>generative（生成）</strong> 方法。它们的函数集都是一样的：</p>
 
@@ -327,7 +324,7 @@
 
 <p>上图是前一篇的例子，图中画的是只考虑两个因素，如果考虑所有因素，结果是逻辑回归的效果好一些。</p>
 
-<h2 id="一个好玩的例子"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</h2>
+<h2 id="a-name-classreference-link-1"><a name="一个好玩的例子" class="reference-link"></a>一个好玩的例子</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/d6fec8d6f2bc99f0547eef27758a87203a6059506b0c6b658208a10742d11632" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu9otwf6j212a0kgju6.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegu9otwf6j212a0kgju6.jpg';}" alt="" /></p>
 
@@ -346,16 +343,13 @@
   </tbody>
 </table>
 
-<h2 id="判别discriminative方法不一定比生成generative方法好"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</h2>
+<h2 id="a-namediscriminativegenerative-classreference-linkdiscriminativegenerative"><a name="判别（discriminative）方法不一定比生成（generative）方法好" class="reference-link"></a>判别（discriminative）方法不一定比生成（generative）方法好</h2>
 
-<p>生成方法的优势：</p>
-<ul>
-  <li>训练集数据量很小的情况；因为判别方法没有做任何假设，就是看着训练集来计算，训练集数量越来越大的时候，error会越小。而生成方法会自己脑补，受到数据量的影响比较小。- 对于噪声数据有更好的鲁棒性（robust）。- 先验和类相关的概率可以从不同的来源估计。比如语音识别，可能直观会认为现在的语音识别大都使用神经网络来进行处理，是判别方法，但事实上整个语音识别是 generative 的方法，dnn只是其中的一块而已；因为还是需要算一个先验概率，就是某句话被说出来的概率，而估计某句话被说出来的概率不需要声音数据，只需要爬很多的句子，就能计算某句话出现的几率。
-    <h1 id="multi-class-classification多类别分类"><a name="multi-class classification（多类别分类）" class="reference-link"></a>multi-class classification（多类别分类）</h1>
-  </li>
-</ul>
+<p>生成方法的优势：<br />
+- 训练集数据量很小的情况；因为判别方法没有做任何假设，就是看着训练集来计算，训练集数量越来越大的时候，error会越小。而生成方法会自己脑补，受到数据量的影响比较小。- 对于噪声数据有更好的鲁棒性（robust）。- 先验和类相关的概率可以从不同的来源估计。比如语音识别，可能直观会认为现在的语音识别大都使用神经网络来进行处理，是判别方法，但事实上整个语音识别是 generative 的方法，dnn只是其中的一块而已；因为还是需要算一个先验概率，就是某句话被说出来的概率，而估计某句话被说出来的概率不需要声音数据，只需要爬很多的句子，就能计算某句话出现的几率。<br />
+# <a name="multi-class classification（多类别分类）" class="reference-link"></a>multi-class classification（多类别分类）</p>
 
-<h2 id="softmax"><a name="softmax" class="reference-link"></a>softmax</h2>
+<h2 id="a-namesoftmax-classreference-linksoftmax"><a name="softmax" class="reference-link"></a>softmax</h2>
 
 <p>下面看一下多类别分类问题的做法，具体原理可以参考《pattern recognition and machine learning》christopher m. bishop 著 ，p209-210</p>
 
@@ -380,7 +374,7 @@
 
 <p>softmax的输出就是用来估计后验概率（posterior probability）。为什么会这样？下面进行简单的说明：</p>
 
-<h2 id="为什么softmax的输出可以用来估计后验概率"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</h2>
+<h2 id="a-namesoftmax-classreference-linksoftmax-1"><a name="为什么softmax的输出可以用来估计后验概率？" class="reference-link"></a>为什么softmax的输出可以用来估计后验概率？</h2>
 
 <p>假设有3个类别，这3个类别都是高斯分布，它们也共用同一个协方差矩阵，进行类似上一篇讲述的推导，就可以得到softmax。</p>
 
@@ -392,13 +386,13 @@
 
 <p>关于最大熵推导softmax有一篇论文讲的比较好：<the equivalence="" of="" logistic="" regression="" and="" maximum="" entropymodels="">。传送门：[http://www.win-vector.com/dfiles/logisticregressionmaxent.pdf](http://www.win-vector.com/dfiles/logisticregressionmaxent.pdf)。如果传送门失效，google一下就好。</the></p>
 
-<h2 id="定义target"><a name="定义target" class="reference-link"></a>定义target</h2>
+<h2 id="a-nametarget-classreference-linktarget"><a name="定义target" class="reference-link"></a>定义target</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/3cfed25d647af05985bc450c47b50fb74bce2ae1e2b60d9a7f704124a370f39c" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegub3mqjcj21280o4acs.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegub3mqjcj21280o4acs.jpg';}" alt="" /></p>
 
 <p>上一篇讲到如果定义类别1 y^=1\hat{y} = 1​y​^​​=1，类别2 y^=2\hat{y} = 2​y​^​​=2，类别3 y^=3\hat{y} = 3​y​^​​=3，这样会人为造成类别1 和类型2有一定的关系这种问题。但可以将 y^\hat{y}​y​^​​定义为矩阵，这样就避免了。而且为了计算交叉熵，y^\hat{y}​y​^​​也需要是个概率分布才可以。</p>
 
-<h1 id="逻辑回归的限制"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</h1>
+<h1 id="a-name-classreference-link-2"><a name="逻辑回归的限制" class="reference-link"></a>逻辑回归的限制</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/9c84ca55ad8572427302e69c4dfac6835de3e75f688c5b95960461207efe78c8" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegubnf6lbj210y0n4gp1.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegubnf6lbj210y0n4gp1.jpg';}" alt="" /></p>
 
@@ -408,13 +402,13 @@
 
 <p>这里的逻辑回归所能做的分界线就是一条直线，没有办法将红蓝色用一条直线分开。</p>
 
-<h2 id="feature-transformation特征转换"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</h2>
+<h2 id="a-namefeature-transformation-classreference-linkfeature-transformation"><a name="feature transformation（特征转换）" class="reference-link"></a>feature transformation（特征转换）</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/c709d8af2ff696318ad6ea21d88dd41376f42ce625f5f50762227cbf8ac7280b" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucj35y8j211w0n0diz.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucj35y8j211w0n0diz.jpg';}" alt="" /></p>
 
 <p>特征转换的方式很多，举例类别1转化为某个点到 (0,0)(0, 0)(0,0) 点的距离，类别2转化为某个点到 (1,1)(1,1)(1,1) 点的距离。然后问题就转化右图，此时就可以处理了。但是实际中并不是总能轻易的找到好的特征转换的方法。</p>
 
-<h2 id="cascading-logistic-regression-models级联逻辑回归模型"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</h2>
+<h2 id="a-namecascading-logistic-regression-models-classreference-linkcascading-logistic-regression-models"><a name="cascading logistic regression models（级联逻辑回归模型）" class="reference-link"></a>cascading logistic regression models（级联逻辑回归模型）</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/69a5313f4b05f7b5648bc2e27ac49da5ab73846d155d7feb6ddd93b9e06e0bc1" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucxcuzzj211k0h4wgg.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1fegucxcuzzj211k0h4wgg.jpg';}" alt="" /></p>
 
@@ -595,9 +589,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/' 
+     'url':'http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/04/10/ji_qi_xue_xi_ru_men_xi_lie_06_logistic_regression_luo_ji_hui_gui/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -662,6 +656,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -677,7 +672,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

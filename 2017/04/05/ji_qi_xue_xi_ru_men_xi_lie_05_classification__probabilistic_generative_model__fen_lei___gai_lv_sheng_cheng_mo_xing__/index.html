@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -180,32 +180,32 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         <ul id="markdown-toc">
-  <li><a href="#classification-分类" id="markdown-toc-classification-分类"><a name="classification 分类" class="reference-link"></a>classification 分类</a></li>
-  <li><a href="#又是神奇宝贝举例" id="markdown-toc-又是神奇宝贝举例"><a name="又是神奇宝贝举例" class="reference-link"></a>又是神奇宝贝举例</a>    <ul>
-      <li><a href="#分类神奇宝贝" id="markdown-toc-分类神奇宝贝"><a name="分类神奇宝贝" class="reference-link"></a>分类神奇宝贝</a></li>
-      <li><a href="#将神奇宝贝数值化" id="markdown-toc-将神奇宝贝数值化"><a name="将神奇宝贝数值化" class="reference-link"></a>将神奇宝贝数值化</a></li>
-      <li><a href="#如何分类" id="markdown-toc-如何分类"><a name="如何分类？" class="reference-link"></a>如何分类？</a>        <ul>
-          <li><a href="#当作回归问题处理" id="markdown-toc-当作回归问题处理"><a name="当作回归问题处理？" class="reference-link"></a>当作回归问题处理？</a></li>
-          <li><a href="#ideal-alternatives理想替代品" id="markdown-toc-ideal-alternatives理想替代品"><a name="ideal alternatives（理想替代品）" class="reference-link"></a>ideal alternatives（理想替代品）</a></li>
+  <li><a href="#a-nameclassification--classreference-linkclassification-" id="markdown-toc-a-nameclassification--classreference-linkclassification-"><a name="classification 分类" class="reference-link"></a>classification 分类</a></li>
+  <li><a href="#a-name-classreference-link" id="markdown-toc-a-name-classreference-link"><a name="又是神奇宝贝举例" class="reference-link"></a>又是神奇宝贝举例</a>    <ul>
+      <li><a href="#a-name-classreference-link-1" id="markdown-toc-a-name-classreference-link-1"><a name="分类神奇宝贝" class="reference-link"></a>分类神奇宝贝</a></li>
+      <li><a href="#a-name-classreference-link-2" id="markdown-toc-a-name-classreference-link-2"><a name="将神奇宝贝数值化" class="reference-link"></a>将神奇宝贝数值化</a></li>
+      <li><a href="#a-name-classreference-link-3" id="markdown-toc-a-name-classreference-link-3"><a name="如何分类？" class="reference-link"></a>如何分类？</a>        <ul>
+          <li><a href="#a-name-classreference-link-4" id="markdown-toc-a-name-classreference-link-4"><a name="当作回归问题处理？" class="reference-link"></a>当作回归问题处理？</a></li>
+          <li><a href="#a-nameideal-alternatives-classreference-linkideal-alternatives" id="markdown-toc-a-nameideal-alternatives-classreference-linkideal-alternatives"><a name="ideal alternatives（理想替代品）" class="reference-link"></a>ideal alternatives（理想替代品）</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#盒子抽球" id="markdown-toc-盒子抽球"><a name="盒子抽球" class="reference-link"></a>盒子抽球</a>    <ul>
-      <li><a href="#抽球的概率和分类有什么关系" id="markdown-toc-抽球的概率和分类有什么关系"><a name="抽球的概率和分类有什么关系？" class="reference-link"></a>抽球的概率和分类有什么关系？</a>        <ul>
-          <li><a href="#prior-先验" id="markdown-toc-prior-先验"><a name="prior 先验" class="reference-link"></a>prior 先验</a></li>
-          <li><a href="#高斯分布" id="markdown-toc-高斯分布"><a name="高斯分布" class="reference-link"></a>高斯分布</a></li>
-          <li><a href="#maximum-likelihood最大似然估计" id="markdown-toc-maximum-likelihood最大似然估计"><a name="maximum likelihood（最大似然估计）" class="reference-link"></a>maximum likelihood（最大似然估计）</a></li>
-          <li><a href="#应用最大似然估计" id="markdown-toc-应用最大似然估计"><a name="应用最大似然估计" class="reference-link"></a>应用最大似然估计</a></li>
+  <li><a href="#a-name-classreference-link-5" id="markdown-toc-a-name-classreference-link-5"><a name="盒子抽球" class="reference-link"></a>盒子抽球</a>    <ul>
+      <li><a href="#a-name-classreference-link-6" id="markdown-toc-a-name-classreference-link-6"><a name="抽球的概率和分类有什么关系？" class="reference-link"></a>抽球的概率和分类有什么关系？</a>        <ul>
+          <li><a href="#a-nameprior--classreference-linkprior-" id="markdown-toc-a-nameprior--classreference-linkprior-"><a name="prior 先验" class="reference-link"></a>prior 先验</a></li>
+          <li><a href="#a-name-classreference-link-7" id="markdown-toc-a-name-classreference-link-7"><a name="高斯分布" class="reference-link"></a>高斯分布</a></li>
+          <li><a href="#a-namemaximum-likelihood-classreference-linkmaximum-likelihood" id="markdown-toc-a-namemaximum-likelihood-classreference-linkmaximum-likelihood"><a name="maximum likelihood（最大似然估计）" class="reference-link"></a>maximum likelihood（最大似然估计）</a></li>
+          <li><a href="#a-name-classreference-link-8" id="markdown-toc-a-name-classreference-link-8"><a name="应用最大似然估计" class="reference-link"></a>应用最大似然估计</a></li>
         </ul>
       </li>
-      <li><a href="#开始分类" id="markdown-toc-开始分类"><a name="开始分类" class="reference-link"></a>开始分类</a></li>
-      <li><a href="#修改model" id="markdown-toc-修改model"><a name="修改model" class="reference-link"></a>修改model</a></li>
+      <li><a href="#a-name-classreference-link-9" id="markdown-toc-a-name-classreference-link-9"><a name="开始分类" class="reference-link"></a>开始分类</a></li>
+      <li><a href="#a-namemodel-classreference-linkmodel" id="markdown-toc-a-namemodel-classreference-linkmodel"><a name="修改model" class="reference-link"></a>修改model</a></li>
     </ul>
   </li>
-  <li><a href="#三大步" id="markdown-toc-三大步"><a name="三大步" class="reference-link"></a>三大步</a></li>
-  <li><a href="#为什么是高斯分布" id="markdown-toc-为什么是高斯分布"><a name="为什么是高斯分布？" class="reference-link"></a>为什么是高斯分布？</a></li>
-  <li><a href="#posterior-probability后验概率" id="markdown-toc-posterior-probability后验概率"><a name="posterior probability（后验概率）" class="reference-link"></a>posterior probability（后验概率）</a></li>
+  <li><a href="#a-name-classreference-link-10" id="markdown-toc-a-name-classreference-link-10"><a name="三大步" class="reference-link"></a>三大步</a></li>
+  <li><a href="#a-name-classreference-link-11" id="markdown-toc-a-name-classreference-link-11"><a name="为什么是高斯分布？" class="reference-link"></a>为什么是高斯分布？</a></li>
+  <li><a href="#a-nameposterior-probability-classreference-linkposterior-probability" id="markdown-toc-a-nameposterior-probability-classreference-linkposterior-probability"><a name="posterior probability（后验概率）" class="reference-link"></a>posterior probability（后验概率）</a></li>
 </ul>
 
 <blockquote>
@@ -224,47 +224,43 @@
 
 <!--more-->
 
-<h1 id="classification-分类"><a name="classification 分类" class="reference-link"></a>classification 分类</h1>
+<h1 id="a-nameclassification--classreference-linkclassification-"><a name="classification 分类" class="reference-link"></a>classification 分类</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/35ddf4ea91dc86c88e25f0ce51913d5a78788c197b31696f396e8b518dda4f75" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavpzbidfj20j605qt8w.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavpzbidfj20j605qt8w.jpg';}" alt="" /></p>
 
 <p>分类要找一个function，输入就是对象 xxx ，输出是这个对象属于n个类别的哪一个。</p>
 
-<p>比如信用评分</p>
-<ul>
-  <li>输入：收入，储蓄，行业，年龄，金融史…- 输出：结果或者拒绝贷款
-比如医疗诊断</li>
-  <li>输入：当前症状，年龄，性别，医疗史…- 输出：患了哪种疾病
-比如手写文字辨识</li>
-</ul>
+<p>比如信用评分<br />
+- 输入：收入，储蓄，行业，年龄，金融史…- 输出：结果或者拒绝贷款<br />
+比如医疗诊断<br />
+- 输入：当前症状，年龄，性别，医疗史…- 输出：患了哪种疾病<br />
+比如手写文字辨识</p>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/25836644a04c9ebcf4d4cfd82cc68a2f5306a134cd85ae33711ef35ebcdf3c13" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavqj65ogj20fs054dg2.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavqj65ogj20fs054dg2.jpg';}" alt="" /></p>
 
-<h1 id="又是神奇宝贝举例"><a name="又是神奇宝贝举例" class="reference-link"></a>又是神奇宝贝举例</h1>
+<h1 id="a-name-classreference-link"><a name="又是神奇宝贝举例" class="reference-link"></a>又是神奇宝贝举例</h1>
 
-<h2 id="分类神奇宝贝"><a name="分类神奇宝贝" class="reference-link"></a>分类神奇宝贝</h2>
+<h2 id="a-name-classreference-link-1"><a name="分类神奇宝贝" class="reference-link"></a>分类神奇宝贝</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/185074b95909a113da9d922d50a6535a87fe36dafbaf599dc6fae80c7d51cdf6" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavr0enqmj213c0n64mn.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavr0enqmj213c0n64mn.jpg';}" alt="" /></p>
 
 <p>神奇宝贝有很多的属性，比如电，火，水。要做的就是一个分类的问题：需要找到一个function，输入一只神奇宝贝，输出它是什么属性。</p>
 
-<h2 id="将神奇宝贝数值化"><a name="将神奇宝贝数值化" class="reference-link"></a>将神奇宝贝数值化</h2>
+<h2 id="a-name-classreference-link-2"><a name="将神奇宝贝数值化" class="reference-link"></a>将神奇宝贝数值化</h2>
 
-<p>比如皮卡丘</p>
-<ul>
-  <li>total：整体强度，大概的表述神奇宝贝有多强，比如皮卡丘是320.- hp：生命值，比如皮卡丘35- attack：攻击力，比如皮卡丘55- defense：防御力，比如皮卡丘40- sp atk：特殊攻击力，比如皮卡丘50- sp def：特殊防御力，比如皮卡丘50- speed：速度，比如皮卡丘90
-所以一只神奇宝贝可以用一个向量来表示，上述7个数字组成的向量。</li>
-</ul>
+<p>比如皮卡丘<br />
+- total：整体强度，大概的表述神奇宝贝有多强，比如皮卡丘是320.- hp：生命值，比如皮卡丘35- attack：攻击力，比如皮卡丘55- defense：防御力，比如皮卡丘40- sp atk：特殊攻击力，比如皮卡丘50- sp def：特殊防御力，比如皮卡丘50- speed：速度，比如皮卡丘90<br />
+所以一只神奇宝贝可以用一个向量来表示，上述7个数字组成的向量。</p>
 
 <p>需要预测是因为在战斗的时候会有属性相克，下面给了张表，只需要知道，战斗的时候遇到对面神奇宝贝的属性己方不知道的情况，会吃亏，所以需要预测它的属性。</p>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/4a395cfc10ab982dfc7f3e45ec63c96a3105f63bdea3bb32962e1bdb1267a0ee" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavrgyqt1j213a0jo49j.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx4.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavrgyqt1j213a0jo49j.jpg';}" alt="" /></p>
 
-<h2 id="如何分类"><a name="如何分类？" class="reference-link"></a>如何分类？</h2>
+<h2 id="a-name-classreference-link-3"><a name="如何分类？" class="reference-link"></a>如何分类？</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/03ee16cba725c05b98cc0924e50ac66730b750ff59e9ce8603a54dff9e5d613e" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavrxbar8j210a0ao79m.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavrxbar8j210a0ao79m.jpg';}" alt="" /></p>
 
-<h3 id="当作回归问题处理"><a name="当作回归问题处理？" class="reference-link"></a>当作回归问题处理？</h3>
+<h3 id="a-name-classreference-link-4"><a name="当作回归问题处理？" class="reference-link"></a>当作回归问题处理？</h3>
 
 <p>假设还不了解怎么做，但之前已经学过了regression。就把分类当作回归硬解。举一个二分类的例子：</p>
 
@@ -276,7 +272,7 @@
 
 <p>还有另外一个问题：比如多分类，类别1当作target1，类别2当作target2，类别3当作target3…如果这样做的话，就会认为类别2和类别3是比较接近的，认为它们是有某种关系的；认为类别1和类别2也是有某种关系的，比较接近的。但是实际上这种关系不存在，它们之间并不存在某种特殊的关系。这样是没有办法得到好的结果。</p>
 
-<h3 id="ideal-alternatives理想替代品"><a name="ideal alternatives（理想替代品）" class="reference-link"></a>ideal alternatives（理想替代品）</h3>
+<h3 id="a-nameideal-alternatives-classreference-linkideal-alternatives"><a name="ideal alternatives（理想替代品）" class="reference-link"></a>ideal alternatives（理想替代品）</h3>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/d2891c31b86001c1dfeec05735347f3bb0abd4961a9516cc1b597228d3380ba4" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavstgff2j21140g8dii.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feavstgff2j21140g8dii.jpg';}" alt="" /></p>
 
@@ -284,7 +280,7 @@
 
 <p>但是这样的损失函数没办法解，这种定义没办法微分。这是有方法的，比如perceptron（感知机），svm，这里先不讲这些。</p>
 
-<h1 id="盒子抽球"><a name="盒子抽球" class="reference-link"></a>盒子抽球</h1>
+<h1 id="a-name-classreference-link-5"><a name="盒子抽球" class="reference-link"></a>盒子抽球</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/75b721c1c1f51b8a297431b393c4e450bcfb7839dee0798e3843b502f8cc29d2" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazm3567vj21320d6mz4.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazm3567vj21320d6mz4.jpg';}" alt="" /></p>
 
@@ -304,7 +300,7 @@
   </tbody>
 </table>
 
-<h2 id="抽球的概率和分类有什么关系"><a name="抽球的概率和分类有什么关系？" class="reference-link"></a>抽球的概率和分类有什么关系？</h2>
+<h2 id="a-name-classreference-link-6"><a name="抽球的概率和分类有什么关系？" class="reference-link"></a>抽球的概率和分类有什么关系？</h2>
 
 <p>将上面两个盒子换成两个类别</p>
 
@@ -335,7 +331,7 @@
   </tbody>
 </table>
 
-<h3 id="prior-先验"><a name="prior 先验" class="reference-link"></a>prior 先验</h3>
+<h3 id="a-nameprior--classreference-linkprior-"><a name="prior 先验" class="reference-link"></a>prior 先验</h3>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/6f10c82e83891b6a97ba9a612a0e1f7d5b308bab3cf6fc3ebfb13a0ff27b1454" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazpzoy04j21020m8gok.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazpzoy04j21020m8gok.jpg';}" alt="" /></p>
 
@@ -358,7 +354,7 @@
 
 <p>这里假设这79点是从高斯分布（gaussian distribution）中得到的，现在需要从这79个点找出符合的那个高斯分布。</p>
 
-<h3 id="高斯分布"><a name="高斯分布" class="reference-link"></a>高斯分布</h3>
+<h3 id="a-name-classreference-link-7"><a name="高斯分布" class="reference-link"></a>高斯分布</h3>
 
 <p>下面简单说一下高斯分布：</p>
 
@@ -372,7 +368,7 @@
 
 <p>假设通过79个点估测出了期望 $\mu$ 和协方差矩阵 Σ\sigmaΣ。期望是图中的黄色点，协方差矩阵是红色的范围。现在给一个不在79个点之内的新点，用刚才估测出的期望和协方差矩阵写出高斯分布的function fμ,Σ(x)f_{\mu,\sigma}(x)f​μ,Σ​​(x)，然后把x带进去，计算出被挑选出来的概率</p>
 
-<h3 id="maximum-likelihood最大似然估计"><a name="maximum likelihood（最大似然估计）" class="reference-link"></a>maximum likelihood（最大似然估计）</h3>
+<h3 id="a-namemaximum-likelihood-classreference-linkmaximum-likelihood"><a name="maximum likelihood（最大似然估计）" class="reference-link"></a>maximum likelihood（最大似然估计）</h3>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/29f861e97788883ae254e3f433e587660dceecc28bf77deb23214da46ed9d0b0" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazss6werj21340psdly.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazss6werj21340psdly.jpg';}" alt="" /></p>
 
@@ -390,13 +386,13 @@
 
 <p>最大似然估计更多详情参看《概率论与数理统计，浙江大学，第七章》</p>
 
-<h3 id="应用最大似然估计"><a name="应用最大似然估计" class="reference-link"></a>应用最大似然估计</h3>
+<h3 id="a-name-classreference-link-8"><a name="应用最大似然估计" class="reference-link"></a>应用最大似然估计</h3>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/35ae4e33a8c2b4568c2b8816ac1ec763d130566af7842fd80f0fcfe6b3ffddbb" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feaztqpbiej21340l2adz.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx2.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feaztqpbiej21340l2adz.jpg';}" alt="" /></p>
 
 <p>算出之前水属性和一般属性高斯分布的期望和协方差矩阵的最大似然估计值。</p>
 
-<h2 id="开始分类"><a name="开始分类" class="reference-link"></a>开始分类</h2>
+<h2 id="a-name-classreference-link-9"><a name="开始分类" class="reference-link"></a>开始分类</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/82118f34f71cd7180731a46e68c7b0fb5b04eec93ecbbda64a30f5312a67d87b" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazugug84j212g0miaeg.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx3.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazugug84j212g0miaeg.jpg';}" alt="" /></p>
 
@@ -415,7 +411,7 @@
   </tbody>
 </table>
 
-<h2 id="修改model"><a name="修改model" class="reference-link"></a>修改model</h2>
+<h2 id="a-namemodel-classreference-linkmodel"><a name="修改model" class="reference-link"></a>修改model</h2>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/06cddbd0853767c035c9e081ed67138ef7ced8b4061ca193d060e514943a5648" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazvdv026j212o0mwgq3.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazvdv026j212o0mwgq3.jpg';}" alt="" /></p>
 
@@ -435,7 +431,7 @@
 
 <p>右图新的结果，分类的boundary是线性的，所以也将这种分类叫做 linear model。如果考虑所有的属性，发现正确率提高到了73%。</p>
 
-<h1 id="三大步"><a name="三大步" class="reference-link"></a>三大步</h1>
+<h1 id="a-name-classreference-link-10"><a name="三大步" class="reference-link"></a>三大步</h1>
 
 <p>将上述问题简化为前几个系列说过的三大步：</p>
 
@@ -443,7 +439,7 @@
 
 <p>实际做的就是要找一个概率分布模型，可以最大化产生data的likelihood。</p>
 
-<h1 id="为什么是高斯分布"><a name="为什么是高斯分布？" class="reference-link"></a>为什么是高斯分布？</h1>
+<h1 id="a-name-classreference-link-11"><a name="为什么是高斯分布？" class="reference-link"></a>为什么是高斯分布？</h1>
 
 <p>可能选择其他分布也会问同样的问题。。。</p>
 
@@ -474,7 +470,7 @@
 
 <p>假设所有的feature都是相互独立产生的，这种分类叫做 <strong>naive bayes classifier（朴素贝叶斯分类器）</strong></p>
 
-<h1 id="posterior-probability后验概率"><a name="posterior probability（后验概率）" class="reference-link"></a>posterior probability（后验概率）</h1>
+<h1 id="a-nameposterior-probability-classreference-linkposterior-probability"><a name="posterior probability（后验概率）" class="reference-link"></a>posterior probability（后验概率）</h1>
 
 <p><img src="/image/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/08932baf249e0081259203dcacfe17c041964ec62508f2fa92394d2f431701c2" onerror="if(!this.err){this.err=true;this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazxverh2j21160la41u.jpg';}else{this.onerror='';this.src='http%3a%2f%2fwx1.sinaimg.cn%2fmw690%2fa9c4d5f6gy1feazxverh2j21160la41u.jpg';}" alt="" /></p>
 
@@ -693,9 +689,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/' 
+     'url':'http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/04/05/ji_qi_xue_xi_ru_men_xi_lie_05_classification__probabilistic_generative_model__fen_lei___gai_lv_sheng_cheng_mo_xing__/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -760,6 +756,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -775,7 +772,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>

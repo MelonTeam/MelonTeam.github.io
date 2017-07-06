@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">
-    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="http://MelonTeam.com/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
 
 
 
@@ -187,7 +187,7 @@
 
 <p>需求背景：日迹需要的编辑滤镜效果预览图</p>
 
-<p><img src="/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807" alt="" />
+<p><img src="/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807" alt="" /><br />
 <!--more--></p>
 
 <p>图1：日迹滤镜效果</p>
@@ -206,57 +206,56 @@
 
 <p>代码示例：</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">//初始化extractor</span>
+<pre><code class="language-java">//初始化extractor
 
-<span class="n">MediaExtractor</span><span class="err"> </span><span class="n">extractor</span><span class="err"> </span><span class="o">=</span><span class="err"> </span><span class="k">new</span><span class="err"> </span><span class="n">MediaExtractor</span><span class="o">();</span>
+MediaExtractor extractor = new MediaExtractor();
 
-<span class="n">extractor</span><span class="o">.</span><span class="na">setDataSource</span><span class="o">(...);</span>
+extractor.setDataSource(...);
 
-<span class="o">...</span>
+...
 
-<span class="c1">//初始化meidacoec</span>
+//初始化meidacoec
 
-<span class="n">MediaCodec</span><span class="err"> </span><span class="n">decoder</span><span class="o">=</span><span class="err"> </span><span class="n">Mediacodec</span><span class="o">.</span><span class="na">createDecodecByType</span><span class="o">(</span><span class="n">mine</span><span class="o">);</span>
+MediaCodec decoder= Mediacodec.createDecodecByType(mine);
 
-<span class="n">decoder</span><span class="o">.</span><span class="na">configure</span><span class="o">(</span><span class="n">format</span><span class="o">,</span><span class="err"> </span><span class="n">surface</span><span class="o">,</span><span class="err"> </span><span class="kc">null</span><span class="o">,</span><span class="err"> </span><span class="mi">0</span><span class="o">);</span>
+decoder.configure(format, surface, null, 0);
 
-<span class="n">decoder</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+decoder.start();
 
-<span class="o">...</span>
+...
 
-<span class="c1">//循环处理每一帧</span>
+//循环处理每一帧
 
-<span class="n">While</span><span class="o">(</span><span class="n">notEndFlag</span><span class="o">){</span>
+While(notEndFlag){
 
-<span class="c1">//把读出来的帧数据交给mediacodec去解析</span>
+//把读出来的帧数据交给mediacodec去解析
 
-<span class="n">extractor</span><span class="o">.</span><span class="na">readSampleDate</span><span class="o">(</span><span class="n">buffer</span><span class="o">,</span><span class="err"> </span><span class="mi">0</span><span class="o">);</span>
+extractor.readSampleDate(buffer, 0);
 
-<span class="n">decoder</span><span class="o">.</span><span class="na">queueInputBuffer</span><span class="o">(</span><span class="n">bufferIndex</span><span class="o">,</span><span class="err"> </span><span class="mi">0</span><span class="o">,</span><span class="err"> </span><span class="n">sampleSize</span><span class="o">,</span><span class="err"> </span><span class="n">showTimeus</span><span class="o">,</span><span class="err"> </span><span class="mi">0</span><span class="o">);</span>
+decoder.queueInputBuffer(bufferIndex, 0, sampleSize, showTimeus, 0);
 
-<span class="c1">//向前移动 准备读取下一帧</span>
+//向前移动 准备读取下一帧
 
-<span class="n">extractor</span><span class="o">.</span><span class="na">advance</span><span class="o">();</span>
+extractor.advance();
 
-<span class="c1">//把mediacodec解析后的数据交给surface去渲染</span>
+//把mediacodec解析后的数据交给surface去渲染
 
-<span class="n">decoder</span><span class="o">.</span><span class="na">dequeueOutputBuffer</span><span class="o">(</span><span class="n">info</span><span class="o">,</span><span class="err"> </span><span class="mi">10000</span><span class="o">);</span>
+decoder.dequeueOutputBuffer(info, 10000);
 
-<span class="n">decoder</span><span class="o">.</span><span class="na">releaseOutputBuffer</span><span class="o">(</span><span class="n">bufferIndex</span><span class="o">,</span><span class="err"> </span><span class="n">isRender</span><span class="o">);</span>
+decoder.releaseOutputBuffer(bufferIndex, isRender);
 
-<span class="o">}</span>
+}
 
 </code></pre>
-</div>
 
-<p>走到这里，我们已经可以从Surface上拿到每一帧对应的Texture
+<p>走到这里，我们已经可以从Surface上拿到每一帧对应的Texture<br />
 （纹理），之后我们就可以利用Opengl的可编程管线，对纹理进行相关的滤镜处理。下面说下opengl的渲染流程。</p>
 
 <p><img src="/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/29f020e2d6d92c74e67eaeee0d6ee1ce471b2212ec23c66584f7b137714876d1" alt="" /></p>
 
 <p>图3： opengl 渲染管线简图</p>
 
-<p>CPU
+<p>CPU<br />
 将物体顶点坐标、顶点变换矩阵、纹理坐标、纹理变换矩阵等通过API传给VertexShader（顶点着色器），它针对VBO提供的每个顶点执行一遍顶点着色器，VertexShader通过varying限定符传输易变变量给FragmentShader使用，FrgementShader对光栅化的每个片元进行处理，生成多重的颜色混合效果，最后渲染到屏幕或者写到文件中。</p>
 
 <p>1. 黑白滤镜的实现</p>
@@ -267,7 +266,7 @@
 
 <p>B. 平均值法：R=G=B=(R+G+B)/3, 这种方式图片亮度值被平均，图片非常柔和</p>
 
-<p>C. 加权平均法：R=G=B=(R<em>Wr+G</em>Wg+B*Wb)，由于人眼对不同颜色的敏感度不一样，所以权重也不同，业界比较常用的权重值是(0.2125,
+<p>C. 加权平均法：R=G=B=(R<em>Wr+G</em>Wg+B*Wb)，由于人眼对不同颜色的敏感度不一样，所以权重也不同，业界比较常用的权重值是(0.2125,<br />
 0.7154, 0.0721)。</p>
 
 <p>我们采用的最后一种加权平均的方式，知道了算法就来实现下吧。要实现GPU实时滤镜，首先要了解这么写Shader，网上有很多shader的文章，这里我就不做叙述。</p>
@@ -420,9 +419,9 @@
 <div id="uyan_frame"></div>
 <script type="text/javascript">
 var uyan_config = {
-     'url':'http://localhost:4000/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/',
-     'du':'http://localhost:4000', 
-     'su':'http://localhost:4000/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/' 
+     'url':'http://MelonTeam.com/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/2017/07/01/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/' 
 };
 </script>
 <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
@@ -487,6 +486,7 @@ var uyan_config = {
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
 
 
+
     <div class="back-to-top">
     <a href="#top" data-scroll>
         <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -502,7 +502,6 @@ var uyan_config = {
         offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
       });
     </script>
-    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
   </body>
 
 </html>
