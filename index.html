@@ -50,35 +50,7 @@ layout: default
 
 
         <!-- Pagination links -->
-        <div class="pagination text-align">
-          <div class="btn-group">
-            {% if paginator.previous_page %}
-              {% if paginator.previous_page == 1 %}
-                  <a href="/" class="btn btn-outline">&laquo;</a>
-              {% else %}
-                  <a href="/page{{paginator.previous_page}}"  class="btn btn-outline">&laquo;</a>
-              {% endif %}
-            {% else %}
-                
-            {% endif %}
-            {% if paginator.page == 1 %}
-                <a href="javascript:;" class="active btn btn-outline">1</a>
-            {% else %}
-                <a href="/"  class="btn btn-outline">1</a>
-            {% endif %}
-            {% for count in (2..paginator.total_pages) %}
-              {% if count == paginator.page %}
-                  <a href="javascript:;"  class="active btn btn-outline">{{count}}</a>
-              {% else %}
-                  <a href="/page{{count}}"  class="btn btn-outline">{{count}}</a>
-              {% endif %}
-            {% endfor %}
-            {% if paginator.next_page %}
-                <a href="/page{{paginator.next_page}}"  class="btn btn-outline">&raquo;</a>
-            {% else %}
-                
-            {% endif %}
-            </div>
+        <div id="pagination" class="pagination text-align">
         </div>
 
     </div>
@@ -177,5 +149,23 @@ layout: default
         </div>
     </div>
 </div>
-<!-- <script src="{{ "/js/scroll.min.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
-<!-- <script src="{{ "/js/pageContent.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
+<script src="{{ '/js/laypage.js' | prepend: site.baseurl }}" charset="utf-8"></script>
+<script type="text/javascript">
+laypage({
+    cont: 'pagination', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+    pages: {{paginator.total_pages}}, //通过后台拿到的总页数
+    curr: {{paginator.page}} , //当前页
+    groups: 5,
+    prev: false,
+    next: false,
+    jump: function(obj, first){ //触发分页后的回调
+        if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+            if(obj.curr == 1){
+                location.href = "/";
+            }else{
+                location.href = "/page" + obj.curr;
+            }
+        }
+    }
+});
+</script>
