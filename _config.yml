@@ -7,8 +7,10 @@
 
 # Site settings
 title: MelonTeam
-brief-intro: 移动终端前沿技术的探索者
+brief-intro: "移动终端前沿技术的探索者"
 baseurl: "" # the subpath of your site, e.g. /blog
+keywords: "Android, iOS, 深度学习, 人工智能"
+description: "腾讯移动终端团队, 拥有丰富的移动终端的开发经验, 专注于前沿技术的探索和研究"
 url: "http://MelonTeam.com" # the base hostname & protocol for your site
 permalink: /posts/:title/
 timezone: Asia/Shanghai
