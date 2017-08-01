@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ARKit浅析V1.0</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一、ARKit介绍**一、ARKit介绍**苹果公司在WWDC2017 上发布了ARKit,开发者可以使用这套框架在iPhone和iPad上创建属于自己的AR体验。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/arkit_qian_xi_v1_0/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>ARKit浅析V1.0</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>nicema
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ar/vr" title="Category: ar/vr" rel="category">ar/vr</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#ARKit" title="Tag: ARKit" rel="tag">ARKit</a-->
+        <a href="/tag/#ARKit" title="Tag: ARKit" rel="tag">ARKit</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一arkit介绍" id="markdown-toc-一arkit介绍">一、<strong>ARKit</strong>介绍<em>**</em></a></li>
+  <li><a href="#二arkit工作原理和流程" id="markdown-toc-二arkit工作原理和流程">二、<strong>ARKit</strong>工作原理和流程<em>**</em></a></li>
+  <li><a href="#三arkit-api介绍" id="markdown-toc-三arkit-api介绍">三、<strong>ARKit API</strong>介绍<em>**</em></a></li>
+</ul>
+
+<h2 id="一arkit介绍">一、<strong>ARKit</strong>介绍<em>**</em></h2>
+
+<p>苹果公司在WWDC2017 上发布了ARKit,开发者可以使用这套框架在iPhone和iPad上创建属于自己的AR体验。
+<!--more--></p>
+
+<p>增强现实技术（Augmented Reality，简称
+AR），是一种实时地计算摄影机影像的位置及角度并加上相应图像、视频、3D模型的技术，这种技术的目标是在屏幕上把虚拟世界套在现实世界并进行互动。</p>
+
+<p>ARKit框架提供了两种AR技术，一种是基于3D场景(SceneKit)实现的增强现实，一种是基于2D场景(SpriktKit)实现的增强现实。</p>
+
+<p>需要注意的是，ARKit虽说是iOS11提供的框架，但是并非升级到iOS11都能使用。必须要A9以及以上的处理器才能使用。以下是ARKit 开发环境：</p>
+
+<p>1.Xcode版本：Xcode9及以上</p>
+
+<p>2.iOS系统:iOS11及以上</p>
+
+<p>3.iOS设备：处理器A9及以上（6S机型及以上）</p>
+
+<p>4.MacOS系统：10.12.4及以上（安装Xcode9对Mac系统版本有要求）</p>
+
+<h2 id="二arkit工作原理和流程">二、<strong>ARKit</strong>工作原理和流程<em>**</em></h2>
+
+<p>首先需要说明的是，ARKit并不是一个能够独立运行的框架，其依赖SceneKit框架。简单点说，ARKit框架主要提供相机相关的工作，主要负责捕捉和分析现实世界。而展示虚拟物体部分，则是依赖SceneKit提供的能力。如果没有SceneKit，那ARKit只是一个相机而已。（SceneKit是苹果在iOS8中集成的一套3D引擎框架）</p>
+
+<p>下图是ARKit中主要类的关系图：</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/706dc5f2b4055e3678343f073d3ac55be3b8258a446c151a865dcc1a6d350872" alt="" /></p>
+
+<p>上图中，ARSCNView可以认为是一个容器，代表的就是看到的现实世界。其作用有两个：</p>
+
+<p>1、如上图右边部分：管理ARSession，在这里简单认为ARSession是管理ARKit世界的上下文，其管理者相机的属性设置，也负责向ARSCNView输出捕捉到的显示世界。</p>
+
+<p>2、如上图左边部分：显示我们添加进去的AR物体，这里可以是一个3D物体，也可以是一个2D物体。这里从继承关系来看，ARSCNView、SCNScene、SCNNode等类是从SceneKit中继承过来的。</p>
+
+<p>从上图可以简单的看出ARKit的工作原理，ARKit框架提供相机能力，在手机上捕捉并构建现实世界。SceneKit提供模型能力，在手机的“现实世界”中添加虚拟物体。</p>
+
+<p>以下是一段代码，可以简单的展示一个虚拟物体:</p>
+
+<p>1）首先需要为ARSession 配置运行参数，参数其实挺简单。</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/845d223ac8393d7de482bec192523b53dd93a70d53f009a48c4fc504fd1bff12" alt="" /></p>
+
+<p>2）使用SCNScene加载3D模型，然后设置成主场景。</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/a85fa7203628e634d9c458e6edbe95c95db75ac775adf9bf2696f9ce281e0798" alt="" /></p>
+
+<p>3）上面使用的是简答的设置主场景的方式，还可以通过addChildNode的方式加载</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/f0b43bcefdeac48e6d8228da03325e42a821ee81212276030ab07945e4ec88e9" alt="" /></p>
+
+<p>从上述代码中可以看到，使用ARKit显示一个3D的虚拟物体 其实很简单。这得益于苹果对于技术细节的高度封装，开发者只需要关注自己的产品逻辑即可。</p>
+
+<h2 id="三arkit-api介绍">三、<strong>ARKit API</strong>介绍<em>**</em></h2>
+
+<p>ARKit框架的API其实并不多。下图就是整个ARKit框架提供的类。下面就这几个主要的类（介绍主要的属性）做一个简单的说明。</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/1008ef67e40e336347ba3c9e4f1386eb351cdb3a60d25803cc2125ed250d7346" alt="" /></p>
+
+<p>1 ARSCNView</p>
+
+<p>之前介绍过，ARKit支持3D和2D场景，ARSCNView是3D的AR场景视图，是从SceneKit框架中的SCNView继承过来的，其内部最重要的属性是</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span> <span class="n">delegate</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">ARSession</span> <span class="o">*</span><span class="n">session</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>其中session 主要负责管理ARSession，前面介绍过，这个类主要是管理整个ARKit的上下文，可以理解成管理整个AR世界的捕捉和创建</p>
+
+<p>ARSCNViewDelegate 代理则是负责回调虚拟节点创建移除的一些关键事件回调，如下图所示，从名字上就可以看出其作用，这里就不再一一赘述其作用了</p>
+
+<p><img src="/image/arkit_qian_xi_v1_0/d651334e169e206ce067a547844e165d1873cd8282cb4aa7cd9aaa77b9ec51bc" alt="" /></p>
+
+<p>2 ARSession</p>
+
+<p>ARSession是一个连接底层与AR视图之间的桥梁。ARSession可以偶去相机的一些关键数据，主要有两种方式：一、通过delegate，可以不断的获知相机位置；二、通过ARSession的CurrentFrame属性来获取；</p>
+
+<p>其内部最重要的属性是：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 代理
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span> <span class="n">id</span>  <span class="n">delegate</span><span class="p">;</span>
+<span class="c1">// 获取当前的相机参数，包括位置等
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARFrame</span> <span class="o">*</span><span class="n">currentFrame</span><span class="p">;</span>
+<span class="c1">// 管理会话追踪参数
+</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARSessionConfiguration</span> <span class="o">*</span><span class="n">configuration</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p> 最重要的是一些代理方法</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//session KVO观察者
+</span><span class="k">@protocol</span> <span class="nc">ARSessionObserver</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+<span class="k">@optional</span>
+<span class="cm">/**
+ session失败
+ */</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">session</span><span class="o">:</span><span class="p">(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="n">session</span> <span class="n">didFailWithError</span><span class="o">:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="n">error</span><span class="p">;</span>
+<span class="cm">/**
+相机改变追踪状态
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">cameraDidChangeTrackingState</span><span class="p">:(</span><span class="n">ARCamera</span> <span class="o">*</span><span class="p">)</span><span class="nv">camera</span><span class="p">;</span>
+<span class="cm">/**
+ session意外断开（如果开启ARSession之后，APP退到后台就有可能导致会话断开）
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionWasInterrupted</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+<span class="cm">/**
+session会话断开恢复（短时间退到后台再进入APP会自动恢复）
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionInterruptionEnded</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+<span class="k">@end</span>
+<span class="cp">#pragma mark - ARSessionDelegate
+</span><span class="k">@protocol</span> <span class="nc">ARSessionDelegate</span> <span class="o">&lt;</span><span class="n">ARSessionObserver</span><span class="o">&gt;</span>
+<span class="k">@optional</span>
+<span class="cm">/**
+ 相机当前状态（ARFrame：空间位置，图像帧等）更新
+ */</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">session</span><span class="o">:</span><span class="p">(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="n">session</span> <span class="n">didUpdateFrame</span><span class="o">:</span><span class="p">(</span><span class="n">ARFrame</span> <span class="o">*</span><span class="p">)</span><span class="n">frame</span><span class="p">;</span>
+<span class="cm">/**
+添加锚点
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didAddAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+<span class="cm">/**
+刷新锚点
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didUpdateAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+<span class="cm">/**
+移除锚点
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didRemoveAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p> 3 ARSessionConfiguration</p>
+
+<p>ARSessionConfiguration会话追踪配置，主要就是追踪相机的配置</p>
+
+<p>4 ARAnchor</p>
+
+<p>ARAnchor表示一个物体在3D空间的位置和方向。</p>
+
+<p>5 ARCamera</p>
+
+<p>记录相机的一些参数。一般情况下，我们并不需要设置这个类，系统会帮我们配置好</p>
+
+<p>6 ARFrame</p>
+
+<p>ARFrame主要是追踪相机当前的状态，这个状态不仅仅只是位置，还有图像帧及时间等参数</p>
+
+<p>7 ARHitTestResult</p>
+
+<p>点击回调结果，这个类主要用于虚拟增强现实技术（AR技术）中现实世界与3D场景中虚拟物体的交互。
+比如我们在相机中移动。拖拽3D虚拟物体，都可以通过这个类来获取ARKit</p>
+
+<p>所捕捉的结果</p>
+
+<p>上文主要参考官方文档和网络博客：<a href="http://blog.csdn.net/u013263917/article/details/72903174">http://blog.csdn.net/u013263917/article/details/72903174</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/password_auto_fill/">Password Auto Fill</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/pei_zhi_tensorflow_gpu_ban_ben_tian_keng_lu/">配置tensorflow GPU 版本填坑路</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/arkit_qian_xi_v1_0/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/arkit_qian_xi_v1_0/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

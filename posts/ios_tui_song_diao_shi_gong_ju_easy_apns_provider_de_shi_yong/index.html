@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iOS推送调试工具Easy APNs Provider的使用</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一·背景一·背景">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>iOS推送调试工具Easy APNs Provider的使用</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>rucasli
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%8E%A8%E9%80%81" title="Tag: 推送" rel="tag">推送</a-->
+        <a href="/tag/#推送" title="Tag: 推送" rel="tag">推送</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一背景" id="markdown-toc-一背景">一·背景</a></li>
+  <li><a href="#二准备工作" id="markdown-toc-二准备工作">二·准备工作</a></li>
+  <li><a href="#三开始调试" id="markdown-toc-三开始调试">三·开始调试</a>    <ul>
+      <li><a href="#1添加token" id="markdown-toc-1添加token">1·添加token：</a></li>
+      <li><a href="#2选择证书文件" id="markdown-toc-2选择证书文件">2·选择证书文件：</a></li>
+      <li><a href="#3连接至苹果推送服务器" id="markdown-toc-3连接至苹果推送服务器">3·连接至苹果推送服务器：</a></li>
+      <li><a href="#4推送负载" id="markdown-toc-4推送负载">4·推送负载：</a></li>
+      <li><a href="#5发送推送" id="markdown-toc-5发送推送">5·发送推送：</a></li>
+    </ul>
+  </li>
+  <li><a href="#四总结延展" id="markdown-toc-四总结延展">四·总结&amp;延展</a></li>
+</ul>
+
+<h3 id="一背景">一·背景</h3>
+
+<blockquote>
+
+  <!--more-->
+  <p>之前接到远程推送需要显示图片的需求，在调试的时候使用公司提供的WNS带的push调试工具发现对环境和设备都有要求，开发调试&amp;测试都比较困难，比如需要找越狱的机子安装发布证书打包的安装包，在WNS
+push测试的时候还需要配置appid和uin等信息。相对于WNS Push测试的限制，Easy APNs Provider是一个很好的调试工具。</p>
+</blockquote>
+
+<h3 id="二准备工作">二·准备工作</h3>
+
+<p>1·Easy APNs Provider可以在AppStore上面下载<a href="https://itunes.apple.com/cn/app
+/easy-apns-provider/id989622350?mt=1">下载戳这里~</a>。</p>
+
+<p>2·修改工程的BundleID，同时登陆<a href="http://developer.apple.com">Apple
+Developer</a>导出推送证书(开发或正式证书都可以)，这里工程更换证书&amp;绑定开发设备&amp;导出证书等步骤就不再赘述。</p>
+
+<p>3·将开发设备网络切换到GuestWiFi，因为开发网无法连接到苹果服务器进行身份验证。</p>
+
+<h3 id="三开始调试">三·开始调试</h3>
+
+<p>Easy APNs Provider调试主要有5个步骤：</p>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/9e57e0cecbdecfdd1c4abe040d70ca05f37b87b3e29a9071471d1f6f27de331a" alt="EAP的主界面" /></p>
+
+<p>[ EAP的主界面 ]</p>
+
+<h5 id="1添加token">1·添加token：</h5>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/2491228a5ce253f844f9f286e279a213d1e13f8b880def715c4a25ed055d9504" alt="三种方式" /></p>
+
+<p>[ 三种方式 ]</p>
+
+<p>添加token有三种方式，特别注意一下几点：<br />
+1、不要token两端的尖括号<br />
+2、空格删完之后再添加，那个框框只能放64个字符,多的会自动除<br />
+3、一定要为每个token添加名字，</p>
+
+<h5 id="2选择证书文件">2·选择证书文件：</h5>
+
+<p>在开发者网站导出的push证书有dubug和release两种，注意区分。</p>
+
+<h5 id="3连接至苹果推送服务器">3·连接至苹果推送服务器：</h5>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/af3eeb4fe937d32e70bd24a814993b685be64a99f0ae57cd2cacb64f4a850a31" alt="选择验证服务器" /></p>
+
+<p>[ 选择验证服务器 ]</p>
+
+<p>debug类型的证书选择.sandbox.<br />
+release类型证书选择.push.<br />
+选择完类型，点击”连接至：”</p>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/9bbbfe94ad3f47965d9f6f3c0e6da1a3d6faa6170943a7c533c26d4413933b3b" alt="log输出" /></p>
+
+<p>[ log输出 ]</p>
+
+<p>这样就可以继续构造自己要推送的消息体了。这里之前踩过一个坑，在开发网的环境下，一直提示失败，以为是证书的问题，最后发现是自己被墙了。</p>
+
+<h5 id="4推送负载">4·推送负载：</h5>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/cc5bd55d39f5452af94b5e5248b7d78bac273c95b481f8288d10c561fab37e59" alt="便利构造" /></p>
+
+<p>[ 便利构造 ]</p>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/306059c0764b5af2ba9eb3f35b24f3ea481f86178fb414afe26202c966608847" alt="原始负载" /></p>
+
+<p>[ 原始负载 ]</p>
+
+<h5 id="5发送推送">5·发送推送：</h5>
+
+<p>最后就可以推送消息了。</p>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/0a7e28202761d5d3f898a8042f8fa14b390336051792074d829cd2d4f0f50f4c" alt="状态" /></p>
+
+<p>[ 状态 ]</p>
+
+<p>效果：</p>
+
+<p><img src="/image/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/57f6f5ec06b4c2d17267d8a3a222fcbc63a1894fcb0a72366805800d77f319a3" alt="效果" /></p>
+
+<p>[ 效果 ]</p>
+
+<h3 id="四总结延展">四·总结&amp;延展</h3>
+
+<p>WNS推送调试的方式对测试和开发的限制都比较大，单单一个越狱机器就挺难找的了，所以Easy APNs
+Provider简单方便。之前也使用过PushMeBaby等调试工具，感觉还是EAP好用，值得推荐。</p>
+
+<p>在做这个需求的时候，使用了iOS10推送相关的新框架UserNotificationKit，苹果将本地推送和远程推送进行了整合与重构。这是推送相关的一个全新的框架，全新的使用方式，遂将Notification相关重温了一次又学习了UN框架的使用，这里推荐一个学习UN框架很好的文章：<a href="https://onevcat.com/2016/08/notification/">UN学习传送门</a>。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/">OpenGL ES (iOS) 学习笔记 — 基础篇（一）
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/">Swift学习笔记（初始化过程）</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

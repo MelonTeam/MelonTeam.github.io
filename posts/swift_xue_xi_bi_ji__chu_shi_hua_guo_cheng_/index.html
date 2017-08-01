@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Swift学习笔记（初始化过程）</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语Swift已经更新到4.0了，成为苹果推荐开发者进行iOS开发的语言，因此即使手头上的工程项目使用的还是object-c，但抽空学习下swift还是有必要的。因为swift从3.0开始已经日趋稳定，所以现在网上的资料大部分都是swift3.0的，本文的内容也是基于swift3.0，如果4.0有涉及新的更改...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Swift学习笔记（初始化过程）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>jackzkzhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Swift" title="Tag: Swift" rel="tag">Swift</a-->
+        <a href="/tag/#Swift" title="Tag: Swift" rel="tag">Swift</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1可选类型属性" id="markdown-toc-1可选类型属性"> 1.可选类型属性</a></li>
+  <li><a href="#2常量属性在构造过程中的修改" id="markdown-toc-2常量属性在构造过程中的修改">2.常量属性在构造过程中的修改</a></li>
+  <li><a href="#3默认构造函数" id="markdown-toc-3默认构造函数">3.默认构造函数</a></li>
+  <li><a href="#4结构体逐一成员构造函数" id="markdown-toc-4结构体逐一成员构造函数">4.结构体逐一成员构造函数</a></li>
+  <li><a href="#5-构造函数代理" id="markdown-toc-5-构造函数代理">5. 构造函数代理</a></li>
+  <li><a href="#类特有的构造函数特点" id="markdown-toc-类特有的构造函数特点">类特有的构造函数特点：</a>    <ul>
+      <li><a href="#1指定构造函数和便利构造函数" id="markdown-toc-1指定构造函数和便利构造函数">1.指定构造函数和便利构造函数：</a>        <ul>
+          <li><a href="#规则-1" id="markdown-toc-规则-1">规则 1</a></li>
+          <li><a href="#规则-2" id="markdown-toc-规则-2">规则 2</a></li>
+          <li><a href="#规则-3" id="markdown-toc-规则-3">规则 3</a></li>
+        </ul>
+      </li>
+      <li><a href="#2两段式构造过程" id="markdown-toc-2两段式构造过程">2.两段式构造过程</a>        <ul>
+          <li><a href="#安全检查-1" id="markdown-toc-安全检查-1">安全检查 1</a></li>
+          <li><a href="#安全检查-2" id="markdown-toc-安全检查-2">安全检查 2</a></li>
+          <li><a href="#安全检查-3" id="markdown-toc-安全检查-3">安全检查 3</a></li>
+          <li><a href="#安全检查-4" id="markdown-toc-安全检查-4">安全检查 4</a></li>
+          <li><a href="#阶段-1" id="markdown-toc-阶段-1">阶段 1</a></li>
+          <li><a href="#阶段-2" id="markdown-toc-阶段-2">阶段 2</a></li>
+        </ul>
+      </li>
+      <li><a href="#3构造函数的继承与重写" id="markdown-toc-3构造函数的继承与重写">3.构造函数的继承与重写</a>        <ul>
+          <li><a href="#规则-1-1" id="markdown-toc-规则-1-1">规则 1</a></li>
+          <li><a href="#规则-2-1" id="markdown-toc-规则-2-1">规则 2</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语
+Swift已经更新到4.0了，成为苹果推荐开发者进行iOS开发的语言，因此即使手头上的工程项目使用的还是object-c，但抽空学习下swift还是有必要的。因为swift从3.0开始已经日趋稳定，所以现在网上的资料大部分都是swift3.0的，本文的内容也是基于swift3.0，如果4.0有涉及新的更改，还需自己查阅。</p>
+
+<p>     km以及网上介绍swift基本语法的文章已经有不少，我这里就不累赘。这篇文章主要想讲的是：swift的初始化。</p>
+
+<!--more-->
+<p>    首先必须明确的两个基本点是：</p>
+
+<p>    1.swift中最基本的数据类型是结构体，类以及枚举。像object-
+c中常用的dictionary,array,string等，在swift中都是结构体类型。</p>
+
+<p>2.swift中，类和结构体在创建实例时，必须为所有存储型属性设置合适的初始值。存储型属性的值不能处于一个未知的状态。你可以在构造器中为存储型属性赋初值，也可以在定义属性时为其设置默认值。比如下面两个例子：</p>
+
+<p>通过构造器初始化存储型属性：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Fahrenheit {
+    var temperature: Double
+    init() {
+        temperature = 32.0
+    }
+}
+var f = Fahrenheit()
+</code></pre>
+</div>
+
+<p>或者：属性申明的时候直接设置初始值：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Fahrenheit {
+    var temperature = 32.0
+}
+</code></pre>
+</div>
+
+<p>下面开始重点介绍下swift初始化过程中一些比较重要的点：</p>
+
+<h3 id="1可选类型属性"> 1.可选类型属性</h3>
+
+<p>可选类型属性是指被允许被赋值为nil的属性，比如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var response: String?
+</code></pre>
+</div>
+
+<p>可选类型的属性将自动初始化为<code class="highlighter-rouge">nil</code>，表示这个属性是有意在初始化时设置为空的。</p>
+
+<h3 id="2常量属性在构造过程中的修改">2.常量属性在构造过程中的修改</h3>
+
+<p>在当前类的初始化函数里，可以修改常量属性的值，但是初始化函数结束时，常量属性必须是一个确认的值，并且之后不可修改。</p>
+
+<p>  需要注意的是，子类的构造函数里不可以修改从父类继承来的常量属性。</p>
+
+<h3 id="3默认构造函数">3.默认构造函数</h3>
+
+<p>  如果结构体或类的所有属性都有默认值，但没有自定义的构造函数以及继承的构造函数，那么 Swift
+会给这些结构体或类提供一个默认构造函数。这个默认构造函数会简单地将所有属性值都设置为默认值。</p>
+
+<h3 id="4结构体逐一成员构造函数">4.结构体逐一成员构造函数</h3>
+
+<p>除了上面提到的默认构造函数，swift中，如果一个结构体的属性申明的时候没有设置默认值，也没有自定义构造函数，swift也会帮助结构体创建一个逐一成员构造函数。比如下面的例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Size {
+    var width = 0.0, height = 0.0
+}
+let twoByTwo = Size(width: 2.0, height: 2.0)
+</code></pre>
+</div>
+
+<p>需要说明的是，如果有自定义构造函数，那么将不会生成默认构造函数以及逐一成员构造函数（结构体）。</p>
+
+<h3 id="5-构造函数代理">5. 构造函数代理</h3>
+
+<p>所谓构造函数代理，指的是一个构造函数通过调用其他构造函数来完成部分初始化工作。下面分结值类型和类类型两种情况来介绍：</p>
+
+<p>值类型：包括结构体和枚举。之所以称为值类型，是因为他们传递时都是进行值拷贝。由于值类型无法继承，所以构造函数代理中，你只能调用自己的其他构造函数。</p>
+
+<p>类类型：由于类可以继承，所以构造函数代理涉及到调用父类的构造函数。所以下面将介绍swift中构造函数在类继承中发挥的作用。</p>
+
+<h2 id="类特有的构造函数特点">类特有的构造函数特点：</h2>
+
+<h3 id="1指定构造函数和便利构造函数">1.指定构造函数和便利构造函数：</h3>
+
+<p>指定构造函数是指 初始化当前类中的所有属性，并调用父类的构造函数来完成父类属性的初始化。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>init(parameters) {
+    statements  
+}
+</code></pre>
+</div>
+
+<p>便利构造函数是比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>convenience init(parameters) {
+    statements
+}
+</code></pre>
+</div>
+
+<p>关于指定构造函数和便利构造函数，有下面三条规则：</p>
+
+<h5 id="规则-1">规则 1</h5>
+
+<p>指定构造器必须调用其直接父类的的指定构造器。</p>
+
+<h5 id="规则-2">规则 2</h5>
+
+<p>便利构造器必须调用_同_类中定义的其它构造器。</p>
+
+<h5 id="规则-3">规则 3</h5>
+
+<p>便利构造器必须最终导致一个指定构造器被调用。</p>
+
+<p><strong>也就是说指定构造函数是向上代理，便利构造函数是横向代理</strong>。</p>
+
+<p><img src="/image/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/921f3e420557f181e01fef39cf0d668b9226e3b547af2bbe19298b29a92f23ac" alt="" /></p>
+
+<h3 id="2两段式构造过程">2.两段式构造过程</h3>
+
+<p>swift中的构造函数必须分为以下两个阶段：</p>
+
+<p>第一个阶段，每个存储型属性被引入它们的类指定一个初始值。当每个存储型属性的初始值被确定后，第二阶段开始，它给每个类一次机会，在新实例准备使用之前进一步定制它们的存储型属性。</p>
+
+<p><strong>这和object-c 相似，但是object-c 属性的初值一般只能被默认初始化为nil或者0，而swift支持你自己定制初始值，更加灵活</strong>。</p>
+
+<p>swift将执行以下四个检查来满足两段式的要求：</p>
+
+<h5 id="安全检查-1">安全检查 1</h5>
+
+<p>指定构造器必须保证它所在类引入的所有属性都必须先初始化完成，之后才能将其它构造任务向上代理给父类中的构造器。</p>
+
+<p>之所以这样，是因为一个对象的内存只有在其所有存储型属性确定之后才能完全初始化。为了满足这一规则，指定构造器必须保证它所在类引入的属性在它往上代理之前先完成初始化。</p>
+
+<h5 id="安全检查-2">安全检查 2</h5>
+
+<p>指定构造器必须先向上代理调用父类构造器，然后再为继承的属性设置新值。如果没这么做，指定构造器赋予的新值将被父类中的构造器所覆盖。</p>
+
+<h5 id="安全检查-3">安全检查 3</h5>
+
+<p>便利构造器必须先代理调用同一类中的其它构造器，然后再为任意属性赋新值。如果没这么做，便利构造器赋予的新值将被同一类中其它指定构造器所覆盖。</p>
+
+<h5 id="安全检查-4">安全检查 4</h5>
+
+<p>构造器在第一阶段构造完成之前，不能调用任何实例方法，不能读取任何实例属性的值，不能引用<code class="highlighter-rouge">self</code>作为一个值。</p>
+
+<p>原因是 类实例在第一阶段结束以前并不是完全有效的。只有第一阶段完成后，该实例才会成为有效实例，才能访问属性和调用方法。</p>
+
+<p>具体来说，两段式执行的是以下操作：</p>
+
+<h5 id="阶段-1">阶段 1</h5>
+
+<ul>
+  <li>某个指定构造器或便利构造器被调用。</li>
+  <li>完成新实例内存的分配，但此时内存还没有被初始化。</li>
+  <li>指定构造器确保其所在类引入的所有存储型属性都已赋初值。存储型属性所属的内存完成初始化。</li>
+  <li>指定构造器将调用父类的构造器，完成父类属性的初始化。</li>
+  <li>这个调用父类构造器的过程沿着构造器链一直往上执行，直到到达构造器链的最顶部。</li>
+  <li>当到达了构造器链最顶部，且已确保所有实例包含的存储型属性都已经赋值，这个实例的内存被认为已经完全初始化。此时阶段 1 完成。</li>
+</ul>
+
+<h5 id="阶段-2">阶段 2</h5>
+
+<ul>
+  <li>从顶部构造器链一直往下，每个构造器链中类的指定构造器都有机会进一步定制实例。构造器此时可以访问<code class="highlighter-rouge">self</code>、修改它的属性并调用实例方法等等。</li>
+  <li>最终，任意构造器链中的便利构造器可以有机会定制实例和使用<code class="highlighter-rouge">self</code>。</li>
+</ul>
+
+<h3 id="3构造函数的继承与重写">3.构造函数的继承与重写</h3>
+
+<p><strong>与object-c不同的是，swift中，子类对父类的构造函数默认是不继承的，除非满足一定的条件</strong>。</p>
+
+<p>如果你重写父类的一个构造函数，那么你必须在重写函数前面加上<strong>override</strong> 修饰符，即使 你重写的是默认构造函数 或者
+你将父类的指定构造函数重写成便利构造函数，因为在重写的构造函数中，有可能会调用到具有相同函数名和参数的原函数，所以必须加修饰符加以区分。</p>
+
+<p>前面说到，swift中子类默认是不继承父类的构造函数的，但是满足以下规则的情况下，子类可以继承父类的构造函数：</p>
+
+<h5 id="规则-1-1">规则 1</h5>
+
+<p>如果子类没有定义任何指定构造器，它将自动继承所有父类的指定构造器。</p>
+
+<h5 id="规则-2-1">规则 2</h5>
+
+<p>如果子类提供了所有父类指定构造器的实现——无论是通过规则 1 继承过来的，还是提供了自定义实现——它将自动继承所有父类的便利构造器。</p>
+
+<p><strong>这里只要自定义父类的所有指定构造函数，即使是自定义成便利构造函数，也是满足规则的</strong>。</p>
+
+<p>swift中的初始化过程就介绍到这里，上面较为详细的介绍了各种规则和注意点，虽然实际开发中可能不一定都会用到，但是了解清楚可以一定程度的避免踩坑，也能更深入地体会到swift的特点。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

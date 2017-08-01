@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>封装内嵌UICollectionView和UIPageControl的ScrollView</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一。交互样式在需求中涉及到一个比较通用的控件，ScrollView里面嵌入CollectionView，封装一下，后面再有相同交互不用重复造轮子。一。交互样式">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>封装内嵌UICollectionView和UIPageControl的ScrollView</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>justinsong
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#UICollectionView" title="Tag: UICollectionView" rel="tag">UICollectionView</a-->
+        <a href="/tag/#UICollectionView" title="Tag: UICollectionView" rel="tag">UICollectionView</a>&nbsp;
+    
+        <!--a href="/tag/#UIScrollView" title="Tag: UIScrollView" rel="tag">UIScrollView</a-->
+        <a href="/tag/#UIScrollView" title="Tag: UIScrollView" rel="tag">UIScrollView</a>&nbsp;
+    
+        <!--a href="/tag/#UIPageControl" title="Tag: UIPageControl" rel="tag">UIPageControl</a-->
+        <a href="/tag/#UIPageControl" title="Tag: UIPageControl" rel="tag">UIPageControl</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一交互样式" id="markdown-toc-一交互样式">一。交互样式</a></li>
+  <li><a href="#二接口" id="markdown-toc-二接口">二。接口</a></li>
+  <li><a href="#三实现" id="markdown-toc-三实现">三。实现</a></li>
+</ul>
+
+<p>在需求中涉及到一个比较通用的控件，ScrollView里面嵌入CollectionView，封装一下，后面再有相同交互不用重复造轮子。</p>
+
+<h5 id="一交互样式">一。交互样式</h5>
+<!--more-->
+
+<p>控件交互：</p>
+
+<p><img src="/image/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/f3143f1bcdede6a0071f474045db873c3fbc4cddc7d0a1e5380d49991fe0f9d9" alt="" /></p>
+
+<p>[ ]</p>
+
+<p>如下类似样式都可以复用同一控件:</p>
+
+<p><img src="/image/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/8ac66ad82b25f8550cad81f16c8403d76d8105a091e015e2d96f32831e8a0a71" alt="" /></p>
+
+<p>[ ]</p>
+
+<p><img src="/image/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/bdcf44cbaa5e7ff5018b84f3b07d429ecc7c999b6b2e107eeb0ed6ada10595f7" alt="" /></p>
+
+<p>[ ]</p>
+
+<h5 id="二接口">二。接口</h5>
+
+<ul>
+  <li>接口</li>
+</ul>
+
+<p>init的时候传入view布局相关的TBCollectionViewParamsModel参数；拿到数据后调用setDataList传入数据，展示CollectionScrollView。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">TBHorizontalItemListView</span> <span class="p">:</span> <span class="nc">UIView</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithFrame</span><span class="p">:(</span><span class="n">CGRect</span><span class="p">)</span><span class="nv">frame</span> <span class="nf">collectionViewParamsModel</span><span class="p">:(</span><span class="n">TBCollectionViewParamsModel</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewParams</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDataList</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">*</span><span class="p">)</span><span class="nv">listData</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>参数</p>
+
+    <p>@interface TBCollectionViewParamsModel : NSObject
+@property (nonatomic, assign) CGSize itemSize;                  //collectionView的cell大小
+@property (nonatomic, assign) CGFloat minimumInteritemSpacing;  //collectionView的cell间水平间距
+@property (nonatomic, assign) CGFloat minimumLineSpacing;       //collectionView的cell间的竖直间距
+@end</p>
+
+    <p>@interface TBCollectionDataListModel : NSObject
+@property (nonatomic, retain) NSArray *itemList;            //单个collectionView中的数据list
+@property (nonatomic, strong) Class cellClass;                  //单个collectionView中使用的cell类型, 需要实现TBCollectionViewCellProtocol
+@property (nonatomic, assign) int type;                         //扩展，暂时无用
+@end</p>
+  </li>
+</ul>
+
+<h5 id="三实现">三。实现</h5>
+
+<p><img src="/image/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/8e5869243dd63a46a331529885ede0cc0a75391c5b40b10ee3f3a51ca3cf3ccd" alt="" /></p>
+
+<p>[ ]</p>
+
+<p>UICollectionViewUICollectionViewUICollectionViewUICollectionView</p>
+
+<ul>
+  <li>灰色的是容器<code class="highlighter-rouge">View</code></li>
+  <li>紫色的是<code class="highlighter-rouge">UIScrollView</code></li>
+  <li>蓝色的是<code class="highlighter-rouge">UICollectionView</code></li>
+  <li>红色的是<code class="highlighter-rouge">UICollectionViewCell</code></li>
+  <li>下方小点点是<code class="highlighter-rouge">TBScrollPageControl</code></li>
+</ul>
+
+<p>关键代码：</p>
+
+<p>根据setDataList传入的数据创建CollectionView并为其布局</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)initCollectionViews
+{
+    _bgScrollView.contentSize = CGSizeMake(TBHorizontalItemListViewWidth * _listData.count, 0);
+
+    CGFloat x_offset = 0;
+    for (NSInteger i = 0; i &lt; _listData.count; i++)
+    {
+        UICollectionViewFlowLayout *flowLayout = [self getCollectionViewFlowLayout:_viewParams];
+
+        CGRect frame = CGRectMake(x_offset + 23 / 2, 20, TBHorizontalItemListViewWidth - 23, 199);
+        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
+        collectionView.tag = 100+i;
+        collectionView.dataSource = self;
+        collectionView.delegate = self;
+        collectionView.alwaysBounceHorizontal = NO;
+        collectionView.alwaysBounceVertical = YES;
+        collectionView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+        collectionView.showsHorizontalScrollIndicator = NO;
+        collectionView.showsVerticalScrollIndicator = NO;
+        collectionView.scrollEnabled = NO;
+        collectionView.backgroundColor = [UIColor blueColor];
+        [_bgScrollView addSubview:collectionView];
+
+        Class cellClass = [_listData objectAtIndex:i].cellClass;
+        NSString *identifier = [NSString stringWithFormat:@"ItemLandscapeCollectionCellIdentifier_%ld",(long)collectionView.tag];
+        [collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
+
+        x_offset += TBHorizontalItemListViewWidth;
+        [collectionView reloadData];
+    }
+    [self layoutIfNeeded];
+}
+</code></pre>
+</div>
+
+<p>CollectionView的代理：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#pragma mark - UICollectionDataSource
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return _viewParams.itemSize;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSInteger groupIndex = collectionView.tag - 100;
+    return _listData[groupIndex].itemList.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    /**取数据*/
+    NSInteger groupIndex = collectionView.tag - 100;
+    TBCollectionDataListModel *listModel = _listData[groupIndex];
+    id itemModel = listModel.itemList[indexPath.row];
+
+    /**创建cell&amp;&amp;赋值*/
+    NSString *identifier = [NSString stringWithFormat:@"ItemLandscapeCollectionCellIdentifier_%ld",collectionView.tag];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    if ([cell respondsToSelector:@selector(setModel:)])
+    {
+        [cell setModel:itemModel];
+    }
+
+    return cell;
+}
+</code></pre>
+</div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/">OpenGL ES (iOS) 学习笔记 — 基础篇（一）
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>图解Objective-C对象模型</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="目录：1.这就是Objective-C对象模型吗？2.Objective-C对象结构">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>图解Objective-C对象模型</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>berniwang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B" title="Tag: iOS对象模型" rel="tag">iOS对象模型</a-->
+        <a href="/tag/#iOS对象模型" title="Tag: iOS对象模型" rel="tag">iOS对象模型</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B" title="Tag: 对象模型" rel="tag">对象模型</a-->
+        <a href="/tag/#对象模型" title="Tag: 对象模型" rel="tag">对象模型</a>&nbsp;
+    
+        <!--a href="/tag/#objectivec" title="Tag: objectivec" rel="tag">objectivec</a-->
+        <a href="/tag/#objectivec" title="Tag: objectivec" rel="tag">objectivec</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1这就是objective-c对象模型吗" id="markdown-toc-1这就是objective-c对象模型吗">1.这就是Objective-C对象模型吗？</a></li>
+  <li><a href="#2objective-c对象结构" id="markdown-toc-2objective-c对象结构">2.Objective-C对象结构</a></li>
+  <li><a href="#3meta-class元类" id="markdown-toc-3meta-class元类">3.Meta Class(元类)</a></li>
+  <li><a href="#4代码验证" id="markdown-toc-4代码验证">4.代码验证</a></li>
+  <li><a href="#5推荐文章" id="markdown-toc-5推荐文章">5.推荐文章</a></li>
+</ul>
+
+<p><strong>目录</strong>：<br />
+<strong>1.这就是Objective-C对象模型吗？</strong><br />
+<strong>2.Objective-C对象结构</strong><br />
+<!--more-->
+<strong>3.Meta Class(元类)</strong><br />
+<strong>4.代码验证</strong><br />
+<strong>5.推荐文章</strong></p>
+
+<h3 id="1这就是objective-c对象模型吗">1.这就是Objective-C对象模型吗？</h3>
+
+<p><img src="/image/tu_jie_objective_c_dui_xiang_mo_xing/8a4e01d4df0416d77c5654ea5f92f48065c94d69f7a1f9132e09be41c0493f98" alt="一张来自官方文档的对象结构图" /></p>
+
+<p>[ 一张来自官方文档的对象结构图 ]</p>
+
+<p>这个图也大致涵盖了Objetive-C对象的主要内容，这里出现了实例变量，指向对象类结构的isa指针，类结构中的selector（运行时将
+转变为IMP（方法实现）），指向父类的superclass指针,一切都是多么的完美。</p>
+
+<p>真的就是这只有这么多了吗?苹果可是经常“善意的欺骗“码农，KVO的实现不就如此，明明牺牲了那么多，却要用个isa混写，深藏功与名（此处应为苹果鼓掌）。好吧，先提个问题，我们项目中经常提供两个方法，分别提供一个实例方法和对应的类方法。比如字典转模型，以我的大Person为例:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> [Person personWithDic:dic];
+ [[Person alloc]initWithDic:dic];
+</code></pre>
+</div>
+
+<p>什么，你还没有看出来有什么端倪？T_ _T ,我感觉第一个感觉比第二好用，对头，我也是这么认为的。毕竟现在还不了解Objetive-
+C对象模型，消息发送机制，这个直观的感觉很正常。但是苹果到底为你做了多少了？先看本文中时常用到的几个名词。</p>
+
+<p><strong>必须搞清楚的几个术语</strong>(<code class="highlighter-rouge">有不同意见清轻喷T_T</code>)</p>
+
+<ul>
+  <li>对象(又跟码农谈Object。。。天台)，一个类的实例对象。</li>
+  <li>类/类结构，也经常叫作类对象(ClassObject)，元类的对象。</li>
+  <li>元类（metaClass），你的图上都咩有，现在说个＊＊＊。</li>
+</ul>
+
+<h3 id="2objective-c对象结构">2.Objective-C对象结构</h3>
+
+<p>下面的代码在<code class="highlighter-rouge">objc/obj.h和objc/Object.h</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/// An opaque type that represents an Objective-C class.
+typedef struct objc_class *Class;
+
+/// Represents an instance of a class.
+struct objc_object {
+    Class isa  OBJC_ISA_AVAILABILITY;
+};
+//再补充一个几乎所有对象的基类NSObject类定义
+@interface Object
+{
+    Class isa;    /* A pointer to the instance's class structure */
+}
+</code></pre>
+</div>
+
+<p>以上几行代码，想要表达的无非就是，Objetive-C对象是C语言的的结构体，每个对象的内存开头的地址都是Class类型的isa。就酱
+，一条Objetive-C中的铁律就产生了。</p>
+
+<p><strong>如果结构体中第一个变量的类型是Class,就可以当作是Objetive-C对象</strong>。之后讲block的实质的时候就会看到其本质就是Objective-C对象。</p>
+
+<p>那么我们再来看看struct
+objc_class的结构体，这个结构体定义在<code class="highlighter-rouge">objc/runtime.h</code>中，这个就是我们真正的类结构体了，描述了对象所属类的性质。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct objc_class {
+    Class isa                    OBJC_ISA_AVAILABILITY;
+
+#if !__OBJC2__
+   Class super_class                           
+                                  OBJC2_UNAVAILABLE;
+    const char *name                                         
+                                  OBJC2_UNAVAILABLE;
+    long version                                             
+                                  OBJC2_UNAVAILABLE;
+    long info                 
+                                  OBJC2_UNAVAILABLE;
+    long instance_size                                       
+                                  OBJC2_UNAVAILABLE;
+    struct objc_ivar_list *ivars   
+                                  OBJC2_UNAVAILABLE;
+    struct objc_method_list **methodLists                    
+                                  OBJC2_UNAVAILABLE;
+    struct objc_cache *cache      
+                                  OBJC2_UNAVAILABLE;
+    struct objc_protocol_list *protocols                     
+                                  OBJC2_UNAVAILABLE;
+#endif
+
+} OBJC2_UNAVAILABLE;
+</code></pre>
+</div>
+
+<p>看到这个，是不是有点熟悉了，这些东西好像我们平常在定义个类的时候都用到过，类的名字，实例变量，方法，遵守的协议等。然而聪明的童鞋可能开始疑惑了，妈蛋，这结构体里面怎么又有一个Class了，那按照铁律这个也是对象啰，那它的类又是在哪里？那这个Class又指到哪里去了，小伙子，你骨骼精奇呀。，那类的延伸不是没完没了，最基本的类在哪里了？就是元类了，比如，我们的NSString虽然是一个类，也就是我们普通意义上的类，但同时也是类对像。既然说到这里，先介绍两个函数,代码验证时要用到(源码之下，无所隐藏，23333)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//Returns the class object for the receiver’s class.
+//返回一个消息接收者的 *类对象*
+- (Class)class
+//Returns the class of an object
+//返回一个对象的类，注意，不是类对象哦
+Class object_getClass(id object)
+</code></pre>
+</div>
+
+<h3 id="3meta-class元类">3.Meta Class(元类)</h3>
+
+<p>先上图，再说话。我想下面这张图，你默默的看个几分钟，就能解之前的疑惑了，心中的草泥马终于可以释怀了。</p>
+
+<p><img src="/image/tu_jie_objective_c_dui_xiang_mo_xing/ad9acc55b8bb6f2e8aa78fdd18bff344d4a1f7c68677390c9880e5d358a2f1a0" alt="Objective-
+C对象结构图" /></p>
+
+<p>[ Objective-C对象结构图 ]</p>
+
+<p>从这张图上，我们来做一个总结：</p>
+
+<ol>
+  <li>对象的isa指向了一个类对象(ClassObject)。</li>
+  <li>
+    <p>类对象里包含了一个SuperClass指向父类，isa 指向了自己的<br />
+元类（MetaClass）.</p>
+  </li>
+  <li>元类和普通的类也是一样，有自己的继承层次，有自己的父类。</li>
+  <li>
+    <p>元类也是一个对象，所有元类都有一个共同的基元<br />
+类（Root MetaClass），基元类的元类就是它自己啦。</p>
+  </li>
+  <li>万物归宗， NSObject是基元类的父类，所以NSObject 基本是<br />
+万物之首（NSProxy并不是继承自NSObject的，原因在讲消息机制时再说吧）。</li>
+</ol>
+
+<p>可是，你讲了这么久，元类到底做什么的了？也只是大致了解一些啦，苹果并没有没给源代码。还记得开头提的一个问题，字典转模型一个类方法和实例方法？这个就是元类的作用了。</p>
+
+<p><strong>类对象中有你定义的实例方法的引用，而元类中有对类方法的引用，使得你可以对类对象（ClassObject）发消息。</strong></p>
+
+<p>这里出两道题，来自sunny的博客。挑两道较好的，刚好与类的对象模型相关。<br />
+<a href="http://blog.sunnyxx.com/2014/11/06/runtime-nuts/">神经病院objc runtime入院考试</a></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//1.下面的答案是什么
+</span><span class="n">BOOL</span> <span class="n">res1</span> <span class="o">=</span> <span class="p">[(</span><span class="n">id</span><span class="p">)[</span><span class="n">NSObject</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSObject</span> <span class="nf">class</span><span class="p">]];</span>
+<span class="n">BOOL</span> <span class="n">res2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">id</span><span class="p">)[</span><span class="n">NSObject</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">isMemberOfClass</span><span class="p">:[</span><span class="n">NSObject</span> <span class="nf">class</span><span class="p">]];</span>
+<span class="n">BOOL</span> <span class="n">res3</span> <span class="o">=</span> <span class="p">[(</span><span class="n">id</span><span class="p">)[</span><span class="n">Sark</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">Sark</span> <span class="nf">class</span><span class="p">]];</span>
+<span class="n">BOOL</span> <span class="n">res4</span> <span class="o">=</span> <span class="p">[(</span><span class="n">id</span><span class="p">)[</span><span class="n">Sark</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">isMemberOfClass</span><span class="p">:[</span><span class="n">Sark</span> <span class="nf">class</span><span class="p">]];</span>
+
+<span class="c1">//2.下面的代码会？Compile Error / Runtime Crash / NSLog…?
+</span><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="p">(</span><span class="nl">Sark</span><span class="p">)</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">foo</span><span class="p">;</span>
+<span class="k">@end</span>
+<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="p">(</span><span class="nl">Sark</span><span class="p">)</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">foo</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"IMP: -[NSObject (Sark) foo]"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="c1">// 测试代码
+</span><span class="p">[</span><span class="n">NSObject</span> <span class="nf">foo</span><span class="p">];</span>
+<span class="p">[[</span><span class="n">NSObject</span> <span class="nf">new</span><span class="p">]</span> <span class="nf">foo</span><span class="p">];</span>
+
+<span class="c1">//答案不能自行解决？你还不会，额，2333，继续看看上面的图。
+</span></code></pre>
+</div>
+
+<h3 id="4代码验证">4.代码验证</h3>
+
+<p>我就简单粗暴的用之前的两个方法把NSString当一次靶子，打印一下，类对象，元类，基元类，NSObject和它的元类的地址。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        Class baseMeta = 
+        object_getClass(object_getClass([NSString class]));
+        Class metaOfBaseMeta = object_getClass(baseMeta);
+        Class fatherOfbaseMeta = [baseMeta superclass];
+
+        printf("NSString,类的地址:%@\n",[NSString class]);
+        printf("metaClass,元类的地
+            址:%p\n",object_getClass([NSString class]));
+        printf("baseMeta，基元类的地址:%p\n",baseMeta);
+        printf("metaOfBaseMeta,基元类的元类地
+            址:%p\n",metaOfBaseMeta);
+        printf("fatherOfbaseMeta,基元类的父类地
+            址:%p\n",fatherOfbaseMeta);
+        printf("NSObject类对象地址:%p\n",[NSObject class]);
+        printf("NSObject元类地
+            址:%p\n",object_getClass([NSObject class]));
+</code></pre>
+</div>
+
+<p>答案在此，我就不解析了，欢迎评论区拍砖。</p>
+
+<p><code class="highlighter-rouge">NSString,类对象的地址:0x7fff7626ce28 metaClass,元类的地址:0x7fff7626ce50
+baseMeta，基元类的地址:0x7fff78bcb118 metaOfBaseMeta,基元类的元类地址:0x7fff78bcb118
+fatherOfbaseMeta,基元类的父类地址:0x7fff78bcb0f0 NSObject类对象地址:0x7fff78bcb0f0
+NSObject元类地址:0x7fff78bcb118</code></p>
+
+<h3 id="5推荐文章">5.推荐文章</h3>
+
+<p><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-
+objective-c.html">1.What is a meta-class in Objective-C cocoawithlove matt大神<br />
+写的，里面还有很多很多很多（重要的事情强调三遍）很好的东<br />
+西</a></p>
+
+<p><a href="http://blog.csdn.net/windyitian/article/details/19810875">2.这个是上一篇文章的翻译，博主并没有看，还是看看原版的</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

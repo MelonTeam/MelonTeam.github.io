@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>深度学习之风格迁移简介</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="风格迁移（style transfer）最近两年非常火，可谓是深度学习领域很有创意的研究成果。它主要是通过神经网络，将一幅艺术风格画（style image）和一张普通的照片（content image）巧妙地融合，形成一张非常有意思的图片。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>深度学习之风格迁移简介</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>cirolong
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ai" title="Category: ai" rel="category">ai</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0" title="Tag: 深度学习" rel="tag">深度学习</a-->
+        <a href="/tag/#深度学习" title="Tag: 深度学习" rel="tag">深度学习</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%A3%8E%E6%A0%BC%E5%8C%96" title="Tag: 风格化" rel="tag">风格化</a-->
+        <a href="/tag/#风格化" title="Tag: 风格化" rel="tag">风格化</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BB" title="Tag: 风格迁移" rel="tag">风格迁移</a-->
+        <a href="/tag/#风格迁移" title="Tag: 风格迁移" rel="tag">风格迁移</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1-风格迁移开山之作" id="markdown-toc-1-风格迁移开山之作">1. 风格迁移开山之作</a>    <ul>
+      <li><a href="#11-内容损失content-loss" id="markdown-toc-11-内容损失content-loss">1.1 内容损失（Content Loss）</a></li>
+      <li><a href="#12-风格损失style-loss" id="markdown-toc-12-风格损失style-loss">1.2 风格损失（Style Loss）</a></li>
+      <li><a href="#13-总损失total-loss" id="markdown-toc-13-总损失total-loss">1.3 总损失（Total Loss）</a></li>
+      <li><a href="#14-训练过程" id="markdown-toc-14-训练过程">1.4 训练过程</a></li>
+      <li><a href="#15-总结" id="markdown-toc-15-总结">1.5 总结</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-快速风格迁移" id="markdown-toc-2-快速风格迁移">2. 快速风格迁移</a>    <ul>
+      <li><a href="#21-网络结构" id="markdown-toc-21-网络结构">2.1 网络结构</a></li>
+      <li><a href="#22-跑个实验" id="markdown-toc-22-跑个实验">2.2 跑个实验</a></li>
+      <li><a href="#23-总结" id="markdown-toc-23-总结">2.3 总结</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-参考资料" id="markdown-toc-3-参考资料">3. 参考资料</a></li>
+</ul>
+
+<p><strong>风格迁移（style transfer）</strong>最近两年非常火，可谓是深度学习领域很有创意的研究成果。它主要是通过神经网络，将一幅艺术风格画（style image）和一张普通的照片（content image）巧妙地融合，形成一张非常有意思的图片。</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/4a0dbd0ba7031a2b9e0f97d222d5050799764b92b7b135ffba3edfda4fd2feea" alt="" />
+<!--more--></p>
+
+<p>因为新颖而有趣，自然成为了大家研究的焦点。目前已经有许多基于风格迁移的应用诞生了，如移动端风格画应用Prisma，手Q中也集成了不少的风格画滤镜：</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/de7624d2c5163daeb833b4a4a4d4bbbf340fbc2a8289763833f8de2608f89b9c" alt="" /></p>
+
+<p>本文将对风格迁移[<a href="https://arxiv.org/pdf/1508.06576.pdf" title="1">1</a>]的实现原理进行下简单介绍，然后介绍下它的快速版，即fast-style-
+transfer[<a href="http://cs.stanford.edu/people/jcjohns/papers/eccv16/JohnsonECCV16.pdf" title="2">2</a>]。</p>
+
+<h2 id="1-风格迁移开山之作">1. 风格迁移开山之作</h2>
+
+<p>2015年，Gatys等人发表了文章[1]《<a href="https://arxiv.org/pdf/1508.06576.pdf" title="A Neural Algorithm of Artistic
+Style">A Neural Algorithm of Artistic
+Style</a>》，首次使用深度学习进行艺术画风格学习。把风格图像Xs的绘画风格融入到内容图像Xc，得到一幅新的图像Xn。则新的图像Xn：即要保持内容图像Xc的原始图像内容（内容画是一部汽车，融合后应仍是一部汽车，不能变成摩托车），又要保持风格图像Xs的特有风格（比如纹理、色调、笔触等）。</p>
+
+<h3 id="11-内容损失content-loss">1.1 内容损失（Content Loss）</h3>
+
+<p>在CNN网络中，一般认为较低层的特征描述了图像的具体视觉特征（即纹理、颜色等），较高层的特征则是较为抽象的图像内容描述。
+所以要比较两幅图像的<strong>内容相似性</strong>，可以比较两幅图像在CNN网络中<code class="highlighter-rouge">高层特征</code>的相似性（欧式距离）。</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/880c6f8c21936bb4c29a2e6952ce357f7e844e7328c86f2a730f500768e66802" alt="" /></p>
+
+<h3 id="12-风格损失style-loss">1.2 风格损失（Style Loss）</h3>
+
+<p>而要比较两幅图像的<strong>风格相似性</strong>，则可以比较它们在CNN网络中较<code class="highlighter-rouge">低层特征</code>的相似性。不过值得注意的是，不能像内容相似性计算一样，简单的采用欧式距离度量，因为低层特征包含较多的图像局部特征（即空间信息过于显著），比如两幅风格相似但内容完全不同的图像，若直接计算它们的欧式距离，则可能会产生较大的误差，认为它们风格不相似。论文中使用了<code class="highlighter-rouge">Gram矩阵</code>，用于计算不同响应层之间的联系，即在保留低层特征的同时去除图像内容的影响，只比较风格的相似性。</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/bc72f7cd6be684f73c7c7e3649dbba4b030bb2607c66370104e043c71b2ac31c" alt="" /></p>
+
+<p>那么风格的相似性计算可以用如下公式表示：</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/1a7ce05010b913ae2c5f58ef362aa76638199c79293f493856feb80d99703476" alt="" /></p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/eff0adf1fd4b183cb872d79e2a5a70ca66d6d21845a59bbf6faf31012532be3a" alt="" /></p>
+
+<h3 id="13-总损失total-loss">1.3 总损失（Total Loss）</h3>
+
+<p>这样对两幅图像进行“内容+风格”的相似度评价，可以采用如下的损失函数：</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/3d679c5b0a174e93a56eba66383e6abd57431c24e76805f0fdcf8d7caa3d89ef" alt="" /></p>
+
+<h3 id="14-训练过程">1.4 训练过程</h3>
+
+<p>文章使用了著名的VGG19网络[3]来进行训练（包含16个卷积层和5个池化层，但实际训练中未使用任何全连接层，并使用平均池化average-
+pooling替代最大池化max-pooling）。</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/3f981ef8277f3d56dbc0dfb8cb9fb38bbcf6c35914f8bc3e53fda29ac2eed6f6" alt="" /></p>
+
+<p><strong>内容层和风格层的选择：</strong>将<code class="highlighter-rouge">内容图像</code>和<code class="highlighter-rouge">风格图像</code>分别输入到VGG19网络中，并将网络各个层的特征图（feature map）进行可视化（重构）。</p>
+
+<p>内容重构五组对比实验：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. conv1_1 (a)
+2. conv2_1 (b)
+3. conv3_1 (c)
+4. conv4_1 (d)
+5. conv5_1 (e)
+</code></pre>
+</div>
+
+<p>风格重构五组对比实验：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. conv1_1 (a)
+2. conv1_1 and conv2_1 (b) 
+3. conv1_1, conv2_1 and conv3_1 (c)
+4. conv1_1, conv2_1, conv3_1 and conv4_1 (d)
+5. conv1_1, conv2_1, conv3_1, conv4_1 and conv5_1 (e)
+</code></pre>
+</div>
+
+<p>通过实验发现：对于内容重构，(d)和(e)较好地保留了图像的高阶内容（high-level
+content）而丢弃了过于细节的像素信息；对于风格重构，(e)则较好地描述了艺术画的风格。如下图红色方框标记：</p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/44a2b217d7d007c6110d5248c90ccf0f66c6296f320954668d73c1af6b0d5fa7" alt="" /></p>
+
+<p>在实际实验中，内容层和风格层选择如下：</p>
+
+<p><strong>内容层：conv4_2</strong></p>
+
+<p><strong>风格层：conv1<em>1</em>, <em>conv2_1, conv3</em>__1_, _conv4_1, conv5_1</strong></p>
+
+<p><strong>训练过程：</strong>以白噪声图像作为输入(x)到VGG19网络，conv4_2层的响应与原始内容图像计算出内容损失（Content Loss），“conv1_1, conv2_1, conv3_1, conv4_1, conv5_1”这5层的响应分别与风格图像计算出风格损失，然后它们相加得到总的风格损失（Style Loss），最后Content Loss + Style Loss = Total Loss得到总的损失。采用梯度下降的优化方法求解Total Loss函数的最小值，不断更新x，最终得到一幅“合成画”。</p>
+
+<h3 id="15-总结">1.5 总结</h3>
+
+<ol>
+  <li>每次训练迭代，更新的参数并非VGG19网络本身，而是随机初始化的输入x；</li>
+  <li>由于输入x是随机初始化的，最终得到的“合成画”会有差异；</li>
+  <li>每生成一幅“合成画”，都要重新训练一次，速度较慢，难以做到实时。</li>
+</ol>
+
+<h2 id="2-快速风格迁移">2. 快速风格迁移</h2>
+
+<p>2016年Johnson等人提出了一种更为快速的风格迁移方法[2]《<a href="http://cs.stanford.edu/people/jcjohns/papers/eccv16/JohnsonECCV16.pdf" title="Perceptual losses for real-time style transfer and super-resolution">Perceptual losses for real-time style
+transfer and super-
+resolution</a>》。</p>
+
+<h3 id="21-网络结构">2.1 网络结构</h3>
+
+<p>它们设计了一个变换网络（Image Transform Net），并用VGG16网络作为损失网络（Loss
+Net）。输入图像经由变换网络后，会得到一个输出，此输出与风格图像、内容图像分别输入到VGG16损失网络，类似于[1]的思路，使用VGG16不同层的响应结果计算出内容损失和风格损失，最终求得总损失。然后使用梯度下降的优化方法不断更新变换网络的参数。
+<img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/bea3e1a19df5198b9a31f7d241361cb129f13e0d0d5f4f4e0d14439d6d0b8126" alt="" /></p>
+
+<p><strong>内容层：relu3_3</strong></p>
+
+<p><strong>风格层：relu1<em>2</em>, <em>relu2_2, relu3_3</em>, _relu4_3</strong></p>
+
+<p>其中变换网络（Image Transform Net）的具体结构如下图所示：
+<img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/7136a81165cd087e30beace7672654e10c70041cbf5cafefc1c45791057f2bff" alt="" /></p>
+
+<h3 id="22-跑个实验">2.2 跑个实验</h3>
+
+<p>Johnson等人将论文的代码实现在<a href="https://github.com/jcjohnson/fast-neural-style" title="github">github</a>上进行了开源，包括了论文的复现版本，以及将“Batch-Normalization ”改进为“Instance
+Normalization”[<a href="https://arxiv.org/pdf/1607.08022.pdf" title="4">4</a>]的版本。咱们可以按照他的说明，训练一个自己的风格化网络。我这里训练了一个“中国风”网络，运行效果如下：
+<img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/5489df3b2f1d117cbd275724697edda9ccadb0e92ba6d7c40dfb19c465378e01" alt="" /></p>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/c628d678344dddaef81c122d33fcff1cd00d1d7f2b90834410492ae03bf005d4" alt="" /></p>
+
+<h3 id="23-总结">2.3 总结</h3>
+
+<ol>
+  <li>网络训练一次即可，不像Gatys等人[1]的方法需要每次重新训练网络；</li>
+  <li>可以实现实时的风格化滤镜：在Titan X GPU上处理一张512x512的图片可以达到20FPS。下图为fast-style-transfer与Gatys等人[1]方法的运行速度比较，包括了不同的图像大小，以及Gatys方法不同的迭代次数。</li>
+</ol>
+
+<p><img src="/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/66b64458ff003281762ca3b3da2a7ad3e769b6274259431e2dbd82f9fd5543dd" alt="" /></p>
+
+<h2 id="3-参考资料">3. 参考资料</h2>
+
+<ol>
+  <li>Gatys L A, Ecker A S, Bethge M. A neural algorithm of artistic style[J]. arXiv preprint arXiv:1508.06576, 2015.</li>
+  <li>Johnson J, Alahi A, Fei-Fei L. Perceptual losses for real-time style transfer and super-resolution[C]//European Conference on Computer Vision. Springer International Publishing, 2016: 694-711.</li>
+  <li>Simonyan K, Zisserman A. Very deep convolutional networks for large-scale image recognition[J]. arXiv preprint arXiv:1409.1556, 2014.</li>
+  <li>Ulyanov D, Vedaldi A, Lempitsky V. Instance normalization: The missing ingredient for fast stylization[J]. arXiv preprint arXiv:1607.08022, 2016.</li>
+  <li><a href="http://closure11.com/fast-style-transfer%E5%BF%AB%E9%80%9F%E9%A3%8E%E6%A0%BC%E8%BD%AC%E7%A7%BB/" title="Fast Style Transfer\(快速风格转移\)">Fast Style Transfer(快速风格转移)</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/26746283" title="图像风格迁移\(Neural Style\)简史">图像风格迁移(Neural Style)简史</a></li>
+</ol>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/">OpenGL ES (iOS) 学习笔记 — 基础篇（一）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

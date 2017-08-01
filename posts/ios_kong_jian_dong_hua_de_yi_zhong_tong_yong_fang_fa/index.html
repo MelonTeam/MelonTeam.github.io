@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IOS控件动画的一种通用方法</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  IOS控件动画的一种通用方法IOS控件动画的一种通用方法  最近在做一个垂直弹幕控件 , 在做控件动画时费了不少心思, 这里分享一些心得.">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>IOS控件动画的一种通用方法</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>houlvezhou
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%8A%A8%E7%94%BB" title="Tag: 动画" rel="tag">动画</a-->
+        <a href="/tag/#动画" title="Tag: 动画" rel="tag">动画</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#ios控件动画的一种通用方法" id="markdown-toc-ios控件动画的一种通用方法">IOS控件动画的一种通用方法</a>    <ul>
+      <li><a href="#前言" id="markdown-toc-前言">前言</a></li>
+      <li><a href="#矩阵的基本知识" id="markdown-toc-矩阵的基本知识">矩阵的基本知识</a></li>
+      <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="ios控件动画的一种通用方法">IOS控件动画的一种通用方法</h1>
+
+<blockquote>
+  <p>最近在做一个垂直弹幕控件 , 在做控件动画时费了不少心思, 这里分享一些心得.
+<!--more--></p>
+</blockquote>
+
+<h2 id="前言">前言</h2>
+
+<p>关于动画, 我们一般使用UIKit提供的动画来实现.</p>
+
+<p>UIView动画可以设置的动画属性有:</p>
+
+<ul>
+  <li>大小变化(frame)</li>
+  <li>拉伸变化(bounds)</li>
+  <li>中心位置(center)</li>
+  <li>矩阵(transform)</li>
+  <li>透明度(alpha)</li>
+  <li>背景颜色(backgroundColor)</li>
+  <li>拉伸内容(contentStretch)</li>
+</ul>
+
+<p>这里主要介绍transform这个属性.</p>
+
+<p><strong>CGAffineTransform</strong><br />
+transform的类型是CGAffineTransform , 这是一个2D矩阵.</p>
+
+<h2 id="矩阵的基本知识">矩阵的基本知识</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct CGAffineTransform
+{
+  CGFloat a, b, c, d;
+  CGFloat tx, ty;
+};
+CGAffineTransform CGAffineTransformMake (CGFloat a,CGFloat b,CGFloat c,CGFloat d,CGFloat tx,CGFloat ty);
+</code></pre>
+</div>
+
+<p>为了把二维图形的变化统一在一个坐标系里，引入了齐次坐标的概念，即把一个图形用一个三维矩阵表示，其中第三列总是(0,0,1)，用来作为坐标系的标准。所以所有的变化都由前两列完成。<br />
+以上参数在矩阵中的表示为：</p>
+
+<p><img src="/image/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/44e68d4700c1529266d0a5a62cddbc0b4af2b251983f2b5602da9be106b599d2" alt="1" /></p>
+
+<p>[ 1 ]</p>
+
+<p>运算原理：原坐标设为（X,Y,1）;</p>
+
+<p><img src="/image/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/45c301df9d8f74bdc1125d11a318b20f34025016cff750151993f3258b5dc5a7" alt="2" /></p>
+
+<p>[ 2 ]</p>
+
+<p>通过矩阵运算后的坐标[aX + cY + tx bX + dY + ty 1]，我们对比一下可知：<br />
+<strong>第一种</strong>：<br />
+设a=d=1, b=c=0.<br />
+[aX + cY + tx bX + dY + ty 1] = [X + tx Y + ty 1];<br />
+可见，这个时候，坐标是按照向量（tx，ty）进行平移，<br />
+其实这也就是函数</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CGAffineTransform CGAffineMakeTranslation(CGFloat tx,CGFloat ty)
+</code></pre>
+</div>
+
+<p>的计算原理。</p>
+
+<p><strong>第二种</strong>：</p>
+
+<p>设b=c=tx=ty=0.<br />
+[aX + cY + tx bX + dY + ty 1] = [aX dY 1];<br />
+可见，这个时候，坐标X按照a进行缩放，Y按照d进行缩放，a，d就是X，Y的比例系数，其实这也就是函数</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CGAffineTransform CGAffineTransformMakeScale(CGFloat sx, CGFloat sy)
+</code></pre>
+</div>
+
+<p>的计算原理。a对应于sx，d对应于sy。</p>
+
+<p><strong>第三种</strong>：设tx=ty=0，a=cosɵ，b=sinɵ，c=-sinɵ，d=cosɵ。<br />
+[aX + cY + tx bX + dY + ty 1] = [Xcosɵ - Ysinɵ Xsinɵ + Ycosɵ 1] ;<br />
+可见，这个时候，ɵ就是旋转的角度，逆时针为正，顺时针为负。其实这也就是函数</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CGAffineTransform CGAffineTransformMakeRotation(CGFloat angle)
+</code></pre>
+</div>
+
+<p>的计算原理。angle即ɵ的弧度表示。</p>
+
+<p>总体来说, 记住下面这个结论就好.</p>
+
+<blockquote>
+
+  <p>对于CGAffineTransformMake(a,b,c,d,tx,ty)<br />
+<strong>ad缩放bc旋转tx,ty位移</strong></p>
+</blockquote>
+
+<h2 id="应用">应用</h2>
+
+<p>如何做一个 指定锚点的缩放动画.</p>
+
+<p>分析:<br />
+缩放动画 只需要改变b , d 的值即可. 但是此时控件的锚点是在中心点.<br />
+把当前中心点移动到你想要的点即可 , 例如, 把锚点放在相对控件原点(0,0)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//设置开始状态
+CGFloat offsetX = 0 - view.size.width/2;
+CGFloat offsetY = 0 - view.size.height/2;
+//0.1 , 0.1 缩放到原来大小的0.1倍, 把原点放到(0,0)
+view.transform = CGAffineTransformMake(0.1, 0, 0, 0.01, offsetX, offsetY);
+[UIView animateWithDuration:0.5 delay:0.7 
+options:UIViewAnimationOptionCurveLinear 
+animations:^{
+   //放大到1倍, 位移到原点
+     view.transform = CGAffineTransformMake(1, 0, 0, 1, 0, 0);
+        } completion:^(BOOL finished){}];
+</code></pre>
+</div>
+
+<p>可以看到. 只使用一次变换就完成了一次位移和缩放的动画.</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/">OpenGL ES (iOS) 学习笔记 — 基础篇（一）
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

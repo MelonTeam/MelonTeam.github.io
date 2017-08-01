@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Masonry源码阅读笔记——使用Block实现链式编程</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 前段时间在阅读Masonry源码时，看到其内部使用了链式编程，比较有趣，这里简单分享一下；      在OC中实现链式编程并不难，最常用的实现是使用Block，具体包括以下几个要点：1）对于要实现链式编程的函数，使用Block作为其返回值；">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/masonry_yuan_ma_yue_du_bi_ji__shi_yong_block_shi_xian_lian_shi_bian_cheng/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Masonry源码阅读笔记——使用Block实现链式编程</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-28
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>jakchen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#masonry" title="Tag: masonry" rel="tag">masonry</a-->
+        <a href="/tag/#masonry" title="Tag: masonry" rel="tag">masonry</a>&nbsp;
+    
+        <!--a href="/tag/#block" title="Tag: block" rel="tag">block</a-->
+        <a href="/tag/#block" title="Tag: block" rel="tag">block</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B" title="Tag: 链式编程" rel="tag">链式编程</a-->
+        <a href="/tag/#链式编程" title="Tag: 链式编程" rel="tag">链式编程</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 前段时间在阅读Masonry源码时，看到其内部使用了链式编程，比较有趣，这里简单分享一下；</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>在OC中实现链式编程并不难，最常用的实现是使用Block，具体包括以下几个要点：</p>
+
+<p>1）对于要实现链式编程的函数，使用Block作为其返回值；
+<!--more--></p>
+
+<p>2）作为返回值的Block，需在执行后Return自身；</p>
+
+<p>这里看起来似乎不太好理解，下面通过一个例子来说明：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">Box</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CGFloat</span> <span class="n">width</span><span class="p">))</span><span class="n">setWidth</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CGFloat</span> <span class="n">height</span><span class="p">))</span><span class="n">setHeight</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">setProperty</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">build</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">Box</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CGFloat</span> <span class="n">width</span><span class="p">))</span><span class="n">setWidth</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">^</span><span class="p">(</span><span class="n">CGFloat</span> <span class="n">width</span><span class="p">){</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Set width : %f."</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CGFloat</span> <span class="n">height</span><span class="p">))</span><span class="n">setHeight</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">^</span><span class="p">(</span><span class="n">CGFloat</span> <span class="n">height</span><span class="p">){</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Set height : %f."</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">setProperty</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Set other property."</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">build</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"A box is built."</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="err">@autoreleasepool</span> <span class="p">{</span>
+        <span class="n">Box</span> <span class="o">*</span><span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="n">Box</span> <span class="nf">new</span><span class="p">];</span>
+        <span class="n">box</span><span class="p">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="n">f</span><span class="p">).</span><span class="n">setHeight</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="n">f</span><span class="p">).</span><span class="n">setProperty</span><span class="p">().</span><span class="n">build</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p> 在对象通过点语法调用函数时，返回了一个Block，在执行Block后，又返回了对象本身，这样就能将多个函数调用串联起来，实现链式的效果；</p>
+
+<p>代码执行后为：</p>
+
+<p><img src="/image/masonry_yuan_ma_yue_du_bi_ji__shi_yong_block_shi_xian_lian_shi_bian_cheng/2539d7c85c85658cd418ea411532cde94090cac9fa3e6a8a0ea842f888c399da" alt="" /></p>
+
+<p>当然，链式编程很多时候并没有实际意义，例如上面的Demo，完全可以采用下面的实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">Box</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="nf">setWidth</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">width</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="nf">setHeight</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">height</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="n">build</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">Box</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="nf">setWidth</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">width</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Set width : %f."</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="nf">setHeight</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">height</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Set height : %f."</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Box</span> <span class="o">*</span><span class="p">)</span><span class="n">build</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"A box is built."</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="err">@autoreleasepool</span> <span class="p">{</span>
+        <span class="n">Box</span> <span class="o">*</span><span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="n">Box</span> <span class="nf">new</span><span class="p">];</span>
+        <span class="p">[[[</span><span class="n">box</span> <span class="nf">setWidth</span><span class="p">:</span><span class="mi">10</span><span class="p">.</span><span class="n">f</span><span class="p">]</span> <span class="nf">setHeight</span><span class="p">:</span><span class="mi">10</span><span class="p">.</span><span class="n">f</span><span class="p">]</span> <span class="nf">build</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>但这样写一开始还能接受，链条一长时就会出现一堆恶心的中括号，这也是OC一直让人诟病的点；使用Block，形式上会美观许多；</p>
+
+<p>当然，一般情况下还是不推荐链式编程的，因为这么写除了美观外毫无意义（个人愚见）；但对于一些特殊的情况，例如使用Bulider模式，这么写可以使代码可读性更好，所以说，具体做法还是要视情况而定；</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/qian_xi_android_zhong_de_threadlocal/">浅析Android中的ThreadLocal</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/password_auto_fill/">Password Auto Fill</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/masonry_yuan_ma_yue_du_bi_ji__shi_yong_block_shi_xian_lian_shi_bian_cheng/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/masonry_yuan_ma_yue_du_bi_ji__shi_yong_block_shi_xian_lian_shi_bian_cheng/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

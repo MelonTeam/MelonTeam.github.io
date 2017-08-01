@@ -5,236 +5,250 @@
     <description>腾讯移动终端团队, 拥有丰富的移动终端的开发经验, 专注于前沿技术的探索和研究</description>
     <link>http://MelonTeam.com/</link>
     <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 11 Jul 2017 18:02:19 +0800</pubDate>
-    <lastBuildDate>Tue, 11 Jul 2017 18:02:19 +0800</lastBuildDate>
+    <pubDate>Tue, 01 Aug 2017 11:56:32 +0800</pubDate>
+    <lastBuildDate>Tue, 01 Aug 2017 11:56:32 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>浅析Android中的ThreadLocal</title>
-        <description>
-ThreadLocal第一眼很容易让人误以为这是一个Thread，其实并不是，它是在JDK
-1.2中引入，为每个线程提供一个独立的本地变量副本，用来解决变量并发访问的冲突问题。所有的线程可以共享一个ThreadLocal对象，但是每一个线程只能访问自己所存储的变量，线程之间互不影响。那为什么标题中说的是Android中的ThreadLocal呢，原因是Android中的ThreadLocal和JDK的ThreadLocal代码实现上是有一定区别的，虽然最终实现的效果是一样的。
-
-</description>
-        <pubDate>Fri, 30 Jun 2017 22:49:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/qian_xi_android_zhong_de_threadlocal/</guid>
-        
-        <category>ThreadLocal</category>
-        
-        <category>Android</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>日迹中视频编辑滤镜效果实现方法</title>
+        <title>多端排版杂谈</title>
         <description>
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;导语 本文简要分析，日迹视频解码流程以及视频滤镜的实现原理&lt;/td&gt;
+      &lt;td&gt;导语 本次主要聊聊多平台的排版技术的差异与共同，涉及的平台有Web、Android、iOS&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-需求背景：日迹需要的编辑滤镜效果预览图
+要说排版技术，在这三个平台中我觉得最有话语权的应该就Web端了；主要因为web的发展历史更为悠久，而且伴随着Web端的应用场景越发广阔，内容排版越发复杂；这让排版技术在web端扮演着更加举足轻重的角色。下面我就先从web开始讲起：
 
-&lt;img src=&quot;/image/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/c192aef86cafe072b54ce3ce9510e8b54f77a1cc25e52123383e2219ab680807&quot; alt=&quot;&quot; /&gt;
+       1990年，Berners-Lee发明了HTML，最开始仅仅支持文本排版以及一些超链接；
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 22:10:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ri_ji_zhong_shi_pin_bian_ji_lv_jing_xiao_guo_shi_xian_fang_fa/</guid>
+        <pubDate>Mon, 31 Jul 2017 23:53:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/duo_duan_pai_ban_za_tan/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/duo_duan_pai_ban_za_tan/</guid>
         
-        <category>滤镜实现</category>
+        <category>iOS</category>
+        
+        <category>web</category>
+        
+        <category>Android</category>
+        
+        <category>流体排版</category>
+        
+        <category>FlexboxLayout</category>
         
         
-        <category>android</category>
+        <category>未分类</category>
         
       </item>
     
       <item>
-        <title>OpenGL ES读书笔记（一）—初始庐山真面目</title>
+        <title>Swift学习笔记（初始化过程）</title>
         <description>
-&lt;ul&gt;
-  &lt;li&gt;1. OpenGL ES简介
-    &lt;ul&gt;
-      &lt;li&gt;1.1 顶点着色器&lt;/li&gt;
-      &lt;li&gt;1.2 片段着色器&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+| 导语
+Swift已经更新到4.0了，成为苹果推荐开发者进行iOS开发的语言，因此即使手头上的工程项目使用的还是object-c，但抽空学习下swift还是有必要的。因为swift从3.0开始已经日趋稳定，所以现在网上的资料大部分都是swift3.0的，本文的内容也是基于swift3.0，如果4.0有涉及新的更改，还需自己查阅。
+
+     km以及网上介绍swift基本语法的文章已经有不少，我这里就不累赘。这篇文章主要想讲的是：swift的初始化。
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 21:37:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_es_du_shu_bi_ji__yi__chu_shi_lu_shan_zhen_mian_mu/</guid>
+        <pubDate>Mon, 31 Jul 2017 21:38:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/</guid>
         
-        <category>Android</category>
+        <category>Swift</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>iOS推送调试工具Easy APNs Provider的使用</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一背景&quot; id=&quot;markdown-toc-一背景&quot;&gt;一·背景&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;一背景&quot;&gt;一·背景&lt;/h3&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+</description>
+        <pubDate>Mon, 31 Jul 2017 21:05:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/</guid>
+        
+        <category>iOS</category>
+        
+        <category>推送</category>
+        
+        
+        <category>ios</category>
+        
+      </item>
+    
+      <item>
+        <title>IOS控件动画的一种通用方法</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#ios控件动画的一种通用方法&quot; id=&quot;markdown-toc-ios控件动画的一种通用方法&quot;&gt;IOS控件动画的一种通用方法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ios控件动画的一种通用方法&quot;&gt;IOS控件动画的一种通用方法&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  最近在做一个垂直弹幕控件 , 在做控件动画时费了不少心思, 这里分享一些心得.
+&lt;/blockquote&gt;
+
+</description>
+        <pubDate>Mon, 31 Jul 2017 20:45:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/</guid>
+        
+        <category>iOS</category>
+        
+        <category>动画</category>
+        
+        
+        <category>ios</category>
+        
+      </item>
+    
+      <item>
+        <title>封装内嵌UICollectionView和UIPageControl的ScrollView</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一交互样式&quot; id=&quot;markdown-toc-一交互样式&quot;&gt;一。交互样式&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+在需求中涉及到一个比较通用的控件，ScrollView里面嵌入CollectionView，封装一下，后面再有相同交互不用重复造轮子。
+
+&lt;h5 id=&quot;一交互样式&quot;&gt;一。交互样式&lt;/h5&gt;
+
+</description>
+        <pubDate>Mon, 31 Jul 2017 20:44:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/</guid>
+        
+        <category>UICollectionView</category>
+        
+        <category>UIScrollView</category>
+        
+        <category>UIPageControl</category>
+        
+        <category>iOS</category>
+        
+        
+        <category>ios</category>
+        
+      </item>
+    
+      <item>
+        <title>[iOS] OpenGL ES 2.0之初体验</title>
+        <description>
+| 导语 OpenGL ES 是专门为手持设备制定的 3D 规范，是 OpenGL 的简化版，目前最新规范版本为 3.0。 由于iPhone
+5C及以下设备不支持OpenGL ES 3.0，所以这里我以2.0版本为例进行OpenGL ES的入门探索。
+
+        虽然 iOS 5在 GLKit 中提供了方便使用OpenGL ES的GLKView，但我这里还是先从零开始设置自己的GL ES
+view，从而更进一步了解OpenGL ES是如何工作的。
+
+</description>
+        <pubDate>Mon, 31 Jul 2017 20:36:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/</guid>
+        
+        <category>iOS</category>
         
         <category>OpenGL</category>
         
         
-        <category>android</category>
+        <category>ios</category>
         
       </item>
     
       <item>
-        <title>教你自己动手写HTTP服务器</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#网络io模型选择&quot; id=&quot;markdown-toc-网络io模型选择&quot;&gt;网络IO模型选择&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-谈到HTTP服务器，立马就能联想到Apache、Nginx等大名鼎鼎的开源组件。如果需要一个本地代理HTTP服务器，自己手写一个怎么样，会不会很难？！本文试着介绍如何在Android上手动编写一个轻量的HTTP服务器，通过阅读本文，笔者即将为你揭开HTTP服务器的面纱，收获一个五脏俱全的轻量HTTP服务器组件TinyHttpd。
-
-&lt;h2 id=&quot;网络io模型选择&quot;&gt;网络IO模型选择&lt;/h2&gt;
-
-</description>
-        <pubDate>Fri, 30 Jun 2017 20:40:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/jiao_ni_zi_ji_dong_shou_xie_http_fu_wu_qi/</guid>
-        
-        <category>轻量HTTP服务器组件</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>Fresco 4.X和5.X内存分析</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#4x系统的fresco&quot; id=&quot;markdown-toc-4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-两年前部落项目接入Fresco的时候，那时候主流机型还是4.X。Fresco在4.X的机器的内存性能很好，Bitmap存在Ashmem（匿名共享内存）层里面的，对应用的内存缓存的压力不大。
-
-&lt;h2 id=&quot;4x系统的fresco&quot;&gt;4.X系统的Fresco&lt;/h2&gt;
-
-</description>
-        <pubDate>Fri, 30 Jun 2017 20:36:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/fresco_4_x_he_5_x_nei_cun_fen_xi/</guid>
-        
-        <category>fresco</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>Fork/Join 框架</title>
+        <title>图解Objective-C对象模型</title>
         <description>
-&lt;strong&gt;1. 简介&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;1.1 什么是Fork/Join框架&lt;/strong&gt;&lt;br /&gt;
-        Java 5 引入了 Executor 和 ExecutorService 接口，使得 Java在并发支持上得到了进一步的提升。 Java
+&lt;strong&gt;目录&lt;/strong&gt;：&lt;br /&gt;
+&lt;strong&gt;1.这就是Objective-C对象模型吗？&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;2.Objective-C对象结构&lt;/strong&gt;
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 18:35:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/fork_join_kuang_jia/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/fork_join_kuang_jia/</guid>
+        <pubDate>Mon, 31 Jul 2017 20:13:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/</guid>
         
-        <category>并发</category>
+        <category>iOS对象模型</category>
         
-        <category>java</category>
+        <category>对象模型</category>
+        
+        <category>objectivec</category>
         
         
-        <category>android</category>
+        <category>ios</category>
         
       </item>
     
       <item>
-        <title>页面结构化在Android上的尝试</title>
+        <title>React Native学习笔记</title>
         <description>
-| 导语
-MVP开发模式可以帮助项目结构解耦，但其庞大的方法数增加，较为笨重设计对于手Q项目并不很适合。参考之前Web开发经验，提出以页面结构化的解耦方式组织代码。下面讲讲Lego在Android上一次小小尝试
+&lt;strong&gt;原理&lt;/strong&gt;
 
-&lt;strong&gt;一，MVP简介&lt;/strong&gt;
+一．React
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 16:38:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ye_mian_jie_gou_hua_zai_android_shang_de_chang_shi/</guid>
+        <pubDate>Mon, 31 Jul 2017 17:31:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/react_native_xue_xi_bi_ji/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/react_native_xue_xi_bi_ji/</guid>
         
-        <category>LEGO</category>
-        
-        <category>页面结构化</category>
+        <category>iOS</category>
         
         
-        <category>android</category>
+        <category>ios</category>
         
       </item>
     
       <item>
-        <title>[译]Android Instant Apps简介</title>
+        <title>深度学习之风格迁移简介</title>
         <description>
-| 导语 Google最近发布了Instant Apps，可以帮助开发者进一步的增强Android的原生App体验。Instant
-Apps旨在通过在需要时只下载应用程序的一部分，帮助用户尽可能快地进入最佳原生App体验。即使没有在他们的设备上安装应用，也可以快速轻松地用优秀的移动应用体验吸引用户。
+&lt;strong&gt;风格迁移（style transfer）&lt;/strong&gt;最近两年非常火，可谓是深度学习领域很有创意的研究成果。它主要是通过神经网络，将一幅艺术风格画（style image）和一张普通的照片（content image）巧妙地融合，形成一张非常有意思的图片。
 
-Android Instant Apps是通过一个个小的功能模块传递给用户的，每个模块仅包含完成特定操作所需的代码和资源。Instant
-Apps由URL触发，这意味着它们可以从任何位置启动，包括搜索结果，社交媒体分享，消息，beacons，NFC和其他应用程序甚至其他的Instant
+&lt;img src=&quot;/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/4a0dbd0ba7031a2b9e0f97d222d5050799764b92b7b135ffba3edfda4fd2feea&quot; alt=&quot;&quot; /&gt;
 
 </description>
-        <pubDate>Fri, 30 Jun 2017 16:09:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_instant_apps_jian_jie/</guid>
+        <pubDate>Mon, 31 Jul 2017 17:03:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/</guid>
         
-        <category>App</category>
+        <category>深度学习</category>
         
-        <category>Instant</category>
+        <category>风格化</category>
+        
+        <category>风格迁移</category>
         
         
-        <category>android</category>
+        <category>ai</category>
         
       </item>
     
       <item>
-        <title>Android ScrollView设置初始position的方法</title>
+        <title>OpenGL ES (iOS) 学习笔记 — 基础篇（一）</title>
         <description>
-最近接了产品的一个需求，需要在一个拥有标题栏，内容区，图片区的滚动视图中，默认隐藏标题栏，而且支持用户手动下拉出现标题。
-
-刚听到这个需求的时候，觉得这个很简单，直接设置ScrollView的初始滚动值即可。然而，当真正实现的时候却发现，Android压根没有方法可以设置ScrollView的初始滚动值。经过一系列的尝试，最终通过反射，修改成员变量的方法，实现了产品的需求。下面记录一下具体的踩坑过程。
-
-</description>
-        <pubDate>Fri, 30 Jun 2017 16:03:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/android_scrollview_she_zhi_chu_shi_position_de_fang_fa/</guid>
-        
-        <category>反射</category>
-        
-        <category>初始位置</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>Kotlin 初体验: 用 Kotlin 写命令行工具</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#工具需求&quot; id=&quot;markdown-toc-工具需求&quot;&gt;工具需求&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-| 导语 可喜可贺, kotlin 在今年的 google I/O 大会上, 成为 google android 平台的新一门官方语言,
-偶尔有了个写工具的机会试着用它来替代原来常用的 python
-
-&lt;h2 id=&quot;工具需求&quot;&gt;工具需求&lt;/h2&gt;
+最近一直在做视频相关的工作，结合最近很火的AR技术，所以准备好好学习一下3D渲染的相关知识。因为一直在iOS移动端开发，所以学习一下OpenGL ES
+技术。
 
 </description>
-        <pubDate>Thu, 29 Jun 2017 22:56:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/kotlin_chu_ti_yan__yong_kotlin_xie_ming_ling_xing_gong_ju/</guid>
+        <pubDate>Mon, 31 Jul 2017 16:31:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/</guid>
         
-        <category>java</category>
+        <category>Opengles</category>
         
-        <category>kotlin</category>
+        <category>iOS</category>
         
         
-        <category>android</category>
+        <category>ios</category>
         
       </item>
     

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SpriteKit动画小游戏</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  Spritekit简介Spritekit简介Spritekit是苹果IOS7中引入的一个2D游戏引擎框架，可以实现各种动画效果，在这之前业界比较优秀的游戏引擎是cocos2d，支持场景切换、精灵和精灵表单、动作、动画和特性、物理碰撞、视差滚动等等，可以说SpriteKit是cocos2d的IOS的内置实现，两...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/spritekit_dong_hua_xiao_you_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>SpriteKit动画小游戏</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>ericxwli
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#spritekit" title="Tag: spritekit" rel="tag">spritekit</a-->
+        <a href="/tag/#spritekit" title="Tag: spritekit" rel="tag">spritekit</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#spritekit简介" id="markdown-toc-spritekit简介">Spritekit简介</a></li>
+  <li><a href="#工程配置" id="markdown-toc-工程配置">工程配置</a></li>
+  <li><a href="#hello-spritekit模板" id="markdown-toc-hello-spritekit模板">Hello Spritekit模板</a></li>
+  <li><a href="#加入英雄node" id="markdown-toc-加入英雄node">加入英雄Node</a></li>
+  <li><a href="#加入敌机" id="markdown-toc-加入敌机">加入敌机</a></li>
+  <li><a href="#发射子弹" id="markdown-toc-发射子弹">发射子弹</a></li>
+  <li><a href="#碰撞检测" id="markdown-toc-碰撞检测">碰撞检测</a></li>
+  <li><a href="#场景切换" id="markdown-toc-场景切换">场景切换</a></li>
+</ul>
+
+<h2 id="spritekit简介">Spritekit简介</h2>
+
+<p>Spritekit是苹果IOS7中引入的一个2D游戏引擎框架，可以实现各种动画效果，在这之前业界比较优秀的游戏引擎是cocos2d，支持场景切换、精灵和精灵表单、动作、动画和特性、物理碰撞、视差滚动等等，可以说SpriteKit是cocos2d的IOS的内置实现，两者所支持的特性基本一致，对于苹果开发者来说前者更加容易上手，本文将通过一个demo实例来初步探索和学习spritekit。
+<!--more--></p>
+
+<h2 id="工程配置">工程配置</h2>
+
+<p>首先我们来创建一个spritekit的hello
+wrold吧，第一步新建工程，xcode已经提供了Spritekit的模板，我们选择game，创建名字为SpritekitDemo。这里简单说一下，游戏一般有横屏或者竖屏，这里只要在工程设定的General表情中进行勾选即可，这样游戏就可以强制为横屏或者竖屏。</p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/af6b8a3b07454b91ab88320fbb75ea8668ff6e3e8c84daa5b1555cf5ce4d100d" alt="" /></p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/85cde664c82a95d38ccc803c54035d96e0fb6f3a84bc08968ad92f3f4790d3e6" alt="" /></p>
+
+<h2 id="hello-spritekit模板">Hello Spritekit模板</h2>
+
+<p>直接编译运行上面创建的工程，我们会看到下面的画面，没点击画面时会出现不同颜色并旋转的小方框，这就是一个简单的游戏动画效果，我们简单分析下hello
+spritekit模板来了解spritekit的一个大致框架。</p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/7e8306778f89a8e4649017e0f256d27666bc63ef2cbc249adf11f0c14104d118" alt="" /></p>
+
+<p>在demo工程中我们会看到xcode直接为我们写好的两个类<code class="highlighter-rouge">GameViewController</code> <code class="highlighter-rouge">GameScene</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // Load the SKScene from 'GameScene.sks'
+    GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
+
+    // Set the scale mode to scale to fit the window
+    scene.scaleMode = SKSceneScaleModeAspectFill;
+
+    SKView *skView = (SKView *)self.view;
+
+    // Present the scene
+    [skView presentScene:scene];
+
+    skView.showsFPS = YES;
+    skView.showsNodeCount = YES;
+}
+</code></pre>
+</div>
+
+<p>GameViewController是demo的rootviewcontroller，在打开视图前创建了一个SKScene，设置了scene的适配属性，将根视图创建为SKView，调用了presentScene方法来呈现了GameScene。我们接着看看GameScene是什么东东？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)didMoveToView:(SKView *)view {
+    // Setup your scene here
+
+    // Get label node from scene and store it for use later
+    _label = (SKLabelNode *)[self childNodeWithName:@"//helloLabel"];
+
+    _label.alpha = 0.0;
+    [_label runAction:[SKAction fadeInWithDuration:2.0]];
+
+    CGFloat w = (self.size.width + self.size.height) * 0.05;
+
+    // Create shape node to use during mouse interaction
+    _spinnyNode = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w) cornerRadius:w * 0.3];
+    _spinnyNode.lineWidth = 2.5;
+
+    [_spinnyNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:1]]];
+    [_spinnyNode runAction:[SKAction sequence:@[
+                                                [SKAction waitForDuration:0.5],
+                                                [SKAction fadeOutWithDuration:0.5],
+                                                [SKAction removeFromParent],
+                                                ]]];
+}
+</code></pre>
+</div>
+
+<p>在GameScene中创建了一个SKLabelNode，而这个node展示的就是Hello，World！字样，并且调用了runAction，执行了改变透明的渐变为1的SKAction，呈现了hello
+world出现的动画。</p>
+
+<p>另一个_spinnyNode被创建未一个带圆角的正方形，并执行了两个Action，一个是1秒内旋转360度的重复动作，一个是消失的动作序列，并在点击的时候调用addchlid方法将这个节点加入到了场景中</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)touchDownAtPoint:(CGPoint)pos {
+    SKShapeNode *n = [_spinnyNode copy];
+    n.position = pos;
+    n.strokeColor = [SKColor greenColor];
+    [self addChild:n];
+}
+</code></pre>
+</div>
+
+<p>呈现了点击出现旋转渐变消失的小方块。</p>
+
+<p>至此我们可以大致了解到了spritekit运行的一个大致框架：SpriteKit是基于Scene(场景)来组织的动画的，每个SKView(用来显示)中可以渲染和管理一个SKScene，每个Scene中可以装载多个Node，Node通过执行action来展示不同动作。</p>
+
+<p>SKNode的几大子类包括:</p>
+
+<p>SKSpriteNode(用于绘制精灵纹理);</p>
+
+<p>SKVideoNode（用于播放视频）；</p>
+
+<p>SKLabelNode(用于渲染文本）；</p>
+
+<p>SKShapeNode(用于渲染基于Core Graphics路径的形状）；</p>
+
+<p>SKEmitterNode（用于创建和渲染粒子系统);</p>
+
+<p>SKCropNode(用于使用遮罩来裁剪子节点）；</p>
+
+<p>SKEffectNode（用于在子节点上使用Core Image滤镜）。</p>
+
+<p>在了解了基本的运行原理后，接下来我们准备来创建自己的小游戏，游戏内容就是一个打飞机的故事，己方英雄通过射出自己的子弹来击爆迎面而来的敌机。</p>
+
+<h2 id="加入英雄node">加入英雄Node</h2>
+
+<p>正如前所说Node是装载在Scene中的，所以我们在刚在的didMoveToView中添加我们heroNode。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)didMoveToView:(SKView *)view {
+    _heroNode = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"hero"] size:CGSizeMake(40, 40)];
+    _heroNode.position = CGPointMake(self.size.width/2, _heroNode.size.height/2);
+    [self addChild:_heroNode];
+}
+</code></pre>
+</div>
+
+<p>1.<code class="highlighter-rouge">spriteNodeWithTextur:size:</code>方法可以简单的传入Node的纹理和尺寸来初始化英雄Node，texture可以<code class="highlighter-rouge">textureWithImageNamed</code>方法获得一个图片的纹理，也可以传入自定义的texture。</p>
+
+<p>2.Node的position是指该Node的中心位置，在设置位置时，这里注意Spritekit中的坐标系和OPENGL的坐标系是一致的，都是屏幕左下角为起始点(0,0)。</p>
+
+<p>最后通过addChild方法就将我们的英雄Node加入到场景中了，效果图：</p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/fb7c08b6ad605a0251a37b85f0c150d4eb88f97c4063abd38203fdd57b78e411" alt="" /></p>
+
+<p>英雄需要能够移动才能有效击杀敌机，所以我们通过手指在屏幕点击和移动时，调整英雄的位置，让其随着手指的移动而移动。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *t in touches)
+    {
+        _heroNode.position = [t locationInNode:self];
+    }
+ }
+
+    - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    for (UITouch *t in touches)
+    {
+        _heroNode.position = [t locationInNode:self];
+    }
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *t in touches)
+    {
+        _heroNode.position = [t locationInNode:self];
+    }
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *t in touches)
+    {
+        _heroNode.position = [t locationInNode:self];
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="加入敌机">加入敌机</h2>
+
+<p>我们的英雄是要击射敌机的，而且是随机而来的敌机，连续不断，冲向英雄，所以我们加一个方法addEnemy来创造敌机。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)addEnemy {
+    SKSpriteNode *enemy = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"hero"] size:CGSizeMake(40, 40)];
+
+    //设定敌机的出现位置横坐标随机randomX
+    CGSize winSize = self.size;
+    int minX = enemy.size.width / 2;
+    int maxX = winSize.width - enemy.size.width/2;
+    int rangeX = maxX - minX;
+    int randomX = (arc4random() % rangeX) + minX;
+
+    //设置敌机初始位置并添加敌机进场景
+    enemy.position = CGPointMake(randomX,winSize.height + enemy.size.height/2);
+    [self addChild:enemy];
+
+    //设定敌机飞向英雄的时间，随机来控制不同的敌机飞行速度
+    int minDuration = 2.0;
+    int maxDuration = 4.0;
+    int rangeDuration = maxDuration - minDuration;
+    int actualDuration = (arc4random() % rangeDuration) + minDuration;
+
+    //执行敌机从起始点飞向英雄的动作
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(randomX,enemy.size.height/2)
+                                   duration:actualDuration];
+    SKAction *actionMoveDone = [SKAction runBlock:^{
+        [enemy removeFromParent];
+        [self.enemys removeObject:enemy];
+
+    }];
+    [enemy runAction:[SKAction sequence:@[actionMove,actionMoveDone]]];
+
+    [self.enemys addObject:enemy];
+}
+</code></pre>
+</div>
+
+<p>1.敌机是从英雄所在对面位置飞来，首先确定一个敌机对面出现的横向坐标范围，再随机从这个范围中设定敌机位置。</p>
+
+<p>2.控制敌机不同的飞行速度，是通过敌机飞向英雄动作的总时长不同来实现。</p>
+
+<p>3.SKAction的sequence方法是允许我们执行多个动作，这里我们执行了敌机飞向英雄的动作和消失的动作。</p>
+
+<p>编译运行后只出现了一个敌机，但是这样是不够的，我们再通过执行两个动作来源源不断的生成敌机</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SKAction *actionAddEnemy = [SKAction runBlock:^{
+        [self addEnemy];
+}];
+SKAction *actionWaitNextEnemy = [SKAction waitForDuration:1];
+[self runAction:[SKAction repeatActionForever:[SKAction sequence:@[actionAddEnemy,actionWaitNextEnemy]]]];
+</code></pre>
+</div>
+
+<p>runBlock方法可以创建已个动作的代码块，这里执行了创建敌机方法，然后再等待1秒再次创建敌机，一直循环。</p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/ecc7dfc2dc992bb8e2b476c59ebd4e256c252d2b215ce466eac3a4d6a19b9e9a" alt="" /></p>
+
+<h2 id="发射子弹">发射子弹</h2>
+
+<p>英雄会每隔一段时间会射出一发子弹，即创建一个子弹node并渲染，这样就涉及到这个定时器怎么设置，spritekit是游戏引擎，所以大多数情况下画面是不断变化的，SKView需要循环不断的进行每帧重绘。</p>
+
+<p>在每一帧开始时，SKScene会调用<code class="highlighter-rouge">-update：</code>方法，参数currentTime是当前时间，在该方法中我们可以进行一些刷新的逻辑，或者让node执行action等。所以我们可以在每隔几帧让英雄射出一发子弹来实现子弹发射效果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)shot
+{
+    SKSpriteNode* bulletNode = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"hero"] size:CGSizeMake(2, 2)];;
+    bulletNode.position = CGPointMake(_heroNode.position.x, _heroNode.position.y + _heroNode.size.height/2);
+    [self addChild:bulletNode];
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(bulletNode.position.x,self.size.height + bulletNode.size.height)
+                                   duration:1];
+    SKAction *actionMoveDone = [SKAction runBlock:^{
+        [bulletNode removeFromParent];
+    }];
+    [bulletNode runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
+    [self.bullets addObject:bulletNode];
+}
+-(void)update:(CFTimeInterval)currentTime {
+    // Called before each frame is rendered
+
+    static int tempNum=0;
+    if (tempNum&gt;20)
+    {
+        [self shot];
+        tempNum=0;
+    }
+    tempNum++;
+}
+</code></pre>
+</div>
+
+<p>1.和之前创建Node一样，这里我们创建一个子弹Node，设置其初始位置。</p>
+
+<p>2.将子弹从初始位置移动到敌机底边，并设置所用时间来控制子弹速度。</p>
+
+<p>3.每隔20帧发射一次子弹</p>
+
+<p><img src="/image/spritekit_dong_hua_xiao_you_xi/5c4bae7342b3a586a5932598acccb2efe4c9c64a78eb6fc9ed1dd8c138082202" alt="" /></p>
+
+<h2 id="碰撞检测">碰撞检测</h2>
+
+<p>子弹发射了，但是不能击毁敌机，所以这里我们要做的是在子弹和敌机碰撞时，将他们都进行销毁移除场景，那么我们在什么时机去进行碰撞检测呢？这里我们简单介绍一下spritekit的每一帧周期运转：</p>
+
+<p>1.每一帧开始都会先调用<code class="highlighter-rouge">-update：</code>，如前面所讲我们可以在这里让Node执行action</p>
+
+<p>2.执行update后开始执行所有的action。</p>
+
+<p>3.action执行结束后，<code class="highlighter-rouge">-didEvaluateActions</code>将被调用，可以对Node进行调整</p>
+
+<p>4.进行物理计算，在Node上添加了SKPhysicsBody的话就会参与这一阶段的物理计算，最后根据结果决定节点状态</p>
+
+<p>5.在物理计算完成之后，会调用<code class="highlighter-rouge">-didSimulatePhysics</code>方法，在这个方法中依然可以进行Node的调整，写入游戏逻辑。</p>
+
+<p>根据上面的想法，我们可以在update中简单计算子弹和敌机的位置来决定是否要销毁和移除他们。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void)update:(CFTimeInterval)currentTime {
+    // Called before each frame is rendered
+
+    static int tempNum=0;
+    if (tempNum&gt;20)
+    {
+        [self shot];
+        tempNum=0;
+    }
+    tempNum++;
+
+    NSMutableArray *bulletsToDelete = [[NSMutableArray alloc] init];
+    for (SKSpriteNode *bullet in self.bullets) {
+
+        NSMutableArray *enemysToDelete = [[NSMutableArray alloc] init];
+        for (SKSpriteNode *enemy in self.enemys) {
+
+            if (CGRectIntersectsRect(bullet.frame, enemy.frame)) {
+                [enemysToDelete addObject:enemy];
+            }
+        }
+
+        for (SKSpriteNode *enemy in enemysToDelete) {
+            [self.enemys removeObject:enemy];
+            [enemy removeFromParent];
+            NSLog(@"被击毁了。。。。。。。。");
+        }
+
+        if (enemysToDelete.count &gt; 0) {
+            [bulletsToDelete addObject:bullet];
+        }
+    }
+
+    for (SKSpriteNode *projectile in bulletsToDelete) {
+        [self.bullets removeObject:projectile];
+        [projectile removeFromParent];
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="场景切换">场景切换</h2>
+
+<p>上面我们已经基本完成了打飞机的场景，但是在游戏中会有不同的关卡和不同的场景，这就涉及到两个场景直接的切换，我们这里以主界面场景切换到游戏场景为例来展示。
+1.新建类<code class="highlighter-rouge">MainInterfaceScene</code>是<code class="highlighter-rouge">SKScene</code>的子类,创建两个<code class="highlighter-rouge">SKLabelNode</code>来进行文字提示。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(instancetype)initWithSize:(CGSize)size
+{
+    if (self = [super initWithSize:size]) {
+        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+
+        //1 Add a result label to the middle of screen
+        _resultLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _resultLabel.text = @"精彩打飞机";
+        _resultLabel.fontSize = 30;
+        _resultLabel.fontColor = [SKColor blackColor];
+        _resultLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                           CGRectGetMidY(self.frame));
+        [self addChild:_resultLabel];
+
+        //2 Add a retry label below the result label
+        _retryLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _retryLabel.text = @"开始游戏";
+        _retryLabel.fontSize = 20;
+        _retryLabel.fontColor = [SKColor blueColor];
+        _retryLabel.position = CGPointMake(_resultLabel.position.x, _resultLabel.position.y * 0.8);
+        //3 Give a name for this node, it will help up to find the node later.
+        _retryLabel.name = @"retryLabel";
+        [self addChild:_retryLabel];
+    }
+    return self;
+}
+</code></pre>
+</div>
+
+<p>2.在点击开始游戏标签时将场景切换到GameScene，场景切换使用SKTransition来实现，可以指定切换的方向和动画时间</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void) changeToGameScene
+{
+    GameScene *ms = [GameScene sceneWithSize:self.size];
+    SKTransition *reveal = [SKTransition revealWithDirection:SKTransitionDirectionRight duration:1.0];
+    [self.scene.view presentScene:ms transition:reveal];
+}
+</code></pre>
+</div>
+
+<p>3.在游戏中我们可以设定失败和胜利的条件来切换到游戏结束场景</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-(void) changeToGameScene
+{
+    GameScene *ms = [GameScene sceneWithSize:self.size];
+    SKTransition *reveal = [SKTransition revealWithDirection:SKTransitionDirectionRight duration:1.0];
+    [self.scene.view presentScene:ms transition:reveal];
+}
+</code></pre>
+</div>
+
+<p>至此整个小游戏就创建完成，整个过程包括了游戏的一些基本流程，比如精灵的管理、交互的检测、场景切换等，
+对spritekit的运行原理有了大致的掌握，当然一款真正的游戏比这个复杂多了，后续我们再可以进行不断的完善来使得场景更加丰富，其中不足之处还望指正。(附近中是demo源代码)</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/objectc_dui_xiang_nei_cun_bu_ju_fen_xi/">ObjectC对象内存布局分析</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/shen_ru_li_jie_c_11_yi_/">深入理解C++11(一)</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/spritekit_dong_hua_xiao_you_xi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/spritekit_dong_hua_xiao_you_xi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>
