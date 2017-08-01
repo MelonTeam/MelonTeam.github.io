@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>纹理压缩</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 我们经常听说有相应的jpg,webpp,png等图像压缩格式，但你有没有听说过ETC，S3TC等格式吗？如果没听说就请看我这篇文章吧。      一、前言游戏场景里，贴图是影响真实性的重要因素。通常贴图越大，也就越精细，但其占用的内存空间也就更大。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/wen_li_ya_suo/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>纹理压缩</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-21
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yockieyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#其他" title="Category: 其他" rel="category">其他</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9" title="Tag: 纹理压缩" rel="tag">纹理压缩</a-->
+        <a href="/tag/#纹理压缩" title="Tag: 纹理压缩" rel="tag">纹理压缩</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 我们经常听说有相应的jpg,webpp,png等图像压缩格式，但你有没有听说过ETC，S3TC等格式吗？如果没听说就请看我这篇文章吧。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>一、前言</strong><br />
+游戏场景里，贴图是影响真实性的重要因素。通常贴图越大，也就越精细，但其占用的内存空间也就更大。<br />
+<img src="/image/wen_li_ya_suo/f90eaacc2a6d4b1a51fd97afe9799be76265cdccdeeaa88583f22316c840d599" alt="" /><br />
+<!--more-->
+常用的图片文件格式有：BMP, TGA, JPG, GIF, PNG等。<br />
+不过，像JPG这种常见的图片压缩格式，对于多数应用的内存占用和显示总线带宽占用并没有带来直接的好处，因为还得对JPG进行解压缩成原始的像素，再传给显卡，而且还有加载时的解码计算负担。这是因为显卡的纹理解码硬件不理解JPG格式。所以，在没有显卡硬件支持的情况下，用压缩格式保存纹理没有什么意义，特别是对于移动设备来说，解码像JPG这种复杂格式是很浪费电的。<br />
+常用的纹理格式有：RGB_565， ARGB_4444， ARGB_1555, RGB_888， ARGB_8888等。<br />
+不论何种图片文件格式，它们都是为了存储像素信息而是用的对信息的特殊编码方式，它存储在磁盘中，或者内存中，但是并不能被GPU所识别，因为以向量计算见长的GPU对这些复杂的计算无能为力。当这些文件格式被游戏读入后，需要经过CPU解压成RGB_565，ARGB_4444，
+ARGB_1555, RGB_888， ARGB_8888等像素格式，才能传送到GPU里使用。纹理格式是能被GPU所识别的像素格式，能被快速的寻址并采样。<br />
+纹理格式如：RGB_565，每个像素占用：5+6+5=16 (bits)，共 2 个字节。RGB_888，每个像素占 24 位，3
+个字节。ARGB_8888占 32 位，4 个字节。<br />
+关于纹理格式的更多资料：<a href="http://en.wikipedia.org/wiki/High_color">http://en.wikipedia.org/wiki/High_color</a><br />
+<img src="/image/wen_li_ya_suo/205173456c0d1e56db5914bb8d319a896e3b41bc14b4528c23f63420f8b0e2ae" alt="" /><br />
+<strong>二、贴图压缩方式</strong><br />
+对于一张 512_512 的纹理，RGB_565格式的文件占用 512 KB的容量。<br />
+计算公式为：numBytes = width _ height _ bitsPerPixel / 8<br />
+ARGB_8888格式的文件需要占用1M的容量；如果是1024_1024，则需要更多。<br />
+現在一般的显卡上通常有 32MB 的显存容量。如果每个贴图都要 2MB 的話，即使不计 frame buffer 所占用的空間，也只能使用 16
+张贴图。这显然是不可接受的。所以，现在的游戏通常无法使用很大的贴图。<br />
+然而，在储存一般的影像的時候，通常会使用某些压缩方式。现在常见的 JPEG 压缩，可以达到 1:6 甚至 1:12
+的压缩比。如果把类似的压缩方式应用在贴图上，不就可以大量减少贴图所用的空间了吗？<br />
+不幸的是，一般的影像压缩方式，是沒有办法用在贴图上面的。因为，显示芯片在存取贴图时，是一种「随机存取」的动作。也就是说，显示芯片通常会需要以任意
+的顺序存取贴图里的资料。一般的压缩方式如 JPEG，都利用了 variable length 的
+coding，简单的说，它们必需以一定的顺序才能解开。因此，不能用这种方式来压缩贴图。<br />
+一种压缩方式，是改变颜色空间。例如，3dfx 的 YAB 格式，就是一种不同的颜色空间。利用 YAB，每个像素只需要 8 bits，就可以达到接近 16
+bits 的效果。不过，无论如何，这样都使颜色的数目减少。因此，整个贴图的色彩变化就受到了限制。<br />
+另一种方式，就是用传统的「调色盘」结构。利用一个 256 种颜色的调色盘，就可以把贴图以 8 bits 的方式储存。不过，虽然它的色彩空间较大（可以是 24
+bits 或 32 bits），但是总颜色数目还是不能超过 256 种。所以，它的应用范围仍然有限。<br />
+现在常用的贴图压缩方式，则是利用以区块为基础的方式。通常的做法是，把贴图切割成许多小区块，再对各个区块进行压缩。例如，S3TC 就是把贴图切成 4x4
+的小区块。利用这种做法，就可以对区块进行某种处理（通常就是 vector quantization
+或是其变形），显示芯片也可以以区块为单位，进行随机的存取动作。因此，这是适合用在贴图的方式。<br />
+不过，区块的大小会影响到压缩的效果。一般来说，区块越大，就能有越高的压缩比。不过，越大的区块也会使额外的负担增加。因为显示芯片只能以区块为单位来读取贴图，如果区块越大，则每个区块中就可能会有越多的资料是不需要的。所以，也不能任意把区块的大小加大<br />
+在Beers，Agrawala和Chaddha于1996年发表的一篇影响深远的论文基於已壓縮紋理的渲染
+[1]中，他们列举四项纹理压缩的特点，使其不同于其他图片压缩技术。<br />
+解压速度：为了尽可能不影响性能，解压缩要尽可能快，最好能直接从已压缩的纹理直接渲染。(所谓解压，就是把贴图转换成GPU能识别的纹理格式：RGB_565等。)<br />
+随机访问：由于几乎不可能预测纹理像素被访问的顺序，任何纹理压缩算反必须允许对其中的纹理的随机访问。所以几乎所有的纹理压缩算法都已块为单位压缩和存储纹理像素，当某一个纹理像素被访问时，只有同一块中的若干纹理像素被读取和解压缩。这项需求也排除了很多压缩率较高的图片压缩格式，例如：JPEG和行程長度編碼。<br />
+压缩率和图像质量：由于人眼的不精确性，相比于其他应用领域，图像渲染更适宜使用有损压缩。<br />
+编码速度：纹理压缩对压缩速度的要求不高，因为绝大多数情况下，纹理只需要进行一次压缩。(但是对解压速度要求较高。)<br />
+由于其数据访问模式是事先知道的，纹理压缩常作为整个渲染管线的一部分，在绘制时动态的对已压缩数据进行解压缩(可以把解压缩放在shader里处理)。而反过来渲染管线也可以通过纹理压缩技术来降低对显卡位宽和存储的需求。在纹理贴图中，已经压缩的纹理和没有经过压缩的纹理使用起来基本没有区别，都可以被用来存储颜色数据或其他数据，例如凹凸贴图或法线贴图，也都可以和Mipmapping或各项异性过滤等共同使用。<br />
+主流的纹理压缩标准：ETC, PVRTC, S3TC。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/zhuan_kotlin_yu_yan_ru_men_bao_dian__android_kai_fa_zhe_faq_vol_5/">[转]Kotlin 语言入门宝典 | Android 开发者 FAQ Vol.5</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/what_s_new_in_llvm_9/"> What's New in LLVM 9</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/wen_li_ya_suo/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/wen_li_ya_suo/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

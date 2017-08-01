@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>VC减负若干技巧（一）</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 VC代码的膨胀和臃肿，是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧      随着业务的变更和增加，VC的代码也随着庞大和臃肿，有些一开始设计不好的VC，更是随着时间推移，慢慢变成一场灾难。我的一个感受，某些模块的代码不是万不得已我...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>VC减负若干技巧（一）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>lilinli
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#VC" title="Tag: VC" rel="tag">VC</a-->
+        <a href="/tag/#VC" title="Tag: VC" rel="tag">VC</a>&nbsp;
+    
+        <!--a href="/tag/#%E8%85%90%E7%83%82" title="Tag: 腐烂" rel="tag">腐烂</a-->
+        <a href="/tag/#腐烂" title="Tag: 腐烂" rel="tag">腐烂</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 VC代码的膨胀和臃肿，是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>随着业务的变更和增加，VC的代码也随着庞大和臃肿，有些一开始设计不好的VC，更是随着时间推移，慢慢变成一场灾难。我的一个感受，某些模块的代码不是万不得已我是不敢点开看的。</p>
+
+<p>为什么会出现这种问题呢？  貌似VC的膨胀和臃肿，确实也是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧。
+<!--more--></p>
+
+<p>1 首先是要有清晰的CodeStyle</p>
+
+<p>我觉得这个真正是最重要的东西。我们知道，基本一个VC的代码都会被不同的开发同学去修改，后面的人一般都会遵循前面的CodeStyle，所以第一个版本的CodeStyle是否够清晰，决定了后续加入的代码是否清晰，往往第一个版本CodeStyle就很糟糕的代码，第二第三个版本只会更糟糕。下面是看到一篇<a href="https://casatwy.com
+/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-
+an.html">文章</a>推荐的CodeStyle，个人觉得挺好的，比较清晰，推荐大家借鉴学习。</p>
+
+<p><img src="/image/vc_jian_fu_ruo_gan_ji_qiao__yi_/c292d02d3f85fd4a9771179e382695d739342cdc35b61c4eb0180fcf8369a4ec" alt="" /></p>
+
+<p>2 拆VC</p>
+
+<p>这个也是老生常谈了，关键是要怎么拆，我们天天说mvc，mvc，都知道c是负责协调v和m的，那到底协调是什么？这个概念非常抽象，存DB算不算协调，监听通知算不算协调？因为没有很明确的分界线，所以才不知道这块代码到底应该放在VC内还是VC外。这里我尝试提出一个分界线，VC的责任应该是拿到数据（从model取数据），然后展示数据（在View展示数据）。我们拿这个标准再来看看当前代码，应该如何拆VC。</p>
+
+<p>我以手Q日迹主页这个类来做例子来讲。</p>
+
+<p><img src="/image/vc_jian_fu_ruo_gan_ji_qiao__yi_/06dd70c2e81fbf4f88635cb876aa853275df248c81885057a040ca25df31f5f2" alt="" /></p>
+
+<p>主页代码由一个主文件和若干个category组成,</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>QQStoryViewController 		2874行，
+QQStoryViewController+TableView 2005行
+QQStoryViewController+Notification  849行
+QQStoryViewController+VideoPublish 954行
+</code></pre>
+</div>
+
+<p>可以看到，这个类的已经非常庞大了，从名字也大概可以猜出各自的功能。然后我们按照上面的思路来拆分VC，首先QQStoryViewController+VideoPublish，发表视频相关的API，这个跟拉取数据和展示数据关系都不大，所以肯定可以拆出去。</p>
+
+<p><img src="/image/vc_jian_fu_ruo_gan_ji_qiao__yi_/bc3b6e0efc13ec15f7680c80f2fd218e6f81142bcf758621741fb72753763203" alt="" /></p>
+
+<p>打开文件看了一下代码，这块其实已经剥离出去了，但是不知道什么原因文件名字没有改，让人看了疑惑。</p>
+
+<p>继续看QQStoryViewController+Notification，这个category主要处理通知，按照我们上面定义的分界线，处理通知后一般要刷新UI，所以其属于展示数据的一环，是VC的协调职能，理论上应该放在VC内。但其实仔细分析，一般我们响应通知会做下面操作：</p>
+
+<p>1 不带数据的通知，直接刷新整个UI</p>
+
+<p>2 带数据的通知，先转化数据，再局部更新UI</p>
+
+<p>第一种场景可以直接调VC的接口，第二种场景数据需要进行转化，理论上要先经过数据层做处理或者筛选才能到VC这一层来，所以这里建议通知还是移到VC外，不要放进VC。VC通过实现必要的protocol或者提供重刷接口，让通知层来调用。</p>
+
+<p>再看看主页代码里的处理，</p>
+
+<p><img src="/image/vc_jian_fu_ruo_gan_ji_qiao__yi_/77cf96c44aac5ca6b2f3c005149331af6df9e7a278ec9635e958954d2fab60e8" alt="" /></p>
+
+<p>其实这个category的拆分思路，跟上面说的差不多，不过我建议还是拆成独立的类，不要以category的方式来实现。</p>
+
+<p>接着，我们再来看QQStoryViewController+TableView。顾名思义，这里是处理tableview相关逻辑的地方。关于tableview的拆分，这里有篇<a href="https://www.objc.io/issues/1
+-view-controllers/lighter-view-
+controllers/">文章</a>大家可以参考一下，其设计思路就是添加一个中间类，把tableviewcell的创建和返回委托出去，我们也可以用工厂来实现。这种方式的一个好处就是，这个中间类的代码是可以复用的，所有用到tableview的地方都能用，可以减少很多代码，然后代码集中一处，也有通用的规范和便于管理。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">ArrayDataSource</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">itemAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span><span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">items</span><span class="p">[(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">indexPath</span><span class="p">.</span><span class="nf">row</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span><span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> 
+ <span class="nf">numberOfRowsInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">items</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span><span class="o">*</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span><span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> 
+        <span class="nf">cellForRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span><span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="n">id</span> <span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nf">dequeueReusableCellWithIdentifier</span><span class="p">:</span><span class="n">cellIdentifier</span>
+                                              <span class="nf">forIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="n">id</span> <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">itemAtIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="n">configureCellBlock</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span><span class="n">item</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>  
+</code></pre>
+</div>
+
+<p>VC的调用：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void (^configureCell)(PhotoCell*, Photo*) = ^(PhotoCell* cell, Photo* photo) {
+   cell.label.text = photo.name;
+};
+photosArrayDataSource = [[ArrayDataSource alloc] initWithItems:photos
+                                                cellIdentifier:PhotoCellIdentifier
+                                            configureCellBlock:configureCell];
+self.tableView.dataSource = photosArrayDataSource;
+</code></pre>
+</div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/tu_jie_objective_c_dui_xiang_mo_xing/">图解Objective-C对象模型</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

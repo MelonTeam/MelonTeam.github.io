@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> What&#39;s New in LLVM 9</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 这绝不仅仅是一篇 WWDC 2017 Session 411 学习笔记。除了有关 LLVM 9.0 的新特性之外，还有关于静态分析器和Clang 5 Objective-C ARC 的一点看法和经验。我觉得 LLVM 9 的亮点如下：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/what_s_new_in_llvm_9/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1> What's New in LLVM 9</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-22
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>rebootyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#LLVM" title="Tag: LLVM" rel="tag">LLVM</a-->
+        <a href="/tag/#LLVM" title="Tag: LLVM" rel="tag">LLVM</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90" title="Tag: 静态分析" rel="tag">静态分析</a-->
+        <a href="/tag/#静态分析" title="Tag: 静态分析" rel="tag">静态分析</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%BC%96%E8%AF%91" title="Tag: 编译" rel="tag">编译</a-->
+        <a href="/tag/#编译" title="Tag: 编译" rel="tag">编译</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%A3%80%E6%9F%A5" title="Tag: 检查" rel="tag">检查</a-->
+        <a href="/tag/#检查" title="Tag: 检查" rel="tag">检查</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#api-availability-checking-for-objective-c" id="markdown-toc-api-availability-checking-for-objective-c">API Availability Checking for Objective-C</a>    <ul>
+      <li><a href="#objective-c" id="markdown-toc-objective-c">Objective-C</a></li>
+      <li><a href="#c--c" id="markdown-toc-c--c">C &amp; C++</a></li>
+      <li><a href="#适用范围" id="markdown-toc-适用范围">适用范围</a></li>
+    </ul>
+  </li>
+  <li><a href="#static-analyzer-checks" id="markdown-toc-static-analyzer-checks">Static Analyzer Checks</a>    <ul>
+      <li><a href="#比较-nsnumber" id="markdown-toc-比较-nsnumber">比较 NSNumber</a></li>
+      <li><a href="#dispatch_once" id="markdown-toc-dispatch_once"><code class="highlighter-rouge">dispatch_once()</code></a></li>
+      <li><a href="#nsmutable-类型的属性使用-copy-内存管理语义" id="markdown-toc-nsmutable-类型的属性使用-copy-内存管理语义"><code class="highlighter-rouge">NSMutable</code> 类型的属性使用 <code class="highlighter-rouge">copy</code> 内存管理语义</a></li>
+      <li><a href="#一些建议" id="markdown-toc-一些建议">一些建议</a></li>
+    </ul>
+  </li>
+  <li><a href="#new-warnings" id="markdown-toc-new-warnings">New Warnings</a>    <ul>
+      <li><a href="#arc-中的-block-捕获参数" id="markdown-toc-arc-中的-block-捕获参数">ARC 中的 Block 捕获参数</a>        <ul>
+          <li><a href="#clang-5-中的-objective-c-arc-方法家族" id="markdown-toc-clang-5-中的-objective-c-arc-方法家族">Clang 5 中的 Objective-C ARC 方法家族</a></li>
+          <li><a href="#探索方法返回值内存管理的奥秘" id="markdown-toc-探索方法返回值内存管理的奥秘">探索方法返回值内存管理的奥秘</a>            <ul>
+              <li><a href="#方法为-allocnewcopymutablecopy-家族或方法声明使用-ns_returns_retained" id="markdown-toc-方法为-allocnewcopymutablecopy-家族或方法声明使用-ns_returns_retained">方法为 <code class="highlighter-rouge">alloc/new/copy/mutableCopy</code> 家族或方法声明使用 <code class="highlighter-rouge">NS_RETURNS_RETAINED</code></a></li>
+              <li><a href="#普通方法" id="markdown-toc-普通方法">普通方法</a></li>
+              <li><a href="#优化过程及原理" id="markdown-toc-优化过程及原理">优化过程及原理</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#无参数函数的声明" id="markdown-toc-无参数函数的声明">无参数函数的声明</a></li>
+    </ul>
+  </li>
+  <li><a href="#c-refactoring" id="markdown-toc-c-refactoring">C++ Refactoring</a></li>
+  <li><a href="#features-from-c17" id="markdown-toc-features-from-c17">Features from C++17</a>    <ul>
+      <li><a href="#structured-binding" id="markdown-toc-structured-binding">Structured Binding</a></li>
+      <li><a href="#在条件判断语句中声明初始化变量" id="markdown-toc-在条件判断语句中声明初始化变量">在条件判断语句中声明初始化变量</a></li>
+      <li><a href="#constexpr-if" id="markdown-toc-constexpr-if">constexpr if</a></li>
+      <li><a href="#string_view" id="markdown-toc-string_view">string_view</a></li>
+    </ul>
+  </li>
+  <li><a href="#link-time-optimization" id="markdown-toc-link-time-optimization">Link-Time Optimization</a></li>
+</ul>
+
+<p>| 导语 这<strong>绝不仅仅</strong>是一篇 WWDC 2017 Session 411 学习笔记。除了有关 LLVM 9.0 的新特性之外，还有关于静态分析器和
+Clang 5 Objective-C ARC 的一点看法和经验。</p>
+
+<p>我觉得 LLVM 9 的亮点如下：</p>
+
+<!--more-->
+<ol>
+  <li>支持 Objective-C API 可用性检查</li>
+  <li>新增一些对隐患代码的静态分析检查和 warning</li>
+  <li>更快的 LTO，使其可以真正使用</li>
+</ol>
+
+<h2 id="api-availability-checking-for-objective-c">API Availability Checking for Objective-C</h2>
+
+<p>在低版本系统上调用高版本 SDK 的 API 会引发 crash，所以在兼容多版本系统时需要谨慎判断系统版本，然后使用对应的
+API。这些在运行时才能生效的代码很容易编写出错，而且需要测试人员付出很大工作量来覆盖到各个版本的系统。检查类、实例方法、类方法等是否可用时需要写的代码也不同，很蛋疼呦。</p>
+
+<p>Swift 3 加入了 <code class="highlighter-rouge">#available</code> 语法来检查 API 是否可用，在编译阶段就可以发现哪里漏掉了 API
+可用性检查。如今，Objective-C 也有这项功能啦。</p>
+
+<h3 id="objective-c">Objective-C</h3>
+
+<p>假设加入 App 支持的最低版本是 iOS 10，但是直接调用了 iOS 11 的 API，那么编译器会告警，提醒开发者某个 API
+只能用于较新版本的系统上。这时需要通过 <code class="highlighter-rouge">[@available](https://github.com/available "@available" )</code>
+语法来判断平台和版本：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if(@available(iOS 11, *)) {
+    // iOS 11 以上以及其他所有平台
+}
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">*</code> 相当于通配符，代表所有其他平台都可用。</p>
+
+<p>说完了如何检查 API 可用性后，再来谈谈声明 API 可用性的问题：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)foo API_AVAILABLE(ios(11.0));
+</code></pre>
+</div>
+
+<p>上面的代码声明了调用 <code class="highlighter-rouge">foo</code> 方法需要 iOS 11 以上，而 <code class="highlighter-rouge">foo</code> 方法内部的实现中调用 iOS 11 的 API 时无需再用
+<code class="highlighter-rouge">[@available](https://github.com/available "@available" )</code> 检查。</p>
+
+<p>声明一个类的可用性也很简单，并且无需给类中的每个方法再次声明可用性，只需要用到 <code class="highlighter-rouge">API_AVAILABLE</code> 宏：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">API_AVAILABLE</span><span class="p">(</span><span class="n">ios</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">@interface</span> <span class="nc">MyClassForiOS11OrNewer</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">foo</span><span class="p">;</span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p>其实类似的有关 API 兼容版本的宏还有好几个：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>API_DEPRECATED()
+API_UNAVAILABLE()
+API_DEPRECATED_WITH_REPLACEMENT()
+</code></pre>
+</div>
+
+<h3 id="c--c">C &amp; C++</h3>
+
+<p>如果是想在 C 或 C++ 中查询 API 的可用性，可以使用 LLVM 新加的 <code class="highlighter-rouge">__builtin_available()</code> 函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (__builtin_available(iOS 11, macOS 10.13, *)) {
+    // iOS 11 以上或 macOS 10.13 以上平台，以及其他所有平台
+}
+</code></pre>
+</div>
+
+<p>在 C 或 C++ 中使用 <code class="highlighter-rouge">API_AVAILABLE</code> 宏之前需要引入头文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#include 
+class API_AVAILABLE(ios(11.0)) MyClassForiOS11OrNewer;
+</code></pre>
+</div>
+
+<h3 id="适用范围">适用范围</h3>
+
+<p>对于旧工程，LLVM 只会对新的 API 进行告警(包含 iOS 11,tvOS 11,macOS 10.13,watchOS 4 以上)。旧的 API
+不会被编译器告警，所以不用担心旧项目中已有的代码会产生一大片 warning，只需在采用新 API 的时候加上
+<code class="highlighter-rouge">[@available](https://github.com/available "@available" )</code> 或
+<code class="highlighter-rouge">API_AVAILABLE</code>。也可以选择在 Build Settings 中设置 <code class="highlighter-rouge">Unguarded availability</code> 为 <code class="highlighter-rouge">YES(All
+Versions)</code> 来检查所有的 API。Xcode 9 新建工程 <code class="highlighter-rouge">Unguarded availability</code> 项默认为 <code class="highlighter-rouge">YES(All
+Versions)</code>。</p>
+
+<h2 id="static-analyzer-checks">Static Analyzer Checks</h2>
+
+<p>除了在 Xcode-&gt;Product-&gt;Analyze 中开启静态分析检查外，也可以在 Build 过程中进行静态分析检查。只需在编译设置中将
+<code class="highlighter-rouge">Analyse During 'Build'</code> 设为 <code class="highlighter-rouge">YES</code>。</p>
+
+<p>苹果补充了一些检查项，看了下还都是一不留神就容易犯或者根本没注意到的细节。</p>
+
+<h3 id="比较-nsnumber">比较 NSNumber</h3>
+
+<p>稍有经验的老司机都懂得 NSNumber 不能直接跟 raw value 直接比较，毕竟前者是类的实例对象，后者是基本类型。然而还是有人会弄错：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSNumber *count = @0;
+NSNumber *check = @YES;
+if (count &gt; 0) {
+  NSLog(@"肯定会进到这里，因为 count 不为 nil");
+}
+if (check) {
+  NSLog(@"肯定会进到这里，因为 check 不为 nil");
+}
+</code></pre>
+</div>
+
+<p>现在 LLVM 可以检查出这种情况，也可以关闭这项检查：在编译设置中将 <code class="highlighter-rouge">Suspicious Conversions of NSNumber and
+CFNumberRef</code> 设为 <code class="highlighter-rouge">NO</code>。</p>
+
+<h3 id="dispatch_once"><code class="highlighter-rouge">dispatch_once()</code></h3>
+
+<p>Xcode 的 code snippet 很好用，我觉得正常人不会把 <code class="highlighter-rouge">dispatch_once()</code> 写错吧。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static dispatch_once_t onceToken;
+dispatch_once(&amp;onceToken, ^{
+   foo();
+});
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">onceToken</code> 只能是全局变量或静态变量，使得指针地址的唯一性保证了 <code class="highlighter-rouge">foo()</code> 只执行一次。但总有奇葩把 <code class="highlighter-rouge">onceToken</code>
+声明成成员变量，使得指针地址可能会重复，无法保证线程安全地只执行一次。而现在 LLVM 可以检查出这种不规范的使用方式。</p>
+
+<p>当然，想实现线程安全地只执行一次方法，也可以通过加锁和判断标志位的方式来实现。</p>
+
+<h3 id="nsmutable-类型的属性使用-copy-内存管理语义"><code class="highlighter-rouge">NSMutable</code> 类型的属性使用 <code class="highlighter-rouge">copy</code> 内存管理语义</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">array</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>内存管理语义帮开发者自动合成了 <code class="highlighter-rouge">set</code> 方法的实现，但是当 <code class="highlighter-rouge">copy</code> 应用到了 <code class="highlighter-rouge">NSMutable</code>
+系列的类上，就会产生问题。因为我们想要的是把新的值 <code class="highlighter-rouge">mutableCopy</code> 后赋值给属性，然而内存管理语义中只有 <code class="highlighter-rouge">copy</code> 却没有
+<code class="highlighter-rouge">mutableCopy</code>。而现在 LLVM 可以检查出这种情况。</p>
+
+<p>重写 <code class="highlighter-rouge">set</code> 方法可以解决此问题:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)setArray:(NSMutableArray *)array
+{
+    _array = [array mutableCopy];
+}
+</code></pre>
+</div>
+
+<h3 id="一些建议">一些建议</h3>
+
+<p>静态分析能做到在编译阶段发现一些程序员容易疏忽的地方，它只能检查特定场景下的一些被认为不符合规范的行为。也就是说它维护了一个
+List，编译的时候一项一项检查是否合符规范，但是这个 List 之外的行为并不能被检查出来，这也就是为什么 LLVM 每年都在向这个 List
+新增内容。这个 List 包含了程序员容易犯的代码问题，并且这些问题暗涵很严重的逻辑错误。</p>
+
+<ol>
+  <li>随着 Check List 的不断膨胀，静态分析耗时会增加，对于大中型项目，我并不建议开启每次编译时都进行静态分析检查。建议在每个版本测试阶段定期做静态分析检查。</li>
+  <li>不要过于相信静态分析检查。首先它会漏检，Check List 之外的情况根本检查不出来。如果将一些 API 包含在宏定义中或者封装在 C 函数中调用，导致语法复杂，静态分析甚至还会误报。（我曾经碰见过几次静态分析检查出 MRC 下一些内存泄露，但其实间接调用了 <code class="highlighter-rouge">autorelease</code> 的，根本不会泄露，改为直接调用 <code class="highlighter-rouge">autorelease</code> 就 OK 了）</li>
+  <li>程序员自身应该有一份 Check List，在平时变成变成过程中不断约束自己。比如判断 <code class="highlighter-rouge">NSString</code> 是否有内容时直接看 <code class="highlighter-rouge">length</code> 是否大于 0，而不是判断是否为 <code class="highlighter-rouge">nil</code> 或 <code class="highlighter-rouge">@""</code>。这跟打游戏是否有意识差不多，写代码也要有『意识流』。</li>
+</ol>
+
+<h2 id="new-warnings">New Warnings</h2>
+
+<p>Xcode 9 的 LLVM 又新增了一百多个 error 和 warning，然而大多数程序员还不是照样忽视 warning 么？可以在编译设置中将
+warning 升级成 error。如果是旧的工程，需要升级工程文件到 Xcode 9，然后才能看到这些新增的 warning
+设置项。（点击工程-&gt;Editor-&gt;Validate Settings）</p>
+
+<h3 id="arc-中的-block-捕获参数">ARC 中的 Block 捕获参数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)validateDictionary:(NSDictionary&lt;NSString *, NSString *&gt; *)dict error:(NSError **)error
+{
+    [dict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        if (obj.length &gt; 0) {
+            if (error) {
+                *error = [NSError errorWithDomain:@"FishDomain" code:0 userInfo:nil];
+            }
+        }
+    }];
+}
+</code></pre>
+</div>
+
+<p>ARC 会将 <code class="highlighter-rouge">(NSError **)error</code> 这种 “out-parameter” 隐式修饰为
+<code class="highlighter-rouge">__autoreleasing</code>，也就是其实会被转化成 <code class="highlighter-rouge">(NSError * __autoreleasing *)error</code>。（PS：相关知识参考
+<a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html
+#indirect-parameters">Indirect
+parameters</a>）</p>
+
+<p>给 <code class="highlighter-rouge">*error</code> 赋值时，因为它被 <code class="highlighter-rouge">__autoreleasing</code> 修饰，所以 ARC 下的 Clang 会隐式调用 <code class="highlighter-rouge">retain</code> 和
+<code class="highlighter-rouge">autorelease</code>。 PS: 相关知识参考
+<a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#semantics">Semantics</a></p>
+
+<p>而 <code class="highlighter-rouge">enumerateKeysAndObjectsUsingBlock:</code> 方法会在
+<code class="highlighter-rouge">[@autoreleasepool](https://github.com/autoreleasepool "@autoreleasepool" )</code>
+里面执行 Block，在迭代逻辑中这样做有助于减少内存峰值。</p>
+
+<p>于是 <code class="highlighter-rouge">*error</code> 就在 Block 里提前被释放了。Xcode 9 会针对这种情况发出 warning：”Block captures an
+autoreleasing out-parameter, which may result in use-after-free
+bugs”。解决方案：”Declare the parameter **strong or capture a **block __strong
+variable to keep values alive across autorelease pools”</p>
+
+<p>第一个解决方案简单地把参数 <code class="highlighter-rouge">(NSError **)error</code> 改成 <code class="highlighter-rouge">(NSError *__strong *)error</code>，这要求调用方也使用
+ARC。第二个解决方案是利用 <code class="highlighter-rouge">__block</code> 让 Block 捕获外部变量，默认是强引用：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)validateDictionary:(NSDictionary&lt;NSString *, NSString *&gt; *)dict error:(NSError **)error
+{
+    __block NSError *strongError = nil;
+    [dict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        if (obj.length &gt; 0) {
+            strongError = [NSError errorWithDomain:@"FishDomain" code:0 userInfo:nil];
+        }
+    }];
+    if (error) {
+        *error = strongError;
+    }
+}
+</code></pre>
+</div>
+
+<p>关于 Clang 隐式调用 <code class="highlighter-rouge">retain</code> 和 <code class="highlighter-rouge">autorelease</code> 更深入的细节如下：</p>
+
+<h4 id="clang-5-中的-objective-c-arc-方法家族">Clang 5 中的 Objective-C ARC 方法家族</h4>
+
+<p>Objective-C
+中有<a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html#arc-
+method-families">五大方法家族</a>，每个家族都有自己的规矩：<code class="highlighter-rouge">alloc/new/copy/mutableCopy</code> 四个家族的方法返回的是 “a
+retainable object pointer”，而 <code class="highlighter-rouge">init</code> 家族方法要求必须是实例方法，必须返回 Objective-C 对象。</p>
+
+<p>把一个方法划归到某个方法家族有两种方式：</p>
+
+<ol>
+  <li>按照命名惯例划分方法家族</li>
+  <li>使用 <code class="highlighter-rouge">__attribute__((objc_method_family( somefamily )))</code> 直接指定</li>
+</ol>
+
+<p>如果某个方法不遵循所在家族的规矩，会影响到内存管理，造成内存泄露等后果。（PS：如果是使用第二种方式把不守规矩的方法划归到家族，Clang 会报错。）</p>
+
+<p>ARC 下遵循一套内存管理原则：</p>
+
+<ol>
+  <li><code class="highlighter-rouge">alloc/new/copy/mutableCopy</code> 家族的方法创建的对象是自己持有的，会被 Clang 隐式标记为 <code class="highlighter-rouge">__attribute__((ns_returns_retained))</code>。等效于 Foundation 中的宏 <code class="highlighter-rouge">NS_RETURNS_RETAINED</code></li>
+  <li><code class="highlighter-rouge">init</code> 家族会被 Clang 隐式标记为 <code class="highlighter-rouge">__attribute__((ns_consumes_self))</code> 和 <code class="highlighter-rouge">__attribute__((ns_returns_retained))</code>，用 <code class="highlighter-rouge">NS_REPLACES_RECEIVER</code> 宏也是等效的。</li>
+  <li>不属于任何方法家族的方法会被 Clang 隐式标记为 <code class="highlighter-rouge">__attribute__((ns_returns_not_retained))</code>，等效于 Foundation 中的宏 <code class="highlighter-rouge">NS_RETURNS_NOT_RETAINED</code>。</li>
+</ol>
+
+<p>一般情况下 Clang 会帮我们做这些事情，不必给方法声明手动标记这些属性。而且 Clang 会对最终生成的汇编指令进行优化，去掉多余的 <code class="highlighter-rouge">retain</code>
+和 <code class="highlighter-rouge">autorelease</code>。</p>
+
+<p>ARC 会<strong>视情况</strong>在调用方法时<strong>可能会</strong>添加 <code class="highlighter-rouge">retain</code>，在方法内部返回时<strong>可能会</strong>添加
+<code class="highlighter-rouge">autorelease</code>，经过优化后很可能会抵消。</p>
+
+<p><code class="highlighter-rouge">__attribute__</code> 其实并不是 Objective-C 的语法，而是 Clang 的属性。有关 Clang 的各种属性定义，请查看
+<a href="http://clang.llvm.org/docs/AttributeReference.html">Attributes in Clang</a></p>
+
+<h4 id="探索方法返回值内存管理的奥秘">探索方法返回值内存管理的奥秘</h4>
+
+<p>先做两种情况的实验，查看汇编代码，并总结：</p>
+
+<h5 id="方法为-allocnewcopymutablecopy-家族或方法声明使用-ns_returns_retained">方法为 <code class="highlighter-rouge">alloc/new/copy/mutableCopy</code> 家族或方法声明使用 <code class="highlighter-rouge">NS_RETURNS_RETAINED</code></h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (id)newFoo;
+- (id)foo NS_RETURNS_RETAINED;
+
+- (id)newFoo
+{
+    return [NSObject new];
+}
+- (id)foo
+{
+    return [NSObject new];
+}
+</code></pre>
+</div>
+
+<p>debug
+时从汇编中可以看出：调用方无操作，方法返回时无操作。这显然是优化后的结果。虽然两种方式都能达到优化效果，但更推荐采用让方法加入方法家族，而不是直接使用
+<code class="highlighter-rouge">NS_RETURNS_RETAINED</code> 宏。</p>
+
+<h5 id="普通方法">普通方法</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (id)foo;
+
+- (id)foo
+{
+    return [NSObject new];
+}
+</code></pre>
+</div>
+
+<p>debug 时从汇编中可以看出：调用方调用 <code class="highlighter-rouge">objc_retainAutoreleasedReturnValue()</code>，方法返回时调用
+<code class="highlighter-rouge">objc_autoreleaseReturnValue()</code>（如果返回值没有赋值给变量，会调用
+<code class="highlighter-rouge">objc_unsafeClaimAutoreleasedReturnValue()</code>）。</p>
+
+<h5 id="优化过程及原理">优化过程及原理</h5>
+
+<p><code class="highlighter-rouge">objc_retainAutoreleasedReturnValue(value)</code> 会尝试将之前调用
+<code class="highlighter-rouge">objc_autoreleaseReturnValue(value)</code> 时传入参数 <code class="highlighter-rouge">value</code> 的所有权（retain
+count）传递过来。如果没有在 <code class="highlighter-rouge">value</code> 上调用过 <code class="highlighter-rouge">objc_autoreleaseReturnValue(value)</code>，那就调用
+<code class="highlighter-rouge">retain</code>。具体原理通过查看 Objective-C 源码可以得出(我列举的是 objc-709)：</p>
+
+<p><code class="highlighter-rouge">objc_autoreleaseReturnValue()</code> 试图优化流程，如果上一层调用方会调用
+<code class="highlighter-rouge">objc_retainAutoreleasedReturnValue()</code> 则直接返回参数，否则调用 <code class="highlighter-rouge">autorelease</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>id 
+objc_autoreleaseReturnValue(id obj)
+{
+    // ReturnAtPlus1 表示倾向直接把对象返回，这样就不需要调用 objc_autorelease()，优化性能
+    if (prepareOptimizedReturn(ReturnAtPlus1)) return obj;
+
+    return objc_autorelease(obj);
+}
+
+static ALWAYS_INLINE bool 
+prepareOptimizedReturn(ReturnDisposition disposition)
+{
+    assert(getReturnDisposition() == ReturnAtPlus0);
+    // __builtin_return_address(0) 获取当前函数返回地址，传入 callerAcceptsOptimizedReturn 判断调用方是否紧接着调用了 objc_retainAutoreleasedReturnValue 或者 objc_unsafeClaimAutoreleasedReturnValue
+    if (callerAcceptsOptimizedReturn(__builtin_return_address(0))) {
+        // 将标志位 disposition 写入 TLS
+        if (disposition) setReturnDisposition(disposition);
+        return true;
+    }
+
+    return false;
+}
+
+static ALWAYS_INLINE void 
+setReturnDisposition(ReturnDisposition disposition)
+{// 向 TLS 中写入 Disposition
+    tls_set_direct(RETURN_DISPOSITION_KEY, (void*)(uintptr_t)disposition);
+}
+
+static ALWAYS_INLINE ReturnDisposition 
+getReturnDisposition()
+{// 从 TLS 中读取 Disposition
+    return (ReturnDisposition)(uintptr_t)tls_get_direct(RETURN_DISPOSITION_KEY);
+}
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">callerAcceptsOptimizedReturn()</code> 函数在不同架构的 CPU 上实现也是不一样的，这是因为不同架构 CPU
+的对齐方式不同，偏移量也不同。比如在 arm64 上由于指令对齐方式较好，只需判断函数返回的地址指向的值是不是 <code class="highlighter-rouge">0xaa1d03fd</code> 即可；而在
+x86_64 平台上则要用一大坨代码来判断。有兴趣的可以查看 objc-object.h 文件。</p>
+
+<p><code class="highlighter-rouge">objc_retainAutoreleasedReturnValue()</code> 试图查看是否已优化过并直接返回参数，否则 <code class="highlighter-rouge">retain</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>id
+objc_retainAutoreleasedReturnValue(id obj)
+{   // 如果之前 objc_autoreleaseReturnValue() 存入的标志位为 ReturnAtPlus1，则直接返回对象，无需调用 objc_retain()，优化性能
+    if (acceptOptimizedReturn() == ReturnAtPlus1) return obj;
+
+    return objc_retain(obj);
+}
+
+// 负责从 TLS 中取标志位 ReturnDisposition，然后将其重置
+static ALWAYS_INLINE ReturnDisposition 
+acceptOptimizedReturn()
+{
+    ReturnDisposition disposition = getReturnDisposition();
+    setReturnDisposition(ReturnAtPlus0);  // reset to the unoptimized state
+    return disposition;
+}
+</code></pre>
+</div>
+
+<p>TLS 全称为 Thread Local Storage，是每个线程专有的键值存储。在某个线程上的函数调用栈上相邻两个函数对 TLS
+进行了存取，这中间肯定不会有别的程序『插手』。所以 <code class="highlighter-rouge">getReturnDisposition()</code> 和 <code class="highlighter-rouge">setReturnDisposition()</code>
+的实现比较简单，不需要判断考虑是针对哪个对象的 Disposition 进行存取，因为当前线程上下文中只处理唯一的对象，保证不会乱掉。</p>
+
+<h3 id="无参数函数的声明">无参数函数的声明</h3>
+
+<p>如果函数没有参数，需要用 <code class="highlighter-rouge">void</code> 显式声明。否则可能调用方会传入其他类型和数量的参数，在运行时引发 crash。如果用 <code class="highlighter-rouge">void</code>
+显式声明，在编译阶段就会产生 error。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int foo() // warning:This function declaration is not a prototype
+int foo(void) // OK
+</code></pre>
+</div>
+
+<h2 id="c-refactoring">C++ Refactoring</h2>
+
+<p>对于一个带有 C++ 或 Objective-C++ 代码的工程来说，想重命名某个类名真的是艰难，Xcode 会提示不支持 C++！现在，各种操作也支持
+C++ 咯：</p>
+
+<p><img src="/image/what_s_new_in_llvm_9/30b9003b2861fc1e7df1895f5ae263daa3071f7fd8e5161d9e68002b6e8b84f1" alt="" /></p>
+
+<p>LLVM 的重构代码功能极大节省了开发者的时间。</p>
+
+<h2 id="features-from-c17">Features from C++17</h2>
+
+<p>其实这些都是 C++17 的新特性罢了，LLVM 9.0 积极响应支持。可以在编译选项 C++ Language Dialect 中选择使用的 C++
+标准库。GNU++17 比 C++17 多了语言扩展。</p>
+
+<h3 id="structured-binding">Structured Binding</h3>
+
+<p>解析 Tuple 可以一句搞定了：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>std::tuple&lt;int, double, char&gt; compute();
+void run() {
+    auto [a, b, c] = compute();
+}
+</code></pre>
+</div>
+
+<p>甚至也可以解析类似 tuple 的类型：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Point { double x; double y; double z; };
+Point computeMidPoint(Point p1, Point p2);
+...
+auto [x, y, z] = computeMidPoint(src, dest);
+</code></pre>
+</div>
+
+<p>更多内容详见 C++17 的 <a href="http://www.open-
+std.org/jtc1/sc22/wg21/docs/papers/2016/p0217r3.html">Stuctured Binding</a>。</p>
+
+<h3 id="在条件判断语句中声明初始化变量">在条件判断语句中声明初始化变量</h3>
+
+<p>在判断某个条件之前，可能会产生一些中间变量，如果变量名与外界的有冲突，还会造成一些影响。所以需要一种只在条件判断语句范围内生效的局部变量，避免与无关逻辑代码有冲突：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (auto a = getNumber(); a &gt; 0) 
+    foo();
+
+...
+
+a = 5; // error! a 只在上面的 if 作用域中有效。
+</code></pre>
+</div>
+
+<h3 id="constexpr-if">constexpr if</h3>
+
+<p>以 <code class="highlighter-rouge">if constexpr</code> 开始的语句被称为 <code class="highlighter-rouge">constexpr if</code> 语句。—
+<a href="http://zh.cppreference.com/w/cpp/language/if">cppreference.com</a></p>
+
+<p>举个栗子：<code class="highlighter-rouge">advance</code> 函数可以向前或向后迭代指定步数，但对于字符串和数组来说有更快的方式：无需一步步迭代，可以直接访问。但 <code class="highlighter-rouge">advance</code>
+的参数是通用的，编译不通过：</p>
+
+<p><img src="/image/what_s_new_in_llvm_9/fff453d1c2d1dfee5f46d607c415285c4c01341b786186c8484dd4af6b9b339b" alt="" /></p>
+
+<p>传统解决方法是 Compile Time Dispatch：</p>
+
+<p><img src="/image/what_s_new_in_llvm_9/f221e33d84ba447b1543a97024fd07f5fa81bcd8a7cd1c9d5b241e8162a4057c" alt="" /></p>
+
+<p>C++17 的 <code class="highlighter-rouge">constexpr if</code> 可以一行搞定：</p>
+
+<p><img src="/image/what_s_new_in_llvm_9/fe356a4a80101e208f69d1b80194284865745b0b799bbc4e240f34b842909923" alt="" /></p>
+
+<p>详见 <a href="http://www.open-
+std.org/jtc1/sc22/wg21/docs/papers/2016/p0292r2.html">constexpr if</a>。</p>
+
+<h3 id="string_view">string_view</h3>
+
+<p>简单来说它是指向字符串的指针，但不会拷贝一份字符串。一旦指向的字符串被修改或者被释放了，<code class="highlighter-rouge">string_view</code>
+的内容也会跟跟着变，毕竟是同一份内存。所以，虽然会优化性能，慎用。就像 OC 中的字符串和数组传递赋值时一般都 <code class="highlighter-rouge">copy</code>，string_view
+相当于是 <code class="highlighter-rouge">assign</code>，搞不好野指针呢。</p>
+
+<p>详见 <a href="http://www.open-
+std.org/jtc1/sc22/wg21/docs/papers/2015/n4480.html#string.view">string_view</a>。</p>
+
+<h2 id="link-time-optimization">Link-Time Optimization</h2>
+
+<p>去年搞了个 LTO 和 增量 LTO，今年优化得编译速度更快了，于是建议我们打开 增量 LTO 啊：在编译选项中 Code Generation-&amp;gt
+;Link-Time Optimization</p>
+
+<p>其实我看了 <a href="https://developer.apple.com/videos/play/wwdc2016/405/">2016 年的 What’s New in
+LLVM</a>, LTO
+确实占了很大篇幅，不过当时还不建议开启。经过一年的优化后算是修成正果了。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/wen_li_ya_suo/">纹理压缩</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/masonry_yuan_ma_yue_du_bi_ji__shi_yong_block_shi_xian_lian_shi_bian_cheng/">Masonry源码阅读笔记——使用Block实现链式编程</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/what_s_new_in_llvm_9/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/what_s_new_in_llvm_9/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

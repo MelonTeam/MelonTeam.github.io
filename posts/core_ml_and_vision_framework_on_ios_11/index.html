@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Core ML and Vision Framework on iOS 11</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 机器学习和计算机视觉在 iOS 上虽然早已有了系统级的支持，但 WWDC 17 发布的 iOS 11将它们的使用门槛大大降低。苹果提供了设计合理且容易上手的 API，让那些对基础理论知识一窍不通的门外汉也能玩转高大上的前沿科技，这是苹果一贯的风格。这是一篇 WWDC 2017 Session 506，6...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/core_ml_and_vision_framework_on_ios_11/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Core ML and Vision Framework on iOS 11</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-06
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>rebootyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" title="Tag: 机器学习" rel="tag">机器学习</a-->
+        <a href="/tag/#机器学习" title="Tag: 机器学习" rel="tag">机器学习</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#COREML" title="Tag: COREML" rel="tag">COREML</a-->
+        <a href="/tag/#COREML" title="Tag: COREML" rel="tag">COREML</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#core-ml" id="markdown-toc-core-ml">Core ML</a>    <ul>
+      <li><a href="#简介" id="markdown-toc-简介">简介</a></li>
+      <li><a href="#model-转换工具" id="markdown-toc-model-转换工具">Model 转换工具</a></li>
+      <li><a href="#底层计算性能" id="markdown-toc-底层计算性能">底层计算性能</a></li>
+      <li><a href="#demo-数据预处理" id="markdown-toc-demo-数据预处理">Demo: 数据预处理</a></li>
+      <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+    </ul>
+  </li>
+  <li><a href="#vision" id="markdown-toc-vision">Vision</a>    <ul>
+      <li><a href="#应用场景" id="markdown-toc-应用场景">应用场景</a></li>
+      <li><a href="#vision-使用姿势" id="markdown-toc-vision-使用姿势">Vision 使用姿势</a></li>
+      <li><a href="#demo-与-core-ml-集成" id="markdown-toc-demo-与-core-ml-集成">Demo: 与 Core ML 集成</a></li>
+      <li><a href="#总结-1" id="markdown-toc-总结-1">总结</a></li>
+    </ul>
+  </li>
+  <li><a href="#感受" id="markdown-toc-感受">感受</a></li>
+</ul>
+
+<p>| 导语 机器学习和计算机视觉在 iOS 上虽然早已有了系统级的支持，但 WWDC 17 发布的 iOS 11
+将它们的使用门槛大大降低。苹果提供了设计合理且容易上手的 API，让那些对基础理论知识一窍不通的门外汉也能玩转高大上的前沿科技，这是苹果一贯的风格。</p>
+
+<p>这是一篇 WWDC 2017 Session 506，608，703 和 710 的学习笔记，以及分享自己尝试写的 Demo <a href="https://github.com/yulingtianxia/Core-ML-Sample">Core-ML-
+Sample</a>。
+<!--more--></p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/fd5fdcbb102e6f389ebbde1abc0ae933b1b705e4ca42dcb6f0f6c96e2737ae0e" alt="" /></p>
+
+<h2 id="core-ml">Core ML</h2>
+
+<h3 id="简介">简介</h3>
+
+<p>Core ML 大大降低了开发者在苹果设备上使用机器学习技术预测模型的门槛和成本。苹果制定了自己的模型文件格式，统一的格式和全新的 API 设计使得
+Core ML 支持苹果生态下多个平台。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/8900e53442265cb8fac5a3db6af5242aab594cd161f8641a7d5609ae886d1fe6" alt="" /></p>
+
+<p>将数据经过预处理后输入 MLMODEL 文件，输出为模型的预测结果。使用 Core ML
+只需要很少的代码就可以构建起一个机器学习的应用。只需关注代码即可，无需关注模型的定义，网络的构成。这跟以前写 MPS
+代码时构成了强烈的反差：开发者需要写大量 MPS 代码用于构建和描述一个完整的网络，而加载的文件仅仅是模型的权重而已。MLMODEL
+文件包含了权重和模型结构等信息，并可以自动生成相关的代码，节省开发者大量时间。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/8f9ad95057a23104f748a82cc6e0043106bad0ec7e3b7c3159126c139dc27ea9" alt="" /></p>
+
+<h3 id="model-转换工具">Model 转换工具</h3>
+
+<p>苹果提供了一个 Python 工具，可以将业内一些常用的机器学习框架导出的 Model 转成 MLMODEL 文件。代码会编译成可执行二进制文件，而
+MLMODEL 会编译成 Bundle 文件，在代码文件中可以直接调用 MLMODEL 生成的类，这些都是需要 Xcode 9
+做支撑，也就是说，现阶段并不支持动态下发 MLMODEL 文件。Core ML 的预测过程全都在客户端进行，保证用户隐私不会泄露。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/5744a5d00d4a39ee4fd047140eafe569039f06d8fabf591b556e262f0687fb57" alt="" /></p>
+
+<p>Core ML 支持 DNN,RNN,CNN,SVM,Tree ensembles,Generalized linear models,Pipeline
+models 等，对应的模型转换工具 <a href="https://pypi.python.org/pypi/coremltools">Core ML Tools</a>
+也支持了一些常用机器学习框架模型的转换。虽然目前没有直接支持 Google 的 TensorFlow，但可以使用 Keras
+曲线救国。<code class="highlighter-rouge">coremltools</code> 已经开源，并提供可拓展性的底层接口，可以编写适配其他机器学习框架模型的转换工具。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/806b278de27952c6dca98e18c9c03526542bcf06068b7a0b18336c2251ccaac1" alt="" /></p>
+
+<p>MLMODEL 文件中还包含了很多元数据，比如作者，License，输入输出的描述文字。这些元数据都可以通过 <code class="highlighter-rouge">coremltools</code>
+的接口进行设置。<code class="highlighter-rouge">coremltools</code>
+上手很简单，可以查看完整详细的<a href="https://pythonhosted.org/coremltools/">使用文档</a>。</p>
+
+<p>把 MLMODEL 文件拖拽到 Xcode 工程中后，记得要勾选对应的 target，这样 Xcode 才会自动生成对应的代码。生成的类名就是
+MLMODEL 文件名，输入和输出的变量名和类型也可以在 Xcode 中查看：</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/70af172449d15a445d44a3003bfc2ad9330d2185d28b23acd1e36a77d6c59a2f" alt="" /></p>
+
+<h3 id="底层计算性能">底层计算性能</h3>
+
+<p>Core ML 的底层是 Accelerate BNNS 和 MPS，并可以根据实际情况进行无缝切换。比如在处理图片的场景下使用 MPS，处理文字场景下使用
+Accelerate，甚至可以在同一个 model 的不同层使用不同的底层技术来预测。Vision 和 NLP 可以结合 Core ML 一起使用。Core
+ML 对硬件做了性能优化，而且支持的模型种类更多，开发者不用关注底层的一些细节，苹果全都封装好了。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/4db8ca8d075c365441448ecea5e903e4c1509cd254fb4243794cb63ce18a4269" alt="" /></p>
+
+<p>当然，这些也都是建立在 MPS 更新的基础上，MPS 在 iOS 11 中拓展了支持向量和矩阵的数据结构 <code class="highlighter-rouge">MPSVector</code> 与
+<code class="highlighter-rouge">MPSMatrix</code>，以及它们之间相乘的 API。而且提供了更多的神经网络类型（比如 RNN
+等），在卷积神经网络中也提供了更多种类的卷积核，用于满足更多特殊场景。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/543f73f4e58ffc338734ecac864360a7751147f7e174a6464903847954c0e16b" alt="" /></p>
+
+<p>苹果在 Metal 2 中补充 MPS 大量功能的同时，也提供了用于描述神经网络结构的语言：Neural Network Graph
+API。使用它可以极大简化代码逻辑，代码量缩减到以前的四分之一（以 Inception V3 为例）。并且使用 NN Graph API 可以并行使用
+CPU 和 GPU。这种图语言跟主流的分布式机器学习框架的使用很像：先用简单的 Python
+语言描述好网络结构，定义好输入输出格式，然后一次性提交到后端去执行。后端对底层性能做了很多细节优化，然而开发者完全不用关心这些。新增的
+<code class="highlighter-rouge">MPSNNGraph</code> 提供了异步接口使得 CPU 不用再等待 GPU 的执行结果，性能也得到提升。</p>
+
+<p>Metal 2 使用 MPS 进行图像处理的性能也得到了提升，在不同的设备上大约提升了百分之二十多。</p>
+
+<h3 id="demo-数据预处理">Demo: 数据预处理</h3>
+
+<p><a href="https://github.com/yulingtianxia/Core-ML-Sample">Core-ML-Sample</a> 使用了 Core ML
+和 Vision 技术实现对摄像头拍摄的图像实时预测物体种类。因为图像来源是摄像头，所以需要将 <code class="highlighter-rouge">CMSampleBuffer</code> 转成
+<code class="highlighter-rouge">CVPixelBuffer</code>。因为 Xcode 9 已经生成好了代码，直接调用 <code class="highlighter-rouge">Inceptionv3</code> 类的 <code class="highlighter-rouge">prediction</code>
+方法即可完成预测。生成的 <code class="highlighter-rouge">Inceptionv3Output</code> 类含有 <code class="highlighter-rouge">classLabel</code> 和 <code class="highlighter-rouge">classLabelProbs</code>
+两个属性，可以获取预测的分类标签名以及每种标签的可能性。可以点击 Xcode Model View 中 Model Class
+的生成源码箭头来查看这些类的信息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let inceptionv3model = Inceptionv3()
+
+func handleImageBufferWithCoreML(imageBuffer: CMSampleBuffer) {
+   guard let pixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer) else {
+       return
+   }
+   do {
+       let prediction = try self.inceptionv3model.prediction(image: self.resize(pixelBuffer: pixelBuffer)!)
+       DispatchQueue.main.async {
+           if let prob = prediction.classLabelProbs[prediction.classLabel] {
+               self.predictLabel.text = "\(prediction.classLabel) \(String(describing: prob))"
+           }
+       }
+   }
+   catch let error as NSError {
+       fatalError("Unexpected error ocurred: \(error.localizedDescription).")
+   }
+}
+</code></pre>
+</div>
+
+<p>在 Xcode Model View 中可以看到 Inceptionv3 模型的输入图片为
+<code class="highlighter-rouge">Image</code>，所以需要对摄像头采集到的图像进行预处理。我的转换流程是：<code class="highlighter-rouge">CVPixelBuffer-&gt;CVPixelBuffer-&gt;CIImage-&gt;CIImage(resized)-&gt;CVPixelBuffer</code>。最后一步
+<code class="highlighter-rouge">CIImage</code> 转 <code class="highlighter-rouge">CVPixelBuffer</code> 是通过 <code class="highlighter-rouge">CIContext</code> 渲染完成。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/// resize CVPixelBuffer
+///
+/// - Parameter pixelBuffer: CVPixelBuffer by camera output
+/// - Returns: CVPixelBuffer with size (299, 299)
+func resize(pixelBuffer: CVPixelBuffer) -&gt; CVPixelBuffer? {
+   let imageSide = 299
+   var ciImage = CIImage(cvPixelBuffer: pixelBuffer, options: nil)
+   let transform = CGAffineTransform(scaleX: CGFloat(imageSide) / CGFloat(CVPixelBufferGetWidth(pixelBuffer)), y: CGFloat(imageSide) / CGFloat(CVPixelBufferGetHeight(pixelBuffer)))
+   ciImage = ciImage.applying(transform).cropping(to: CGRect(x: 0, y: 0, width: imageSide, height: imageSide))
+   let ciContext = CIContext()
+   var resizeBuffer: CVPixelBuffer?
+   CVPixelBufferCreate(kCFAllocatorDefault, imageSide, imageSide, CVPixelBufferGetPixelFormatType(pixelBuffer), nil, &amp;resizeBuffer)
+   ciContext.render(ciImage, to: resizeBuffer!)
+   return resizeBuffer
+}
+</code></pre>
+</div>
+
+<p>除了图片需要预处理外，其他数据可能也需要预处理。这需要看训练的模型的输入是什么形式，比如分析一段文本所表达的情绪是开心还是沮丧，可能需要写个预处理程序统计词频，然后输入到训练好的模型中进行预测。</p>
+
+<h3 id="总结">总结</h3>
+
+<ul>
+  <li>Model 极速集成</li>
+  <li>支持多种数据类型</li>
+  <li>硬件优化</li>
+  <li>适配主流机器学习框架</li>
+</ul>
+
+<h2 id="vision">Vision</h2>
+
+<h3 id="应用场景">应用场景</h3>
+
+<ol>
+  <li>人脸检测：支持检测笑脸、侧脸、局部遮挡脸部、戴眼镜和帽子等场景，可以标记出人脸的矩形区域</li>
+  <li>人脸特征点：可以标记出人脸和眼睛、眉毛、鼻子、嘴、牙齿的轮廓，以及人脸的中轴线</li>
+  <li>图像配准</li>
+  <li>矩形检测</li>
+  <li>二维码/条形码检测</li>
+  <li>文字检测</li>
+  <li>目标跟踪：脸部，矩形和通用模板</li>
+</ol>
+
+<h3 id="vision-使用姿势">Vision 使用姿势</h3>
+
+<p>将各种功能的 Request 提供给一个 RequestHandler，Handler 持有图片信息，并将处理结果分发给每个 Request 的
+completion Block 中。可以从 <code class="highlighter-rouge">results</code> 属性中得到 Observation 数组，然后进行更新 UI 等操作。因为
+completion Block 所执行的队列跟 perform request 的队列相同，所以更新 UI 时记得使用主队列。</p>
+
+<p>Vision
+操作流水线分为两类：分析图片和跟踪队列。可以使用图片检测出的物体或矩形结果（Observation）来作为跟踪队列请求（Request）的参数。</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/1d8f721616e23140b7094682f4c14206207c668b1df2a80e0444076854b1774b" alt="" /></p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/cac97183653878e7dc12f0fefe7161527097201809d71e96371e9da1469d52eb" alt="" /></p>
+
+<p>Vision 支持的图片数据类型：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">CVPixelBufferRef</code></li>
+  <li><code class="highlighter-rouge">CGImageRef</code></li>
+  <li><code class="highlighter-rouge">CIImage</code></li>
+  <li><code class="highlighter-rouge">NSURL</code></li>
+  <li><code class="highlighter-rouge">NSData</code></li>
+</ul>
+
+<p>这几乎涵盖了 iOS 中图片相关的 API，很实用很强大。</p>
+
+<p>Vision 有三种 resize 图片的方式，无需使用者再次裁切缩放</p>
+
+<ul>
+  <li><code class="highlighter-rouge">VNImageCropAndScaleOptionCenterCrop</code></li>
+  <li><code class="highlighter-rouge">VNImageCropAndScaleOptionScaleFit</code></li>
+  <li><code class="highlighter-rouge">VNImageCropAndScaleOptionScaleFill</code></li>
+</ul>
+
+<p>Vision 与 iOS 上其他几种带人脸检测功能框架的对比：</p>
+
+<p><img src="/image/core_ml_and_vision_framework_on_ios_11/88920a6b7f37f95f67df0c2960253e0067a253b80021c38147d83d4812103dea" alt="" /></p>
+
+<h3 id="demo-与-core-ml-集成">Demo: 与 Core ML 集成</h3>
+
+<p>Core ML 具有更好的性能，Vision 可为其提供图片处理的流程。Core ML 生成的代码中含有 <code class="highlighter-rouge">MLModel</code> 类型的 <code class="highlighter-rouge">model</code>
+对象，可以用它初始化 <code class="highlighter-rouge">VNCoreMLModel</code> 对象，这样就将 Core ML 的 Model 集成进 Vision 框架中了：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>private var requests = [VNRequest]()
+
+func setupVision() {
+   guard let visionModel = try? VNCoreMLModel(for: inceptionv3model.model) else {
+       fatalError("can't load Vision ML model")
+   }
+   let classificationRequest = VNCoreMLRequest(model: visionModel) { (request: VNRequest, error: Error?) in
+       guard let observations = request.results else {
+           print("no results:\(error!)")
+           return
+       }
+
+       let classifications = observations[0...4]
+           .flatMap({ $0 as? VNClassificationObservation })
+           .filter({ $0.confidence &gt; 0.2 })
+           .map({ "\($0.identifier) \($0.confidence)" })
+       DispatchQueue.main.async {
+           self.predictLabel.text = classifications.joined(separator: "\n")
+       }
+   }
+   classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOptionCenterCrop
+
+   self.requests = [classificationRequest]
+}
+</code></pre>
+</div>
+
+<p>上面的代码实现了 Vision 的工作流，并在 completion Block 中对预测结果进行了处理：从 top5 中筛选可能性大于 0.2
+的结果，并转成文本描述。因为所有结果的可能性总和为 1，所以最终的结果不会达到 5 个，实际测试中其实结果往往只有 1-2 个。</p>
+
+<p>对摄像头传入的每帧图片进行预测。虽然 Vision 帮我们完成了预处理等流程上的工作，但是需要我们传入一些额外的信息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func handleImageBufferWithVision(imageBuffer: CMSampleBuffer) {
+   guard let pixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer) else {
+       return
+   }
+
+   var requestOptions:[VNImageOption : Any] = [:]
+
+   if let cameraIntrinsicData = CMGetAttachment(imageBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) {
+       requestOptions = [.cameraIntrinsics:cameraIntrinsicData]
+   }
+
+   let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: self.exifOrientationFromDeviceOrientation, options: requestOptions)
+   do {
+       try imageRequestHandler.perform(self.requests)
+   } catch {
+       print(error)
+   }
+}
+</code></pre>
+</div>
+
+<p>需要向图片传入 EXIF Orientation 信息：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/// only support back camera
+var exifOrientationFromDeviceOrientation: Int32 {
+   let exifOrientation: DeviceOrientation
+   enum DeviceOrientation: Int32 {
+       case top0ColLeft = 1
+       case top0ColRight = 2
+       case bottom0ColRight = 3
+       case bottom0ColLeft = 4
+       case left0ColTop = 5
+       case right0ColTop = 6
+       case right0ColBottom = 7
+       case left0ColBottom = 8
+   }
+   switch UIDevice.current.orientation {
+   case .portraitUpsideDown:
+       exifOrientation = .left0ColBottom
+   case .landscapeLeft:
+       exifOrientation = .top0ColLeft
+   case .landscapeRight:
+       exifOrientation = .bottom0ColRight
+   default:
+       exifOrientation = .right0ColTop
+   }
+   return exifOrientation.rawValue
+}
+</code></pre>
+</div>
+
+<h3 id="总结-1">总结</h3>
+
+<ul>
+  <li>Vision 是一个关于计算机视觉的顶层新框架。</li>
+  <li>一个界面，多重跟踪检测</li>
+  <li>集成 Core ML 轻松使用自己的 model</li>
+</ul>
+
+<h2 id="感受">感受</h2>
+
+<p>苹果为开发者带来了炫酷的功能，并且这些示例很有针对性，更实用。Vision
+更像是一个工具库，对一些高频场景进行了封装，比如人脸、条形码、矩形和文字等，这些基于底层 API 封装的高级功能可以帮助开发者很快地完成老板的功能。而
+Core ML 给出的 Model 也很有代表性，贴近实际应用场景，很容易激发开发者使用的热情。我想这正是苹果最擅长的，把复杂的事情简单化，提供极易上手的
+Demo，并循序渐进，给予开发者更高深的玩法，不失拓展性和定制化。</p>
+
+<p><code class="highlighter-rouge">coremltools</code> 肯定还存在一些兼容性问题，并且会随着各大机器学习框架的更新而不断更新，我想这也是为何苹果将其开源的原因吧。使用 python
+也更方便维护，而且主流的机器学习框架都是用 python 作为前端语言。</p>
+
+<p>Core ML 功能强大，支持的模型种类很多。与此同时，MPS 在 iOS 11
+也得到了升级，新增的数据类型更方便使用。总之其实还是新增了对底层数据和算法的封装，然后 Core ML
+在此基础上又进行了一层高级的封装。可以看出苹果这一年在底层下的功夫确实不少，在这之后才有了更强大更全面的 API。我预测在这之后 Core ML
+还会有更多的模型得到支持，Vision 也会加入更丰富的应用场景。</p>
+
+<p>如果苹果能够发挥硬件上性能的优势，可能在以后还会演示出更炫酷的 Demo，比如视频实时防抖的处理，更牛逼的滤镜效果。对高性能计算和 GPU
+图像处理感兴趣的话，推荐看下 Metal 2 相关的 Session，尤其是 Session 608。</p>
+
+<p>同时也会发现苹果在机器学习的道路上避开了各个训练框架的锋芒，尤其是最近大红大紫的 Google
+TensorFlow。它选择另辟蹊径，在移动端模型预测性能优化和低成本接入的道路上另辟蹊径，充分发挥自身平台的优势。毕竟在移动端训练模型意义较小，还是交给服务端比较合理。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/">iOS推送调试工具Easy APNs Provider的使用
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/">IOS控件动画的一种通用方法
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/">封装内嵌UICollectionView和UIPageControl的ScrollView
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/">[iOS] OpenGL ES 2.0之初体验
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_qian_ming_ji_zhi_xiang_jie/">IOS签名机制详解</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/objective_c_nei_cun_guan_li_yuan_li_tan_jiu__yi_/">Objective-C内存管理原理探究（一）</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/core_ml_and_vision_framework_on_ios_11/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/core_ml_and_vision_framework_on_ios_11/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

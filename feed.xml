@@ -5,8 +5,8 @@
     <description>腾讯移动终端团队, 拥有丰富的移动终端的开发经验, 专注于前沿技术的探索和研究</description>
     <link>http://MelonTeam.com/</link>
     <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 01 Aug 2017 11:56:32 +0800</pubDate>
-    <lastBuildDate>Tue, 01 Aug 2017 11:56:32 +0800</lastBuildDate>
+    <pubDate>Tue, 01 Aug 2017 14:50:29 +0800</pubDate>
+    <lastBuildDate>Tue, 01 Aug 2017 14:50:29 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -191,6 +191,35 @@ view，从而更进一步了解OpenGL ES是如何工作的。
       </item>
     
       <item>
+        <title>VC减负若干技巧（一）</title>
+        <description>
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 VC代码的膨胀和臃肿，是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+随着业务的变更和增加，VC的代码也随着庞大和臃肿，有些一开始设计不好的VC，更是随着时间推移，慢慢变成一场灾难。我的一个感受，某些模块的代码不是万不得已我是不敢点开看的。
+
+为什么会出现这种问题呢？  貌似VC的膨胀和臃肿，确实也是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧。
+
+</description>
+        <pubDate>Mon, 31 Jul 2017 18:23:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/</guid>
+        
+        <category>VC</category>
+        
+        <category>腐烂</category>
+        
+        
+        <category>ios</category>
+        
+      </item>
+    
+      <item>
         <title>React Native学习笔记</title>
         <description>
 &lt;strong&gt;原理&lt;/strong&gt;
@@ -229,26 +258,6 @@ view，从而更进一步了解OpenGL ES是如何工作的。
         
         
         <category>ai</category>
-        
-      </item>
-    
-      <item>
-        <title>OpenGL ES (iOS) 学习笔记 — 基础篇（一）</title>
-        <description>
-最近一直在做视频相关的工作，结合最近很火的AR技术，所以准备好好学习一下3D渲染的相关知识。因为一直在iOS移动端开发，所以学习一下OpenGL ES
-技术。
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 16:31:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/</guid>
-        
-        <category>Opengles</category>
-        
-        <category>iOS</category>
-        
-        
-        <category>ios</category>
         
       </item>
     

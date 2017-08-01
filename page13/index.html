@@ -115,6 +115,8 @@
                 
                     
                 
+                    
+                
             </ul>
         </nav>
     </div>
@@ -127,11 +129,11 @@
             
               <li>
                 <h2>
-                  <a class="post-link" href="/posts/Protocol_design_for_mobile_Internet_IM/">移动互联网IM之协议设计</a>
+                  <a class="post-link" href="/posts/Video_codec_learning_sharing/">视频编解码学习分享</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-03-27 14:58:55
+                        <i class="fa fa-calendar"></i>2017-03-28 03:04:58
                     </div>
                     
                     
@@ -147,7 +149,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#IM" title="Category: IM" rel="category">IM</a>
+        <a href="/category/#视频" title="Category: 视频" rel="category">视频</a>
     
   
 
@@ -168,9 +170,9 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#tcp安全性" title="Tag: tcp安全性" rel="tag">tcp安全性</a>&nbsp;
+        <a href="/tag/#编解码" title="Tag: 编解码" rel="tag">编解码</a>&nbsp;
     
-        <a href="/tag/#tcp协议设计" title="Tag: tcp协议设计" rel="tag">tcp协议设计</a>
+        <a href="/tag/#视频" title="Tag: 视频" rel="tag">视频</a>
     
   
 
@@ -182,24 +184,23 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Protocol_design_for_mobile_Internet_IM/1.png' alt='' /></div>
-                    导语：如果想自己动手实现一个移动互联网IM app，要怎么做？第一个要解决的问题就是IM协议的设计。本文将讲述如何从0到1设计一个私有的tcp协议。<br />
-       虽然现在市面上已经存在各种各样的消息推送SDK如信鸽，但可能由于各种原因无法全面满足需求，还是想自己实现一个IM或推送功能。那么你需要解决哪些问题呢？首先面临的第一个问题就是如何实现IM协议？<br />
+                    <div class='preview-image'><img src='/image/Video_codec_learning_sharing/1.png' alt='' /></div>
+                    目录 视频为什么要编解码 视频是否可以压缩 编解码实现原理 编解码标准和国际组织 视频文件封装（容器） 视频质量评价体系<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/posts/Protocol_design_for_mobile_Internet_IM/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/posts/Video_codec_learning_sharing/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             
               <li>
                 <h2>
-                  <a class="post-link" href="/posts/Tesla_components/">【特斯拉组件】跨线程渲染圆角图片</a>
+                  <a class="post-link" href="/posts/IOS_touch_event_distribution_mechanism/">IOS触摸事件分发机制详解</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>2017-03-27 13:58:54
+                        <i class="fa fa-calendar"></i>2017-03-27 20:40:54
                     </div>
                     
                     
@@ -236,9 +237,7 @@
   <i class="fa fa-tags"></i>
   
     
-        <a href="/tag/#圆角" title="Tag: 圆角" rel="tag">圆角</a>&nbsp;
-    
-        <a href="/tag/#跨线程" title="Tag: 跨线程" rel="tag">跨线程</a>
+        <a href="/tag/#事件" title="Tag: 事件" rel="tag">事件</a>
     
   
 
@@ -250,13 +249,299 @@
                     
                 </div>
                 <div class="excerpt clearfix">
-                    <div class='preview-image'><img src='/image/Tesla_components/1.jpg' alt='' /></div>
-                    关于app的卡顿发生的原因，kM上相关的文章已经有很多了。有些文章已经分析得很深入，这里不再赘言。其本质原因是在一个VSync（垂直同步）时间片内（约等于1/60s，因为CADisplayLink的频率是1秒钟60次），App无法把一帧画面渲染到屏幕缓冲区，导致了掉帧。<br />
-一帧画面的数据通过总线经过 1，CPU的计算，再进入 2， GPU的渲染，最后被拷贝到屏幕缓冲区的，这两个过程都有可能导致屏幕掉帧：<br />
+                    <div class='preview-image'><img src='/image/IOS_touch_event_distribution_mechanism/1.png' alt='' /></div>
+                    前言<br />
+前言<br />
+很多时候大家都不关心IOS触摸事件的分发机制的实现原理，当遇到以下几种情形的时候你很可能抓破头皮都找不到解决方案:<br />
+某个点击消息由父视图来处理，子视图怎么把消息传递给父视图<br />
+这个按钮不灵敏，怎么扩大点击响应区域<br />
+怎么在一个页面处理手绘、表情拖动放缩、文本编辑三种消息<br />
+阅读本文，你会明白两个问题：IOS如何找到响应者、响应者是如何做出响应，明白这两个问题你就能解决类似上述的疑难杂症。通过控制Hit-test view 、人为干预响应者能否对这一事件作出响应最终来控制触摸事件的分发机制。<br />
 
                 </div>
                 <div class="read-all">
-                    <a  href="/posts/Tesla_components/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/posts/IOS_touch_event_distribution_mechanism/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/posts/Android_short_video_side_of_the_next_sowing_solution/">Android短视频边下边播详解</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-03-27 19:04:58
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Android" title="Category: Android" rel="category">Android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#边下边播" title="Tag: 边下边播" rel="tag">边下边播</a>&nbsp;
+    
+        <a href="/tag/#视频" title="Tag: 视频" rel="tag">视频</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt clearfix">
+                    <div class='preview-image'><img src='/image/Android_short_video_side_of_the_next_sowing_solution/1.png' alt='' /></div>
+                           短视频作为一种常见的富媒体信息载体已经在移动互联网上得到非常普遍的应用，比如Snapchat、微信、手Q日迹等。由于手机网络流量珍贵且带宽有限，应用通常不会直接在线播放视频，而是把视频完整下载到本地后再进行播放，但是下载完整视频需要时间，尤其是视频较大或在网络较差的情况下等待下载的时间就会更长，容易影响用户体验。于是我们想到了边下载边播放，既不浪费流量，也不占用等待时间。下面我们将分别对它的几个实现要点进行详细讲述。<br />
+【视频格式】<br />
+       想要实现边下边播，首先我们需要了解一下视频文件格式。一般情况下，视频文件结构如下所示：<br />
+
+                </div>
+                <div class="read-all">
+                    <a  href="/posts/Android_short_video_side_of_the_next_sowing_solution/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/posts/ML04GradientDescent/">机器学习入门系列04，Gradient Descent（梯度下降法）</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-03-27 18:04:14
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#机器学习" title="Tag: 机器学习" rel="tag">机器学习</a>&nbsp;
+    
+        <a href="/tag/#机器学习入门笔记" title="Tag: 机器学习入门笔记" rel="tag">机器学习入门笔记</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt clearfix">
+                    <div class='preview-image'><img src='http://wx2.sinaimg.cn/mw690/a9c4d5f6gy1fe0p6ppb7dj20z20ck76o.jpg' alt='' /></div>
+                    什么是Gradient Descent（梯度下降法）？ Review: 梯度下降法 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66632699<br />
+什么是Gradient Descent（梯度下降法）？<br />
+在第二篇文章中有介绍到梯度下降法的做法，传送门：机器学习入门系列02，Regression 回归：案例研究<br />
+Review: 梯度下降法<br />
+
+                </div>
+                <div class="read-all">
+                    <a  href="/posts/ML04GradientDescent/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/posts/ML03BiasAndVariance/">机器学习入门系列03，Error的来源：偏差和方差（bias 和 variance）</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-03-27 18:03:33
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#方差" title="Tag: 方差" rel="tag">方差</a>&nbsp;
+    
+        <a href="/tag/#无偏估计" title="Tag: 无偏估计" rel="tag">无偏估计</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt clearfix">
+                    <div class='preview-image'><img src='http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0ofd7d2nj20vi0hsgnx.jpg' alt='' /></div>
+                    回顾 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66611368<br />
+回顾<br />
+第二篇中神奇宝贝的例子：<br />
+
+                </div>
+                <div class="read-all">
+                    <a  href="/posts/ML03BiasAndVariance/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/posts/ML02Regression/">机器学习入门系列02，Regression 回归：案例研究</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2017-03-27 18:02:44
+                    </div>
+                    
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#机器学习" title="Category: 机器学习" rel="category">机器学习</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+                    </div>
+                    
+                    
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#回归" title="Tag: 回归" rel="tag">回归</a>&nbsp;
+    
+        <a href="/tag/#损失函数" title="Tag: 损失函数" rel="tag">损失函数</a>
+    
+  
+
+</span>
+
+
+
+                    </div>
+                    
+                </div>
+                <div class="excerpt clearfix">
+                    <div class='preview-image'><img src='http://wx3.sinaimg.cn/mw690/a9c4d5f6gy1fe0me8ssa8j20zc0kcn5j.jpg' alt='' /></div>
+                    为什么要先进行案例研究？ Regression （回归） 引用课程：http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML16.html<br />
+先看这里，可能由于你正在查看这个平台行间公式不支持很多的渲染，所以最好在我的CSDN上查看，传送门：（无奈脸） CSDN博客文章地址：http://blog.csdn.net/zyq522376829/article/details/66577532<br />
+为什么要先进行案例研究？<br />
+没有比较好的数学基础，直接接触深度学习会非常抽象，所以这里我们先通过一个预测 Pokemon Go 的 Combat Power (CP) 值的案例，打开深度学习的大门。<br />
+Regression （回归）<br />
+
+                </div>
+                <div class="read-all">
+                    <a  href="/posts/ML02Regression/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -294,11 +579,11 @@
                     
                         <li><a href="/posts/tu_jie_objective_c_dui_xiang_mo_xing/">图解Objective-C对象模型</a></li>
                     
+                        <li><a href="/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/">VC减负若干技巧（一）</a></li>
+                    
                         <li><a href="/posts/react_native_xue_xi_bi_ji/">React Native学习笔记</a></li>
                     
                         <li><a href="/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/">深度学习之风格迁移简介</a></li>
-                    
-                        <li><a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__yi_/">OpenGL ES (iOS) 学习笔记 — 基础篇（一）</a></li>
                     
                 </ul>
             </div>
@@ -361,7 +646,7 @@
                             <span class="name">
                                 ios
                             </span>
-                            <span class="badge">33</span>
+                            <span class="badge">37</span>
                         </a>
                     </li>
                     
@@ -370,7 +655,7 @@
                             <span class="name">
                                 android
                             </span>
-                            <span class="badge">24</span>
+                            <span class="badge">26</span>
                         </a>
                     </li>
                     
@@ -379,7 +664,7 @@
                             <span class="name">
                                 其他
                             </span>
-                            <span class="badge">1</span>
+                            <span class="badge">2</span>
                         </a>
                     </li>
                     
@@ -460,7 +745,7 @@
                       
                       
                       
-                      <a href="/tag/#机器学习" style="font-size: 11pt; color: #777;">机器学习</a>
+                      <a href="/tag/#机器学习" style="font-size: 11.5pt; color: #777;">机器学习</a>
                     
                       
                       
@@ -796,7 +1081,7 @@
                       
                       
                       
-                      <a href="/tag/#COREML" style="font-size: 9pt; color: #999;">COREML</a>
+                      <a href="/tag/#COREML" style="font-size: 9.5pt; color: #888;">COREML</a>
                     
                       
                       
@@ -859,7 +1144,7 @@
                       
                       
                       
-                      <a href="/tag/#kotlin" style="font-size: 9.5pt; color: #888;">kotlin</a>
+                      <a href="/tag/#kotlin" style="font-size: 10pt; color: #888;">kotlin</a>
                     
                       
                       
@@ -915,7 +1200,7 @@
                       
                       
                       
-                      <a href="/tag/#App" style="font-size: 9pt; color: #999;">App</a>
+                      <a href="/tag/#App" style="font-size: 9.5pt; color: #888;">App</a>
                     
                       
                       
@@ -979,6 +1264,76 @@
                       
                       
                       <a href="/tag/#ThreadLocal" style="font-size: 9pt; color: #999;">ThreadLocal</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#苹果" style="font-size: 9pt; color: #999;">苹果</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#签名" style="font-size: 9pt; color: #999;">签名</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#OC原理" style="font-size: 9pt; color: #999;">OC原理</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#内存管理" style="font-size: 9pt; color: #999;">内存管理</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#引用计数" style="font-size: 9pt; color: #999;">引用计数</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#纹理压缩" style="font-size: 9pt; color: #999;">纹理压缩</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#LLVM" style="font-size: 9pt; color: #999;">LLVM</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#静态分析" style="font-size: 9pt; color: #999;">静态分析</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#编译" style="font-size: 9pt; color: #999;">编译</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#检查" style="font-size: 9pt; color: #999;">检查</a>
                     
                       
                       
@@ -1070,6 +1425,20 @@
                       
                       
                       <a href="/tag/#风格迁移" style="font-size: 9pt; color: #999;">风格迁移</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#VC" style="font-size: 9pt; color: #999;">VC</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#腐烂" style="font-size: 9pt; color: #999;">腐烂</a>
                     
                       
                       
@@ -1178,7 +1547,7 @@
 <script type="text/javascript">
 laypage({
     cont: 'pagination', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
-    pages: 13, //通过后台拿到的总页数
+    pages: 14, //通过后台拿到的总页数
     curr: 13 , //当前页
     groups: 5,
     prev: false,

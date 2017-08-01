@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IOS签名机制详解</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  背景  苹果为什么要推出签名机制  关键技术和基础原理">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_qian_ming_ji_zhi_xiang_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>IOS签名机制详解</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-03
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>qingduan
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E8%8B%B9%E6%9E%9C" title="Tag: 苹果" rel="tag">苹果</a-->
+        <a href="/tag/#苹果" title="Tag: 苹果" rel="tag">苹果</a>&nbsp;
+    
+        <!--a href="/tag/#App" title="Tag: App" rel="tag">App</a-->
+        <a href="/tag/#App" title="Tag: App" rel="tag">App</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%AD%BE%E5%90%8D" title="Tag: 签名" rel="tag">签名</a-->
+        <a href="/tag/#签名" title="Tag: 签名" rel="tag">签名</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
+  <li><a href="#苹果为什么要推出签名机制" id="markdown-toc-苹果为什么要推出签名机制">苹果为什么要推出签名机制</a></li>
+  <li><a href="#关键技术和基础原理" id="markdown-toc-关键技术和基础原理">关键技术和基础原理</a>    <ul>
+      <li><a href="#单层签名验证" id="markdown-toc-单层签名验证">单层签名验证</a></li>
+      <li><a href="#数字签名" id="markdown-toc-数字签名">数字签名</a></li>
+      <li><a href="#非对称加密" id="markdown-toc-非对称加密">非对称加密</a></li>
+      <li><a href="#双层签名验证" id="markdown-toc-双层签名验证">双层签名验证</a></li>
+    </ul>
+  </li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<ul>
+  <li>背景</li>
+  <li>苹果为什么要推出签名机制</li>
+  <li>关键技术和基础原理
+<!--more-->
+    <ul>
+      <li>单层签名验证</li>
+      <li>数字签名</li>
+      <li>非对称加密</li>
+      <li>双层签名验证</li>
+    </ul>
+  </li>
+  <li>参考文献</li>
+</ul>
+
+<h2 id="背景">背景</h2>
+
+<p>在开发手Q需要真机调试的时候经常有同事抱怨签名报错的问题，一方面是手Q工程非常庞大、有很多<code class="highlighter-rouge">Target</code>每个都需要签名，另一方面IOS签名本身就非常繁琐复杂，其次，很多开发者对签名机制没有彻底掌握，导致出现问题浪费好多时间。所以花了一些时间仔细研究总结了一下IOS签名机制，推荐给大家，希望本文有助于开发者更好地理解IOS签名机制，提升开发效率。</p>
+
+<h2 id="苹果为什么要推出签名机制">苹果为什么要推出签名机制</h2>
+
+<p>苹果一直致力于打造一个健康的闭环生态圈，只有符合标准的App才能在平台上运行，所以推出一个准入认证机制，来保证App的质量和用户的安全。<code class="highlighter-rouge">Windows</code>、<code class="highlighter-rouge">Android</code>等开发平台上的流氓软件横行，我觉得主要一个原因还是平台缺少审核机制。</p>
+
+<h2 id="关键技术和基础原理">关键技术和基础原理</h2>
+
+<blockquote>
+  <p>目前<code class="highlighter-rouge">App</code>主要通过四种途径在苹果平台上运行：<br />
+1.<code class="highlighter-rouge">App Store</code><br />
+2.真机调试<br />
+3.<code class="highlighter-rouge">In-House</code> 企业内部分发，用企业证书签名后可直接运行<br />
+4.<code class="highlighter-rouge">AD-Hoc</code>相当于企业分发的限制版，限制安装设备数量</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">App
+Store</code>是采用单层签名验证机制，后面三种情况使用的是双层签名验证机制，接下来从相对简单的单层签名验证机制开始，详细讲解两者的区别和具体实现过程。</p>
+
+<h3 id="单层签名验证">单层签名验证</h3>
+
+<p><img src="/image/ios_qian_ming_ji_zhi_xiang_jie/0eb0a767b092fcc00244ab44b0706c6251444b1daaa92a6601505222d9631811" alt="sign1" /></p>
+
+<p><strong>实现过程大致分为以下几步：</strong></p>
+
+<ol>
+  <li>苹果官方生成一对公私钥，在 iOS 里内置一个公钥，私钥由苹果后台保存。</li>
+  <li>我们传 App 上 AppStore 时，苹果后台用私钥对 APP 数据进行签名。</li>
+  <li>iOS 系统下载这个 APP 后，用内置的公钥验证这个签名，若签名正确，这个 APP 肯定是由苹果后台认证的，并且没有被修改过，就可以正常运行在IOS上，否则，不能运行。</li>
+</ol>
+
+<p>从上图分析可以看出，签名验证机制的核心技术是数字签名。</p>
+
+<h3 id="数字签名">数字签名</h3>
+
+<p>数字签名的主要作用防止数据被篡改、防止抵赖，数字签名是非对称密钥加密技术与数字摘要技术的应用。接下来讲解一下数字签名的实现过程：<br />
+<img src="/image/ios_qian_ming_ji_zhi_xiang_jie/f73a1c32d92dcbe92c971cf98811aa5d9bb3f3d5c233b35c8254388c82cde9e8" alt="sign0" /></p>
+
+<p><strong>实现过程大致分为以下几步：</strong></p>
+
+<ol>
+  <li>首先用一种算法，算出原始数据的摘要。这种算法需要满足两个条件：若原始数据有任何变化，计算出来的摘要值都会变化。摘要要够短。这里最常用的算法是MD5。</li>
+  <li>生成一份非对称加密的公钥和私钥，私钥我自己拿着，公钥公布出去。</li>
+  <li>用私钥加密这个摘要，得到一份加密后的数据，称为原始数据的签名。</li>
+  <li>摘要和原始数据一起发送给用户。</li>
+  <li>用户收到数据和签名后，用公钥解密得到摘要。同时用户用同样的算法计算原始数据的摘要，对比这里计算出来的摘要和用公钥解密签名得到的摘要是否相等，若相等则表示这份数据中途没有被篡改过，因为如果篡改过，摘要会变化。<br />
+从上述分析可以看出，数字签名技术主要依赖加密技术和摘要算法，接下来简单介绍一下非对称加密技术。</li>
+</ol>
+
+<h3 id="非对称加密">非对称加密</h3>
+
+<p>非对称加密算法需要两个密钥：公开密钥（<code class="highlighter-rouge">publickey</code>）和私有密钥（<code class="highlighter-rouge">privatekey</code>）。公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
+
+<p>非对称密码体制的特点：算法强度复杂、安全性依赖于算法与密钥但是由于其算法复杂，而使得加密解密速度没有对称加密解密的速度快。</p>
+
+<p>了解更多前往 <a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA
+算法原理（一）</a><a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA
+算法原理（二）</a></p>
+
+<h3 id="双层签名验证">双层签名验证</h3>
+
+<p>在很多种情况下<code class="highlighter-rouge">App</code>不需要传到苹果后台认证和审核，能直接在平台上运行，但是苹果又需要对这种情况进行监管和控制，比如说：真机调试、企业证书签名等。为了解决这个问题，因此推出了双层签名认证机制。<br />
+<img src="/image/ios_qian_ming_ji_zhi_xiang_jie/c91e8f6e9bb7398cf3268c138fe5ded6bc0b5522dd8eefb3af6fd5c51a2f3298" alt="sign4" /></p>
+
+<p><strong>大致流程分为以下几步：</strong></p>
+
+<ul>
+  <li>第1步，对应的是 keychain 里的 “从证书颁发机构请求证书”，这里就本地生成了一对公私钥，保存的 CertificateSigningRequest 就是公钥，私钥保存在本地电脑里。</li>
+  <li>第2步，苹果自身实现。</li>
+  <li>第3步，对应把 CertificateSigningRequest 传到苹果后台生成证书，并下载到本地。这时本地有两个证书，一个是第 1 步生成的，一个是这里下载回来的，keychain 会把这两个证书关联起来，因为他们公私钥是对应的，在XCode选择下载回来的证书时，实际上会找到 keychain 里对应的私钥去签名。这里私钥只有生成它的这台 Mac 有，如果别的 Mac 也要编译签名这个 App 怎么办？答案是把私钥导出给其他 Mac 用，在 keychain 里导出私钥，就会存成 .p12 文件，其他 Mac 打开后就导入了这个私钥。</li>
+  <li>第4步，都是在苹果网站上操作，配置 AppID / 权限 / 设备等，最后下载 Provisioning Profile 文件。</li>
+  <li>第5步，XCode 会通过第 3 步下载回来的证书（存着公钥），在本地找到对应的私钥（第一步生成的），用本地私钥去签名 App，并把 Provisioning Profile 文件命名为 embedded.mobileprovision 一起打包进去。这里对 App 的签名数据保存分两部分，Mach-O 可执行文件会把签名直接写入这个文件里，其他资源文件则会保存在 _CodeSignature 目录下。</li>
+  <li>第6步，在安装时，iOS 系统取得证书，通过系统内置的公钥 A，去验证 embedded.mobileprovision 的数字签名是否正确，里面的证书签名也会再验一遍。</li>
+  <li>第7步，确保了 embedded.mobileprovision 里的数据都是苹果授权以后，就可以取出里面的数据，做各种验证，包括用公钥 L 验证APP签名，验证设备 ID 是否在 ID 列表上，AppID 是否对应得上，权限开关是否跟 APP 里的 Entitlements 对应等。</li>
+</ul>
+
+<p><strong>名词解释</strong><br />
+<strong>证书</strong>：公钥+签名信息<br />
+<strong>Code Signing Identity</strong>:证书+私钥<br />
+<strong>.p12文件</strong>：导出的私钥就是p12文件格式<br />
+<strong>Entitlements</strong>：授权机制决定了哪些系统资源在什么情况下允许被一个应用使用。简单的说它就是一个沙盒的配置列表，上面列出了哪些行为被允许，哪些会被拒绝。在<code class="highlighter-rouge">xcode</code>的<code class="highlighter-rouge">Capabilities</code>中列举的功能都是需要配置授权的。<br />
+<strong>Provisioning Profile</strong>：证书+设备IDs+AppID+Entitlements+签名信息</p>
+
+<p><strong>小结</strong><br />
+提交<code class="highlighter-rouge">App
+Store</code>的应用就是采用单层签名验证，只需要苹果自身的公私秘钥就能完成。而企业签名、真机调试等情形，不仅需要苹果参与签名，而且需要开发者自身参与签名，因此称之为双层签名验证。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p><a href="http://blog.cnbang.net/tech/3386/#more-3386">bang’s blog</a><br />
+<a href="https://objccn.io/issue-17-2/">代码签名探析</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/qian_xi_android_zhong_de_threadlocal/">浅析Android中的ThreadLocal</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/core_ml_and_vision_framework_on_ios_11/">Core ML and Vision Framework on iOS 11</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_qian_ming_ji_zhi_xiang_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_qian_ming_ji_zhi_xiang_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>
