@@ -1,0 +1,107 @@
+---
+layout: post
+title: "React Native学习笔记"
+date: 2017-07-31 17:31:00 +0800
+categories: ios
+author: doreencao
+tags: iOS
+---
+
+* content
+{:toc}
+
+
+
+**原理**
+
+一．React
+<!--more-->
+
+以我对前端非常简陋的理解，它需要三个模块实现基本的完整功能：
+
+1.         HTML，创建DOM节点和DOM树，组成页面的结构和基本布局
+
+2.         CSS，影响DOM样式，如位置信息、大小、层级、显示隐藏等
+
+3.         JS，代码中与DOM树节点id一一对应来处理逻辑，以动态操控DOM
+
+React框架提供了一种“简洁的语法高效绘制DOM框架”，即JSX。个人理解的“简洁”是指实现JS与HTML的混合编程，看起来像是在JS中用HTML语言创建DOM节点，开发过程只需要关心如果用JS构造页面。高效性得益于Virtual
+DOM机制，DOM需要更新时，创建一个虚拟树即Virtual Dom代表所需状态，将其与之前的Virtual
+Dom通过Diff算法进行比对，只渲染被改变的内容，避免了JS引擎判断调用负责渲染的DOM操作接口，充分利用JS引擎的性能高效改动DOM。
+
+二．React Native
+
+移动平台提供了运行JS代码的引擎，而JS可以实现动态配置并表达逻辑信息，二者的结合可以概括React
+Native所要解决的问题：基于JS，具备动态配置能力的移动端开发框架，开发者用同一套语法、工具，开发面向安卓、iOS、前端不同平台的应用。
+
+以iOS平台为例，系统平台提供的JavaScript Core框架实现OC代码与JS代码的直接交互。React Native用JavaScript
+Core作为JS的解析引擎，并自己实现了一套通用与所有JS引擎的机制，可以理解为以JS的形式告诉native该执行什么OC代码。
+
+![](/image/react_native_xue_xi_bi_ji/490461277b38e87b22c069d8bc5c35b4ed918b10b1f3af9c5cbe5494359ef78a)
+
+**性能问题**
+
+React Native框架具有APP轻量、支持动态更新、跨平台等优势，也存在兼容性和性能问题。
+
+通过阅读React
+Native性能相关的文章，总结出性能问题主要分为两大类：页面初次加载速度慢，大数据量时Listview加载卡顿。下面针对这两大类问题，具体讨论他们的原因和解决方法。
+
+![](/image/react_native_xue_xi_bi_ji/d0a70f3077d8719288fd6c539ee13d24fb74a097ac7fc54315e059d43325affa)
+
+一．页面初次加载速度慢
+
+![](/image/react_native_xue_xi_bi_ji/e6ead6c5a0949676181e989730e56134419cc2a7dfbaaa537a81e51422af74eb)
+
+由上图可知，RN页面初次加载的主要时间消耗在JS Init +Requir上，这主要就是JS Bundle加载的时间。
+
+(一）JS Bundle分包
+
+![](/image/react_native_xue_xi_bi_ji/912e989111ca2b79b2d0c457bc3a46e874228db75370ab00c6ccfd58a631433e)
+
+如上图所示，RN官方的打包工具，会在每一个业务的JS
+Bundle中，打包进框架JS代码和业务JS代码，而这个框架JS代码大约有530KB。所以，我们应该改造RN的打包工具，拆分开业务JS和框架JS，每个业务的JS
+Bundle只拥有自己的业务JS，然后共用同一份框架JS代码。这样既可以有效减小JS Bundle包，减少加载JS
+Bundle的时间，也有利于后续的预加载和缓存。
+
+(二）预加载RN框架
+
+在打开RN界面时，会先加载RN框架，然后在框架上运行业务JS，所以导致整个RN界面打开需要将近1s的时间。
+
+因为前面已经将框架JS和业务JS分离，所以可以在后台预加载一个RN环境，把框架JS代码先跑起来，然后在RN界面真正打开的时候，再跑业务JS，直接进行业务界面的渲染，加快界面打开速度。
+
+二．大数据量时Listview加载卡顿
+
+（一）Listview节点复用
+
+分析卡顿原因，可以从Listview的实现原理入手。React列表的每一项都会带有一个key属性，在React进行虚拟dom
+diff时，作为每个列表项的标记。
+
+![](/image/react_native_xue_xi_bi_ji/f904b524c89bb254dfa1d607772a68fca0761351a9e3065661fe831457f973fb)
+
+由上图可知，列表在滑动的过程中，节点并没有复用，react会认为是key1被销毁和key6被创建，这会引发页面重绘，消耗大量的渲染时间。除此之外，被滑出视野范围外的节点，只是从列表这个父节点上移除，但是节点的引用依然存在，还是会占用内存。
+
+所以，节点没有复用，滑动时会触发多次重绘，导致卡顿。同时，由于滑出视野范围的节点没有被及时回收，在大数据量时，会导致内存占用迅速增大，导致整个app卡顿。
+
+![](/image/react_native_xue_xi_bi_ji/80d46afeae3d8c505e6c084b41987f38673399699332bb820f842ff310c9cac7)
+
+通过修改，复用节点，react就会认为仅仅是key1更改了位置，只会引发重排，减少渲染时间。这里的具体方案可以参考native端Recycle
+view的实现。
+
+（二）Listview异步加载数据
+
+Listview是同步加载数据的，当数据量大时，容易卡顿。可以考虑异步地往Listview push数据。
+
+（三）ReactNative FlatList
+
+RN新版本中推出的List，其实就是官方实现的复用列表节点的List，性能显著提升。
+
+参考文档：
+
+[React Native
+从入门到原理](http://www.jianshu.com/p/978c4bd3a759)[](http://www.jianshu.com/p/978c4bd3a759
+"React Native 从入门到原理" )
+
+[携程是如何做React Native优化的](https://zhuanlan.zhihu.com/p/23715716)
+
+[Qunar React Native 大规模应用实践](http://geek.csdn.net/news/detail/139051)
+
