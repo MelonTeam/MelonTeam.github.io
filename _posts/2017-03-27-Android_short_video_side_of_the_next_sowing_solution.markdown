@@ -2,7 +2,7 @@
 layout: post
 title:  "Android短视频边下边播详解"
 date:   2017-03-27 11:04:58
-categories: Android
+categories: android
 tags: 边下边播 视频
 ---
 * content

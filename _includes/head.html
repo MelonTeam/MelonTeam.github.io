@@ -15,7 +15,12 @@
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml " | prepend: site.baseurl | prepend: site.url }}">
 
-
+    <!-- some other meta -->
+    {% if page.url == "/404.html" %}
+        <meta http-equiv="refresh" content="5; url=/">
+    {% endif %}
+    <!-- some other stuff like link or script -->
+    
 {% if page.mathjax %}
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -29,4 +34,5 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 {% endif %}
+
 </head>
