@@ -110,7 +110,6 @@ setFactory() 和 setFactory2()。
 所以，我们调用 setFactory()或者setFactory2()方法有可能会遇到失败：“A factory has already been set
 on this LayoutInflater”。最后，我通过反射把我定义的Factory对象安全地注入到了LayoutInflater对象中。
 
-具体代码请详见微码：<http://code.oa.com/v2/weima/detail/96896>
 
 * * *
 
