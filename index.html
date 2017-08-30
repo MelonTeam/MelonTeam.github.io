@@ -29,12 +29,14 @@ layout: default
                     {% include category.html %}
                     </div>
                     {% endif %}
-                    {% if post.tags != empty %}
+                </div>
+                {% if post.tags != empty %}
+                <div class="label">
                     <div class="label-card">
                     {% include tag.html %}
                     </div>
-                    {% endif %}
                 </div>
+                {% endif %}
                 <div class="excerpt clearfix">
                     {{post.content|first_image|preview_image}}
                     {{post.excerpt|strip_html|trim_newlines|newline_to_br}}
@@ -68,25 +70,12 @@ layout: default
                     {% endfor %}
                 </ul>
             </div>
-
-            <!-- Content -->
             <div class="side ">
                 <div>
-                    <i class="fa fa-th-list"></i>
-                    分类
+                    <i class="fa fa-pencil-square-o"></i>
+                    最新评论
                 </div>
-                <ul class="content-ul" cate>
-                    {% for category in site.categories %}
-                    <li>
-                        <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}" class="categories-list-item" cate="{{ category | first }}">
-                            <span class="name">
-                                {{ category | first }}
-                            </span>
-                            <span class="badge">{{ category | last | size }}</span>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                <div id="uyan_newcmt_unit"></div>
             </div>
             <!-- 其他div框放到这里 -->
             <div class="side">

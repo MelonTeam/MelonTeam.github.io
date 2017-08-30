@@ -20,7 +20,18 @@
         <meta http-equiv="refresh" content="5; url=/">
     {% endif %}
     <!-- some other stuff like link or script -->
-    
+    {% if site.uyan_id %}
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'{{ site.url }}{{ page.url }}',
+     'du':'{{ site.url }}', 
+     'su':'{{ site.url }}{{ page.url }}' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid={{site.uyan_id}}"></script>
+<!-- UY END -->
+{% endif %}
 {% if page.mathjax %}
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
