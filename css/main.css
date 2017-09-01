@@ -846,6 +846,8 @@ pre {
       border-radius: 5px; }
       .page[index] .right .wrap .side .tags-cloud a:hover {
         background-color: #f0e7ce; }
+  .page[index] .right .wrap .side #uyan_widget_newcmt {
+    height: auto !important; }
 
 @media screen and (max-width: 770px) {
   .page[index] .left > ul li h2 {

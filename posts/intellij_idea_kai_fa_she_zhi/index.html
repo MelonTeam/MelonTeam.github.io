@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IntelliJ IDEA开发设置</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一、设置参数，优化开发体验            导语 介绍一些IntelliJ IDEA使用过程中可以提高工作效率和改善心情的开发设置      一、设置参数，优化开发体验Help -&gt; Edit Custom VM Options，创建一份vmoptions文件。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>IntelliJ IDEA开发设置</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>limingzhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#IntelliJ" title="Tag: IntelliJ" rel="tag">IntelliJ</a-->
+        <a href="/tag/#IntelliJ" title="Tag: IntelliJ" rel="tag">IntelliJ</a>&nbsp;
+    
+        <!--a href="/tag/#idea" title="Tag: idea" rel="tag">idea</a-->
+        <a href="/tag/#idea" title="Tag: idea" rel="tag">idea</a>&nbsp;
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+    
+        <!--a href="/tag/#java" title="Tag: java" rel="tag">java</a-->
+        <a href="/tag/#java" title="Tag: java" rel="tag">java</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一设置参数优化开发体验" id="markdown-toc-一设置参数优化开发体验">一、设置参数，优化开发体验</a></li>
+  <li><a href="#二防止导包时在代码中出现import" id="markdown-toc-二防止导包时在代码中出现import">二、防止导包时在代码中出现import*</a></li>
+  <li><a href="#三正确地使用tab键" id="markdown-toc-三正确地使用tab键">三、正确地使用Tab键</a></li>
+  <li><a href="#四开启android高版本api错误警告" id="markdown-toc-四开启android高版本api错误警告">四．开启Android高版本API错误警告</a></li>
+  <li><a href="#五代码提示不区分大小写" id="markdown-toc-五代码提示不区分大小写">五、代码提示不区分大小写</a></li>
+  <li><a href="#六左侧类名下面显示类成员" id="markdown-toc-六左侧类名下面显示类成员">六、左侧类名下面显示类成员</a></li>
+  <li><a href="#七给ide设置背景" id="markdown-toc-七给ide设置背景">七、给IDE设置背景</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 介绍一些IntelliJ IDEA使用过程中可以提高工作效率和改善心情的开发设置</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="一设置参数优化开发体验">一、设置参数，优化开发体验</h1>
+
+<p>Help -&gt; Edit Custom VM Options，创建一份vmoptions文件。<br />
+<!--more-->
+默认64位操作系统 + 16G内存<br />
+建议修改参数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-Xms2g  
+-Xmx4g  
+-XX:+UseConcMarkSweepGC  
+-XX:+UseParNewGC  
+-Xverify:none
+</code></pre>
+</div>
+
+<p>-Xms 设置初始的内存大小，可以提高Java程序的启动速度</p>
+
+<p>-Xmx 设置最大的内存大小，ide默认的只有几百兆，导致开发过程中载入很大的类时使用起来十分卡顿，提高改值，可以减少垃圾回收频率，提升IDE性能</p>
+
+<p>-XX:UseConcMarkSweepGC 设置年老代为并发收集垃圾</p>
+
+<p>-XX:UseParNewGC 设置年轻代为并发收集垃圾</p>
+
+<p>-Xverify：none 关闭Java字节码验证，可以加快类的装入速度，提高IDE启动速度</p>
+
+<h1 id="二防止导包时在代码中出现import">二、防止导包时在代码中出现import*</h1>
+
+<p>File –&gt; Settings –&gt;Editor –&gt; Code Style –&gt; Java–&gt;Imports</p>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/fbee7baec9e10e04c2fed2d5e232c45cf19b9eba5f3089b4cd4ebf76344203a7" alt="" />、</p>
+
+<p>为了避免在代码中出现import<em>的情况， 把需要使用import</em>时的包数量提高到1000。</p>
+
+<h1 id="三正确地使用tab键">三、正确地使用Tab键</h1>
+
+<p>如果工程中要避免使用Tab，该设置可以让你使用tab键的同时仍然以空格的方式输入</p>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/284da8bbf94b81af9e9c3b4c915f639e9b9db5c27d77ef6ed41b754729c70bb3" alt="" /><br />
+分别对：Java和xml选项进行配置<br />
+1. 取消对Use tab character的勾选<br />
+2. 让indent改为4个空格。</p>
+
+<h1 id="四开启android高版本api错误警告">四．开启Android高版本API错误警告</h1>
+
+<p>如果你的IDE缺少了高版本api错误提示，看下这里是不是没有设置好：<br />
+File –&gt;Setting –&gt;Inspections–&gt;Android Lint –&gt; Calling new
+methods on older versions</p>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/5048d6e888288221b544ee719d081d2dbdd1a117d1f3f93d75d325cce74e7eb1" alt="" /></p>
+
+<h1 id="五代码提示不区分大小写">五、代码提示不区分大小写</h1>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/be5e34d1ac3932cb5ef7f5e1e12edfdc1938665e98f6a9cc3aad6f7a6fbabd5a" alt="" /></p>
+
+<p>把 case sensitive completion 设置为None，因为IDE本身默认是区分大小写，
+这样我们用到代码提示功能时还要记住字母是大小还是小写，很麻烦。</p>
+
+<h1 id="六左侧类名下面显示类成员">六、左侧类名下面显示类成员</h1>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/aa52d2852c09ad19886c2ddd775225d58539a60142319f4c88df63f04ea7cd7c" alt="" /></p>
+
+<p>这样子可以很方便的查看该类的成员。</p>
+
+<h1 id="七给ide设置背景">七、给IDE设置背景</h1>
+
+<p><img src="/image/intellij_idea_kai_fa_she_zhi/4eff98e0457ba80e56248f4b995c4b6a63b00ecaef27b3f8eaf9f5b682c912d2" alt="" /></p>
+
+<p>按下Ctrl+Shift+A，输入Set Background Image，点击结果跳转，
+弹出一个窗口，按照提示操作即可，如果你把IDE设置为老婆的背景，每天对着老婆写代码，是不是充满干劲呢（认真脸）？</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/">Android旁门左道之动态替换应用程序类
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_dong_tai_quan_xian/">Android动态权限
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_tou_ying_he_she_xiang_ji/">OpenGL-投影和摄像机
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_interpolator_xiang_jie/">[译]Android Interpolator详解
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/">[译]Android TensorFlow机器学习示例
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/">Android旁门左道之动态替换应用程序类</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/heskell_yu_han_shu_shi_bian_cheng/">Heskell与函数式编程</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

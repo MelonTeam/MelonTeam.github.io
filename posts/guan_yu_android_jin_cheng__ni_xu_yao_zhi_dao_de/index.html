@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>关于Android进程，你需要知道的</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 Android系统是怎样杀进程的，native进程是怎么管理的？本文为你解密      一、Android进程管理Android是基于组件工作的，每个组件可以通过android:process节点指定在一个独立进程中执行，所以一个app里面可能会有多个Android进程。系统在强制停...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>关于Android进程，你需要知道的</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>henrikwu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#native" title="Tag: native" rel="tag">native</a-->
+        <a href="/tag/#native" title="Tag: native" rel="tag">native</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%BB%84%E4%BB%B6" title="Tag: 组件" rel="tag">组件</a-->
+        <a href="/tag/#组件" title="Tag: 组件" rel="tag">组件</a>&nbsp;
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 Android系统是怎样杀进程的，native进程是怎么管理的？本文为你解密</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>一、Android进程管理</p>
+
+<p>Android是基于组件工作的，每个组件可以通过android:process节点指定在一个独立进程中执行，所以一个app里面可能会有多个Android进程。系统在强制停止app的时候是怎么干掉这些进程呢？
+<!--more--></p>
+
+<p>                             ActivityManagerService相关逻辑</p>
+
+<p><img src="/image/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/3c35b09907f11ed4060db484abdbc7e0b44a8e27040799bac97b620ee23cba2d" alt="" /></p>
+
+<p>      这里我们可以看到核心逻辑，首先遍历出来该packageName下的所有Android进程放在procs集合里，接着我们在for循环里分别杀之。</p>
+
+<p><img src="/image/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/daeffd2651a9a05e2c18d6a8009df0ee3951f3db85873aa963c11d7b351f44a6" alt="" /></p>
+
+<p>    这里我们可以看到调用Process的killProcessQuiet方法去杀进程，实际上最终调用linux进程机制发送-9信号将相关进程杀掉。</p>
+
+<p>这里我们着重看一下killProcessGroup方法，这个逻辑是5.0之后新增的。看名字我们可以大概猜测一下是杀进程组，那Android里面的进程组什么样的呢？什么样的进程会被放在进程组里呢？</p>
+
+<p>二、进程组</p>
+
+<p>    Android进程组借鉴了Linux进程组的机制，实际上就是fork出来的子进程会被和Android进程放到同一个进程组里面。</p>
+
+<p><img src="/image/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/cf0faabfb92efc980c607c701e294674a1dfc11849612305362c04a59ab69ac7" alt="" /></p>
+
+<p>但是这里面不同的是，Android里面同一个进程组的进程会被记录的/acct/uid_xxx/pid_xxx/cgroup.procs文件下，这样当系统强制停止app的时候，就会从这个文件里面读取进程并杀之。</p>
+
+<p><img src="/image/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/a67fde456851ae2b23a527b4704ac75ad6984f1bbc8331ceb86520c12fc4242a" alt="" /></p>
+
+<p>这块逻辑是5.0之后新增的。也是为了堵之前不杀native进程的漏洞。因为这个逻辑，所以之前市面上很成熟的native进程守护保活方案失效了。当然这里面还是有可以的做文章的空间，想要保活依然可以做到。不过Android每个版本都由相应的进化，所以需要分析源码来找到突破口。</p>
+
+<p>最后给一张Android进程的分析图：<img src="/image/guan_yu_android_jin_cheng__ni_xu_yao_zhi_dao_de/a12479a4f223d650e0da75f00c57c97016c78df57d5241e670acb8d88ea07b42" alt="" /></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/intellij_idea_kai_fa_she_zhi/">IntelliJ IDEA开发设置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/">Android旁门左道之动态替换应用程序类
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_dong_tai_quan_xian/">Android动态权限
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_tou_ying_he_she_xiang_ji/">OpenGL-投影和摄像机
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_interpolator_xiang_jie/">[译]Android Interpolator详解
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/">[译]Android TensorFlow机器学习示例
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_zi_yuan_re_xiu_fu_zhi_xiu_gai_aapt_yuan_ma/">Android资源热修复之修改aapt源码</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/">Android之贝赛尔曲线及其应用场景</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

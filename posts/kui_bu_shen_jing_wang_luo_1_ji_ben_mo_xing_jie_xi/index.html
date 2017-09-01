@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>跬步神经网络1-基本模型解析</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 最近开始看NN，很多疑问。微积分什么的早丢了，边看边查，记录备忘。本篇主要是针对最基本的网络模型，解释反向传播（backpropagation）原理。目录跬步神经网络1-基本模型解析">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>跬步神经网络1-基本模型解析</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-08
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yanjun
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" title="Tag: 神经网络" rel="tag">神经网络</a-->
+        <a href="/tag/#神经网络" title="Tag: 神经网络" rel="tag">神经网络</a>&nbsp;
+    
+        <!--a href="/tag/#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD" title="Tag: 人工智能" rel="tag">人工智能</a-->
+        <a href="/tag/#人工智能" title="Tag: 人工智能" rel="tag">人工智能</a>&nbsp;
+    
+        <!--a href="/tag/#AI" title="Tag: AI" rel="tag">AI</a-->
+        <a href="/tag/#AI" title="Tag: AI" rel="tag">AI</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>| 导语 最近开始看NN，很多疑问。微积分什么的早丢了，边看边查，记录备忘。
+本篇主要是针对最基本的网络模型，解释反向传播（backpropagation）原理。</p>
+
+<p>目录<br />
+跬步神经网络1-基本模型解析<br />
+<!--more-->
+<a href="" title="跬步神经网络2-C++简单实现">跬步神经网络2-C++简单实现</a><br />
+<a href="" title="跬步神经网络3-MNIST手写库初步识别">跬步神经网络3-MNIST手写库初步识别</a></p>
+
+<hr />
+
+<p> 整个神经网络可以理解成变量是所有 w、b的损失函数 L，L（w1,b1,w2,b2,w3,b3…….）</p>
+
+<p>为求L的极小值，使用梯度下降的方法</p>
+
+<p>对每个变量求偏导，算出 <em>**</em>Δw、Δb</p>
+
+<p>更新 w = w - lr Δw    b = b - lr Δb     lr 是步长（learning rate）</p>
+
+<p>激活函数、损失函数、网络结构、训练方法、连接方式、填充方式，都有很多选择，每个选择都会影响最终结果，要达到最优需要逐步积累经验</p>
+
+<p>先从最简单的开始。。。。。。</p>
+
+<hr />
+
+<p>需要复习的知识点，导数和偏导数、链式法则、梯度下降</p>
+
+<p><strong>导数</strong>：二维几何场景下，可以理解为曲线上某点的斜率，在求函数极小值的时候，可以根据斜率确定下一步 X 该增大还是减小</p>
+
+<p><strong>偏导数</strong>：存在多个变量的情况下，x的偏导就是假设其他变量都是常数，然后对x求导</p>
+
+<p><strong>链式法则</strong>：借一张图</p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/679a554c4cf8077d71afbb842a34db1f40de6facad3ead654e3a5275bf58dd84" alt="" /></p>
+
+<p><strong>梯度下降：</strong>求导或偏导得到斜率确定变化值，更新变量得到新的值，重复上面的操作，直到斜率为0或小于设置的某个阈值（比如0.000001）</p>
+
+<p>x = x - lrΔx                   y = y - lrΔy          lr 是步长</p>
+
+<hr />
+
+<p><strong>NN网络举个栗子：</strong></p>
+
+<p><em>神经元：</em><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/2b3c062e52756a9ecaa5b0aca2d87d155d9d71ceb3c4a7e55cbab25d8461d228" alt="" /></p>
+
+<p><em>激活函数、损失函数：<img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/4ec4ae962fadd12e1546387de33a67e139e07ac0888f8d86629582334930868f" alt="" /></em></p>
+
+<p><em>网络结构：</em></p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/51c56e8d795582e85b79cedc2c31a48aa1aa8ee7d9249b0011eb7d54b96fb86f" alt="" /></p>
+
+<p>根据上面的网络结构以及定义，可以得到：</p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/4dd0b9ca6f444635ca0bb3c744de844323c5777e27787c263d58670d5bb99ff5" alt="" /></p>
+
+<p>为了更新 W24、W25，需要求 E关于W24、W25的偏导：</p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/75403f4f5b13892b4f21d9f5ca6bdcb1cbf8672b956eece8e6c79d056603c447" alt="" /></p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/72947d37861daee680a8304e9d5651f7ad77b55b9c9331b904c6f685f3a4b98b" alt="" /></p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/47d181c5f4003c7fdaabcf66bd5b23ff394c308d6136b78538dbb3f8211dd471" alt="" /></p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/e80d18e6571c2fce116e9d784ee7382968ca85b8ec33358a1989a7480ef083a8" alt="" /></p>
+
+<hr />
+
+<p> 计算W12偏导比较麻烦一些</p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/d5eed0fb0bc3b8bac4ebc7875db009dfc4d396829758aaa6daf4888e86b61f3e" alt="" /></p>
+
+<hr />
+
+<p> 根据上面的结果，总结下面的公式：</p>
+
+<p><img src="/image/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/80b1782fb7f5ed7f0eb5e2dfeef7dd45204c4153961d605cf7a86196098d7987" alt="" /></p>
+
+<hr />
+
+<p>不同的激活函数和损失函数，求导的方程不一样。</p>
+
+<p>上面的例子使用 logistic函数和最小方差。</p>
+
+<p>下一步打算根据上面的公式，用c++写个小程序动手跑一遍，加深理解，尝试解决简单问题，</p>
+
+<p>然后熟悉成熟框架。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/duo_duan_pai_ban_za_tan/">多端排版杂谈</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/">跬步神经网络2-C++简单实现</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

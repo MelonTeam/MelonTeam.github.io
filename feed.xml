@@ -5,39 +5,124 @@
     <description>腾讯移动终端团队, 拥有丰富的移动终端的开发经验, 专注于前沿技术的探索和研究</description>
     <link>http://MelonTeam.com/</link>
     <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 03 Aug 2017 10:35:55 +0800</pubDate>
-    <lastBuildDate>Thu, 03 Aug 2017 10:35:55 +0800</lastBuildDate>
+    <pubDate>Fri, 01 Sep 2017 12:56:47 +0800</pubDate>
+    <lastBuildDate>Fri, 01 Sep 2017 12:56:47 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>多端排版杂谈</title>
+        <title>Bitmap 源码阅读笔记</title>
         <description>
+| 导语 Android 系统上的图片的处理，跟Bitmap
+这个类脱不了关系，我们有必要去深入阅读里面的源码，以便在工作中能更好的处理Bitmap相关的问题。
+
+Bitmap 源码阅读笔记
+
+</description>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/</guid>
+        
+        <category>Bitmap</category>
+        
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>Heskell与函数式编程</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#haskell简介&quot; id=&quot;markdown-toc-haskell简介&quot;&gt;Haskell简介&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;导语 本次主要聊聊多平台的排版技术的差异与共同，涉及的平台有Web、Android、iOS&lt;/td&gt;
+      &lt;td&gt;导语 这个系列打算分为三部分，由浅入深地介绍所谓的函数式编程 1）Haskell入门 2）Monad介绍 3）函数式编程的思想&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-要说排版技术，在这三个平台中我觉得最有话语权的应该就Web端了；主要因为web的发展历史更为悠久，而且伴随着Web端的应用场景越发广阔，内容排版越发复杂；这让排版技术在web端扮演着更加举足轻重的角色。下面我就先从web开始讲起：
+&lt;h1 id=&quot;haskell简介&quot;&gt;Haskell简介&lt;/h1&gt;
 
-       1990年，Berners-Lee发明了HTML，最开始仅仅支持文本排版以及一些超链接；
+Haskell诞生于1990年，是一门纯函数式编程语言，和我们经常使用的JAVA不一样，JAVA是一门命令式编程语言。函数式编程和命令式编程有本质上的区别，命令式编程是基于冯诺依曼体系的抽象，通俗点来说就是像电脑运作般思考，而函数式编程更多是数学抽象上函数的概念，也就是输入和输出的映射关系。
 
 </description>
-        <pubDate>Mon, 31 Jul 2017 23:53:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/duo_duan_pai_ban_za_tan/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/duo_duan_pai_ban_za_tan/</guid>
+        <pubDate>Thu, 31 Aug 2017 23:46:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/</guid>
         
-        <category>iOS</category>
+        <category>haskell</category>
         
-        <category>web</category>
+        <category>函数式编程</category>
+        
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>IntelliJ IDEA开发设置</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一设置参数优化开发体验&quot; id=&quot;markdown-toc-一设置参数优化开发体验&quot;&gt;一、设置参数，优化开发体验&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 介绍一些IntelliJ IDEA使用过程中可以提高工作效率和改善心情的开发设置&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;一设置参数优化开发体验&quot;&gt;一、设置参数，优化开发体验&lt;/h1&gt;
+
+Help -&amp;gt; Edit Custom VM Options，创建一份vmoptions文件。
+
+</description>
+        <pubDate>Thu, 31 Aug 2017 23:37:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/</guid>
+        
+        <category>IntelliJ</category>
+        
+        <category>idea</category>
         
         <category>Android</category>
         
-        <category>流体排版</category>
+        <category>java</category>
         
-        <category>FlexboxLayout</category>
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>Android旁门左道之动态替换应用程序类</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一引子&quot; id=&quot;markdown-toc-一引子&quot;&gt;一，引子&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 本文讲述如何通过替换应用程序类的方法，可以协助开发调试甚至应用于项目中。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+作者： yarkeyzhang  2017.8.31
+
+&lt;h1 id=&quot;一引子&quot;&gt;一，引子&lt;/h1&gt;
+
+</description>
+        <pubDate>Thu, 31 Aug 2017 23:04:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/</guid>
+        
+        <category>Android</category>
+        
+        <category>旁门左道</category>
         
         
         <category>未分类</category>
@@ -45,219 +130,165 @@
       </item>
     
       <item>
-        <title>Swift学习笔记（初始化过程）</title>
-        <description>
-| 导语
-Swift已经更新到4.0了，成为苹果推荐开发者进行iOS开发的语言，因此即使手头上的工程项目使用的还是object-c，但抽空学习下swift还是有必要的。因为swift从3.0开始已经日趋稳定，所以现在网上的资料大部分都是swift3.0的，本文的内容也是基于swift3.0，如果4.0有涉及新的更改，还需自己查阅。
-
-     km以及网上介绍swift基本语法的文章已经有不少，我这里就不累赘。这篇文章主要想讲的是：swift的初始化。
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 21:38:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/swift_xue_xi_bi_ji__chu_shi_hua_guo_cheng_/</guid>
-        
-        <category>Swift</category>
-        
-        
-        <category>未分类</category>
-        
-      </item>
-    
-      <item>
-        <title>iOS推送调试工具Easy APNs Provider的使用</title>
+        <title>Android动态权限</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#一背景&quot; id=&quot;markdown-toc-一背景&quot;&gt;一·背景&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#概述&quot; id=&quot;markdown-toc-概述&quot;&gt;概述&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;一背景&quot;&gt;一·背景&lt;/h3&gt;
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 随机聊需求中出现几个涉及权限的bug，所以对动态权限机制做了一个简单的整理。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-&lt;blockquote&gt;
+&lt;h2 id=&quot;概述&quot;&gt;概述&lt;/h2&gt;
 
-&lt;/blockquote&gt;
+Android应用程序通过请求权限来访问设备数据，例如联系人，短信，SD卡，相机，蓝牙等。应用所需的权限需要在manifest文件中声明，在安装的时候由用户授予。
 
 </description>
-        <pubDate>Mon, 31 Jul 2017 21:05:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_tui_song_diao_shi_gong_ju_easy_apns_provider_de_shi_yong/</guid>
+        <pubDate>Thu, 31 Aug 2017 21:50:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/android_dong_tai_quan_xian/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/android_dong_tai_quan_xian/</guid>
         
-        <category>iOS</category>
+        <category>Android</category>
         
-        <category>推送</category>
+        <category>动态权限</category>
         
         
-        <category>ios</category>
+        <category>android</category>
         
       </item>
     
       <item>
-        <title>IOS控件动画的一种通用方法</title>
+        <title>OpenGL-投影和摄像机</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#ios控件动画的一种通用方法&quot; id=&quot;markdown-toc-ios控件动画的一种通用方法&quot;&gt;IOS控件动画的一种通用方法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#1opengl中的摄像机视景体近平面&quot; id=&quot;markdown-toc-1opengl中的摄像机视景体近平面&quot;&gt;1.OpenGL中的摄像机、视景体、近平面&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;ios控件动画的一种通用方法&quot;&gt;IOS控件动画的一种通用方法&lt;/h1&gt;
+&lt;h2 id=&quot;1opengl中的摄像机视景体近平面&quot;&gt;1.OpenGL中的摄像机、视景体、近平面&lt;/h2&gt;
 
-&lt;blockquote&gt;
-  最近在做一个垂直弹幕控件 , 在做控件动画时费了不少心思, 这里分享一些心得.
-&lt;/blockquote&gt;
+OpenGL的摄像机和现实世界中的人眼很相似，都有一个三维的坐标表示位置，眼睛的朝向和视野范围，位置和眼睛朝向不同，所观察到的物体的形态就会有所不同，视野范围则规定了只有在该范围的物体才会进入人的视线，超出视野范围的部分就无法被观察到(人总不可能观察到耳朵两边和后脑勺的物体吧。)
 
 </description>
-        <pubDate>Mon, 31 Jul 2017 20:45:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_kong_jian_dong_hua_de_yi_zhong_tong_yong_fang_fa/</guid>
+        <pubDate>Thu, 31 Aug 2017 21:12:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/</guid>
         
-        <category>iOS</category>
-        
-        <category>动画</category>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>封装内嵌UICollectionView和UIPageControl的ScrollView</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#一交互样式&quot; id=&quot;markdown-toc-一交互样式&quot;&gt;一。交互样式&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-在需求中涉及到一个比较通用的控件，ScrollView里面嵌入CollectionView，封装一下，后面再有相同交互不用重复造轮子。
-
-&lt;h5 id=&quot;一交互样式&quot;&gt;一。交互样式&lt;/h5&gt;
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 20:44:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/feng_zhuang_nei_qian_uicollectionview_he_uipagecontrol_de_scrollview/</guid>
-        
-        <category>UICollectionView</category>
-        
-        <category>UIScrollView</category>
-        
-        <category>UIPageControl</category>
-        
-        <category>iOS</category>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>[iOS] OpenGL ES 2.0之初体验</title>
-        <description>
-| 导语 OpenGL ES 是专门为手持设备制定的 3D 规范，是 OpenGL 的简化版，目前最新规范版本为 3.0。 由于iPhone
-5C及以下设备不支持OpenGL ES 3.0，所以这里我以2.0版本为例进行OpenGL ES的入门探索。
-
-        虽然 iOS 5在 GLKit 中提供了方便使用OpenGL ES的GLKView，但我这里还是先从零开始设置自己的GL ES
-view，从而更进一步了解OpenGL ES是如何工作的。
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 20:36:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/ios_opengl_es_2_0_zhi_chu_ti_yan/</guid>
-        
-        <category>iOS</category>
+        <category>Android</category>
         
         <category>OpenGL</category>
         
         
-        <category>ios</category>
+        <category>android</category>
         
       </item>
     
       <item>
-        <title>图解Objective-C对象模型</title>
-        <description>
-&lt;strong&gt;目录&lt;/strong&gt;：&lt;br /&gt;
-&lt;strong&gt;1.这就是Objective-C对象模型吗？&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;2.Objective-C对象结构&lt;/strong&gt;
+        <title>全卷积神经网络fcn学习笔记</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一caffe环境搭建&quot; id=&quot;markdown-toc-一caffe环境搭建&quot;&gt;一、caffe环境搭建&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+| 导语 前段时间学习了一下全卷积神经网络fcn，现以笔记的形式总结学习的过程。主要包括四个部分：
+（1）caffe框架的搭建；（2）fcn原理介绍；（3）分析具体fcn网络；（4）使用caffe框架进行fcn的训练和预测
+
+&lt;h1 id=&quot;一caffe环境搭建&quot;&gt;一、caffe环境搭建&lt;/h1&gt;
 
 </description>
-        <pubDate>Mon, 31 Jul 2017 20:13:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/tu_jie_objective_c_dui_xiang_mo_xing/</guid>
+        <pubDate>Thu, 31 Aug 2017 21:01:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/quan_juan_ji_shen_jing_wang_luo_fcn_xue_xi_bi_ji/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/quan_juan_ji_shen_jing_wang_luo_fcn_xue_xi_bi_ji/</guid>
         
-        <category>iOS对象模型</category>
+        <category>深度学习</category>
         
-        <category>对象模型</category>
+        <category>全卷积神经网络</category>
         
-        <category>objectivec</category>
+        <category>fcn</category>
         
         
-        <category>ios</category>
+        <category>ai</category>
         
       </item>
     
       <item>
-        <title>VC减负若干技巧（一）</title>
+        <title>[译]Android Interpolator详解</title>
         <description>
+原文地址：&amp;lt;https://blog.mindorks.com/understanding-interpolators-in-android-
+ce4e8d1d71cd&amp;gt;
+
+</description>
+        <pubDate>Thu, 31 Aug 2017 20:39:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/yi_android_interpolator_xiang_jie/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_interpolator_xiang_jie/</guid>
+        
+        <category>Android</category>
+        
+        <category>动画</category>
+        
+        <category>插值器</category>
+        
+        <category>Interpolator</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>[译]Android TensorFlow机器学习示例</title>
+        <description>
+原文地址：&amp;lt;https://blog.mindorks.com/android-tensorflow-machine-learning-example-
+ff0e9b2654cc&amp;gt;
+
+</description>
+        <pubDate>Thu, 31 Aug 2017 20:25:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/</guid>
+        
+        <category>tensorflow</category>
+        
+        <category>机器学习</category>
+        
+        <category>Android</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>Viewpager循环滑动的实现</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#方案1&quot; id=&quot;markdown-toc-方案1&quot;&gt;&lt;strong&gt;方案1：&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;导语 VC代码的膨胀和臃肿，是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧&lt;/td&gt;
+      &lt;td&gt;导语 本文讲述实现ViewPager循环滑动效果的两种方案：&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-随着业务的变更和增加，VC的代码也随着庞大和臃肿，有些一开始设计不好的VC，更是随着时间推移，慢慢变成一场灾难。我的一个感受，某些模块的代码不是万不得已我是不敢点开看的。
+&lt;h3 id=&quot;方案1&quot;&gt;&lt;strong&gt;方案1：&lt;/strong&gt;&lt;/h3&gt;
 
-为什么会出现这种问题呢？  貌似VC的膨胀和臃肿，确实也是业界普遍问题，网上很多文章也都在讨论如何给VC减负，这里总结一下我看过的文章提出的一些减负技巧。
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 18:23:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/vc_jian_fu_ruo_gan_ji_qiao__yi_/</guid>
-        
-        <category>VC</category>
-        
-        <category>腐烂</category>
-        
-        
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>React Native学习笔记</title>
-        <description>
-&lt;strong&gt;原理&lt;/strong&gt;
-
-一．React
+复写ViewPager或者Adapter，扩展dataList，左右各加1。
 
 </description>
-        <pubDate>Mon, 31 Jul 2017 17:31:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/react_native_xue_xi_bi_ji/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/react_native_xue_xi_bi_ji/</guid>
+        <pubDate>Thu, 31 Aug 2017 20:22:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/viewpager_xun_huan_hua_dong_de_shi_xian/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/viewpager_xun_huan_hua_dong_de_shi_xian/</guid>
         
-        <category>iOS</category>
+        <category>adapter</category>
         
+        <category>ViewPager</category>
         
-        <category>ios</category>
-        
-      </item>
-    
-      <item>
-        <title>深度学习之风格迁移简介</title>
-        <description>
-&lt;strong&gt;风格迁移（style transfer）&lt;/strong&gt;最近两年非常火，可谓是深度学习领域很有创意的研究成果。它主要是通过神经网络，将一幅艺术风格画（style image）和一张普通的照片（content image）巧妙地融合，形成一张非常有意思的图片。
-
-&lt;img src=&quot;/image/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/4a0dbd0ba7031a2b9e0f97d222d5050799764b92b7b135ffba3edfda4fd2feea&quot; alt=&quot;&quot; /&gt;
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 17:03:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/shen_du_xue_xi_zhi_feng_ge_qian_yi_jian_jie/</guid>
-        
-        <category>深度学习</category>
-        
-        <category>风格化</category>
-        
-        <category>风格迁移</category>
+        <category>循环</category>
         
         
-        <category>ai</category>
+        <category>android</category>
         
       </item>
     

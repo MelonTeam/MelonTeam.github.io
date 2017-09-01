@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>OpenGL-投影和摄像机</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  1.OpenGL中的摄像机、视景体、近平面1.OpenGL中的摄像机、视景体、近平面OpenGL的摄像机和现实世界中的人眼很相似，都有一个三维的坐标表示位置，眼睛的朝向和视野范围，位置和眼睛朝向不同，所观察到的物体的形态就会有所不同，视野范围则规定了只有在该范围的物体才会进入人的视线，超出视野范围的部分就无法...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenGL-投影和摄像机</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>slimxu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+    
+        <!--a href="/tag/#OpenGL" title="Tag: OpenGL" rel="tag">OpenGL</a-->
+        <a href="/tag/#OpenGL" title="Tag: OpenGL" rel="tag">OpenGL</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1opengl中的摄像机视景体近平面" id="markdown-toc-1opengl中的摄像机视景体近平面">1.OpenGL中的摄像机、视景体、近平面</a></li>
+  <li><a href="#2坐标系" id="markdown-toc-2坐标系">2.坐标系</a>    <ul>
+      <li><a href="#手机屏幕坐标系" id="markdown-toc-手机屏幕坐标系">手机屏幕坐标系</a></li>
+      <li><a href="#opengl世界坐标系" id="markdown-toc-opengl世界坐标系">OpenGL世界坐标系</a></li>
+    </ul>
+  </li>
+  <li><a href="#3两种投影方式" id="markdown-toc-3两种投影方式">3.两种投影方式</a>    <ul>
+      <li><a href="#正交投影" id="markdown-toc-正交投影">正交投影</a></li>
+      <li><a href="#透视投影" id="markdown-toc-透视投影">透视投影</a></li>
+      <li><a href="#leftrightbottomtopnearfar坐标确定" id="markdown-toc-leftrightbottomtopnearfar坐标确定">left,right,bottom,top,near,far坐标确定</a></li>
+    </ul>
+  </li>
+  <li><a href="#4设置摄像机位置" id="markdown-toc-4设置摄像机位置">4.设置摄像机位置</a></li>
+  <li><a href="#5变换流程" id="markdown-toc-5变换流程">5.变换流程</a></li>
+</ul>
+
+<h2 id="1opengl中的摄像机视景体近平面">1.OpenGL中的摄像机、视景体、近平面</h2>
+
+<p>OpenGL的摄像机和现实世界中的人眼很相似，都有一个三维的坐标表示位置，眼睛的朝向和视野范围，位置和眼睛朝向不同，所观察到的物体的形态就会有所不同，视野范围则规定了只有在该范围的物体才会进入人的视线，超出视野范围的部分就无法被观察到(人总不可能观察到耳朵两边和后脑勺的物体吧。)<br />
+<!--more-->
+所以，在OpenGL中的摄像机看来，是这样观察物体的：</p>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/b551d7ebff4b59b92249126a2778a2219ee023b61d9d80093d7c38fe5a17d9c8" alt="" /></p>
+
+<p>摄像机视角看近平面：</p>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/f31077c811b804af62c47449c0ca1d1543415a046ef0b078b765f89dcec6020f" alt="" /></p>
+
+<p>left、right、bottom、top四条边规定了近平面的大小，near为近平面距离摄像机坐标的距离，far为远平面距离摄像机的距离，这六个变量围成的立方体就是摄像机的可视范围：视景体，物体只有在视景体里面的部分才会被显示出来投影到近平面上。该图为透视投影的案例，投影在近平面的影像会产生近大远小的效果。</p>
+
+<h2 id="2坐标系">2.坐标系</h2>
+
+<h4 id="手机屏幕坐标系">手机屏幕坐标系</h4>
+
+<p>二维坐标系，左上角为原点，X，Y轴正方向分别为右和下，XY取值范围为屏幕分辨率。</p>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/633b148895f7c3d88661f6295c962bb046e910dcc93bdc86c08ac2066fc306bc" alt="" /></p>
+
+<h4 id="opengl世界坐标系">OpenGL世界坐标系</h4>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/a32a9268c6f565d113bcd66a5188a650f80bbe507e50fea7f9827d01f0cc5633" alt="" /></p>
+
+<p>三维坐标系，X正方向为右，Y正方向为上，Z正方向朝向我们。<br />
+注意：摄像机位置，投影坐标都是基于世界坐标系设置的。</p>
+
+<h2 id="3两种投影方式">3.两种投影方式</h2>
+
+<h3 id="正交投影">正交投影</h3>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/343f298fb1a420194683c1de57bdc3d0190bce8080f95895090e2b8566290baa" alt="" /></p>
+
+<p><strong>说明：</strong>视点为摄像机的位置；离视点较近，<strong>垂直于观察方向向量</strong>的平面为近平面，离视点较远，<strong>垂直于观察方向向量</strong>的平面为远平面，<br />
+<strong>代码调用</strong>：使用Matrix.orthoM()来设置正交投影。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    /**
+     * @param m 生成的投影矩阵,float[4*4]
+     * @param mOffset 填充时候起始的偏移量
+     * @param left  近平面left边的x坐标
+     * @param right 近平面right边的x坐标
+     * @param bottom  近平面bottom边的y坐标
+     * @param top   近平面top边的y坐标
+     * @param near  近平面距离摄像机的距离
+     * @param far   远平面距离摄像机的距离
+     */
+public static void orthoM(float[] m, int mOffset,
+        float left, float right, float bottom, float top,
+        float near, float far) {
+}
+</code></pre>
+</div>
+
+<h3 id="透视投影">透视投影</h3>
+
+<p><strong>特点：</strong>透视投影的图已经在上面给出了，它的投影线是不平行的，最终相交于视点处，所以会有近大远小的效果。<br />
+<strong>代码调用</strong>：使用Matrix.frustumM()来设置透视投影。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/**
+* 参数含义同正交投影
+*/
+public static void frustumM(float[] m, int offset,
+            float left, float right, float bottom, float top,
+            float near, float far) {
+}
+</code></pre>
+</div>
+
+<h3 id="leftrightbottomtopnearfar坐标确定">left,right,bottom,top,near,far坐标确定</h3>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/033334d09f5d59549966a62d80e4d8e11639053a327902f2af58e97df8944bfd" alt="" /></p>
+
+<p>红点为摄像机位置(eyeX,eyeY,eyeZ) = (0, 0, 3)。<br />
+蓝色三角形为被观察的物体（为了方便画图没有用立体图形，但是一个道理，立方体的区别就是顶点z坐标非0了），绿色长方体为视景体，此时三角形全部在视景体内。<br />
+近平面各坐标：<br />
+left=-1,right=1,top=2,bottom=-2，<br />
+近平面z坐标 = eyeZ - near=2，<br />
+远平面z坐标 = eyeZ - far = -2</p>
+
+<p><strong>near、far的取值范围规定：</strong></p>
+
+<ul>
+  <li>正交投影时，摄像机可位于视景体中间，此时near &lt; 0，far &gt; 0，近平面位于视点后面（Z轴正方向），远平面位于视点前面（Z轴负方向）</li>
+  <li>正交投影时，视景体也可位于视点后面(Z轴正方向)，此时near &lt; 0, far &lt; 0</li>
+  <li>正交投影时，far 和 near没有规定的大小关系，既可以far &gt; near 也可以 far &lt; near，只要物体在视景体内都可以被观察到。</li>
+  <li>透视投影时，摄像机必须位于视景体前面：eyeZ&gt;近平面Z坐标 &amp;&amp; eyeZ &gt; 远平面Z坐标，即：eyeZ &gt; (eyeZ - near) &amp;&amp; eyeZ &gt; (eyeZ - far)。</li>
+</ul>
+
+<h2 id="4设置摄像机位置">4.设置摄像机位置</h2>
+
+<p><strong>代码调用</strong>：使用Matrix.setLookAtM()来设置摄像机位置。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    /**
+     *
+     * @param rm 生成的摄像机矩阵，float[16]
+     * @param rmOffset 填充时候的起始偏移量
+     * @param eyeX 摄像机x坐标
+     * @param eyeY 摄像机y坐标
+     * @param eyeZ 摄像机z坐标
+     * @param centerX 观察目标点的x坐标
+     * @param centerY 观察目标点的y坐标
+     * @param centerZ 观察目标点的z坐标
+     * @param upX 摄像机up向量在x上的分量
+     * @param upY 摄像机up向量在y上的分量
+     * @param upZ 摄像机up向量在z上的分量
+     */
+    public static void setLookAtM(float[] rm, int rmOffset,
+            float eyeX, float eyeY, float eyeZ,
+            float centerX, float centerY, float centerZ, float upX, float upY,
+            float upZ) {
+    }
+</code></pre>
+</div>
+
+<p><strong>eyeX,eyeY,eyeZ：</strong>摄像机坐标。<br />
+<strong>centerX,centerY,centerZ:</strong>观察点坐标，和摄像机坐标一起决定了摄像机的观察方向，即向量(centerX - eyeX, centerY - eyeY, centerZ - eyeZ)。观察方向不朝向视景体是无法看到的。<br />
+<strong>upX,upY,upZ:</strong>摄像机up向量。相对于人眼观察物体中，人头的朝向，头的朝向影响了最后的成像。同样以图来说明：</p>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/1b53abd99a5f2fe96c5fd33ea250b7a1be81642cc03f4b43f274ee6c57234c21" alt="" /></p>
+
+<p>当up向量为Y的正方向时，正如我们头顶对着天花板，所以观察到的物体是正的，投影在近平面的样子就是正的，如右图。</p>
+
+<p><img src="/image/opengl_tou_ying_he_she_xiang_ji/a114e465675c540c3677d1e5d671832fd509d11d8e3cc5f6da63e654c3edd100" alt="" /></p>
+
+<p>当up向量为X正方向时，正如我们向右90度歪着脑袋去看这个三角形，看到的三角形就会是向左旋转了90度的三角形。<br />
+再比如up向量如果为Z轴正方向，就相当于仰着头去看这个三角形，但是因为我们的up向量和观察方向平行了，所以我们什么也看不到，就比如仰着头去看你眼前的物体时，你什么也看不到。<br />
+所以在设置up向量时，一般总是设置为(0,1,0)，这是大多数观察时头朝上的方向。注意：up向量的大小无关紧要，有意义的只有方向。<br />
+引用一段网上的解释：</p>
+
+<blockquote>
+  <p>第一组eyex, eyey,eyez 相机在世界搜索坐标的位置<br />
+第二组centerx,centery,centerz 相机镜头对准的物体在世界坐标的位置<br />
+第三组upx,upy,upz 相机向上的方向在世界坐标中的方向<br />
+第一组眼睛就相当于你的头在一个三维坐标中的具体坐标。<br />
+第二组就是你眼睛要看的物体的坐标。<br />
+第三组就是你的头的方向。<br />
+如果你把upx=0;upz=0;upy=1,那么说明你的头是正常人一样的方向，如果upy=-1那么就相当于你是倒立的。<br />
+如果upx=1;upz=0;upy=0；那么相当于我们看的是右边，如果upx=-1，就相当于看的左边。<br />
+如果upx=0;upz=1;upy=0；相当于我们看的是屏幕朝我们的方向，如果upz=-1,相当于我们看的是屏幕向里的方向。</p>
+</blockquote>
+
+<h2 id="5变换流程">5.变换流程</h2>
+
+<p>一个物体的顶点，是在世界坐标系中被定义的，是怎么样转为为在手机屏幕上显示的坐标的呢，OpenGL中有一系列的变换流程，涉及到了6种不同的空间：<br />
+<strong>物体空间：</strong>物体空间坐标系是在物体的几何中心，相对于物体本身而言的。<br />
+<strong>世界空间：</strong>世界空间一开始有介绍过，是物体在最终的3D场景中的的位置坐标对应的坐标系空间，通过代码设置的物体顶点坐标，摄像机坐标，投影平面的left,right等坐标，都是相对于世界空间的。<br />
+<strong>摄像机空间：</strong>物体经过摄像机观察后，进入摄像机空间，该空间坐标系中，摄像机位于原点，视线沿Z轴负方向，Y轴方向与UP向量一致。<br />
+<strong>剪裁空间：</strong>物体即使被摄像机观察到进入了摄像机空间，如果有的部分位于视景体外部，也是看不到的，所以被摄像机观察到的，同时位于视景体外部的部分裁去，留下在视景体内部的物体部分，这部分构成了剪裁空间。<br />
+<strong>标准设备空间：</strong>将剪裁空间内的物体进行透视除法后得到的就是在标准设备空间的物体，需要注意的是OpenGL中标准设备空间三个轴的坐标范围都是[-1,1]。<br />
+<strong>实际窗口空间：</strong>就是视口，一般使用<code class="highlighter-rouge">GLES20.glViewport(int x, int y, int width, int height)</code>设置，通常来说是SurfaceView的大小。</p>
+
+<ul>
+  <li>
+    <p>物体空间-&gt;世界空间<br />
+乘以物体变换矩阵，比如将三角形先旋转30°再平移(0, 1, 2)，这样按照操作顺序生成的矩阵就是物体的变换矩阵。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>public void drawSelf() {   ...   //生成变换矩阵   Matrix.setRotateM(mMMartrix, 0, 0, 0, 1, 0);       Matrix.rotateM(mMMartrix, 0, xAngle, 1, 0, 0);   ... }
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>世界空间-&gt;摄像机空间<br />
+乘以摄像机矩阵。</p>
+  </li>
+  <li>
+    <p>摄像机空间-&gt;剪裁空间<br />
+乘以投影矩阵，乘完后，物体就已经被投影在近平面上了，此时物体各个顶点的坐标不再是三维，而是二维，是对应在近平面上的位置。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  /**    * 传入物体变换矩阵,得到最终最终变换矩阵,送入渲染管线    * [@param]( "@param" ) spec 物体的变换矩阵    */   public static float[] getFinalMatrix(float[] spec) {
+  mMVPMatrix = new float[16];
+  Matrix.multiplyMM(mMVPMatrix, 0, mCameraMatrix, 0, spec, 0);    //乘以摄像机矩阵
+  Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);//乘以投影矩阵
+  return mMVPMatrix;   }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p><code class="highlighter-rouge">用户可以操作的为以上三个步骤，一旦物体投影到近平面上后，之后的步骤就由渲染管线自动完成。</code></p>
+
+<ul>
+  <li>
+    <p>剪裁空间-&gt;标准设备空间<br />
+经过透视除法，将近平面上的物体顶点坐标化为标准设备空间中[-1,1]坐标。</p>
+  </li>
+  <li>
+    <p>标准设备空间-&gt;实际窗口空间（视口）<br />
+将标准设备空间的XY平面[-1,1]的坐标转换为位于实际窗口中的XY像素坐标。</p>
+  </li>
+</ul>
+
+<p>在视景体内的物体是先投影到近平面，再到标准设备，最终显示到视口的，所以近平面的宽高非常重要，因为一旦近平面的宽高比出现了问题，那么物体就会被拉伸变形。一般会保持近平面的宽高比和视口的宽高比相等。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Override
+public void onSurfaceChanged(GL10 gl, int width, int height) {
+    GLES20.glViewport(0, 0, width, height); //设置视口
+    float ratio = (float)width / height;
+    MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 2, 10); 
+    MatrixState.setCamera(  
+            0, 0, 3,
+            0f, 0f, 0f,
+            0f, -1f, 0f);
+}
+</code></pre>
+</div>
+
+<p>代码中，视口大小为width、height，宽高比为ratio，所以设置近平面的<code class="highlighter-rouge">left = -ratio, right = ratio, bottom
+= -1, top = 1</code>，近平面 <code class="highlighter-rouge">width = 2ratio, height = 2, width / height =
+ratio</code>，即为视口宽高比。当然，设置近平面位置也需要考虑需要显示的物体的顶点坐标，如果近平面太小，导致视景体太小无法完全包住观察的物体的话，也就无法观察出来了。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/intellij_idea_kai_fa_she_zhi/">IntelliJ IDEA开发设置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/">Android旁门左道之动态替换应用程序类
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_dong_tai_quan_xian/">Android动态权限
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_interpolator_xiang_jie/">[译]Android Interpolator详解
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/">[译]Android TensorFlow机器学习示例
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/quan_juan_ji_shen_jing_wang_luo_fcn_xue_xi_bi_ji/">全卷积神经网络fcn学习笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_dong_tai_quan_xian/">Android动态权限</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bitmap 源码阅读笔记</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 Android 系统上的图片的处理，跟Bitmap这个类脱不了关系，我们有必要去深入阅读里面的源码，以便在工作中能更好的处理Bitmap相关的问题。Bitmap 源码阅读笔记">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Bitmap 源码阅读笔记</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-01
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>nearlei
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Bitmap" title="Tag: Bitmap" rel="tag">Bitmap</a-->
+        <a href="/tag/#Bitmap" title="Tag: Bitmap" rel="tag">Bitmap</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#bitmap-源码阅读笔记" id="markdown-toc-bitmap-源码阅读笔记">Bitmap 源码阅读笔记</a>    <ul>
+      <li><a href="#前言" id="markdown-toc-前言">前言</a></li>
+      <li><a href="#阅读目标" id="markdown-toc-阅读目标">阅读目标</a></li>
+      <li><a href="#入口" id="markdown-toc-入口">入口</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语 Android 系统上的图片的处理，跟Bitmap
+这个类脱不了关系，我们有必要去深入阅读里面的源码，以便在工作中能更好的处理Bitmap相关的问题。</p>
+
+<p>Bitmap 源码阅读笔记</p>
+
+<!--more-->
+<h3 id="bitmap-源码阅读笔记">Bitmap 源码阅读笔记</h3>
+
+<h4 id="前言">前言</h4>
+
+<p>Android 系统上的图片的处理，跟Bitmap 这个类脱不了关系，我们有必要去深入阅读里面的源码，以便在工作中能更好的处理Bitmap相关的问题。</p>
+
+<h4 id="阅读目标">阅读目标</h4>
+
+<p>在使用Bitmap 的过程中，我们遇到最大的问题就是Bitmap加载过程中 OOM 的问题 和 Bitmap 过多时的内存占用问题，因此我们主要是要了解的是
+Bitmap 的加载流程 和 Bitmap里的内存到底是怎么分配，怎么释放</p>
+
+<h4 id="入口">入口</h4>
+
+<p>查看Bitmap.java 的构造方法就会发现 它不是一个 public 方法，而且注释写着 “called from JNI”
+，因此它不像普通的类一样能随便new出来</p>
+
+<p>Bitmap(long nativeBitmap, byte[] buffer, int width, int height, int density,</p>
+
+<p>boolean isMutable, boolean requestPremultiplied,</p>
+
+<p>byte[] ninePatchChunk, NinePatch.InsetStruct ninePatchInsets) {</p>
+
+<p>…..</p>
+
+<p>内容省略</p>
+
+<p>…..</p>
+
+<p>}</p>
+
+<p>创建Bitmap 大致有两个途径，一个是通过 BitmapFactory.java 的decodeXXXXX 方法去创建，另外一个是 通过 Bitmap
+里的createBitmap 方法去创建</p>
+
+<p>我们先从BitmapFactory.java 的 decodeXXXX 这些方法里跟进去</p>
+
+<p>/**</p>
+
+<ul>
+  <li>
+    <p>Private helper function for decoding an InputStream natively. Buffers the input enough to</p>
+  </li>
+  <li>
+    <p>do a rewind as needed, and supplies temporary storage if necessary. is MUST NOT be null.</p>
+  </li>
+</ul>
+
+<p>*/</p>
+
+<p>private static Bitmap decodeStreamInternal(InputStream is, Rect outPadding,
+Options opts) {</p>
+
+<p>// ASSERT(is != null);</p>
+
+<p>byte [] tempStorage = null;</p>
+
+<p>if (opts != null) tempStorage = opts.inTempStorage;</p>
+
+<p>if (tempStorage == null) tempStorage = new byte[DECODE_BUFFER_SIZE];</p>
+
+<p>return nativeDecodeStream(is, tempStorage, outPadding, opts);</p>
+
+<p>}</p>
+
+<p>这里会通过JNI 调用到native层的 BitmapFactory.cpp</p>
+
+<p>static jobject nativeDecodeStream(JNIEnv* env, jobject clazz, jobject is,
+jbyteArray storage,</p>
+
+<p>jobject padding, jobject options) {</p>
+
+<p>jobject bitmap = NULL;</p>
+
+<p>SkAutoTDelete stream(CreateJavaInputStreamAdaptor(env, is, storage));</p>
+
+<p>if (stream.get()) {</p>
+
+<p>SkAutoTDelete bufferedStream(</p>
+
+<p>SkFrontBufferedStream::Create(stream.detach(), BYTES_TO_BUFFER));</p>
+
+<p>SkASSERT(bufferedStream.get() != NULL);</p>
+
+<p>bitmap = doDecode(env, bufferedStream, padding, options);</p>
+
+<p>}</p>
+
+<p>return bitmap;</p>
+
+<p>}</p>
+
+<p>这里发现所有的 decodeXXXX 方法都会统一调用到 doDecode( ) 这个方法里</p>
+
+<p>static jobject doDecode(JNIEnv* env, SkStreamRewindable* stream, jobject
+padding, jobject options) {</p>
+
+<p>int sampleSize = 1;</p>
+
+<p>SkImageDecoder::Mode decodeMode = SkImageDecoder::kDecodePixels_Mode;</p>
+
+<p>SkColorType prefColorType = kN32_SkColorType;</p>
+
+<p>bool doDither = true;</p>
+
+<p>bool isMutable = false;</p>
+
+<p>float scale = 1.0f;</p>
+
+<p>bool preferQualityOverSpeed = false;</p>
+
+<p>bool requireUnpremultiplied = false;</p>
+
+<p>jobject javaBitmap = NULL;</p>
+
+<p>if (options != NULL) {</p>
+
+<p>sampleSize = env-&gt;GetIntField(options, gOptions_sampleSizeFieldID);</p>
+
+<p>if (optionsJustBounds(env, options)) {</p>
+
+<p>decodeMode = SkImageDecoder::kDecodeBounds_Mode;</p>
+
+<p>}</p>
+
+<p>// initialize these, in case we fail later on</p>
+
+<p>env-&gt;SetIntField(options, gOptions_widthFieldID, -1);</p>
+
+<p>env-&gt;SetIntField(options, gOptions_heightFieldID, -1);</p>
+
+<p>env-&gt;SetObjectField(options, gOptions_mimeFieldID, 0);</p>
+
+<p>jobject jconfig = env-&gt;GetObjectField(options, gOptions_configFieldID);</p>
+
+<p>prefColorType = GraphicsJNI::getNativeBitmapColorType(env, jconfig);</p>
+
+<p>isMutable = env-&gt;GetBooleanField(options, gOptions_mutableFieldID);</p>
+
+<p>doDither = env-&gt;GetBooleanField(options, gOptions_ditherFieldID);</p>
+
+<p>preferQualityOverSpeed = env-&gt;GetBooleanField(options,</p>
+
+<p>gOptions_preferQualityOverSpeedFieldID);</p>
+
+<p>requireUnpremultiplied = !env-&gt;GetBooleanField(options,
+gOptions_premultipliedFieldID);</p>
+
+<p>javaBitmap = env-&gt;GetObjectField(options, gOptions_bitmapFieldID);</p>
+
+<p>if (env-&gt;GetBooleanField(options, gOptions_scaledFieldID)) {</p>
+
+<p>const int density = env-&gt;GetIntField(options, gOptions_densityFieldID);</p>
+
+<p>const int targetDensity = env-&gt;GetIntField(options,
+gOptions_targetDensityFieldID);</p>
+
+<p>const int screenDensity = env-&gt;GetIntField(options,
+gOptions_screenDensityFieldID);</p>
+
+<p>if (density != 0 &amp;&amp; targetDensity != 0 &amp;&amp; density !=
+screenDensity) {</p>
+
+<p>scale = (float) targetDensity / density;</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>const bool willScale = scale != 1.0f;</p>
+
+<p>SkImageDecoder* decoder = SkImageDecoder::Factory(stream);</p>
+
+<p>if (decoder == NULL) {</p>
+
+<p>return nullObjectReturn(“SkImageDecoder::Factory returned null”);</p>
+
+<p>}</p>
+
+<p>decoder-&gt;setSampleSize(sampleSize);</p>
+
+<p>decoder-&gt;setDitherImage(doDither);</p>
+
+<p>decoder-&gt;setPreferQualityOverSpeed(preferQualityOverSpeed);</p>
+
+<p>decoder-&gt;setRequireUnpremultipliedColors(requireUnpremultiplied);</p>
+
+<p>android::Bitmap* reuseBitmap = nullptr;</p>
+
+<p>unsigned int existingBufferSize = 0;</p>
+
+<p>if (javaBitmap != NULL) {</p>
+
+<p>reuseBitmap = GraphicsJNI::getBitmap(env, javaBitmap);</p>
+
+<p>if (reuseBitmap-&gt;peekAtPixelRef()-&gt;isImmutable()) {</p>
+
+<p>ALOGW(“Unable to reuse an immutable bitmap as an image decoder target.”);</p>
+
+<p>javaBitmap = NULL;</p>
+
+<p>reuseBitmap = nullptr;</p>
+
+<p>} else {</p>
+
+<p>existingBufferSize = GraphicsJNI::getBitmapAllocationByteCount(env,
+javaBitmap);</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>NinePatchPeeker peeker(decoder);</p>
+
+<p>decoder-&gt;setPeeker(&amp;peeker);</p>
+
+<p>JavaPixelAllocator javaAllocator(env);</p>
+
+<p>RecyclingPixelAllocator recyclingAllocator(reuseBitmap, existingBufferSize);</p>
+
+<p>ScaleCheckingAllocator scaleCheckingAllocator(scale, existingBufferSize);</p>
+
+<p>SkBitmap::Allocator* outputAllocator = (javaBitmap != NULL) ?</p>
+
+<p>(SkBitmap::Allocator<em>)&amp;recyclingAllocator :
+(SkBitmap::Allocator</em>)&amp;javaAllocator;</p>
+
+<p>if (decodeMode != SkImageDecoder::kDecodeBounds_Mode) {</p>
+
+<p>if (!willScale) {</p>
+
+<p>// If the java allocator is being used to allocate the pixel memory, the
+decoder</p>
+
+<p>// need not write zeroes, since the memory is initialized to 0.</p>
+
+<p>decoder-&gt;setSkipWritingZeroes(outputAllocator == &amp;javaAllocator);</p>
+
+<p>decoder-&gt;setAllocator(outputAllocator);</p>
+
+<p>} else if (javaBitmap != NULL) {</p>
+
+<p>// check for eventual scaled bounds at allocation time, so we don’t decode the
+bitmap</p>
+
+<p>// only to find the scaled result too large to fit in the allocation</p>
+
+<p>decoder-&gt;setAllocator(&amp;scaleCheckingAllocator);</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>// Only setup the decoder to be deleted after its stack-based, refcounted</p>
+
+<p>// components (allocators, peekers, etc) are declared. This prevents RefCnt</p>
+
+<p>// asserts from firing due to the order objects are deleted from the stack.</p>
+
+<p>SkAutoTDelete add(decoder);</p>
+
+<p>AutoDecoderCancel adc(options, decoder);</p>
+
+<p>// To fix the race condition in case “requestCancelDecode”</p>
+
+<p>// happens earlier than AutoDecoderCancel object is added</p>
+
+<p>// to the gAutoDecoderCancelMutex linked list.</p>
+
+<p>if (options != NULL &amp;&amp; env-&gt;GetBooleanField(options,
+gOptions_mCancelID)) {</p>
+
+<p>return nullObjectReturn(“gOptions_mCancelID”);</p>
+
+<p>}</p>
+
+<p>SkBitmap decodingBitmap;</p>
+
+<p>if (decoder-&gt;decode(stream, &amp;decodingBitmap, prefColorType, decodeMode)</p>
+
+<p>!= SkImageDecoder::kSuccess) {</p>
+
+<p>return nullObjectReturn(“decoder-&gt;decode returned false”);</p>
+
+<p>}</p>
+
+<p>int scaledWidth = decodingBitmap.width();</p>
+
+<p>int scaledHeight = decodingBitmap.height();</p>
+
+<p>if (willScale &amp;&amp; decodeMode != SkImageDecoder::kDecodeBounds_Mode) {</p>
+
+<p>scaledWidth = int(scaledWidth * scale + 0.5f);</p>
+
+<p>scaledHeight = int(scaledHeight * scale + 0.5f);</p>
+
+<p>}</p>
+
+<p>// update options (if any)</p>
+
+<p>if (options != NULL) {</p>
+
+<p>jstring mimeType = getMimeTypeString(env, decoder-&gt;getFormat());</p>
+
+<p>if (env-&gt;ExceptionCheck()) {</p>
+
+<p>return nullObjectReturn(“OOM in getMimeTypeString()”);</p>
+
+<p>}</p>
+
+<p>env-&gt;SetIntField(options, gOptions_widthFieldID, scaledWidth);</p>
+
+<p>env-&gt;SetIntField(options, gOptions_heightFieldID, scaledHeight);</p>
+
+<p>env-&gt;SetObjectField(options, gOptions_mimeFieldID, mimeType);</p>
+
+<p>}</p>
+
+<p>// if we’re in justBounds mode, return now (skip the java bitmap)</p>
+
+<p>if (decodeMode == SkImageDecoder::kDecodeBounds_Mode) {</p>
+
+<p>return NULL;</p>
+
+<p>}</p>
+
+<p>jbyteArray ninePatchChunk = NULL;</p>
+
+<p>if (peeker.mPatch != NULL) {</p>
+
+<p>if (willScale) {</p>
+
+<p>scaleNinePatchChunk(peeker.mPatch, scale, scaledWidth, scaledHeight);</p>
+
+<p>}</p>
+
+<p>size_t ninePatchArraySize = peeker.mPatch-&gt;serializedSize();</p>
+
+<p>ninePatchChunk = env-&gt;NewByteArray(ninePatchArraySize);</p>
+
+<p>if (ninePatchChunk == NULL) {</p>
+
+<p>return nullObjectReturn(“ninePatchChunk == null”);</p>
+
+<p>}</p>
+
+<p>jbyte* array = (jbyte*) env-&gt;GetPrimitiveArrayCritical(ninePatchChunk,
+NULL);</p>
+
+<p>if (array == NULL) {</p>
+
+<p>return nullObjectReturn(“primitive array == null”);</p>
+
+<p>}</p>
+
+<p>memcpy(array, peeker.mPatch, peeker.mPatchSize);</p>
+
+<p>env-&gt;ReleasePrimitiveArrayCritical(ninePatchChunk, array, 0);</p>
+
+<p>}</p>
+
+<p>jobject ninePatchInsets = NULL;</p>
+
+<p>if (peeker.mHasInsets) {</p>
+
+<p>ninePatchInsets = env-&gt;NewObject(gInsetStruct_class,
+gInsetStruct_constructorMethodID,</p>
+
+<p>peeker.mOpticalInsets[0], peeker.mOpticalInsets[1], peeker.mOpticalInsets[2],
+peeker.mOpticalInsets[3],</p>
+
+<p>peeker.mOutlineInsets[0], peeker.mOutlineInsets[1], peeker.mOutlineInsets[2],
+peeker.mOutlineInsets[3],</p>
+
+<p>peeker.mOutlineRadius, peeker.mOutlineAlpha, scale);</p>
+
+<p>if (ninePatchInsets == NULL) {</p>
+
+<p>return nullObjectReturn(“nine patch insets == null”);</p>
+
+<p>}</p>
+
+<p>if (javaBitmap != NULL) {</p>
+
+<p>env-&gt;SetObjectField(javaBitmap, gBitmap_ninePatchInsetsFieldID,
+ninePatchInsets);</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>SkBitmap outputBitmap;</p>
+
+<p>if (willScale) {</p>
+
+<p>// This is weird so let me explain: we could use the scale parameter</p>
+
+<p>// directly, but for historical reasons this is how the corresponding</p>
+
+<p>// Dalvik code has always behaved. We simply recreate the behavior here.</p>
+
+<p>// The result is slightly different from simply using scale because of</p>
+
+<p>// the 0.5f rounding bias applied when computing the target image size</p>
+
+<p>const float sx = scaledWidth / float(decodingBitmap.width());</p>
+
+<p>const float sy = scaledHeight / float(decodingBitmap.height());</p>
+
+<p>// TODO: avoid copying when scaled size equals decodingBitmap size</p>
+
+<p>SkColorType colorType = colorTypeForScaledOutput(decodingBitmap.colorType());</p>
+
+<p>// FIXME: If the alphaType is kUnpremul and the image has alpha, the</p>
+
+<p>// colors may not be correct, since Skia does not yet support drawing</p>
+
+<p>// to/from unpremultiplied bitmaps.</p>
+
+<p>outputBitmap.setInfo(SkImageInfo::Make(scaledWidth, scaledHeight,</p>
+
+<p>colorType, decodingBitmap.alphaType()));</p>
+
+<p>if (!outputBitmap.tryAllocPixels(outputAllocator, NULL)) {</p>
+
+<p>return nullObjectReturn(“allocation failed for scaled bitmap”);</p>
+
+<p>}</p>
+
+<p>// If outputBitmap’s pixels are newly allocated by Java, there is no need</p>
+
+<p>// to erase to 0, since the pixels were initialized to 0.</p>
+
+<p>if (outputAllocator != &amp;javaAllocator) {</p>
+
+<p>outputBitmap.eraseColor(0);</p>
+
+<p>}</p>
+
+<p>SkPaint paint;</p>
+
+<p>paint.setFilterQuality(kLow_SkFilterQuality);</p>
+
+<p>SkCanvas canvas(outputBitmap);</p>
+
+<p>canvas.scale(sx, sy);</p>
+
+<p>canvas.drawARGB(0x00, 0x00, 0x00, 0x00);</p>
+
+<p>canvas.drawBitmap(decodingBitmap, 0.0f, 0.0f, &amp;paint);</p>
+
+<p>} else {</p>
+
+<p>outputBitmap.swap(decodingBitmap);</p>
+
+<p>}</p>
+
+<p>if (padding) {</p>
+
+<p>if (peeker.mPatch != NULL) {</p>
+
+<p>GraphicsJNI::set_jrect(env, padding,</p>
+
+<p>peeker.mPatch-&gt;paddingLeft, peeker.mPatch-&gt;paddingTop,</p>
+
+<p>peeker.mPatch-&gt;paddingRight, peeker.mPatch-&gt;paddingBottom);</p>
+
+<p>} else {</p>
+
+<p>GraphicsJNI::set_jrect(env, padding, -1, -1, -1, -1);</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>// if we get here, we’re in kDecodePixels_Mode and will therefore</p>
+
+<p>// already have a pixelref installed.</p>
+
+<p>if (outputBitmap.pixelRef() == NULL) {</p>
+
+<p>return nullObjectReturn(“Got null SkPixelRef”);</p>
+
+<p>}</p>
+
+<p>if (!isMutable &amp;&amp; javaBitmap == NULL) {</p>
+
+<p>// promise we will never change our pixels (great for sharing and pictures)</p>
+
+<p>outputBitmap.setImmutable();</p>
+
+<p>}</p>
+
+<p>if (javaBitmap != NULL) {</p>
+
+<p>bool isPremultiplied = !requireUnpremultiplied;</p>
+
+<p>GraphicsJNI::reinitBitmap(env, javaBitmap, outputBitmap.info(),
+isPremultiplied);</p>
+
+<p>outputBitmap.notifyPixelsChanged();</p>
+
+<p>// If a java bitmap was passed in for reuse, pass it back</p>
+
+<p>return javaBitmap;</p>
+
+<p>}</p>
+
+<p>int bitmapCreateFlags = 0x0;</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>if (isMutable) bitmapCreateFlags</td>
+      <td>= GraphicsJNI::kBitmapCreateFlag_Mutable;</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>if (!requireUnpremultiplied) bitmapCreateFlags |=
+GraphicsJNI::kBitmapCreateFlag_Premultiplied;</p>
+
+<p>// now create the java bitmap</p>
+
+<p>return GraphicsJNI::createBitmap(env, javaAllocator.getStorageObjAndReset(),</p>
+
+<p>bitmapCreateFlags, ninePatchChunk, ninePatchInsets, -1);</p>
+
+<p>}</p>
+
+<p>doDeocode 方法是阅读的重点，这里会去读取从上层传进来的 Config
+里的参数值去配置各种状态,而且还会去选择不同的分配器，去分配内存,具体代码如下</p>
+
+<p>JavaPixelAllocator javaAllocator(env);</p>
+
+<p>RecyclingPixelAllocator recyclingAllocator(reuseBitmap, existingBufferSize);</p>
+
+<p>ScaleCheckingAllocator scaleCheckingAllocator(scale, existingBufferSize);</p>
+
+<p>SkBitmap::Allocator* outputAllocator = (javaBitmap != NULL) ?</p>
+
+<p>(SkBitmap::Allocator<em>)&amp;recyclingAllocator :
+(SkBitmap::Allocator</em>)&amp;javaAllocator;</p>
+
+<p>if (decodeMode != SkImageDecoder::kDecodeBounds_Mode) {</p>
+
+<p>if (!willScale) {</p>
+
+<p>// If the java allocator is being used to allocate the pixel memory, the
+decoder</p>
+
+<p>// need not write zeroes, since the memory is initialized to 0.</p>
+
+<p>decoder-&gt;setSkipWritingZeroes(outputAllocator == &amp;javaAllocator);</p>
+
+<p>decoder-&gt;setAllocator(outputAllocator);</p>
+
+<p>} else if (javaBitmap != NULL) {</p>
+
+<p>// check for eventual scaled bounds at allocation time, so we don’t decode the
+bitmap</p>
+
+<p>// only to find the scaled result too large to fit in the allocation</p>
+
+<p>decoder-&gt;setAllocator(&amp;scaleCheckingAllocator);</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>最后会调用到Graphics.cpp 里的 GraphicsJNI::createBitmap 方法去创建真正的bitmap</p>
+
+<p>jobject GraphicsJNI::createBitmap(JNIEnv* env, android::Bitmap* bitmap,</p>
+
+<p>int bitmapCreateFlags, jbyteArray ninePatchChunk, jobject ninePatchInsets,</p>
+
+<p>int density) {</p>
+
+<p>bool isMutable = bitmapCreateFlags &amp; kBitmapCreateFlag_Mutable;</p>
+
+<p>bool isPremultiplied = bitmapCreateFlags &amp;
+kBitmapCreateFlag_Premultiplied;</p>
+
+<p>// The caller needs to have already set the alpha type properly, so the</p>
+
+<p>// native SkBitmap stays in sync with the Java Bitmap.</p>
+
+<p>assert_premultiplied(bitmap-&gt;info(), isPremultiplied);</p>
+
+<p>jobject obj = env-&gt;NewObject(gBitmap_class, gBitmap_constructorMethodID,</p>
+
+<p>reinterpret_cast(bitmap), bitmap-&gt;javaByteArray(),</p>
+
+<p>bitmap-&gt;width(), bitmap-&gt;height(), density, isMutable, isPremultiplied,</p>
+
+<p>ninePatchChunk, ninePatchInsets);</p>
+
+<p>hasException(env); // For the side effect of logging.</p>
+
+<p>return obj;</p>
+
+<p>}</p>
+
+<p>这里我们发现，最后创建是通过调用 Bitmap 的构造方法去创建一个java 的对象返回回来</p>
+
+<hr />
+
+<p>项目有事找我，我先去处理一下项目的事，具体分析未完待续……..</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/heskell_yu_han_shu_shi_bian_cheng/">Heskell与函数式编程</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

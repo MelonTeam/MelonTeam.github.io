@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>聊聊kotlin中的run, let, with, apply, also ...</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 kotlin 标准库中, run, let, with, apply, also 实现解读      在看kotlin代码时, 可能会看到let, run这样的函数调用, 最早接触的时候, 我也弄不清楚其中差异, 觉得用法这么像, 为什么弄出多个名字,不过仔细看看嘛, 还是略有不同的...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/liao_liao_kotlin_zhong_de_run_let_with_apply_also__/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/liao_liao_kotlin_zhong_de_run_let_with_apply_also__/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/liao_liao_kotlin_zhong_de_run_let_with_apply_also__/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>聊聊kotlin中的run, let, with, apply, also ...</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>vashzhong
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#block" title="Tag: block" rel="tag">block</a-->
+        <a href="/tag/#block" title="Tag: block" rel="tag">block</a>&nbsp;
+    
+        <!--a href="/tag/#kotlin" title="Tag: kotlin" rel="tag">kotlin</a-->
+        <a href="/tag/#kotlin" title="Tag: kotlin" rel="tag">kotlin</a>&nbsp;
+    
+        <!--a href="/tag/#extension" title="Tag: extension" rel="tag">extension</a-->
+        <a href="/tag/#extension" title="Tag: extension" rel="tag">extension</a>&nbsp;
+    
+        <!--a href="/tag/#%E8%A7%A3%E8%AF%BB" title="Tag: 解读" rel="tag">解读</a-->
+        <a href="/tag/#解读" title="Tag: 解读" rel="tag">解读</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#方法解读" id="markdown-toc-方法解读">方法解读</a>    <ul>
+      <li><a href="#run函数两个定义" id="markdown-toc-run函数两个定义">run函数(两个定义):</a></li>
+      <li><a href="#let函数" id="markdown-toc-let函数">let函数</a></li>
+      <li><a href="#with函数" id="markdown-toc-with函数">with函数</a></li>
+      <li><a href="#apply函数-also函数" id="markdown-toc-apply函数-also函数">apply函数, also函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#示例代码" id="markdown-toc-示例代码">示例代码</a></li>
+  <li><a href="#思考" id="markdown-toc-思考">思考</a></li>
+  <li><a href="#参考链接" id="markdown-toc-参考链接">参考链接</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 kotlin 标准库中, run, let, with, apply, also 实现解读</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>在看kotlin代码时, 可能会看到let, run这样的函数调用, 最早接触的时候, 我也弄不清楚其中差异, 觉得用法这么像, 为什么弄出多个名字,
+不过仔细看看嘛, 还是略有不同的, 待我慢慢道来.</p>
+
+<!--more-->
+<blockquote>
+  <p>kotlin中, <code class="highlighter-rouge">run</code>, <code class="highlighter-rouge">let</code>, <code class="highlighter-rouge">with</code>, <code class="highlighter-rouge">apply</code>, <code class="highlighter-rouge">also</code>, 都是标准库的函数, 它的实现可以直接在IDE上跳转看到,
+也可以在这里看:
+<a href="https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/src/kotlin/util/Standard.kt">Standard.kt</a></p>
+</blockquote>
+
+<p>看这些函数的实现, 会发现它们非常短, 最多不超过两行.. 我们一个一个看过去吧</p>
+
+<h1 id="方法解读">方法解读</h1>
+
+<h2 id="run函数两个定义">run函数(两个定义):</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- public inline fun  run(block: () -&gt; R): R = block()
+- public inline fun  T.run(block: T.() -&gt; R): R = block()
+</code></pre>
+</div>
+
+<p>第一个函数run, 接受一个参数, 参数类型是签名”() -&gt; R”的函数, 这里也被称为block. 执行的结果就是执行这个block,
+并返回R类型的对象. 这里的上下文this和run()方法被调用时候的this一致.</p>
+
+<p>第二个函数, 看起来和第一个函数非常像, 但是多了一个泛型参数T.., 它是kotlin的extension的一个用法:</p>
+
+<p>确切说, 这个run是一个generic extension函数, 对于任何类型T, 扩展了run这个方法, 参数类型是签名”T.() -&gt;
+R”的函数..<br />
+这个函数的上下文this和第一个run不同, 上下文对应T这个类型的实例this. 关于kotlin extension的更详细介绍, 可以查看官网文档</p>
+
+<p>this上下文差异是这两个run用法最大的不同</p>
+
+<h2 id="let函数">let函数</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- public inline fun  T.let(block: (T) -&gt; R): R = block(this)
+</code></pre>
+</div>
+
+<p>let extension函数看起来是不是有点像是两个run函数的混合?<br />
+为什么说是混合:</p>
+
+<ol>
+  <li>let的函数参数block中, 对应的上下文this和第一个run函数是一致的</li>
+  <li>let和第二个run函数一样是一个extension函数, 但是它的block参数支持一个参数, 就是任意类型T的实例, 在extension函数定义时候, “this”就对应扩展类型实例.</li>
+</ol>
+
+<p>所以使用let函数时, block可以同时访问两个this上下文差异</p>
+
+<h2 id="with函数">with函数</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- public inline fun  with(receiver: T, block: T.() -&gt; R): R = receiver.block()
+</code></pre>
+</div>
+
+<p>with函数不是一个extension函数, 它第二个参数是一个函数类型, 所以可以用with(x) { BLOCK } 的写法.
+这个BLOCK和run函数的extension函数版本的block参数, 是等价的.</p>
+
+<h2 id="apply函数-also函数">apply函数, also函数</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- public inline fun  T.apply(block: T.() -&gt; Unit): T { block(); return this }
+- public inline fun  T.also(block: (T) -&gt; Unit): T { block(this); return this }
+</code></pre>
+</div>
+
+<p>剩下apply和also两个函数, 他们和run, let的实现又非常相似<br />
+apply和T.run的block参数的上下文一致<br />
+also和T.let的block参数的上下文一致<br />
+只是返回值和run/let有所区别.</p>
+
+<h1 id="示例代码">示例代码</h1>
+
+<p>解读完了, 来一段示例代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import org.junit.Test
+
+/**
+ * Created by vashzhong on 2017/7/27.
+ */
+class TestDemo {
+    val str: String = "str(class val)"
+
+    @Test fun playWithStandard() {
+        val str = "str(function val)"
+        var number = 0
+        var ret = 0
+
+        println("run:")
+        ret = run {
+            number++
+            println("str = $str")
+            println("this = $this")
+            println("this.str = ${this.str}")
+            0
+        }
+        println("ret = $ret, number = $number")
+
+        println("T.run:")
+        ret = number.run {
+            number++
+            println("str = $str")
+            println("this = $this")
+            1
+        }
+        println("ret = $ret, number = $number")
+
+        println("T.let:")
+        ret = number.let {
+            println("str = $str")
+            println("it = $it")
+            println("this = $this")
+            println("this.str = ${this.str}")
+            2
+        }
+        println("ret = $ret, number = $number")
+
+        println("with(T):")
+        ret = with(number) {
+            number++
+            println("str = $str")
+            println("this = $this")
+            3
+        }
+        println("ret = $ret, number = $number")
+
+        println("apply:")
+        ret = number.apply {
+            number++
+            println("str = $str")
+            println("this = $this")
+            4
+        }
+        println("ret = $ret, number = $number")
+
+        println("also:")
+        ret = number.also {
+            number++
+            println("str = $str")
+            println("it = $it")
+            println("this = $this")
+            println("this.str = ${this.str}")
+            5
+        }
+        println("ret = $ret, number = $number")
+    }
+}
+</code></pre>
+</div>
+
+<p>理解它的输出, 应该就对run, let, with, apply, also的差异完全明了</p>
+
+<h1 id="思考">思考</h1>
+
+<ol>
+  <li>在上边的实例代码中, T.run, T.apply, with(T)对应的block中, 怎么拿到TestDemo实例里边的str这个String? “str(class val)”</li>
+  <li>为什么T.run对应的block中, number++了, 但是println(“this = $this”)输出结果没有增加?</li>
+  <li>有什么办法看到和kotlin代码等价的java代码?</li>
+</ol>
+
+<h1 id="参考链接">参考链接</h1>
+
+<ul>
+  <li>The difference between Kotlin’s functions, KM的md语法链接解析有bug, 不支持url里边带<code class="highlighter-rouge">@</code>,直接提出来不链接了  “@tpolansk” )/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8`</li>
+  <li><a href="https://lmller.github.io/kotlin-standard-extensions">Kotlin Basics: Standard Extension Functions</a></li>
+</ul>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/shi_guang_liu_zhuan_zhong_gui_ji__zhe_shi_wo_men_tao_bu_kai_de_ming_yun__yi_/">时光流转终归寂，这是我们逃不开的命运（一）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_zi_yuan_re_xiu_fu_zhi_xiu_gai_aapt_yuan_ma/">Android资源热修复之修改aapt源码</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>[译]初识RxJava 2 for Android</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 关于响应式编程在手Q中的应用，目前本人了解到至少有以下两种： （1）手Q部落实现的一套Stream框架。 （2）Qzone引入的RxJava1.1.2。 为了知其然，知其所以然，下面从入门开始对最受欢迎的响应式框架RxJava进行研究。原文作者：Jessica Thornsby (Mar 6th, 2017)">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/yi__chu_shi_rxjava_2_for_android/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/yi__chu_shi_rxjava_2_for_android/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/yi__chu_shi_rxjava_2_for_android/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>[译]初识RxJava 2 for Android</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-20
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>leoyxwang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#RxJava" title="Tag: RxJava" rel="tag">RxJava</a-->
+        <a href="/tag/#RxJava" title="Tag: RxJava" rel="tag">RxJava</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%93%8D%E5%BA%94%E5%BC%8F" title="Tag: 响应式" rel="tag">响应式</a-->
+        <a href="/tag/#响应式" title="Tag: 响应式" rel="tag">响应式</a>&nbsp;
+    
+        <!--a href="/tag/#ReactiveX" title="Tag: ReactiveX" rel="tag">ReactiveX</a-->
+        <a href="/tag/#ReactiveX" title="Tag: ReactiveX" rel="tag">ReactiveX</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%BC%82%E6%AD%A5" title="Tag: 异步" rel="tag">异步</a-->
+        <a href="/tag/#异步" title="Tag: 异步" rel="tag">异步</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一什么是rxjava" id="markdown-toc-一什么是rxjava">一、什么是RxJava？</a></li>
+  <li><a href="#" id="markdown-toc-">#</a>    <ul>
+      <li><a href="#二什么使用rxjava" id="markdown-toc-二什么使用rxjava">二、什么使用RxJava？</a>        <ul>
+          <li><a href="#21-更简洁更易读的代码" id="markdown-toc-21-更简洁更易读的代码">2.1 更简洁，更易读的代码</a></li>
+        </ul>
+      </li>
+      <li><a href="#-1" id="markdown-toc--1">#</a>        <ul>
+          <li><a href="#22-多线程简单易用" id="markdown-toc-22-多线程简单易用">2.2 多线程简单易用</a></li>
+        </ul>
+      </li>
+      <li><a href="#-2" id="markdown-toc--2">#</a>        <ul>
+          <li><a href="#23-提高灵活性" id="markdown-toc-23-提高灵活性">2.3 提高灵活性</a></li>
+          <li><a href="#24-创建响应式app" id="markdown-toc-24-创建响应式app">2.4 创建响应式App</a></li>
+        </ul>
+      </li>
+      <li><a href="#三将rxjava添加到android-studio略" id="markdown-toc-三将rxjava添加到android-studio略">三、将RxJava添加到Android Studio（略）</a></li>
+      <li><a href="#四rxjava的组成" id="markdown-toc-四rxjava的组成">四、RxJava的组成</a>        <ul>
+          <li><a href="#41创建observable" id="markdown-toc-41创建observable">4.1 创建Observable</a></li>
+          <li><a href="#42-创建observer" id="markdown-toc-42-创建observer">4.2 创建Observer</a></li>
+          <li><a href="#43用更少的代码创建observable" id="markdown-toc-43用更少的代码创建observable">4.3 用更少的代码创建Observable</a></li>
+        </ul>
+      </li>
+      <li><a href="#五结论" id="markdown-toc-五结论">五、结论</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语 关于响应式编程在手Q中的应用，目前本人了解到至少有以下两种： （1）手Q部落实现的一套Stream框架。 （2）Qzone引入的RxJava
+1.1.2。 为了知其然，知其所以然，下面从入门开始对最受欢迎的响应式框架RxJava进行研究。</p>
+
+<p>原文作者：Jessica Thornsby (Mar 6th, 2017)</p>
+
+<!--more-->
+<p>&lt;https://code.tutsplus.com/tutorials/getting-started-with-rxjava-20-for-
+android–cms-28345&gt;</p>
+
+<hr />
+
+<p>如果你是Android开发人员，你一定听说过 <strong>RxJava </strong>——它是将响应式引入JVM的ReactiveX库的开源实现。</p>
+
+<p>虽然 <strong>RxJava </strong>对“数据”的定义十分广泛，但 <strong>RxJava </strong>的设计目的是为了解决异步数据流的痛点。<strong>RxJava</strong>
+兼容JVM，能够在各种平台上使用。本文将简单展示如何使用 <strong>RxJava 2 </strong>进行Android开发。</p>
+
+<p>在本系列文章最后你将会掌握所有 **RxJava 2
+**的要素，然后你就可以开始编写高度响应式的App，可以处理各种同步和异步数据。所有这些更加简洁和可管理的代码都能使用Java实现。</p>
+
+<p>本系列文章不止为 <strong>RxJava</strong> 新手提供指导，如果你是 <strong>RxJava 1</strong> 的老司机并希望与时俱进地转到 <strong>RxJava 2</strong>
+，那么本文会使你转换的过程更加顺利。虽然升级到最新版本的库可能听起来没那么复杂，但 <strong>RxJava 2 </strong>并不是简单的update，而是
+<strong>RxJava </strong>的完整重写。因此伴随着巨大的变化，会带来很多困惑。所以从初学者的角度来看需要一些时间来熟悉 **RxJava 2
+**，长远来看可以节省大量时间和踩坑的过程。</p>
+
+<p>本文将介绍什么是 <strong>RxJava </strong>，以及它为Android开发人员带来的主要优点。我们也将深入了解任意 <strong>RxJava </strong>工程的核心组件：
+<strong>Observers</strong> 和 <strong>Observables</strong> 和 <strong>Subscriptions</strong>
+。在本文最后你就可以创建一个包括所有这些组件的简单”Hello World”式App。</p>
+
+<p><img src="/image/yi__chu_shi_rxjava_2_for_android/548d23e0b67282ef1014f7bb1c6cf708328a8eeaaf2ac1561ae63fb7762e3eb1" alt="" /></p>
+
+<h2 id="一什么是rxjava">一、什么是RxJava？</h2>
+
+<p><strong>RxJava </strong>是一个能让你使用响应式编程风格创建App的第三方库。它的核心是响应式变成提供了简洁高效的方式来处理和响应包括具有动态数据在内的实时数据流。</p>
+
+<p>这些数据流不一定必须是传统数据类型的形式，因为 <strong>RxJava
+**把所有的一切（如变量、属性、缓存甚至用户输入包括点击和滑动）都当做数据流(</strong>Stream**)。</p>
+
+<p>每个 Stream
+发射的数据可以是一个值（必选）、一个错误（可选）或者一个“完成”的信号（可选）。创建数据发射流后，将它们与消费这条流的响应式对象组合起来，然后根据流发射的内容对
+Stream 的数据执行不同的操作。<strong>RxJava </strong>包括很多有用的操作符配合 Stream
+一起工作，这使得过滤(filter)、映射(map)、延时(delay)、计数(count)等操作更容易执行。</p>
+
+<p><img src="/image/yi__chu_shi_rxjava_2_for_android/ad742c4b0995f683dd9c2d7cf65ef056a0626990e5dc9526f201b34801e61c76" alt="" /></p>
+
+<p>为创建这种数据流的工作流和响应它们的对象，<strong>RxJava </strong>扩展了 <strong>Observer</strong> 设计模式（观察者模式）。本质上，在 <strong>RxJava</strong>
+中由 <strong>Observable</strong> 对象发射数据流然后终止，由 <strong>Observer </strong>对象订阅 <strong>Observable</strong> 。<strong>Observer</strong>
+在所订阅的 <strong>Observable</strong> 发射一个值、错误、完成信号时会接收到通知。</p>
+
+<p>所以概括地来说，<strong>RxJava </strong>就是：</p>
+
+<ul>
+  <li>创建 <strong>Observable</strong> 。</li>
+  <li>为 <strong>Observable</strong> 设置发射的数据。</li>
+  <li>创建 <strong>Observer </strong>。</li>
+  <li>把 <strong>Observable</strong> 指定 <strong>Observer</strong>。</li>
+  <li>为 <strong>Observer</strong> 设置任务，用于在收到指定的 <strong>Observable</strong> 发射的数据时执行。</li>
+</ul>
+
+<h1>#</h1>
+
+<h2 id="二什么使用rxjava">二、什么使用RxJava？</h2>
+
+<p>学习任何新技术都需要时间和精力，而作为面向数据的库，<strong>RxJava</strong> 并不是最容易掌握的API。</p>
+
+<p>为了帮助决定是否值得初步投资学习 <strong>RxJava</strong> ，接下来我们来探索一些在Android项目中引入 <strong>RxJava </strong>库的主要优点。</p>
+
+<h3 id="21-更简洁更易读的代码">2.1 更简洁，更易读的代码</h3>
+
+<p>复杂、冗长和难以阅读的代码总是令人烦躁。凌乱的代码更容易出Bug并降低开发效率，如果发生任何错误，跟踪这些问题会花费大量的时间。</p>
+
+<p>即使项目可以顺利构建，复杂的代码仍有很大的隐患，特别是需要在几个月内对app发布更新、启动项目，然后马上就遇到了很多纠结混乱的代码！</p>
+
+<p><strong>RxJava </strong>简化了处理数据和事件所需的代码，方法是允许开发者描述想实现的内容，而不是写一份指令列表。<strong>RxJava </strong>也提供了一个标准的工作流程，可以用来处理App中所有的数据和事件——创建 <strong>Observable</strong> ，创建 <strong>Observer</strong> ，把 <strong>Observable</strong> 分配给 <strong>Observer</strong> ，清理和重复。这个公式化的方法使得代码变得非常直接和人性化。</p>
+
+<h2 id="-1">#</h2>
+
+<h3 id="22-多线程简单易用">2.2 多线程简单易用</h3>
+
+<p>现在Android应用需要支持多任务。至少在App在后台执行某些工作（如管理网络链接、下载文件或播放音乐）时，用户能够继续与UI交互。那么问题来了，Android默认情况下是单线程的，所以如果App需要执行多任务就需要创建一些额外的线程。</p>
+
+<p>因此，Android确实提供了许多方法来创建其他线程，例如Service和IntentService，但是这些解决方案都不是特别容易实现的，并且可能很容易导致复杂和冗长的代码出错。</p>
+
+<p><strong>RxJava </strong>旨在通过特殊的调度方式和操作符来解决多线程App的痛点。 <strong>RxJava</strong> 提供了更简单的方法指定任务应该被执行的线程和任务结果应该被发布到的线程。<strong>RxJava 2 </strong>默认提供了一些调度，包括<strong>Schedulers.newThread </strong>,它在创建新线程时特别有用。</p>
+
+<p>要更改执行工作的线程，只需使用 <strong>subscribeOn **操作符更改 **Observer</strong> 观察 <strong>Observable</strong>
+的位置（线程）。例如，我们可以创建一个新线程并指定任务在这个新线程上执行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>observable.subscribeOn(Schedulers.newThread())
+</code></pre>
+</div>
+
+<p>Android上多线程另一个长期以来的问题是，只能在主线程更新UI。通常无论何时都需要把一些后台任务的结果从发送到UI中，必须创建一个专用的Handler。</p>
+
+<p>再者，<strong>RxJava</strong> 有一个更直接的解决方案。可以使用 <strong>observeOn</strong> 操作符来指定 <strong>Observable</strong>
+通过包括主线程在内的不同 <strong>Scheduler</strong> 发送通知。</p>
+
+<p>这就是说只要两行代码就可以创建一个新线程并把此线程上任务的结果发送到UI线程。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>.subscribeOn(Schedulers.newThread())
+.observeOn(AndroidSchedulers.mainThread())
+</code></pre>
+</div>
+
+<p>其实在技术上这里有一些超前，因为 <strong>AndroidSchedulers.mainThread</strong>
+只有在RxAndroid库中才可以使用。不过该实例可以瞥见 <strong>RxJava</strong> 和 <strong>RxAndroid</strong>
+简化过于复杂的Android开发领域的能力。</p>
+
+<h2 id="-2">#</h2>
+
+<h3 id="23-提高灵活性">2.3 提高灵活性</h3>
+
+<p><strong>Observable </strong>以完全隐藏创建数据的方式发出数据。由于观察者无法观察到数据是怎样创建的，可以随意定制 <strong>Observable</strong> 来创建数据。</p>
+
+<p>一旦实现了 <strong>Observable</strong> ，<strong>RxJava **提供了强大的操作符可以用来过滤、合并和变换由这些</strong>Observable
+**发射出的数据。甚至可以把越来越多的操作符链接在一起，直到准确创建了App需要的数据流。</p>
+
+<p>例如，可以组合来自多个流的数据，过滤新合并的流，然后用生成的数据作为后续数据流的输入。记住在 <strong>RxJava</strong>
+中几乎所有内容都被视为数据流，因此甚至可以把这些操作符用于非传统的“数据”，例如点击事件。</p>
+
+<h3 id="24-创建响应式app">2.4 创建响应式App</h3>
+
+<p>App展示loading页面并等待用户点击“下一步”的时代已经过去。如今的主流移动App需要能够对日益增长的各种事件和数据做出响应，最好是实时的。例如，主流社交网络App需要不断监听输入的点赞、评论和好友请求，同时在后台管理网络连接，并在用户点击或滑动屏幕时立即响应。</p>
+
+<p><strong>RxJava</strong> 旨在能够同时且实时管理大量数据和事件，是创建快速响应的App的强大工具。</p>
+
+<h2 id="三将rxjava添加到android-studio略">三、将RxJava添加到Android Studio（略）</h2>
+
+<p>任何含有rx包名的代码都是 <strong>RxJava 1 </strong>代码，与 <strong>RxJava 2</strong> 不兼容。</p>
+
+<h2 id="四rxjava的组成">四、RxJava的组成</h2>
+
+<p>目前为止，我们只是在很高的层次上看过 <strong>RxJava</strong> 。是时候具体并深入了解在 <strong>RxJava</strong>
+工作期间再次出现的两个最重要的组件：<strong>Observer</strong> 和 <strong>Observable</strong> 。</p>
+
+<p>在本节结束之前，我们不仅可以对这两个核心组件有一个深刻的了解，而且将会创建一个功能齐全的App，其中包含一个发出数据的 <strong>Observable</strong>
+和做出响应的 <strong>Observer</strong> 。</p>
+
+<h3 id="41创建observable">4.1 创建Observable</h3>
+
+<p><strong>Observable </strong>类似 <strong>Iterable ，</strong>给定一个序列，它将遍历该序列并发射出每个Item，但是 <strong>Observable</strong> 只有当 <strong>Observer</strong> 订阅时才会开始发射数据。</p>
+
+<p>每次 <strong>Observable</strong> 发射一个Item时会使用 <strong>onNext() </strong>方法通知它的 <strong>Observer</strong> 。一旦
+<strong>Observable</strong> 传送完了所有的数据，会调用以下任意一个方法终止发射：</p>
+
+<ul>
+  <li><strong>onComplete() </strong>: 操作成功。</li>
+  <li><strong>onError()</strong> : 抛出Exception。</li>
+</ul>
+
+<p>我们来看一个例子。这里我们创建一个 <strong>Observable</strong> 来发射数字1,2,3,4然后终止。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observable observable = Observable.create(new ObservableOnSubscribe() {
+  @Override
+ 
+  public void subscribe(ObservableEmitter e) throws Exception {
+      //Use onNext to emit each item in the stream//
+      e.onNext(1);
+      e.onNext(2);
+      e.onNext(3);
+      e.onNext(4);
+ 
+      //Once the Observable has emitted all items in the sequence, call onComplete//
+      e.onComplete();
+  }
+ }
+);
+</code></pre>
+</div>
+
+<h3 id="42-创建observer">4.2 创建Observer</h3>
+
+<p><strong>Observer</strong> 是使用 <strong>subscribe() </strong>方法分配给 <strong>Observable</strong> 的对象。一旦完成订阅，它会在 <strong>Observable</strong> 发出以下之一时做出响应：</p>
+
+<ul>
+  <li><strong>onNext()</strong> : <strong>Observable</strong> 已经发出了一个值。</li>
+  <li><strong>onError()</strong> : 发生了错误。</li>
+  <li><strong>onComplete()</strong> : <strong>Observable</strong> 发射完成了所有值。</li>
+</ul>
+
+<p>我们创建一个 <strong>Observer</strong> 订阅1,2,3,4的 <strong>Observable</strong> 。为了简单，这个 <strong>Observer </strong>会响应
+<strong>onNext</strong> , <strong>onError </strong>, <strong>onComplete </strong>并在Logcat中打印相关信息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observer observer = new Observer() {
+  @Override
+  public void onSubscribe(Disposable d) {
+      Log.e(TAG, "onSubscribe: ");
+  }
+ 
+  @Override
+  public void onNext(Integer value) {
+      Log.e(TAG, "onNext: " + value);
+  }
+ 
+  @Override
+  public void onError(Throwable e) {
+      Log.e(TAG, "onError: ");
+  }
+ 
+  @Override
+  public void onComplete() {
+      Log.e(TAG, "onComplete: All Done!");
+  }
+};
+ 
+//Create our subscription//
+observable.subscribe(observer);
+</code></pre>
+</div>
+
+<p>Logcat结果如下：</p>
+
+<p><img src="/image/yi__chu_shi_rxjava_2_for_android/1bb42dd7b9450cc752ae59542f6edca7e7a2caf97d97ea3c44efc5dad01ecb0c" alt="" /></p>
+
+<h3 id="43用更少的代码创建observable">4.3 用更少的代码创建Observable</h3>
+
+<p>虽然我们的项目正在成功地发布数据，但我们使用的代码并不完全简洁，特别是用来创建 <strong>Observable</strong> 的代码。</p>
+
+<p>幸运的是，<strong>RxJava</strong> 提供了一些便捷的方法，允许使用更少的代码创建 <strong>Observable</strong> 。</p>
+
+<p><strong>1. Observable.just()</strong></p>
+
+<p>可以使用 <strong>.just() </strong>操作符将任何对象转换为 <strong>Observable</strong> ，最终的 <strong>Observable</strong> 将发射出原始对象并完成。</p>
+
+<p>例如，这里我们创建一个 <strong>Observable</strong> ，发射一个字符串给 <strong>Observer</strong> 。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observable observable = Observable.just("Hello World!");
+</code></pre>
+</div>
+
+<p><strong>2. Observable.from()</strong></p>
+
+<p><strong>.from() </strong>允许将对象的集合转换成可观察的数据流。可以使用 <strong>Observable.fromArray</strong> 把数组转换成 <strong>Observable </strong>，使用 <strong>Observable.fromCallable</strong> 把 <strong>Callable</strong> 转换成 <strong>Observable</strong> ，以及 <strong>Observable.fromIterable</strong> 把 <strong>Iterable</strong> 转换成 <strong>Observable</strong> 。</p>
+
+<p><strong>3. Observable.range()</strong></p>
+
+<p>可以使用 <strong>.range()</strong> 操作符发射一个序列的整数。第一个整数是初始值，第二个是要发出的整数数量。例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observable observable = Observable.range(0, 5);
+</code></pre>
+</div>
+
+<p>4. <strong>Observable.interval()</strong></p>
+
+<p>该操作符创建了一个发射无限递增序列整数的 <strong>Observable</strong> ，每次发射间隔时间是可配置的。例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observable observable = Observable.interval(1, TimeUnit.SECONDS)
+</code></pre>
+</div>
+
+<p>5. <strong>Observable.empty()</strong></p>
+
+<p>这个操作符创建了一个不发射Item但正常终止的 <strong>Observable</strong> ，在需要快速创建测试用的 <strong>Observable</strong> 时较为有用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Observable observable = Observable.empty();
+</code></pre>
+</div>
+
+<h2 id="五结论">五、结论</h2>
+
+<p>本文介绍了 <strong>RxJava</strong> 的基本组件。</p>
+
+<p>至此我们知道如何创建并使用 <strong>Observer</strong> 和 <strong>Observable</strong> 工作了，并且知道怎样创建订阅，这样 <strong>Observable</strong>
+就可以开始发射数据。我们还简要地看了一些用于使用更少的代码创建不同 <strong>Observable</strong> 的操作符。</p>
+
+<p>然而，操作符不仅仅是减少代码量的方便之选。创建一个Observer和Observable很简单，但操作符是真正使 <strong>RxJava</strong> 出现无限可能的地方。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ui_zou_cha_yu_xian_shi_qi_se_cai_pian_cha/">UI走查与显示器色彩偏差</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/">Windows下Tensorflow的环境安装和Hello world</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

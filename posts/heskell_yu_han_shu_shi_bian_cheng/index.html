@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Heskell与函数式编程</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  Haskell简介            导语 这个系列打算分为三部分，由浅入深地介绍所谓的函数式编程 1）Haskell入门 2）Monad介绍 3）函数式编程的思想      Haskell简介Haskell诞生于1990年，是一门纯函数式编程语言，和我们经常使用的JAVA不一样，JAVA是一门命令式编程...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Heskell与函数式编程</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>siriushe
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#haskell" title="Tag: haskell" rel="tag">haskell</a-->
+        <a href="/tag/#haskell" title="Tag: haskell" rel="tag">haskell</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B" title="Tag: 函数式编程" rel="tag">函数式编程</a-->
+        <a href="/tag/#函数式编程" title="Tag: 函数式编程" rel="tag">函数式编程</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#haskell简介" id="markdown-toc-haskell简介">Haskell简介</a></li>
+  <li><a href="#编写第一个haskell" id="markdown-toc-编写第一个haskell">编写第一个Haskell</a></li>
+  <li><a href="#类型和函数" id="markdown-toc-类型和函数">类型和函数</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 这个系列打算分为三部分，由浅入深地介绍所谓的函数式编程 1）Haskell入门 2）Monad介绍 3）函数式编程的思想</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="haskell简介">Haskell简介</h1>
+
+<p>Haskell诞生于1990年，是一门纯函数式编程语言，和我们经常使用的JAVA不一样，JAVA是一门命令式编程语言。函数式编程和命令式编程有本质上的区别，命令式编程是基于冯诺依曼体系的抽象，通俗点来说就是像电脑运作般思考，而函数式编程更多是数学抽象上函数的概念，也就是输入和输出的映射关系。
+<!--more--></p>
+
+<p>我们来举个简单里例子，一个价格的集合，大于20块的打9折，然后相加。</p>
+
+<p>下面是JAVA的示例：</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/82f3b67bb24cc3c69adeb54117d1344a5e62d5f746fe4aef339bcaeedf9a5d02" alt="" /></p>
+
+<p>这里的写法非常清晰明了，循环价格的集合，找出其中大于20的价钱，打九折，然后加到价格总数里面，实际上计算器内部使用寄存器和跳转指令执行的流程也是相差无几，这就是用计算机执行的思维去写代码。</p>
+
+<p>然后看下Haskell对这个问题的处理：</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/1d2490746a11ae277b15819b03e4ae7ed3dd97949843801d1e5323ba02d0cfca" alt="" /></p>
+
+<p>就一行代码，涉及了三个函数</p>
+
+<p>1）filter ：从价格集合中筛选出大于20的价格，形成新的集合</p>
+
+<p>2）map：对1中产生的新集合进行变换处理，这里的处理是每个元素*0.9，也就是打九折</p>
+
+<p>3）sum：对2中产生集合进行求和处理</p>
+
+<p>从这里可以看到，Haskell的基本处理单位是函数（函数是一等公民），一个函数可以成为另外一个函数的输入，函数和数学范畴的映射是一样的。</p>
+
+<p>因此掌握Haskell对理解函数式编程具有很大的作用。</p>
+
+<h1 id="编写第一个haskell">编写第一个Haskell</h1>
+
+<p>编写Haskell之前需要把Haskell
+Platform下载下来（<a href="https://www.haskell.org/platform/">https://www.haskell.org/platform/</a>），安装后使用ghci就可以进行Haskell编程了。</p>
+
+<p>我的电脑是Windows，在Windows下打开cmd，输入ghci，就能进入编程界面，在这个界面能够进行简单的编码，比如下面：</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/ed5bbbdbb02e02e90ac1838bfe2d5372ab50db23c64e74881b32eb453e0a4923" alt="" /></p>
+
+<p>这里简单的进行了一次 3+5的求和操作。</p>
+
+<p>但是我们更加习惯于用编辑器进行编码，下面使用文本编辑器来写一段代码。</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/cc4d08129702ea1eb3306d3ee954361d2423850706a63b576c64c253a88a7f60" alt="" /></p>
+
+<p>这段代码定义了一个函数findMax，输入两个数字x和y，输出x和y的最大值，这里要注意下haskell内if
+else语句else是不可或缺的，不像JAVA可以只写if不写else。</p>
+
+<p>写完保存成文件（这里保存为cal.hs），以.hs作为后缀，在对应目录的命令行下面输入 :l 文件名</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/0c64c49a47be383fd5c1ab8e7c94952d853a176c5b2db59dc1d762f4e3d74ee0" alt="" /></p>
+
+<p>调用自定义的函数findMax，输入参数1 3，然后就能够看到输出最大值3了。</p>
+
+<h1 id="类型和函数">类型和函数</h1>
+
+<p>Haskell是静态类型，也就是编译器在编译过程中就能够明确每个值的类型，当发现类型不匹配的时候，在编译过程中就会报错。比如输入这样一个函数：</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/1807b7c8e26fb63f93fc785ab5a92df90d86ea1723b7fd7d23457556ee6d3231" alt="" /></p>
+
+<p>== 是个表达式，编译的时候会进行1和”2“的类型判断，1是Int类型，”2“是[Char]类型，因此会报编译错误。</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/7ab8db689a78b33f143dc0c6b6585fcf595db311a017aff1a5fa5aef5933d561" alt="" /></p>
+
+<p>Haskell 可以使用 :t 命令来查看数值的类型，下面来看下一些常见的类型。</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/d9f61c5bc4f0cd976ff2dec1dd03079dce0a3a2eab770505a72ba8abda20823a" alt="" /></p>
+
+<p>可以看到一些基础的类型</p>
+
+<p>True ，Char，[Char]</p>
+
+<p>然后对于  :t 0 的理解   （ 0 :: Num a =&gt; a ），表明
+0是一种Num类族(typeclass)的a，Num类族这里可以先简单理解为JAVA的interface，Integer，Double等都是它的”实现“，和在之后的篇章再详细介绍到typeclass的概念。</p>
+
+<p>我们先看下函数的类型是怎么样的，之前我们定义过一个函数findMax，这里看下<img src="/image/heskell_yu_han_shu_shi_bian_cheng/661816989648bdd79b5a3e4dacde4efd00cfb97851de01a9bb80ff7d93dd961e" alt="" /></p>
+
+<p>这里Ord也是一个typeclass，一个他的实例的类型能够使用&gt;来比较大小，然后后面跟着三个a，这里简单做下括号就能够区分了。</p>
+
+<p>( a -&gt; a ) -&gt; a ，最后一个参数输出，前面两个a是入参，用文字来描述就是：</p>
+
+<p>输入两个Ord类族的参数，输出一个Ord类族的输出。</p>
+
+<p>这里对findMax对下简单的变形，让它更能突显问题：</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/e8a8f5a04d971e92412c357a302034c109e15c1a32e65c9b84ab1520a81c7ada" alt="" /></p>
+
+<p>这里看下type</p>
+
+<p><img src="/image/heskell_yu_han_shu_shi_bian_cheng/44ccbf9714f3249f8e582708cb796d652d69ddcaf659defb07109334974edb91" alt="" /></p>
+
+<p>用文字来表述：</p>
+
+<p>入参是（Ord , Ord , (Eq , Fractional)
+）类族的三个参数，出参是一个Boolean值，其中z具有Eq和Fractional两个特性，Eq的作用是能够做==比较，Fractional表示z能够被分解为分数。</p>
+
+<p>未完待续</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/intellij_idea_kai_fa_she_zhi/">IntelliJ IDEA开发设置</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/bitmap_yuan_ma_yue_du_bi_ji/">Bitmap 源码阅读笔记</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

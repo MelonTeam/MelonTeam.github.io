@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>《实现模式》读书总结</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  关于这本书            导语 这是一本关于如何写好代码的书，是一本关于“如何编写别人能看懂的代码”的书。从价值观、原则、模式三个层面解读如何优化代码结构，减少代码维护成本。      关于这本书  作者简介">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/shi_xian_mo_shi__du_shu_zong_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/shi_xian_mo_shi__du_shu_zong_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/shi_xian_mo_shi__du_shu_zong_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>《实现模式》读书总结</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-14
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>hiwang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#其他" title="Category: 其他" rel="category">其他</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%AE%9E%E7%8E%B0%E6%A8%A1%E5%BC%8F" title="Tag: 实现模式" rel="tag">实现模式</a-->
+        <a href="/tag/#实现模式" title="Tag: 实现模式" rel="tag">实现模式</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%87%8D%E6%9E%84" title="Tag: 重构" rel="tag">重构</a-->
+        <a href="/tag/#重构" title="Tag: 重构" rel="tag">重构</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%88%90%E6%9C%AC%E4%BC%98%E5%8C%96" title="Tag: 成本优化" rel="tag">成本优化</a-->
+        <a href="/tag/#成本优化" title="Tag: 成本优化" rel="tag">成本优化</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%A1%86%E6%9E%B6" title="Tag: 框架" rel="tag">框架</a-->
+        <a href="/tag/#框架" title="Tag: 框架" rel="tag">框架</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%BC%96%E7%A8%8B" title="Tag: 编程" rel="tag">编程</a-->
+        <a href="/tag/#编程" title="Tag: 编程" rel="tag">编程</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#关于这本书" id="markdown-toc-关于这本书">关于这本书</a></li>
+  <li><a href="#模式" id="markdown-toc-模式">模式</a></li>
+  <li><a href="#一种编程理论" id="markdown-toc-一种编程理论">一种编程理论</a>    <ul>
+      <li><a href="#价值观" id="markdown-toc-价值观">价值观</a></li>
+      <li><a href="#原则" id="markdown-toc-原则">原则</a></li>
+      <li><a href="#小结" id="markdown-toc-小结">小结</a></li>
+    </ul>
+  </li>
+  <li><a href="#动机" id="markdown-toc-动机">动机</a></li>
+  <li><a href="#类" id="markdown-toc-类">类</a></li>
+  <li><a href="#状态" id="markdown-toc-状态">状态</a></li>
+  <li><a href="#行为" id="markdown-toc-行为">行为</a></li>
+  <li><a href="#方法" id="markdown-toc-方法">方法</a></li>
+  <li><a href="#容器" id="markdown-toc-容器">容器</a></li>
+  <li><a href="#改进框架" id="markdown-toc-改进框架">改进框架</a></li>
+  <li><a href="#附录-a" id="markdown-toc-附录-a">附录 A</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 这是一本关于如何写好代码的书，是一本关于“如何编写别人能看懂的代码”的书。从价值观、原则、模式三个层面解读如何优化代码结构，减少代码维护成本。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="关于这本书">关于这本书</h2>
+
+<ol>
+  <li>
+    <p>作者简介<br />
+<!--more-->
+Kent Beck，软件开发方法学的泰山北斗，是最早研究软件开发的模式和重构的人之一，是敏捷开发的开创者之一，更是极限编程和测试驱动开发的创始人。</p>
+  </li>
+  <li>
+    <p>这本书的目标<br />
+这本书的目标是帮助你通过代码表达自己的意图。</p>
+  </li>
+  <li>
+    <p>章节概览</p>
+  </li>
+</ol>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/553beb22455fe08166720719b05134606035055060049e13272d457453992775" alt="章节概述" /></p>
+
+<p>[ 章节概述 ]</p>
+
+<h2 id="模式">模式</h2>
+
+<p>模式就是我们在编写代码时固定的规则（force）。</p>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/95802d1c1cb94c1b94f5ab0c51954a2978e9a68855d50c312d62db816154d216" alt="模式" /></p>
+
+<p>[ 模式 ]</p>
+
+<p>举个栗子:chestnut: 编程中，我们想写一个函数，需要给它命名。那么映入我们脑海的是：</p>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/dc89eabdc257eebb35bac628d07d871343b0c48456524b7ad406f447a90f654d" alt="给函数命名的模式" /></p>
+
+<p>[ 给函数命名的模式 ]</p>
+
+<ol>
+  <li>模式让你感觉到束手束脚，但可以帮你节省时间和经历，提高效率。</li>
+  <li>模式的种类繁多，众多模式构成了一种编程风格</li>
+</ol>
+
+<h2 id="一种编程理论">一种编程理论</h2>
+
+<h3 id="价值观">价值观</h3>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/4f8611cc11244e5991e7f499222a5f33231b5456e746d56eed296b7c83f19114" alt="编程理论-
+价值观" /></p>
+
+<p>[ 编程理论-价值观 ]</p>
+
+<h3 id="原则">原则</h3>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/515298ce964728523fbf427487dc0ac517a19a44aedba69136dd5ec17a3dff0c" alt="编程理论-
+原则" /></p>
+
+<p>[ 编程理论-原则 ]</p>
+
+<h3 id="小结">小结</h3>
+
+<p>上面提到了个关键词，分别是：模式、原则、价值观。</p>
+
+<p>模式是编码是的一些约束（force），众多的模式共同构筑了一种编程风格。</p>
+
+<p>价值观是编程过程中统一支配性主题，影响了我们在编程中所作的每个决策。</p>
+
+<p>原则是模式和价值观之间搭建的桥梁，在遇到没有现有模式可以解决的问题的时候，原则往往可以让我们“无中生有”的创造一些东西，而这些东西往往都是很不错的。</p>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/0f0edd7361f6ffb0b04e8ccb246ca31142e7e587afc52d2d19de9f25fad33ce6" alt="模式-原则-
+价值观" /></p>
+
+<p>[ 模式-原则-价值观 ]</p>
+
+<p>摘录书中的一句总结：模式描述了要做什么，价值观提供了动机，原则把动机转化成了实际行动。</p>
+
+<h2 id="动机">动机</h2>
+
+<p>由上面的讨论可以知道，价值观为模式的形成提供了动机。那么主要的动机之一是软件设计应该致力于减少整体成本。</p>
+
+<p>costtotal=costdevelop+costmaintain cost{total} = cost{develop} +
+cost_{maintain} costtotal=costdevelop+cost​maintain​​</p>
+
+<p>经过统计，人们发现，维护成本远远高于初始成本。也就是说维护的代价很大。因为理解现有代码需要耗费很多时间，而且容易出错，改动之后还需要重新测试和部署。</p>
+
+<p>costmaintain=costunderstand+costchange+costtest+costdevelop cost{maintain} =
+cost{understand} + cost{change} + cost{test} + cost_{develop}
+costmaintain=costunderstand+costchange+costtest+cost​develop​​</p>
+
+<p>通过合理的模式的使用，可以降低经济成本。</p>
+
+<h2 id="类">类</h2>
+
+<p>关于类，书中讲解了很多细小的点。有的比较有意思，值得一说。</p>
+
+<p>通读本章后，进行了梳理整合，做如下总结。</p>
+
+<ol>
+  <li>类的命名</li>
+</ol>
+
+<p>类的名字应该是简明扼要，简短而有表现力。一个好的命名可以大大增加理解代码的容易度。</p>
+
+<ol>
+  <li>针对接口编程，不针对现实编程</li>
+</ol>
+
+<p>对操作进行抽象，由子类实现各自的具体逻辑。<br />
+interface（接口）对扩展开放，对修改关闭。比如想给一个interface增加一个函数，不能直接添加，
+要重新写个interface继承它。如果直接在原interface增加函数，就要导致所有实现了本接口的地方都要修改，这个代价是非常大的。</p>
+
+<ol>
+  <li>当我们从其他地方复制了一大段代码</li>
+</ol>
+
+<p>如果有两个地方的代码非常相似甚至相同，那就要考虑是否可以抽取到公共父类或者工具类中。直接拷贝一份的弊端很明显，维护起来很困难，比如其中一个地方需要修改，那么另外一个地方是不是也要修改呢。而且增加了代码的阅读难度，这明显和模式的原则不符。</p>
+
+<ol>
+  <li>内部类和匿名内部类</li>
+</ol>
+
+<p>内部类当被实例化之后，会获得创建它的外部类对象的引用，所以可以直接访问后者的数据而不用建立额外的连接。<br />
+但是这中对象持有操作有内存泄漏的风险。比如在手Q中ThreadManager.post中就有特殊的操作来避免内存泄漏。</p>
+
+<ol>
+  <li>逻辑委派和可插拔的选择器</li>
+</ol>
+
+<p>把相同的逻辑统一处理，然后把不同的逻辑发放给不同的模块去处理。在手Q中，不同的回报消息在统一处理之后发放给不同的回调逻辑，也是一种实际应用。</p>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/2c7429e0d8714156dcac74de067f5c8b0df611d84532d83d68a5acc8c4ad92d1" alt="逻辑委派" /></p>
+
+<p>[ 逻辑委派 ]</p>
+
+<p>可插拔的选择器和逻辑委派很相似，比如有一个打印类的函数列表的工具方法，传给它不同的类名，就打印不同的类的函数信息。</p>
+
+<ol>
+  <li>类库实现模式、实现模式、</li>
+</ol>
+
+<p>把一些公共的方法放到一个公共的类中，声明为static，当成工具来调用。可以简化代码，看起来更清晰。</p>
+
+<h2 id="状态">状态</h2>
+
+<ol>
+  <li>直接访问与间接访问</li>
+</ol>
+
+<p>在类中有很多变量，每一个变量都会存在很多状态，比如boolean有true和false两种状态，一般类的范围内进行直接访问，对外部的访问一般强制间接访问，也就是通过public的函数访问。<br />
+比如下面这种方式一般是类内访问。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     door.isOpen = true
+</code></pre>
+</div>
+
+<p>而下面这种方式一般用在类外访问。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     public boolean isOpen() {
+     return this.isOpen;
+ }
+</code></pre>
+</div>
+
+<p>其实就是合理使用Java中的private、protected、public修饰。</p>
+
+<ol>
+  <li>变量的分块</li>
+</ol>
+
+<p>在一个类中有很多变量，比如private成员变量、static静态变量、public公共变量，除了变量名命名要规范外，还要分区分块。比如static类型的应该放到最上面，并且与其他类型的变量隔开。</p>
+
+<ol>
+  <li>参数</li>
+</ol>
+
+<p>一个变量想传递到其他地方有很多方法。比如可以设置成public+static，让别人直接访问。但是这种方式耦合程度太高，比如改一个变量名，所有引用的地方都要修改。可以使用参数，直接把一个状态传递到另外一个地方，而不涉及二者之间的耦合。</p>
+
+<ol>
+  <li>变量的初始化：及早初始化和延迟初始化</li>
+</ol>
+
+<p>初始化就是给变量一个默认的状态。<br />
+对于对性能影响较低的初始化可以及早初始化，可以保证变量在后续的使用过程中是已经初始化了的。并且变量的初始化要尽量放到一起，这样逻辑更清晰，也更美观。比如Android中的findViewById()在初始化时就要尽量放到一起。<br />
+延迟初始化是考虑到了性能问题，如果初始化成本很高，就可以考虑通过延迟初始化来实现快速启动。</p>
+
+<h2 id="行为">行为</h2>
+
+<ol>
+  <li>主体流</li>
+</ol>
+
+<p>虽然Java是面向对象编程，但是在一个函数中，也是由上到下依次执行。主体流中包含了一些异常判断和卫述句（guard clause）。</p>
+
+<ol>
+  <li>卫述句</li>
+</ol>
+
+<p>卫述句是异常检查的一种方式。在程序的主体流中，需要判断某些不适用主体流的情况。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     void init() {
+     if (isInited) {
+         return;
+     }
+     ....
+ }
+</code></pre>
+</div>
+
+<p>我们习惯了if-then-
+else这种约束，当看到if的时候，很容易就想到需要else语句。卫述句则不需要else子句，它是表达的另一种情形，只是一次主体流中的异常判断。</p>
+
+<ol>
+  <li>异常传播</li>
+</ol>
+
+<p>当程序发生异常，不能直接将日志信息输出，这样被有心之人抓取到了会产生安全隐患。同样也不能置之不理，这样后面排查问题就很困难。正确的做法是调用异常处理工具，比如写入日志文件等等。</p>
+
+<h2 id="方法">方法</h2>
+
+<p>把大块的逻辑分成许多块，每一块都是一个方法，每个方法起一个顾名思义的名称。这样的代码理解起来更容易，更易于维护和重用。</p>
+
+<ol>
+  <li>安全复制</li>
+</ol>
+
+<p>如果在一个类中有一个List，存放着若干个类Demo的对象实例，比如</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     List list = new ArrayList();
+</code></pre>
+</div>
+
+<p>如果外界想访问这个列表呢，通常的做法是这样的</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     public List getDemoList() {
+     return this.list;
+ }
+</code></pre>
+</div>
+
+<p>这样的话会有安全隐患，我们必须要考虑，外界的逻辑是否会对我们的数据产生影响</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     getDemoList().clear(); // 数据被莫名修改，会发生一些问题。
+</code></pre>
+</div>
+
+<p>考虑更高的安全性，我们可以这么做</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     public List getDemoList() {
+     List copyList = new ArrayList();
+     copyList.addAll(this.list);
+     return copyList;
+ }
+</code></pre>
+</div>
+
+<p>当然，安全复制不可滥用，如果数据很大，这种复制会占用耗费的内存和性能，所以更好的做法是综合考虑安全性和性能的平衡。</p>
+
+<ol>
+  <li>方法注释</li>
+</ol>
+
+<p>对于沟通良好的代码来说，很多注释完全是多余的。在强调命名的沟通性和表达性的时候，注释显得处在一个很别扭的层次上。注释不是越多越好，在必要的时候添加适当的注释是合理的。当然，在后期的代码修改的时候，记得及时更新代码注释，否则注释不正确反倒对阅读人造成了误解。</p>
+
+<h2 id="容器">容器</h2>
+
+<ol>
+  <li>使用容器应该关心的一个问题</li>
+</ol>
+
+<p>在将容器暴露给外界使用的时候，需要考虑外界是否可以对容器进行修改。比如Iterable无法保证容器中的数据不被修改，外界可以直接调用它的remove方法进行修改，而不通知容器所有者，这样会出现问题。解决办法之一就是返回一个安全拷贝。</p>
+
+<ol>
+  <li>不可变的容器</li>
+</ol>
+
+<p>当只想把容器暴露给外界而不希望被修改时，除了安全拷贝外，还可以创建不可修改的容器，当容器的元素被外界修改时，程序会throw exception。</p>
+
+<p><img src="/image/shi_xian_mo_shi__du_shu_zong_jie/cb63ac94a79f1c7021620b78ede4f7d7e491aeb53638458a315dfc0dd01b267f" alt="不可变的容器" /></p>
+
+<p>[ 不可变的容器 ]</p>
+
+<ol>
+  <li>容器的继承和委派</li>
+</ol>
+
+<p>有时候我们可能需要继承一个容器类。比如新建一个书籍列表的类Library，我们的目的是给他提供类似集合一样的增删改查操作。一个很直接的想法是让它继承ArrayList。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class Library extends ArrayList{
+    ....
+}
+</code></pre>
+</div>
+
+<p>这种操作实现了Library的add、remove、迭代以及其他容器操作，但是这种方式会带来一些问题。比如一般我们不需要ArrayList的toArray操作，但是如何避免用户调用呢，总不能把所有不需要的方法都加以实现并抛出UnsupportedOperationException来取消继承。</p>
+
+<p>这里可以使用委派来实现这种操作。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class Library{
+    Collection books = new ArrayList();
+}
+</code></pre>
+</div>
+
+<p>使用这种方式可以只暴露一些需要的方法。我在头像墙widget中就是这样做的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class AvatarWallViewPager{
+    protected RollViewPager mViewPager;
+}
+</code></pre>
+</div>
+
+<h2 id="改进框架">改进框架</h2>
+
+<ol>
+  <li>更新框架时的向前兼容性</li>
+</ol>
+
+<p>在更新框架的时候，一个非常重要的点就是向后兼容。更新框架的功能不能影响到现有代码的逻辑。在设计框架的时候，保持代码尽可能简单的同时，也要尽可能提高代码的适用范围，考虑后续框架的更新是否容易。</p>
+
+<ol>
+  <li>兼容性更新—增量式更新</li>
+</ol>
+
+<p>包（package）为框架代码的增量式更新提供了一条途径，可以在新的包下创建相同类名的新类。比如把更新后的org.junit.Assert放到org.junit.improved.Assert这个类中，这样的话客户代码只需要更新imports语句就可以实现更新。修改import更加简单，影响更小。</p>
+
+<ol>
+  <li>抽象—接口和抽象类</li>
+</ol>
+
+<p>多使用接口和抽象类可以提高框架的灵活度。只将必要的逻辑暴露给外部使用，内部逻辑是private的。当修改框架代码时，只要接口和抽象类的抽象方法不变，其他的逻辑可以灵活修改，外部调用者不会受到任何影响。</p>
+
+<h2 id="附录-a">附录 A</h2>
+
+<p>这部分主要是介绍了一个度量操作性能的框架。介绍了设计框架时要注意的一些事情。</p>
+
+<p>设计操作度量框架要注意以下几个要点：</p>
+
+<ol>
+  <li>将操作执行多次，取平均值，克服精度问题。</li>
+  <li>在测量时要考虑Java的自动优化机制会不会影响操作执行的时间。</li>
+</ol>
+
+<h2 id="总结">总结</h2>
+
+<p>这本书主要是着力于编程时的思维层面上的考虑。开发者大脑中要时刻铭记沟通、简单、灵活的价值观，遵循实现模式，并学会在遇到前所未有的问题时，能在价值观的指导下，利用现有原则找到更为恰当的解决方案。</p>
+
+<p><em>ps：KM的MarkDown渲染貌似有些问题，某些效果没有我本地MarkDown编辑器渲染的好。附件里提供PDF文档，有需要的可以直接下载了看。</em></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/">跬步神经网络2-C++简单实现</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ui_zou_cha_yu_xian_shi_qi_se_cai_pian_cha/">UI走查与显示器色彩偏差</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

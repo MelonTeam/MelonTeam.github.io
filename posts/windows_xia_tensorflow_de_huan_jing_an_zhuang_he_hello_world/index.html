@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Windows下Tensorflow的环境安装和Hello world</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 深度学习 数字识别 Tensorflow 环境搭建      本人对深度学习是0基础，python也是没有用过，最近很流行深度学习，因此也想学习一下，上次听同学的培训介绍深度学习的helloworld就是写一个数字识别的程序，下面我按照Tensorflow的网站介绍，搭建了windo...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Windows下Tensorflow的环境安装和Hello world</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-26
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>kylepeng
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA" title="Tag: 环境搭建" rel="tag">环境搭建</a-->
+        <a href="/tag/#环境搭建" title="Tag: 环境搭建" rel="tag">环境搭建</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 深度学习 数字识别 Tensorflow 环境搭建</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>本人对深度学习是0基础，python也是没有用过，最近很流行深度学习，因此也想学习一下，上次听同学的培训介绍深度学习的hello
+world就是写一个数字识别的程序，下面我按照Tensorflow的网站介绍，搭建了windows的开发环境。</p>
+
+<!--more-->
+<p>为什么是Tensorflow呢，因为Tensorflow是google推出的开源项目，很多公司都使用这个来进行深度学习开发，因此我就随大流，也用Tensorflow来学习。</p>
+
+<p>环境的安装</p>
+
+<p>我的是windows环境，没装python。</p>
+
+<p>1.去python网站下载python3.5.x的
+windows版安装程序，虽然现在最新版的python是3.6.1，但TensorFlow的教程上写的是3.5.x,
+所以我没有用最新的，而是下载了3.5.3版本的python安装包来安装，安装包地址：<a href="https://www.python.org/ftp/python/3.5.3/python-3.5.3-amd64.exe">https://www.python.org/ftp/python/3.5.3/python-3.5.3-amd64.exe</a></p>
+
+<p>安装步骤如下：</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/ec4698eaa750f780f8f88afb26bdb621d32b126d87cf0b4a1d79147a18aa7b93" alt="" /></p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/ecf8e04f6f980a047570a8ba6d1cd4c6b9620e1f62bd0b0b304782f9ab6d7dc9" alt="" /></p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/0072a551c0f35541b7cdae7018fa9999b8daaca015390c802a857b4a937ab3d0" alt="" /></p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/ce17b4c69311be46b7d449a03af8305f9a54af6b6af4a02fa5e95218b5c49f62" alt="" /></p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/b3236883b153d842b1c3d41d0b93a11509ee65936493ae366de7d444724139e5" alt="" /></p>
+
+<p>2.安装TensorFlow，tensorflow有两个版本，一个是支持GPU的，需要有NVIDIA的显卡，然而我的机器并没有，所以装的是cpu版。</p>
+
+<p>打开个新cmd窗口，输入如下命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>**pip3 install --upgrade tensorflow**
+</code></pre>
+</div>
+
+<p>如果要装GPU版，请输入如下命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>**pip3 install --upgrade tensorflow-gpu**
+</code></pre>
+</div>
+
+<p>安装完成</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/a8b2f3a6cc38ab5c0f8222591d40cc5dd98f9fb5a43c02f035d1a4fb0327164c" alt="" /></p>
+
+<p>3.注意还需要安装Microsoft Visual C++ 2015Redistributable(x64) ,
+不然tensorflow的模块还是不能用的，安装包下载地址：</p>
+
+<p>&lt;
+96E7-D4B285925B00/vc_redist.x64.exe&gt;</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/b00f9fe0a7798975c930ca28d73dcb5c92c2912ab0460a7595a31cf5ece6c90b" alt="" /></p>
+
+<p>4. 校验环境是否正确</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/5a23999402fd3de6974f2455d8d06b2988ccb26782612159550bb4d55fc788a5" alt="" /></p>
+
+<p>虽然中间打印了一条warning，但环境是ok了，可以开始用来深度学习了。</p>
+
+<p>开始“写”Hello world了，说是写，其实把Tensorflow自带上的一个例子拿来运行。这个例子的位置是</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/c914622b810d77acec7e577f1efacddc2f3c45c683a39808bc1b9ebbed638bac" alt="" /></p>
+
+<p>这里都是例子，其中mnist_deep.py就是一个进行数字识别的深度学习的例子，它使用了Tensorflow上的图片库来进行学习和校验，让我们看看它运行的结果，把mnist_deep.py拷贝到某个目录，然后在那个目录运行下面的命令。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python mnist_deep.py
+</code></pre>
+</div>
+
+<p> 如果在公司开发网中，这样运行会报错，连不上服务器，是因为开发网要设代理，那么把代理设上</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>set https_proxy=
+</code></pre>
+</div>
+
+<p> 之后再运行python mnist_deep.py, 就可以正常的运行了</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/53b42c3656a943fcf1a54ca73446b174acf7c8deb6871f35a4cc56efa1ac9aca" alt="" /></p>
+
+<p>这个例子的功能是首先开始去Tensorflow网站下载训练和校验的素材，</p>
+
+<p>然后开始进行数字识别训练</p>
+
+<p>最后进行校验训练的效果，会拿校验素材来进行验证学习之后的数字识别准确率。</p>
+
+<p><img src="/image/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/cd447bfe0fde2389378db03512c3ef583aa9ca2584af2bb8eb8ba932094334a0" alt="" /></p>
+
+<p>因为本人也是python 零基础的，所以到这步之后，也需要仔细的去读代码，就不班门弄斧了。</p>
+
+<p>在这里欢迎各位新手也都能加入到深度学习的坑里来</p>
+
+<p>注：这里例子使用的素材不是普通的图片格式，而是自定义的格式，格式的介绍可以看这里</p>
+
+<p><a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></p>
+
+<p>参考资料：</p>
+
+<p><a href="https://www.tensorflow.org/install/install_windows">https://www.tensorflow.org/install/install_windows</a></p>
+
+<p><a href="https://www.tensorflow.org/get_started/mnist/pros">https://www.tensorflow.org/get_started/mnist/pros</a></p>
+
+<p><a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/yi__chu_shi_rxjava_2_for_android/">[译]初识RxJava 2 for Android</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/kvo_shi_xian_yuan_li/">KVO实现原理</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

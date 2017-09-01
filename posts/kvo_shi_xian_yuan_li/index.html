@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>KVO实现原理</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="概览本文分为两个大的方面。一、kvo的简单使用场景。二、kvo的来龙去脉，讲讲苹果的实现。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/kvo_shi_xian_yuan_li/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/kvo_shi_xian_yuan_li/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/kvo_shi_xian_yuan_li/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>KVO实现原理</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>berniwang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#kvo" title="Tag: kvo" rel="tag">kvo</a-->
+        <a href="/tag/#kvo" title="Tag: kvo" rel="tag">kvo</a>&nbsp;
+    
+        <!--a href="/tag/#isa%E6%B7%B7%E5%86%99" title="Tag: isa混写" rel="tag">isa混写</a-->
+        <a href="/tag/#isa混写" title="Tag: isa混写" rel="tag">isa混写</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p><strong>概览</strong><br />
+本文分为两个大的方面。一、kvo的简单使用场景。二、kvo的来龙去脉，讲讲苹果的实现。</p>
+
+<!--more-->
+<p><strong>KVO 使用方法，和常用场景。</strong></p>
+
+<p>Key-value observing is a mechanism that allows objects to be notified of
+changes to specified properties of other objects.</p>
+
+<p>— Key-Value Observing Programming Guide</p>
+
+<p>简而言之，kvo就是允许一个对象去监听其他对象(可以自己)指定属性的值的变化。但是一般涉及的类比较复杂的时候，我们应该该使用Notification或者delegate，b不然太过分散，bug不容易查找，当然delegate，通知也需要统一处理.现在使用属性监听的场景还是比较少了，我们这里主要是探究一下苹果的实现原理。</p>
+
+<p>使用方法分3步：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.  注册观察者 addObserver:forKeyPath:options:context:
+2.  观察者中实现
+    observeValueForKeyPath:ofObject:change:context:
+3.  移除观察者： removeObserver:forKeyPath:
+</code></pre>
+</div>
+
+<p>注意：</p>
+
+<ul>
+  <li>注册与移除必须成对出现，否则会crash掉。</li>
+  <li>观察者实现的方法，change字典里存放的数据与你注册观察者时<br />
+的options相关，NSKeyValueObservingOptionNew表现为<br />
+改变后的值，键为@”new”;NSKeyValueObservingOptionOld,<br />
+同理键为@”old”,根据自己的需要选择。</li>
+</ul>
+
+<hr />
+
+<p><strong>kvo实现原理</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.  runtime生成被监控类的子类NSKVONotifying_xx实例对
+    象，被监控对象的isa指针指向子类，真正的起作用的类就成了
+    子类。
+
+2. 一旦被监控类的某个属性改变，就会在子类中重写相应的set方
+   法，在set方法中调用NSObject的- willChangeValueForKey:
+   和- didChangeValueForKey:通知观察者。自己可以测试在被
+   监控的类中自己重写这两个方法中的一个，可以看到观察者就
+   收不到
+   －observeValueForKeyPath:ofObject:change:context:消息
+   了，说明截断了消息，使得kvo机制不起作用了。
+
+3. 子类中还重写了－ class方法，返回父类的 class，欲盖弥彰，
+   就好像没有这个子类一样。
+
+4.删除观察者后一切照旧，对象的isa指针重新指向父类。
+</code></pre>
+</div>
+
+<p>下面通过代码来验证：</p>
+
+<p>自定义Person类，有age和height两个属性。自己时被监控对象，为了简单起见，也是观察者。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#import 
+#import 
+</span>
+<span class="k">@interface</span> <span class="nc">Person</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span> <span class="n">height</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">Person</span>
+<span class="cm">/**
+ *  如果重写，这两个方法，kvo就失效了。
+ */</span>
+<span class="c1">//- (void)willChangeValueForKey:(NSString *)key{
+//    NSLog(@"willChangeValueForKey");
+//}
+</span>
+<span class="c1">//- (void)didChangeValueForKey:(NSString *)key{
+//    NSLog(@"didChangeValueForKey");
+//}
+//options属性改变change的值，这个是观察者要实现的方法。
+</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">observeValueForKeyPath</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">keyPath</span> <span class="nf">ofObject</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">object</span> <span class="nf">change</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span><span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">change</span> <span class="nf">context</span><span class="p">:(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="nv">context</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">keyPath</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"age"</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span><span class="n">change</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p>获取一个类实现的所有selector(不包括父类的方法)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static NSArray* classMethodsName(Class c){
+    NSMutableArray* array = [NSMutableArray new];
+    uint count = 0;
+    Method* methods = class_copyMethodList(c, &amp;count);
+    for(int i=0; iNSStringFromSelector(
+                      method_getName(methods[i])
+                      )
+        ];
+    }
+    return array;
+}
+
+static void PrintDescription(NSString *name, id obj)
+{
+    //重点关注，对象的类型，runtime的类型。
+    NSString *str = [NSString stringWithFormat:
+                     @"%@: %@\n\tNSObject class %@\n\tlibobjc class %@\n\timplements methods ",
+                     name,
+                     obj,
+                     [obj class],
+                     object_getClass(obj),
+                     [                          
+                     classMethodsName(
+                     object_getClass(obj)
+                     ) 
+                     componentsJoinedByString:@","]
+                     ];
+
+    printf("%s\n", [str UTF8String]); 
+}
+</code></pre>
+</div>
+
+<p>main函数里，定义了三个人，one,two,three,one观察了自己的age属性，two观察了自己height属性，three作为对比。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        Person* one = [Person new];
+        Person* two = [Person new];
+        Person* three = [Person new];
+
+        printf("注册观察者之前\n");
+        PrintDescription(@"one", one);
+        PrintDescription(@"two", two);
+        PrintDescription(@"three", three);
+        /**
+         *  在注册观察者之前
+         */
+       //breakpint 1
+        [one addObserver:one forKeyPath:@"age" 
+             options:NSKeyValueObservingOptionNew 
+             context:nil];
+        [two addObserver:two forKeyPath:@"height" 
+             options:NSKeyValueObservingOptionNew 
+             context:nil];
+
+        printf("注册观察者之后\n");        
+        PrintDescription(@"one", one);
+        PrintDescription(@"two", two);
+        PrintDescription(@"three", three);
+
+        //查看类的方法实现(函数指针)的地址。
+        printf("\none own method setAge:%p  libSubcluss 
+               method setAge:%p\n",
+               class_getMethodImplementation(
+                  [one class], @selector(setAge:)
+               ),
+               class_getMethodImplementation(
+                 object_getClass(one), 
+                 @selector(setAge:)
+                 )
+        );
+        printf("two own method setHeight:%p
+                libSubcluss method setHeight:%p\n"
+               ,class_getMethodImplementation(
+                  [two class], @selector(setHeight:)
+                ),
+               class_getMethodImplementation(
+                 object_getClass(two), 
+                 @selector(setHeight:)
+               )
+        );
+        printf("three own method setHeight:%p  
+            three libSubcluss method setHeight:%p\n\n",
+            class_getMethodImplementation(
+              [three class], @selector(setHeight:)
+            ),
+            class_getMethodImplementation(
+              object_getClass(three), 
+              @selector(setHeight:)
+              )
+         );
+         //        one.age = 14;
+        //        two.height = 5.5;
+        /**
+         *  注册观察者之后
+         */      
+       //breakpoint 2
+        [one removeObserver:one forKeyPath:@"age"];
+        [two removeObserver:two forKeyPath:@"height"];
+
+        printf("删除观察者之后\n");
+        PrintDescription(@"one", one);
+        PrintDescription(@"two", two);
+        PrintDescription(@"three", three);
+        //breakpoint 3
+
+    }
+    return 0;
+}
+</code></pre>
+</div>
+
+<p>breakpint 1</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>one: &lt;Person: 0x1006001c0&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods   
+    setAge:,observeValueForKeyPath:ofObject:change
+        :context:,height,setHeight:&gt;
+two: &lt;Person: 0x100600220&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods 
+    setAge:,observeValueForKeyPath:ofObject:change
+        :context:,height,setHeight:&gt;
+three: &lt;Person: 0x100600230&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods 
+    setAge:,observeValueForKeyPath:ofObject:change
+        :context:,height,setHeight:&gt;
+</code></pre>
+</div>
+
+<p><strong>结果1：</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>在未添加观察者之前，运行时的类和对象本身的类是一样的。
+</code></pre>
+</div>
+
+<p>breakpoint2</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>one: 0x1006001c0&gt;
+    NSObject class Person
+    libobjc class NSKVONotifying_Person
+    implements methods 
+    class,dealloc,_isKVOA&gt;
+two: 0x100600220&gt;
+    NSObject class Person
+    libobjc class NSKVONotifying_Person
+    implements methods 
+    class,dealloc,_isKVOA&gt;
+three: 0x100600230&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods 
+    
+
+one own method setAge:0x1000015b0  libSubcluss method     
+               setAge:0x7fff8a5a1a81
+two own method setHeight:0x100001600  libSubcluss 
+        method setHeight:0x7fff8a5a1ba9
+three own method   setHeight:0x100001600  three  
+libSubcluss method setHeight:0x100001600
+</code></pre>
+</div>
+
+<p><strong>结果2</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.  监听过的属性值都会在NSKVONotifying_XX(本例是Person)
+    生成对应的set方法。
+2. 重写了class方法，目的在于隐藏子类，依然返回父类的class,
+    伪装自己。
+3.  one的setAge方法，two的setHeight方法，居然有两个实
+     现，说明运行时至少是该方法重写了。而没有监听属性的
+     three一切正常。
+至此，应该算是比较明白runtime干了一件什么样的事了，还不会，那我们看看，删除监听的后效果。
+</code></pre>
+</div>
+
+<p>breakpoint3</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>one: &lt;Person: 0x1006001c0&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods
+    setAge:,observeValueForKeyPath:ofObject:change
+    :context:,height,setHeight:&gt;
+two: &lt;Person: 0x100600220&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods 
+   setAge:,observeValueForKeyPath:ofObject:change:
+      context:,height,setHeight:&gt;
+three: &lt;Person: 0x100600230&gt;
+    NSObject class Person
+    libobjc class Person
+    implements methods      
+    setAge:,observeValueForKeyPath:ofObject:
+    change:context:,height,setHeight:&gt;
+</code></pre>
+</div>
+
+<p>一切都是原来的的样子，runtime的magic。</p>
+
+<p><strong>结论</strong></p>
+
+<p>只要监听了属性的改变，父类就通过isa-
+swizzle(isa混写)，指向了子类，而狡猾的子类不仅完成了该有的set方法的重写，而且重写class方法，返回父类的类对象。然而runtime之下，无所隐藏.</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/windows_xia_tensorflow_de_huan_jing_an_zhuang_he_hello_world/">Windows下Tensorflow的环境安装和Hello world</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/chang_duan_shi_ji_yi_wang_luo_xue_xi_bi_ji/">长短时记忆网络学习笔记</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

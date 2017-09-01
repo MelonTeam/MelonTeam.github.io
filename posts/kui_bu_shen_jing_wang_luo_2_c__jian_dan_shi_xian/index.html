@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>跬步神经网络2-C++简单实现</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 不考虑性能，用c++简单实现NN网络，通过训练预测 XOR、AND、OR      目录跬步神经网络1-基本模型解析">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>跬步神经网络2-C++简单实现</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-11
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yanjun
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" title="Tag: 神经网络" rel="tag">神经网络</a-->
+        <a href="/tag/#神经网络" title="Tag: 神经网络" rel="tag">神经网络</a>&nbsp;
+    
+        <!--a href="/tag/#AI" title="Tag: AI" rel="tag">AI</a-->
+        <a href="/tag/#AI" title="Tag: AI" rel="tag">AI</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 不考虑性能，用c++简单实现NN网络，通过训练预测 XOR、AND、OR</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>目录<br />
+<a href="" title="跬步神经网络1-基本模型解析">跬步神经网络1-基本模型解析</a><br />
+<!--more-->
+跬步神经网络2-C++简单实现<br />
+<a href="" title="跬步神经网络3-MNIST手写库初步识别">跬步神经网络3-MNIST手写库初步识别</a></p>
+
+<hr />
+
+<p>跬步1 了解了bp神经网络的原理，这次动手实践。</p>
+
+<p>代码在这里： <a href="https://git.coding.net/yj_3000/SimpleNN.git">https://git.coding.net/yj_3000/SimpleNN.git</a><br />
+                      xcode工程，需要设置一下开发者账号<br />
+                      windows是vs2012的工程</p>
+
+<p>**代码大致结构：<br />
+**主要包括3个类，Session、Layer 和 Unit。<br />
+Session 代表一套NN网络，可以配置激活函数、损失函数、数据填充方法等<br />
+Layer 代表网络中的一层，包含一个或者多个Unit<br />
+Unit 代表神经元，实现了  UpdateO(更新输出值)    UpdateE(更新Error)<br />
+                                          UpdateB(更新Bias)        UpdateW(更新权重)</p>
+
+<p><strong>简单训练方法：</strong><br />
+1. 设置 input 所有 unit的 输出值 和 output 所有 unit 的目标值<br />
+2. 正向依次调用所有 unit 的 updateO<br />
+3. 反向依次调用所有 unit 的 updateE updateB updateW<br />
+4. 重复 epochs 次</p>
+
+<p>目前实现了3种激活函数： logistic、tanh、relu<br />
+<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/1d9355fcaf0282b2364a7fe6ec1977fcbb0798896754b10a97305e972f3f94f8" alt="" /></p>
+
+<p>测试1 - (LogicFitting::run) :<br />
+1. 建立 2,2,1的网络，随机填充<br />
+2. 使用相同的网络、相同的参数（lr=0.013），设置不同的激活函数，开始训练 XOR<br />
+3. 退出条件<br />
+         1）训练次数达到上限<br />
+         2）预测结果与目标值的距离小于 0.01<br />
+结果如下图，<br />
+1） lr=0.013时， relu 表现最好<br />
+<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/d408a6e8702ee890b47cf650bf1b4aef59557ceee90821f64d63031202613a42" alt="" /></p>
+
+<p>2）lr=0.3时，
+relu训练次数以内，没有达到要求<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/655119e2fcbf9ca5492911061216f19bedb71652a04422993360f60e2be1ce07" alt="" /></p>
+
+<p>3）lr=0.9时， relu和tanh训练次数以内，都没有达到要求<br />
+<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/82b8ac745b2ffe15bd7687638109e8c89fe94c46af49577f0ceade2236684f25" alt="" /></p>
+
+<p>测试2 - (LogicFitting::run1) :<br />
+1. 使用相同的网络， 调整 lr，看结果,<br />
+    relu 在 lr &gt; 0.33 之后就再也没有成功过，<br />
+    尝试设置 lr = 0.31 ，然后多次随机填充网络，都会失败，无法成功<br />
+    relu 太容易 die 了<br />
+    这也引出另外一个问题，如何动态调整 lr<br />
+<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/ba26375af8135a10111486d67ce54cdec07dd1a70398985d56848b49add909c3" alt="" /></p>
+
+<p>下一步打算使用 mnist 上的手写数字数据库，做识别手写数字的联系，<br />
+如果训练性能跟不上，尝试把一般的网络优化方式都实现，看看效果</p>
+
+<p>这里借一张图：<br />
+<a href="https://www.youtube.com/watch?v
+=yKKNr-QKz2Q&amp;index=3&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49">https://www.youtube.com/watch?v=yKKNr-
+QKz2Q&amp;index=3&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49</a><br />
+<img src="/image/kui_bu_shen_jing_wang_luo_2_c__jian_dan_shi_xian/87fb25f0cc597a7b227720dc648d40108675cacffe0e450855320581231de84e" alt="" /><br />
+蓝色线，表示 lr 太小，导致梯度下降很慢，有生之年系列<br />
+红色刚刚好<br />
+绿色比较尴尬，出现循环，<br />
+        栗子（y=x<em>x  y’=2x   想通过梯度下降求极小值， lr=1   x初始值是1，x1=1-1</em>y’(1)=-1）<br />
+        x会一直在 -1 和 1之间摇摆<br />
+黄色是lr设置太大，直接越过最低点</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/kui_bu_shen_jing_wang_luo_1_ji_ben_mo_xing_jie_xi/">跬步神经网络1-基本模型解析</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/shi_xian_mo_shi__du_shu_zong_jie/">《实现模式》读书总结</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

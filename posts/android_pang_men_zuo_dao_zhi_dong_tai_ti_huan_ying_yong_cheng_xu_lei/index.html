@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android旁门左道之动态替换应用程序类</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一，引子            导语 本文讲述如何通过替换应用程序类的方法，可以协助开发调试甚至应用于项目中。      作者： yarkeyzhang  2017.8.31一，引子">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Android旁门左道之动态替换应用程序类</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yarkeyzhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%97%81%E9%97%A8%E5%B7%A6%E9%81%93" title="Tag: 旁门左道" rel="tag">旁门左道</a-->
+        <a href="/tag/#旁门左道" title="Tag: 旁门左道" rel="tag">旁门左道</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一引子" id="markdown-toc-一引子">一，引子</a></li>
+  <li><a href="#二安卓平台机制" id="markdown-toc-二安卓平台机制">二，安卓平台机制</a></li>
+  <li><a href="#三修改应用程序classloader" id="markdown-toc-三修改应用程序classloader">三，修改应用程序ClassLoader</a>    <ul>
+      <li><a href="#1插件框架方案" id="markdown-toc-1插件框架方案">1，插件框架方案：</a></li>
+      <li><a href="#2应用自身替换" id="markdown-toc-2应用自身替换">2，应用自身替换</a></li>
+    </ul>
+  </li>
+  <li><a href="#四类加载器终极修改" id="markdown-toc-四类加载器终极修改">四，类加载器终极修改</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 本文讲述如何通过替换应用程序类的方法，可以协助开发调试甚至应用于项目中。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>作者： yarkeyzhang  2017.8.31</p>
+
+<h1 id="一引子">一，引子</h1>
+<!--more-->
+
+<p>继上一篇文章（<a href="" title="Android旁门左道之动态替换系统View类">Android旁门左道之动态替换系统View类</a>）中我们讨论的，动态替换布局中的View，从而实现不需要修改xml布局文件的情况下控制View对象的创建。同事表示因吹斯听，思路轻奇；后来发现这个功能也可以应用于某些开发场景，比如日迹业务接入手Q基础拍摄框架，不需要修改到框架代码以及布局文件，通过动态替换View方案便可以实现业务特殊功能；以及用于定位并规避一些系统View类的Bug。然而自始至终我们一直局限在View的层次，有没有办法实现动态替换任意类？我们来继续讨论这个因吹斯听的话题吧！</p>
+
+<h1 id="二安卓平台机制">二，安卓平台机制</h1>
+
+<p>Android App进程通过应用程序唯一的包名（package
+name）可以获取到Apk包的信息（apk路径），然后通过dalvik.system.PathClassLoader来加载对应的应用程序类。而用户自定义的Application派生类（比如MyAppApplication）是一个应用程序中第一个被加载的用户类，我们查看它的ClassLoader如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>|- dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.xxx.xxx-1/base.apk"], nativeLibraryDirectories=[/data/app/com.xxx.xxx-1/lib/arm, /vendor/lib, /system/lib]]]
+|- java.lang.BootClassLoader
+</code></pre>
+</div>
+
+<p>这里的BootClassLoader是PathClassLoader的“parent”。BootClassLoader可以加载各种基础的类（比如：List,String,Activity），PathClassLoader则完成从Apk中加载用户类。加载顺序：先BootClassLoader尝试加载，如果找不到类则由PathClassLoader加载。ClassA类加载ClassB类，默认使用ClassA类的ClassLoader。（包括new关键字，以及Class.forName(String)等等）</p>
+
+<h1 id="三修改应用程序classloader">三，修改应用程序ClassLoader</h1>
+
+<p>我们的想法很简单，想要替换类，也就是能够控制类的加载，那么需要能够自行创建应用程序的ClassLoader。我们一旦成功地修改了应用程序ClassLoader，那么便可以动态控制用户类的加载。比如动态修改某个Activity（比如MyMainActivity）。只需要重写ClassLoader中的public
+Class&gt; loadClass(String className)方法。比如：（示意代码）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MyClassLoader extends ClassLoader {
+    @Override
+    public Class&gt; loadClass(String className) throws ClassNotFoundException {
+        if (className.equals("com.xxx.xxx.OldActivity")) {
+            className = “com.xxx.xxx.NewActivity”;
+        }
+        return super.loadClass(className);
+    }
+}
+</code></pre>
+</div>
+
+<p>如何修改应用程序ClassLoader？</p>
+
+<h3 id="1插件框架方案">1，插件框架方案：</h3>
+
+<p>有了解过插件框架原理的同学想必已经明白，比较彻底的做法是通过Android单进程多Application实例的特性：让假的FakeApplication先启动进程，然后构建一个NewClassLoader加载真正的MyAppApplication类。这样一来，我们整个App的用户代码都会被NewClassLoader加载，而不是默认的PathClassLoader。在NewClassLoader的实现中做手脚，我们可以动态替换类。插件框架的改动会比较大，我们不想把事情搞太大，看看能否在应用内自身完成替换。对插件框架有兴趣的我们可以私下一起讨论。</p>
+
+<h3 id="2应用自身替换">2，应用自身替换</h3>
+
+<p>应用自身替换，也就是需要在Application类以及启动之后开始做手脚。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>private static boolean hookPackageClassLoader(Context context, ClassLoader appClassLoaderNew) {
+    try {
+        Field packageInfoField = Class.forName("android.app.ContextImpl").getDeclaredField("mPackageInfo");
+        packageInfoField.setAccessible(true);
+        Object loadedApkObject = packageInfoField.get(context);
+        Class&gt; LoadedApkClass = Class.forName("android.app.LoadedApk");
+        Method getClassLoaderMethod = LoadedApkClass.getDeclaredMethod("getClassLoader");
+        ClassLoader appClassLoaderOld = (ClassLoader) getClassLoaderMethod.invoke(loadedApkObject);
+        Field appClassLoaderField = LoadedApkClass.getDeclaredField("mClassLoader");
+        appClassLoaderField.setAccessible(true);
+        appClassLoaderField.set(loadedApkObject, appClassLoaderNew);
+        return true;
+    } catch (Throwable ignored) {
+    }
+    return false;
+}
+
+public class MyAppApplication extends Application {
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        hookPackageClassLoader(base, new NewClassLoader());
+    }
+}
+</code></pre>
+</div>
+
+<p>替换一个应用程序的ClassLoader核心代码如上所示。加上了以上的代码之后，启动一下我们的首页MyMainActivity。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MyMainActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e("MyMainActivity", "getClass().getClassLoader() : " + getClass().getClassLoader());
+        Log.e("MyMainActivity", "getClassLoader() : " + getClassLoader());
+        Log.e("MyMainActivity", "MyView classLoader : " + MyView.class.getClassLoader());
+    }
+}
+</code></pre>
+</div>
+
+<p>非常成功！我们发现MyMainActivity.class，以及context.getClassLoader都会是我们自定义的NewClassLoader。而且！如上第三句日志，自定义MyView类，它的ClassLoader也是NewClassLoader，也证明了ClassLoader的“传承”。自此，MyMainActivity类中加载的类都会经过NewClassLoader，于是我们可以控制它们的加载。</p>
+
+<p>但是！这里比插件框架方案迟了一步。细心的你发现了问题，也就是说无论如何，我们的MyAppApplication类需要先被系统加载起来，它的ClassLoader是系统创建的PathClassLoader，而不是我们想要的NewClassLoader。根据以上我们说的“传承”，那么MyAppApplication类中创建出来的对象，都会跟随MyAppApplication类的ClassLoader。这些对象之后创建的对象，也会是如此！这条线我们无法控制。</p>
+
+<h1 id="四类加载器终极修改">四，类加载器终极修改</h1>
+
+<p><img src="/image/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/fd84528328db0cc860f13ec8a6db12846e0f05b283fdc92cde77ee9bb3c72c5d" alt="“美女”的图片搜索结果" /></p>
+
+<p><em>待续，记得再来看我 … ( ⊙ o ⊙ )</em></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/intellij_idea_kai_fa_she_zhi/">IntelliJ IDEA开发设置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/android_dong_tai_quan_xian/">Android动态权限
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/opengl_tou_ying_he_she_xiang_ji/">OpenGL-投影和摄像机
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_interpolator_xiang_jie/">[译]Android Interpolator详解
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/">[译]Android TensorFlow机器学习示例
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_dong_tai_quan_xian/">Android动态权限</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/intellij_idea_kai_fa_she_zhi/">IntelliJ IDEA开发设置</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>
