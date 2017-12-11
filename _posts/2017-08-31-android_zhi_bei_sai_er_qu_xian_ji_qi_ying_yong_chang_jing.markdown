@@ -1,0 +1,293 @@
+---
+layout: post
+title: "Android之贝赛尔曲线及其应用场景"
+date: 2017-08-31 19:28:00 +0800
+categories: 未分类
+author: ronaldzhang
+tags: 贝塞尔曲线
+---
+
+* content
+{:toc}
+
+| 导语 本文对贝赛尔曲线的公式及推导过程进行了深入学习，同时结合网上的资料，整理了一些其常用的应用场景。
+
+Android之贝赛尔曲线及其应用场景
+
+
+<!--more-->
+
+前段时间做送礼动画需求的时候遇到送礼轨迹需要平滑的要求，因此对常用的平滑轨迹贝赛尔曲线进行了深入学习，同时结合网上的资料，整理了一些其常用的应用场景，在这篇文章中和大家分享一下，希望能对大家有所裨益。
+
+
+
+一、贝赛尔曲线概述
+
+1\. 贝赛尔曲线来源
+
+在数学的数值分析领域中，贝赛尔曲线（Bezier曲线）是电脑图形学中相当重要的参数曲线。 它于1962年，由法国工程师皮埃尔·贝塞尔（Pierre
+Bézier）所广泛发表，他运用贝塞尔曲线来为汽车的主体进行设计。贝塞尔曲线最初由Paul de Casteljau于1959年运用de
+Casteljau算法开发，以稳定数值的方法求出贝塞尔曲线。
+
+
+
+2\. Bezier曲线公式
+
+    这部分包括一阶二阶三阶Bezier曲线的公式和推导过程。下面将对这些分别进行介绍。
+
+2.1 一阶Bezier曲线
+
+其公式如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/02a029fdbdc7c9bb22b88c4ed9fbb21daf110db640fde4f5cbffffae8a1fef24)
+
+P0为起点、P1为终点，t表示当前时间，B(t)表示公式的结果值。其示意图如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/1b0bb68a158c4f83ba8fc93dee9d259bf48eadc0431cdbf2d6da15370b387bd3)
+
+注意，曲线的意义就是公式结果B(t)随时间的变化，其取值所形成的轨迹。在示意图中，黑色点表示在当前时间t下公式B(t)的取值。而红色的那条线就是在各个时间点下不同取值的B(t)所形成的轨迹。
+
+总而言之：对于一阶贝赛尔曲线，大家可以理解为一条两点之间的直线，其等同于线性插值。
+
+其推导过程如下：
+
+假设两个端点分别为p0和p1，时间为t时曲线的轨迹点是p2，则p2 = p0 + (p1-p0)*t，其中t在0和1之间。
+
+所以p2 = (1-t)*p0 + t*p1。
+
+这就是一阶贝塞尔曲线的公式。
+
+2.2 二阶贝赛尔曲线
+
+    二阶贝赛尔曲线的公式如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/c45e711546829da229a8fa31d0b88a2a243940ff4126c6c4665637d1aecea773)
+
+    在这里P0是起始点，P2是终点，P1是控制点。其生成曲线的示意图如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/f0fe6f8eaf94b54db5cc3fdd8b5b89a748baf2cd375c3e2f7bf8fecfd0e58687)
+
+首先，P0点和P1点形成了一条贝赛尔曲线，还记得我们上面对一阶贝赛尔曲线的总结么：就是一个点在这条直线上做匀速运动；所以P0-P1这条直线上的移动的点就是Q0；
+
+同样，P1,P2形成了一条一阶贝赛尔曲线，在这条一阶贝赛尔曲线上，它们的随时间移动的点是Q1；
+
+最后，动态点Q0和Q1又形成了一条一阶贝赛尔曲线，在它们这条一阶贝赛尔曲线动态移动的点是B ；
+
+而B的移动轨迹就是这个二阶贝赛尔曲线的最终形态。
+
+下面，我们将利用一个示意图来对此曲线公式进行推导，示意图如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/245a9cd4fa6410d8871c633dd63a222a88b67c56fbbe8460b1bfc93272cdd8cd)
+
+    简单来说，我们就是要求当时间为t时p5的位置。前面我们可以知道：
+
+    p3 = (1-t)*p0 + t*p1；
+
+    p4 = (1-t)*p1 + t*p2；
+
+    p5 = (1-t)*p3 + t*p4；
+
+    带入即可得二阶贝赛尔曲线的公式。
+
+2.3 三阶贝赛尔曲线
+
+    其公式如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/a9c8ab8649af425bc320de81ca21804ec510c1dcd7bae355a76936e2616d89d1)
+
+    我们取其中一点来讲解轨迹的形成原理，当t=0.25时,此时状态如下：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/1acbd75d41392e93257070c50a93f98e059c5fc4b06cdd0b36f64366938b3ddc)
+
+    同样，P0是起始点，P3是终点；P1是第一个控制点，P2是第二个控制点；
+
+首先，这里有三条一阶贝赛尔曲线，分别是P0-P1,P1-P2,P2-P3; 他们随时间变化的点分别为Q0，Q1，Q2 ；
+
+然后是由Q0，Q1，Q2这三个点，再次连接，形成了两条一阶贝赛尔曲线，分别是Q0—Q1,Q1—Q2;他们随时间变化的点为R0,R1 ；
+
+同样，R0和R1同样可以连接形成一条一阶贝赛尔曲线，在R0—R1这条贝赛尔曲线上随时间移动的点是B，而B的移动轨迹就是这个三阶贝赛尔曲线的最终形状。
+
+从上面的解析大家可以看出，所谓几阶贝赛尔曲线，全部是由一条条一阶贝赛尔曲线搭起来的；
+
+在上图中，形成一阶贝赛尔曲线的直线是灰色的，形成二阶贝赛尔曲线线是绿色的，形成三阶贝赛尔曲线的线是蓝色的。
+
+三阶贝赛尔曲线公式的推导过程和二阶一样，这里就不复述了。更高阶的贝赛尔曲线公式一般使用比较少，这里就不再深入讲解了。
+
+
+
+二、Android中的贝赛尔曲线
+
+    Android的Path类中有四个方法与贝赛尔曲线相关，分别是：
+
+    
+    
+    //二阶贝赛尔
+    public void quadTo(float x1, float y1, float x2, float y2)  
+    public void rQuadTo(float dx1, float dy1, float dx2, float dy2)  
+    
+    //三阶贝赛尔  
+    public void cubicTo(float x1, float y1, float x2, float y2,float x3, float y3)  
+    public void rCubicTo(float x1, float y1, float x2, float y2,float x3, float y3) 
+
+  
+
+在这四个函数中quadTo、rQuadTo是二阶贝赛尔曲线，cubicTo、rCubicTo是三阶贝赛尔曲线；我们这篇文章以二阶贝赛尔曲线的quadTo、rQuadTo为主，三阶贝赛尔曲线cubicTo、rCubicTo的使用方法与二阶贝赛尔曲线类似，用处也比较少，这篇就不再细讲了。
+
+我们先来看看quadTo函数的用法，其定义如下：
+
+参数中(x1,y1)是控制点坐标，(x2,y2)是终点坐标 。
+
+整条线的起始点是通过Path.moveTo(x,y)来指定的，而如果我们连续调用quadTo()，前一个quadTo()的终点，就是下一个quadTo()函数的起点；如果初始没有调用Path.moveTo(x,y)来指定起始点，则默认以控件左上角(0,0)为起始点。
+
+rQuadTo这个函数和quadTo用法类似，其区别是其参数中控制点(dx1,dy1)和终点(dx2,dy2)的坐标值是相对于此贝塞尔曲线起点的相对坐标值，而不是和quadTo一样是绝对坐标值。
+
+因此，下面这两段代码是等价的：
+
+利用quadTo定义绝对坐标：
+
+path.moveTo(300,400);
+
+path.quadTo(500,300,500,500);
+
+
+
+与利用rQuadTo定义相对坐标：
+
+path.moveTo(300,400);
+
+path.rQuadTo(200,-100,200,100)
+
+
+
+三、贝塞尔曲线常用应用场景
+
+贝塞尔曲线的作用十分广泛，其常用的应用场景有：一些平滑的折线图的制作，例如平滑手势轨迹；QQ小红点拖拽效果；波浪线移动效果等。下面将以平滑手势轨迹为例来演示如何使用贝塞尔曲线。
+
+要实现手指轨迹其实是非常简单的，我们只需要在自定义中拦截OnTouchEvent，然后根据手指的移动轨迹来绘制Path即可。要实现把手指的移动轨迹连接起来，最简单的方法就是直接使用Path.lineTo()就能实现把各个点连接起来。
+
+    以下是实现该功能的核心代码：
+
+    
+    
+    public boolean onTouchEvent(MotionEvent event) {  
+    
+        switch (event.getAction()){  
+    
+           case MotionEvent.ACTION_DOWN: {  
+    
+                mPath.moveTo(event.getX(), event.getY());  
+    
+                return true;  
+    
+            }  
+    
+            case MotionEvent.ACTION_MOVE:  
+    
+                mPath.lineTo(event.getX(), event.getY());  
+    
+                postInvalidate();  
+    
+                break;  
+    
+            default:  
+    
+                break;  
+    
+        }  
+    
+        return super.onTouchEvent(event);  
+    
+    } 
+
+  
+
+当用户点击屏幕的时候，我们调用mPath.moveTo(event.getX(),
+event.getY());然后在用户移动手指时使用mPath.lineTo(event.getX(),
+event.getY())；将各个点串起来。然后调用postInvalidate()重绘。
+
+其效果图如下图所示：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/019fd4312f90a564f5d295aa7d113570caad6a926633b22336dece94d4050306)
+
+
+
+如果我们把S放大，明显看出，在两个点连接处有明显的转折，特别是在S顶部位置横纵坐标变化比较快的位置，看起来跟图片放大后的马赛克一样。其原因是这个S是由各个不同点之间连线写出来的，而之间并没有平滑过渡，所以当坐标变化比较剧烈时，线与线之间的转折就显得特别明显了。
+
+所以要想优化这种效果，就得实现线与线之间的平滑过渡，很显然，二阶贝赛尔曲线是一个不错的选择。下面我们就利用Path.quadTo函数来重新实现下移动轨迹效果。
+
+    下面是将两段直线变为一段曲线的原理。示意图如下图所示：
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/45d4f93832f08f8887f73ab8a765a6cfc7eea130977d09666c358e65d51af4df)
+
+    从这两个线段中可以看出，我们使用Path.lineTo（）的时候，是直接把手指触点A,B,C给连起来。
+
+而如果要用贝塞尔曲线实现这三个点间的流畅过渡，就只能将这两个线段的中间点做为起始点和结束点，而将手指的倒数第二个触点B做为控制点。
+
+大家可能会觉得，那这样，在结束的时候，A到P0和P1到C1的这段距离岂不是没画进去？是的，如果Path最终没有close的话，这两段距离是被抛弃掉的。因为手指间滑动时，每两个点间的距离很小，所以P1到C之间的距离可以忽略不计。
+
+接下来，我们在onTouch函数中实现其核心代码。代码如下：
+
+    
+    
+        @Override  
+    
+        public boolean onTouchEvent(MotionEvent event) {  
+    
+            switch (event.getAction()){  
+    
+                case MotionEvent.ACTION_DOWN:{  
+    
+                    mPath.moveTo(event.getX(),event.getY());  
+    
+                    mPreX = event.getX();  
+    
+                    mPreY = event.getY();  
+    
+                    return true;  
+    
+                }  
+    
+                case MotionEvent.ACTION_MOVE:{  
+    
+                    float endX = (mPreX+event.getX())/2;  
+    
+                    float endY = (mPreY+event.getY())/2;  
+    
+                    mPath.quadTo(mPreX,mPreY,endX,endY);  
+    
+                    mPreX = event.getX();  
+    
+                    mPreY =event.getY();  
+    
+                    invalidate();  
+    
+                }  
+    
+                break;  
+    
+                default:  
+    
+                    break;  
+    
+            }  
+    
+            return super.onTouchEvent(event);  
+    
+        }
+
+
+
+在ACTION_DOWN的时候，利用mPath.moveTo(event.getX(),event.getY())将Path的初始位置设置到手指的触点处，如果不调用mPath.moveTo的话，会默认是从(0,0)开始的。然后我们定义两个变量mPreX，mPreY来表示手指的前一个点。我们通过上面的分析知道，这个点是用来做控制点的。最后return
+true让ACTION_MOVE,ACTION_UP事件继续向这个控件传递。在ACTION_MOVE时，我们先找到结束点，我们说了结束点是这个线段的中间位置，所以很容易求出它的坐标endX,endY；控制点是上一个手指位置即mPreX,mPreY;那有些同学可能会问了，那起始点是哪啊。在开篇讲quadTo()函数时，就已经说过，第一个起始点是Path.moveTo(x,y)定义的，其它部分，一个quadTo的终点，是下一个quadTo的起始点。
+所以这里的起始点，就是上一个线段的中间点。就这样，把各个线段的中间点做为起始点和终点，把终点前一个手指位置做为控制点。
+
+    现在对比用直线和贝塞尔曲线画的手势图像。
+
+![](/image/android_zhi_bei_sai_er_qu_xian_ji_qi_ying_yong_chang_jing/f0e530a7a8dc5b7c5e39aa234b01533285ffe3795f33db37a686825de2eb740a)
+
+
+
+    从效果图中可以明显可以看出，通过quadTo实现的曲线更顺滑。
+
+    本文就讲到这里了，如果还有什么有疑问的地方，请联系我一起深入探讨。
+
