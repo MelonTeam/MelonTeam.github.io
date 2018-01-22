@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>把你的Android Library开源给全世界</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 想要把自己的开源组件分享给全世界，除了github，你还需要JCenter。      在Android Studio想要引用某个第三方library库，只要在项目文件build.gradle中添加一行代码即可：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>把你的Android Library开源给全世界</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>vincanyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#jcenter" title="Tag: jcenter" rel="tag">jcenter</a-->
+        <a href="/tag/#jcenter" title="Tag: jcenter" rel="tag">jcenter</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#jcenter" id="markdown-toc-jcenter">JCenter</a></li>
+  <li><a href="#将android-library发布到jcenter" id="markdown-toc-将android-library发布到jcenter">将Android library发布到JCenter</a>    <ul>
+      <li><a href="#注册bintray帐号" id="markdown-toc-注册bintray帐号">注册bintray帐号</a></li>
+      <li><a href="#添加maven仓库" id="markdown-toc-添加maven仓库">添加maven仓库</a></li>
+      <li><a href="#引用bintray-release" id="markdown-toc-引用bintray-release">引用bintray-release</a></li>
+      <li><a href="#编译并上传library文件" id="markdown-toc-编译并上传library文件">编译并上传library文件</a></li>
+      <li><a href="#提交jcenter审核" id="markdown-toc-提交jcenter审核">提交JCenter审核</a></li>
+      <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+    </ul>
+  </li>
+  <li><a href="#可能会遇到的问题" id="markdown-toc-可能会遇到的问题">可能会遇到的问题</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 想要把自己的开源组件分享给全世界，除了github，你还需要JCenter。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>在Android Studio想要引用某个第三方library库，只要在项目文件build.gradle中添加一行代码即可：</p>
+
+<!--more-->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dependencies {
+    compile 'com.vincan:medialoader:1.0.0'
+}
+</code></pre>
+</div>
+
+<p>就是这么简单，但这个library库是哪里来的呢？对java熟知的人都知道maven，没错，build.gradle里引用的第三方库都是来自maven仓库。目前Android
+Studio最为常用的、默认的maven库就是JCenter。</p>
+
+<h2 id="jcenter">JCenter</h2>
+
+<p>JCenter是一个由<a href="https://bintray.com/">bintray.com</a>维护的Maven仓库 。我们在项目的build.gradle
+文件中如下定义仓库，就能使用JCenter了：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>allprojects {
+    repositories {
+        JCenter()
+    }
+}
+</code></pre>
+</div>
+
+<p>起初，Android Studio 选择Maven Central作为默认仓库。但是Maven
+Central上传library异常困难，其他方面对开发者也不够友好。所以Android
+Studio从0.8版本起，就将默认的Maven仓库由mavenCentral变为了JCenter。</p>
+
+<p>相比Maven Central，JCenter主要有如下几个优势：</p>
+
+<p>l  JCenter支持CDN传输library，开发者可以享受到更快的下载体验。</p>
+
+<p>l  JCenter是全世界最大的Java仓库，是Maven Central的超集。</p>
+
+<p>l  更容易上传，不需要像在 Maven Central上做很多复杂的事情。</p>
+
+<p>l  支持library上传到 Maven Central 。</p>
+
+<p>所以JCenter成为Android Studio默认的maven仓库已经毫无争议。</p>
+
+<h2 id="将android-library发布到jcenter">将Android library发布到JCenter</h2>
+
+<p>那么，如果我们想把自己的开源组件分享出去，也就是说怎么把一个library发布到JCenter呢？接下来我们以[MediaLoader](</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/99c5e72721b4f67d50cd61a48444a205419b82619433c014ebb1292216d7dcc1" alt="" /></p>
+
+<h3 id="注册bintray帐号">注册bintray帐号</h3>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/ebbfa48073579d1a93ef1c1f3de10121005adfa502f3e3ba15a4102128a20da6" alt="" /></p>
+
+<p>首先，我们需要注册bintray帐号。如上图所示，bintray的注册账号分为两种：分别是企业版本（图片左侧）和开源版本（图片右侧），前者可试用一段时间后再收费，开源版本相对享受较少的功能，但并不影响我们上传的功能，所以我们这里选择开源版本。</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/eaa63569258386efdfad6da2041a9434ef1d95ffbb469a5aba8c86acf6caa22b" alt="" /></p>
+
+<p>进入注册界面后，开始注册并通过邮箱激活，也可以选择更为方便的第三方注册如github，注册过程比较简单，不再赘述。</p>
+
+<h3 id="添加maven仓库">添加maven仓库</h3>
+
+<p>注册帐号后登录，新用户默认是没有maven仓库的，所以登录后我们首先需要创建一个maven repository，点击“Add New
+Repository”：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/3d2bc6ebcc5e9b6206de32ff01a23a531622a368e367cde85998cb58a287e522" alt="" /></p>
+
+<p>然后，Repository  Name填写“maven”，Repository Type选择Maven：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/84375a38487032b3664689d4e08bac26a869cc7c68eb094fac56e9234d10a182" alt="" /></p>
+
+<p>点击“Create”，完成maven repository的创建。</p>
+
+<h3 id="引用bintray-release">引用bintray-release</h3>
+
+<p>接下来，我们需要在library中引用bintray-release，在build.gradle文件中增加如下配置：</p>
+
+<p>第1步：添加编译依赖</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>buildscript {
+    repositories {
+        JCenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+</code></pre>
+</div>
+
+<p>第2步：将library设置为bintray插件工程</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: 'bintray-release'
+</code></pre>
+</div>
+
+<p>第3步：添加发布信息</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>publish {
+    userOrg = 'yangwencan2002'//bintray.com用户名
+    groupId = 'com.vincan'//library包名
+    artifactId = 'medialoader'//library名称
+    publishVersion = android.defaultConfig.versionName//版本号
+    desc = 'Cache video/audio while playing for any android media player'//描述
+    website = '
+}
+</code></pre>
+</div>
+
+<h3 id="编译并上传library文件">编译并上传library文件</h3>
+
+<p>在引入bintray-release后，我们就可以使用bintrayUpload命令进行上传了，在Android
+Studio的Terminal控制台输入如下命令：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gradlew clean build bintrayUpload
+ -PbintrayUser=yangwencan2002//bintray.com用户名
+ -PbintrayKey=xxxxxxxxxxxxxxxxxxxxxx//bintray.com API Key
+ -PdryRun=false
+</code></pre>
+</div>
+
+<p>其中，PbintrayKey也就是API Key，在bintray.com的Edit Profile中可以获取到，如下图：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/8f3b65e58f0c70a83ce0b69b5aad1f512d25350960187bd50dc310f1c04b3446" alt="" /></p>
+
+<p>最终在Android Studio的Terminal控制台输入效果图如下：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/b0aa02a2d0719f3e2faae622da702af3e9f322f5991e14a09035021fc0de719c" alt="" /></p>
+
+<p>命令BUILD SUCCESSFUL后，在maven库下就可以看到上传library对应的package信息（package是maven
+repository
+下的组件名称，bintrayUpload命令会检测package是否存在，如果不存在就创建，实际上我们也可以在bintray.com上先手动创建package），如下所示</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/cccf33978e1830a98f8eb56e69cb863e69de89e7a9bd546274154f9f1a466a29" alt="" /></p>
+
+<h3 id="提交jcenter审核">提交JCenter审核</h3>
+
+<p>虽然我们已经能够在bintray.com上看到我们的library信息，但是还不能被引用，原因是因为它还没真正被加入到JCenter，所以我们还需要把它添加到JCenter。</p>
+
+<p>进入library的package信息页面后，点击“Add To JCenter”进行添加：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/e995828a740ac3e5378c3e4feaad8880adf2855140d87ca2d23239fc659d4c0e" alt="" /></p>
+
+<p>然后填写一下你对该library的简单描述后提交就可以了。整个流程到此就结束了，不过最后还需要bintray的人工审核（通常需要3个小时以上），审核通过后会给你发送站内信息，如下图：</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/4b41aa20b59c622c6191c5b13b982579eccb451dd764040271c86de9dadce01f" alt="" /></p>
+
+<p>你也可以通过url（</p>
+
+<p><img src="/image/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/cb678155f2c27c2e4fe0daada79d33c90855532cd6872d3332c6bd52a534559d" alt="" /></p>
+
+<h3 id="总结">总结</h3>
+
+<p>最后，总结一下整个过程如下：</p>
+
+<p>1、注册bintray帐号（首次才需要）</p>
+
+<p>2、添加maven仓库（首次才需要）</p>
+
+<p>3、引用bintray-release</p>
+
+<p>4、编译并上传library文件</p>
+
+<p>5、提交JCenter审核</p>
+
+<h2 id="可能会遇到的问题">可能会遇到的问题</h2>
+
+<p>1、androidstudio mavenAndroidJavadocs FAILED GBK编码不可映射：</p>
+
+<p>这是因为在构建javadocs时，代码注释中包含中文，所以需要在library的build.gradle添加：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>tasks.withType(Javadoc) {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
+</code></pre>
+</div>
+
+<p>或者干脆不要构建javadocs：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>tasks.withType(Javadoc).all {
+    enabled = false
+}
+</code></pre>
+</div>
+
+<p>2、Error:Execution failed for task ‘:xxx:bintrayUpload’.&gt; Could not create
+package&gt; ‘xxxxx/maven/xxxxxxxxx’: HTTP/1.1 401 Unauthorized：</p>
+
+<p>这是认证错误，可能是用户名或API Key出错导致。</p>
+
+<p>3、lint报错：</p>
+
+<p>解决报错或按提示在library的build.gradle添加如下即可：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>android {
+    lintOptions {
+        abortOnError false
+    }
+}
+</code></pre>
+</div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/zen_yang_you_ya_de_da_log/">怎样优雅的打log</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/">#音视频技术学习笔记（1）-基础入门</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

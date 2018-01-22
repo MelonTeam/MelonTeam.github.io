@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android代码上减少方法数的一些奇技淫巧</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一、工具介绍| 导语随着Android项目代码量的增加，当应用方法数量超过了65536的时候，编包的时候就会报出著名“64k”方法数问题。虽然然最简单粗暴的方法是分dex，还有其他像混淆等，但本人还是研究了几种代码上减少方法的方式，希望能帮到“有缘人”。一、工具介绍">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Android代码上减少方法数的一些奇技淫巧</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-23
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>andyqtchen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a-->
+        <a href="/tag/#Android" title="Tag: Android" rel="tag">Android</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%96%B9%E6%B3%95%E6%95%B0" title="Tag: 方法数" rel="tag">方法数</a-->
+        <a href="/tag/#方法数" title="Tag: 方法数" rel="tag">方法数</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%96%B9%E6%B3%95%E6%95%B0%E4%BC%98%E5%8C%96" title="Tag: 方法数优化" rel="tag">方法数优化</a-->
+        <a href="/tag/#方法数优化" title="Tag: 方法数优化" rel="tag">方法数优化</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%96%B9%E6%B3%95%E6%95%B0%E8%B6%85%E5%87%BA" title="Tag: 方法数超出" rel="tag">方法数超出</a-->
+        <a href="/tag/#方法数超出" title="Tag: 方法数超出" rel="tag">方法数超出</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一工具介绍" id="markdown-toc-一工具介绍">一、工具介绍</a></li>
+  <li><a href="#二代码场景与方法数分析" id="markdown-toc-二代码场景与方法数分析">二、代码场景与方法数分析</a>    <ul>
+      <li><a href="#11-子类中调用了父类中未被子类重写的方法" id="markdown-toc-11-子类中调用了父类中未被子类重写的方法">1.1 子类中调用了父类中未被子类重写的方法</a>        <ul>
+          <li><a href="#1场景" id="markdown-toc-1场景">（1）场景</a></li>
+          <li><a href="#2解决方案" id="markdown-toc-2解决方案">（2）解决方案</a></li>
+          <li><a href="#3-其他特例" id="markdown-toc-3-其他特例">（3） 其他特例</a></li>
+          <li><a href="#4综上所述" id="markdown-toc-4综上所述">（4）综上所述：</a></li>
+        </ul>
+      </li>
+      <li><a href="#12-私有内部类" id="markdown-toc-12-私有内部类">1.2 私有内部类</a>        <ul>
+          <li><a href="#1场景-1" id="markdown-toc-1场景-1">（1）场景</a></li>
+          <li><a href="#2解决方案-1" id="markdown-toc-2解决方案-1">（2）解决方案</a></li>
+          <li><a href="#3综上所述" id="markdown-toc-3综上所述">（3）综上所述：</a></li>
+        </ul>
+      </li>
+      <li><a href="#13-在内部类中访问外部类的私有方法变量" id="markdown-toc-13-在内部类中访问外部类的私有方法变量">1.3 在内部类中访问外部类的私有方法/变量</a>        <ul>
+          <li><a href="#1场景-2" id="markdown-toc-1场景-2">（1）场景</a></li>
+          <li><a href="#2综上所述" id="markdown-toc-2综上所述">（2）综上所述：</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#三总结" id="markdown-toc-三总结">三、总结</a></li>
+</ul>
+
+<p>| 导语
+随着Android项目代码量的增加，当应用方法数量超过了65536的时候，编包的时候就会报出著名“64k”方法数问题。虽然然最简单粗暴的方法是分dex，还有其他像混淆等，但本人还是研究了几种代码上减少方法的方式，希望能帮到“有缘人”。</p>
+
+<h1 id="一工具介绍">一、工具介绍</h1>
+
+<!--more-->
+<ul>
+  <li><a href="https://developer.android.com/studio/index.html">Android Studio</a></li>
+  <li><a href="https://sourceforge.net/projects/dex2jar/">dex2jar</a></li>
+</ul>
+
+<h1 id="二代码场景与方法数分析">二、代码场景与方法数分析</h1>
+
+<blockquote>
+  <p>下面要介绍下几种常见的代码使用场景，分析方法数增加情况。</p>
+</blockquote>
+
+<h2 id="11-子类中调用了父类中未被子类重写的方法">1.1 子类中调用了父类中未被子类重写的方法</h2>
+
+<h3 id="1场景">（1）场景</h3>
+
+<p>先看一个简单的类：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+</code></pre>
+</div>
+
+<p>按照我们手算出来的方法数是<code class="highlighter-rouge">2</code>（一个默认构造器，一个onCreate方法）；</p>
+
+<p>那我们使用工具看下这个类的方法数。</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/1c10feb59af07c2ef900735f88de97d9222818f02baf70533b8d8859fb2e1eba" alt="" /></p>
+
+<p>[ MainActivity的方法数 ]</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/1120e5441dfa8482b32bac7ab4ee3ddc83243139cb3b645111345db371ad1e85" alt="" /></p>
+
+<p>[ MainActivity.smali文件 ]</p>
+
+<p>3个？为什么是3个？原来是多了<code class="highlighter-rouge">setContentView</code>这个方法。因为按照java的语义，如果有覆盖父类的方法，则会直接调用覆盖的方法。从<code class="highlighter-rouge">smali</code>文件可以看出<code class="highlighter-rouge">setContentView</code>是属于<code class="highlighter-rouge">MainActivity</code>的方法。</p>
+
+<h3 id="2解决方案">（2）解决方案</h3>
+
+<p>那这次我们改成这样：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_main);
+    }
+}
+</code></pre>
+</div>
+
+<p>工具看下方法数：</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/9d636434802e75512a19b1ef0dbff21c7fd93289e7920c6c23967fced5a52bc5" alt="" /></p>
+
+<p>[ 修改后MainActivity的方法数 ]</p>
+
+<p>结果的确和我们手算出来的一样！</p>
+
+<h3 id="3-其他特例">（3） 其他特例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_main);
+    }
+}
+
+public class TestActivity extends MainActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_main);
+    }
+}
+</code></pre>
+</div>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/70c0e45fe027e94c1d37f97d24be0b996805816c6ed0c0710c221b07afed8108" alt="" /></p>
+
+<p>[ MainActivity和TestActivity的方法数 ]</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/ca838ded72ed18531ccbe233b05a05c44548d2456767ff907e647037168a27c4" alt="" /></p>
+
+<p>[ TestActivity.smali文件 ]</p>
+
+<p>方法数实际增加了<strong>5</strong>个。因为<code class="highlighter-rouge">TestActivity</code>的<code class="highlighter-rouge">super</code>就是<code class="highlighter-rouge">MainActivity</code>，而<code class="highlighter-rouge">MainActivity</code>并没有<code class="highlighter-rouge">setContentView</code>这个方法，而<code class="highlighter-rouge">AppCompatActivity</code>才有，所以这时候的<code class="highlighter-rouge">super.setContentView</code>相当于<code class="highlighter-rouge">this.setContentView</code>。<br />
+这个其实也是有解决办法的，可以这样写<code class="highlighter-rouge">((AppCompatActivity)this).setContentView</code>。</p>
+
+<h3 id="4综上所述">（4）综上所述：</h3>
+
+<p>子类中调用了父类中未被子类重写的方法时，请尽量使用<code class="highlighter-rouge">super</code>来调用或者使用方法的父类强转下<code class="highlighter-rouge">this</code>。</p>
+
+<h2 id="12-私有内部类">1.2 私有内部类</h2>
+
+<h3 id="1场景-1">（1）场景</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_main);
+        new Thread(new Task()).start();
+    }
+
+   private class Task implements Runnable{
+
+        @Override
+        public void run() {
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p>目测，<code class="highlighter-rouge">MainActivity</code><strong>2</strong>个方法数（默认构造器、<code class="highlighter-rouge">onCreate</code>），<code class="highlighter-rouge">Task</code><strong>2</strong>个方法数（默认构造器、<code class="highlighter-rouge">run</code>）。<br />
+那，事实是不是这样呢？<br />
+工具看下方法数：</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/6d282d86a43461838faab777f359e51e93896077f58c2650f98dc713fdf236d4" alt="" /></p>
+
+<p>[ MainActivity和Task方法数 ]</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/83a749f7a12f60e69154049f7420077774a931068489ff6ecd6bb2e7a4b2531a" alt="" /></p>
+
+<p>[ MainActivity$Task.smali文件 ]</p>
+
+<p><code class="highlighter-rouge">MainActivity</code>方法数没错，而<code class="highlighter-rouge">Task</code>实际上得出来的方法数却是<strong>3</strong>个。私有内部类默认直接增加了两个带参构造器。<br />
+其他情况呢？</p>
+
+<h3 id="2解决方案-1">（2）解决方案</h3>
+
+<p>实验了下非私有的内部类，是正常的,<strong>2</strong>个方法数。所以将内部类改成非<code class="highlighter-rouge">private</code>就能解决。</p>
+
+<h3 id="3综上所述">（3）综上所述：</h3>
+
+<p>建议定义内部类是尽量使用非私有的。</p>
+
+<h2 id="13-在内部类中访问外部类的私有方法变量">1.3 在内部类中访问外部类的私有方法/变量</h2>
+
+<h3 id="1场景-2">（1）场景</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class MainActivity extends AppCompatActivity {
+
+    private String text = "在内部类里调用";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_main);
+        new Thread(new Task()).start();
+    }
+
+   class Task implements Runnable{
+
+        @Override
+        public void run() {
+            System.out.println(text);
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p>同<code class="highlighter-rouge">1.2</code>分析，目测是：<code class="highlighter-rouge">MainActivity</code><strong>2</strong>个方法数（默认构造器、<code class="highlighter-rouge">onCreate</code>），<code class="highlighter-rouge">Task</code><strong>2</strong>个方法数（默认构造器、<code class="highlighter-rouge">run</code>）。<br />
+而实际上，是：</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/8ba1978507a5ae2edd9fe69c3cda340092b141d4a96fd43dfeb378a1f20f22b7" alt="" /></p>
+
+<p>[ MainActivity和Task方法数 ]</p>
+
+<p><img src="/image/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/bdce24771a54b0d4e4f618a2dc90ec4399d5d22fd4e7fdafa467a89cac1560f4" alt="" /></p>
+
+<p>[ MainActivity.smali文件 ]</p>
+
+<p>在外部类中，增加了一个<code class="highlighter-rouge">access$000</code>的方法，这方法是为了支持<code class="highlighter-rouge">Task</code>访问<code class="highlighter-rouge">MainActivity</code>的<code class="highlighter-rouge">private</code>变量。</p>
+
+<p>若将字段变成非私有，就不会产生<code class="highlighter-rouge">access$000</code>的方法。</p>
+
+<h3 id="2综上所述">（2）综上所述：</h3>
+
+<p>若外部类字段有可能被内部类访问到，就尽量不使用<code class="highlighter-rouge">private</code>。</p>
+
+<h1 id="三总结">三、总结</h1>
+
+<p>（1）子类中调用了父类中未被子类重写的方法时，请尽量使用<code class="highlighter-rouge">super</code>来调用。<br />
+（2）建议定义内部类是尽量使用非私有的。<br />
+（3）若外部类字段有可能被内部类访问到，就尽量不使用<code class="highlighter-rouge">private</code>。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/shi_yong_audiorecord_yi_ji_audiotrack_lu_zhi_ji_bo_fang_yin_pin/">使用AudioRecord以及AudioTrack录制及播放音频
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_chang_jian_nei_cun_xie_lou_wen_ti/">Android常见内存泄漏问题</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/c__ban_zhuan_min_gong_xue_xi_go_yu_yan/">C++搬砖民工学习Go语言</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Objc 中 “== YES”  的愚蠢行为有多可怕</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="问题引出：几个星期前，我遇到一个这样的bug，在我的机器上用 debug 环境编译出来的正常运行，但是 RDM 运行出来的总是出现错误。当时排查到的问题代码大致如下：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Objc 中 “== YES”  的愚蠢行为有多可怕</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>pikachuqiu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#BOOL" title="Tag: BOOL" rel="tag">BOOL</a-->
+        <a href="/tag/#BOOL" title="Tag: BOOL" rel="tag">BOOL</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p><strong>问题引出：</strong><br />
+几个星期前，我遇到一个这样的bug，在我的机器上用 debug 环境编译出来的正常运行，但是 RDM 运行出来的总是出现错误。当时排查到的问题代码大致如下：</p>
+
+<!--more-->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)tableFootLoadingViewDidTriggerLoading:(MQZoneTableFootLoadingView *)footLoadingView
+{
+    [self performSelector:@selector(loadMoreData:) withObject:@(YES) afterDelay:1];
+}
+
+- (void)loadMoreData:(BOOL)isRefresh
+{
+    if (isRefresh == YES)
+    {
+        //...
+    }
+    else 
+    {
+        //...
+    }
+}
+</code></pre>
+</div>
+
+<p>大致的排查 bug 情况是我发现无论如何，从 <code class="highlighter-rouge">performSelector</code> 进入到的 <code class="highlighter-rouge">loadMoreData</code> 的时候，参数
+<code class="highlighter-rouge">isRefresh</code> 永远是 NO。</p>
+
+<p><strong>问题解决：</strong><br />
+当时，我猜测，这里 @(YES) 发生了一次把 YES 转换为 <code class="highlighter-rouge">NSNumber</code> 的操作, 然后进入到 <code class="highlighter-rouge">loadMoreData</code>
+的时候做了一层隐式转换，变成了 <code class="highlighter-rouge">BOOL</code> 类型，并且，这层转换对于我们来说是一个黑盒子。所以，这里出错的可能性极大。<br />
+另外， <code class="highlighter-rouge">isRefresh</code> 参数和 <code class="highlighter-rouge">YES</code> 进行直接比较，这里的代码似乎有点问题。通过修改这两处地方，bug 得到了很好的解决，修改后的代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)tableFootLoadingViewDidTriggerLoading:(MQZoneTableFootLoadingView *)footLoadingView
+{
+    [self performSelector:@selector(loadMoreData:) withObject:@(0) afterDelay:1];
+}
+
+- (void)loadMoreData:(NSNumber *)refreshNum
+{
+    BOOL isRefresh = [refreshNum integerValue] != 0;
+    if (isRefresh)
+    {
+    }
+    else 
+    {
+    }
+}
+</code></pre>
+</div>
+
+<p>这里，我修改了两个地方。<br />
+1、参数由 <code class="highlighter-rouge">BOOL</code> 改为 <code class="highlighter-rouge">NSNumber</code>, 去除了那层对我们不可见的隐式转换<br />
+2、取消了 <code class="highlighter-rouge">isRefresh == YES</code> 的代码，改为 <code class="highlighter-rouge">if (isRefresh)</code></p>
+
+<p><strong>问题分析：</strong></p>
+
+<p>在 Objc 中，表示真假的有 <code class="highlighter-rouge">BOOL</code>、<code class="highlighter-rouge">bool</code>、<code class="highlighter-rouge">Boolean</code>, 其实 <code class="highlighter-rouge">bool</code> 与 <code class="highlighter-rouge">Boolean</code> 均是 <code class="highlighter-rouge">C</code> 与 <code class="highlighter-rouge">C++</code>
+语言更为通用。</p>
+
+<p>三者的区别：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>定义</th>
+      <th>头文件</th>
+      <th>真</th>
+      <th>假</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bool</td>
+      <td>_Bool (int)</td>
+      <td>stdbool.h</td>
+      <td>true</td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td>Boolean</td>
+      <td>unsigned char</td>
+      <td>MacTypes.h</td>
+      <td>TRUE</td>
+      <td>FALSE</td>
+    </tr>
+    <tr>
+      <td>BOOL</td>
+      <td>signed char</td>
+      <td>objc.h</td>
+      <td>YES</td>
+      <td>NO</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>其中，最大的区别在于 <code class="highlighter-rouge">BOOL</code> 被定义为了 <code class="highlighter-rouge">signed char</code>，<code class="highlighter-rouge">signed char</code> 的取值范围为 -127～128。</p>
+
+<p><strong>一：<code class="highlighter-rouge">== YES</code> 导致问题</strong></p>
+
+<ul>
+  <li>测试环境 Xcode 9.1:</li>
+</ul>
+
+<p>下面代码输出了 NO：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int main(int argc, char * argv[])
+{
+    if (2 == YES)
+    {
+        NSLog(@"YES");
+    }
+    else
+    {
+        NSLog(@"NO");
+    }
+}
+</code></pre>
+</div>
+
+<p>下面的代码输出 YES</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int main(int argc, char * argv[])
+{
+    if (2)
+    {
+        NSLog(@"YES");
+    }
+    else
+    {
+        NSLog(@"NO");
+    }
+}
+</code></pre>
+</div>
+
+<p>第二段代码输出 <code class="highlighter-rouge">YES</code> 是很显然的，但是第一段代码为何输出了 <code class="highlighter-rouge">NO</code>, 为此，我们可以输出 YES, 看结果是啥</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSLog(@"%d", YES);  //结果输出了 1
+</code></pre>
+</div>
+
+<p>所以，答案是显而易见的，2 怎么可能 == 1 呢，所以 这里的第一段代码输出了 1。</p>
+
+<p><strong>二：不同机型上的问题</strong></p>
+
+<ul>
+  <li>测试环境 Xcode 9.1, iPhone 5（注意 5s 为 64位） 与 iPhone 6 模拟器:</li>
+</ul>
+
+<p>下面的代码在 32 位机器上 NO, 64 位机器上输出 YES</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int main(int argc, char * argv[])
+{
+    BOOL result = 2;
+    if (result == YES)
+    {
+        NSLog(@"YES");
+    }
+    else
+    {
+        NSLog(@"NO");
+    }
+}
+</code></pre>
+</div>
+
+<p>下面代码在 32 位与 64 位机器中，均输出 YES</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int main(int argc, char * argv[])
+{
+    BOOL result = 2;
+    if (result)
+    {
+        NSLog(@"YES");
+    }
+    else
+    {
+        NSLog(@"NO");
+    }
+}
+</code></pre>
+</div>
+
+<p>第二个结果明显是正确的，但是第一个又是为什么产生差异呢？<br />
+让我们看看 YES 的定义：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#define OBJC_BOOL_DEFINED
+
+#if __has_feature(objc_bool)
+#define YES __objc_yes
+#define NO  __objc_no
+#else
+#define YES ((BOOL)1)
+#define NO  ((BOOL)0)
+#endif
+</code></pre>
+</div>
+
+<p>首先是宏 <code class="highlighter-rouge">__has_feature(objc_bool)</code>, 通过下面的代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#if __has_feature(objc_bool)
+    NSLog(@"YES = __objc_yes");
+#else
+    NSLog(@"YES = 1");
+#endif
+</code></pre>
+</div>
+
+<p>我发现 32 位 和 64 位机器，都运行了 <code class="highlighter-rouge">NSLog(@"YES = __objc_yes");</code>，也就是说 32 位 和 64 位 YES
+都被定义为了 <code class="highlighter-rouge">__objc_yes</code></p>
+
+<p>很遗憾，我没有找到 <code class="highlighter-rouge">__objc_yes</code> 的定义，但是我们可以简单的把它打印出来看看结果，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSLog(@"%d", __objc_yes);
+</code></pre>
+</div>
+
+<p>输出结果均为 1</p>
+
+<p>但是，我们通过编译器的警告，可以看到 <code class="highlighter-rouge">__objc_yes</code> 在 32 位和 64 位机器的不同：</p>
+
+<p>32位机器：</p>
+
+<p><img src="/image/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/7621bdcb87f136f4a010659d0f9f31413aacb07a7f77a671b3fcb462dba9d67f" alt="" /></p>
+
+<p>64位机器：</p>
+
+<p><img src="/image/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/d24218bd5b777acf7052d8527c16a86507dc8b1333dffd561aacaa652bd68e3f" alt="" /></p>
+
+<p>这就解释了上面那段代码在两种不同机器上输出结果不一致的问题了：</p>
+
+<p>在 64 位机器上， <code class="highlighter-rouge">__objc_yes</code> 就是 bool 类型的某一个值，那么在 C++ 中，任何非 0 的值就是 true，所以，在 64
+位机器上，<code class="highlighter-rouge">result == YES</code> 的代码能够顺利执行。<br />
+但是在 32 位机器上，<code class="highlighter-rouge">__objc_yes</code> 是一个 <code class="highlighter-rouge">signed char</code>，并且 = 1，2 == 1 这个逻辑显然过不去，所以这里会导致 32
+位和 64 位代码的不同运行结果。</p>
+
+<p>但是，到了这里，我好奇一点：在 64 位机器上，为何 <code class="highlighter-rouge">(2 == YES)</code> 无法通过 但是 <code class="highlighter-rouge">result = 2; result == YES</code>
+却可以通过呢？</p>
+
+<p>于是，我运行了下面代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>BOOL result = 2;
+NSLog(@"%d", result);
+</code></pre>
+</div>
+
+<p>上述代码在 32 位机器上输出了 2， 在 64 位机器上输出了 YES, 这也就解释了上面的问题，也就是说，真正起作用的其实是 BOOL = int
+这一层隐式转换。这一层，对我们来说是黑盒子，而且在 64 位与 32 位机器的表现不一致。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/swift_han_shu_pai_fa_ji_zhi/">Swift 函数派发机制</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/xue_xi_bi_ji__objective_c_runtime_yi_/">[学习笔记] Objective-C Runtime（一）</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

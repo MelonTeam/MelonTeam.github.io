@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>套接口地址族AF_UNSPEC引发的探究</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 网络框架盛行的今天，AF_UNSPEC这个宏估计很多人都没接触过，那我又是如何接触它的呢？      也许很多人，特别是新人的会对对网络编程中AF_UNSPEC这个地址宏的定义感到很陌生，也许大部分人都只记得AF_INET和AF_INET6这两个常用的地址族。然而一个BUG让我首次接...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>套接口地址族AF_UNSPEC引发的探究</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>qiaohuili
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#后端" title="Category: 后端" rel="category">后端</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B" title="Tag: 网络编程" rel="tag">网络编程</a-->
+        <a href="/tag/#网络编程" title="Tag: 网络编程" rel="tag">网络编程</a>&nbsp;
+    
+        <!--a href="/tag/#TCP%2FUDP" title="Tag: TCP/UDP" rel="tag">TCP/UDP</a-->
+        <a href="/tag/#TCP/UDP" title="Tag: TCP/UDP" rel="tag">TCP/UDP</a>&nbsp;
+    
+        <!--a href="/tag/#AF_UNSPEC" title="Tag: AF_UNSPEC" rel="tag">AF_UNSPEC</a-->
+        <a href="/tag/#AF_UNSPEC" title="Tag: AF_UNSPEC" rel="tag">AF_UNSPEC</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 网络框架盛行的今天，AF_UNSPEC这个宏估计很多人都没接触过，那我又是如何接触它的呢？</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>也许很多人，特别是新人的会对对网络编程中AF_UNSPEC这个地址宏的定义感到很陌生，也许大部分人都只记得AF_INET和AF_INET6这两个常用的地址族。然而一个BUG让我首次接触到了这个宏，带着一些疑惑，决定对它研究一下。</p>
+
+<p>首先看下以下简单的示例代码（请忽略无关细节）：
+<!--more--></p>
+
+<p>server demo:</p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/cc9131340e37b97fcbc5a356b26de7c8d88ce8c40de8595cce0e1f46a7c851f2" alt="" /></p>
+
+<p>client demo:</p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/bb11f395310d9eb56968cf99563930c6f3a1fb9213006ba01bbfc1287e606faf" alt="" /></p>
+
+<p>下面是client的运行结果：</p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/2b3c4ac60a5a36a333112d9d282c7307dc5344ac1fb7d43b9a7b4313f7196de2" alt="" /></p>
+
+<p>这个是示例代码，很显然可以看出在client
+demo里有一行代码被注释了。没错，这就是导致bug的原因——套接口的地址族没有填充。<em><strong>本来问题发现了，改一下就完事</strong></em>。可是突然间想到了点小问题，有点想脑补一下的冲动：</p>
+
+<p>1.地址族0值（memset初始化了）什么意义？</p>
+
+<p>2.如果0值是一个不合法的值，为什么connect返回成功，而在send时候出错了？</p>
+
+<p>首先查下第一个问题，查宏定义：</p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/ab3ba5c4b84800d676ba61bce29c76e7c84ae931360aa4a6789bcd15535e7d7c" alt="" /></p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/3032a63445d1d0a5025145357b63ed545e6b2d77387a50b412cb2e10a73e60b2" alt="" /></p>
+
+<p>在第一个图的第一个宏定义中，前面我们提到的AF_UNSPEC出现了，就是我们demo中的地址族值。未指定？那第二个问题来了，为何connect可以成功？以下是connect的api说明（man
+2 connect）：</p>
+
+<p><img src="/image/tao_jie_kou_di_zhi_zu_af_unspec_yin_fa_de_tan_jiu/226481866632165087fda21decbb5be128fc9de553e9eaabc199c2532a61a104" alt="" /></p>
+
+<p>大意是：通常基于连接的套接字协议只会成功的调用connection()一次，而基于无连接的套接字协议则可能通过多次调用connect()去改变套接口连结。基于无连接的套接字协议就是可以通过将地址结构中sa_family设置为AF_UNSPEC来解除它们之间的连结。</p>
+
+<p>其实，在TCP中，调用connect()会发起三次握手，建立client和server之间的连接；而在UDP中，调用connect()只是内核把对端的IP/PORT记录下来，所以根据connect()的文档说明，对于UDP调用connect()且地址族指定AF_UNSPEC，就会解除内核中套接口与对端IP/PORT的连结。那UDP将对端IP/PORT绑定有什么好处吗？举个例子：</p>
+
+<p>(1).普通UDP发送两个报文过程：建立连结 =&gt; 发送报文1 =&gt; 解除连结 =&gt; 建立连结 =&gt; 发送报文2
+=&gt;解除连结。</p>
+
+<p>(2).使用connect()：建立连结 =&gt; 发送报文1 =&gt; 发送报文2 =&gt; 解除连结</p>
+
+<p>这时候可以使用send、recv收发报文。</p>
+
+<p>所以使用connect()的UDP连接的话可以提高性能。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/qia_dun_xing_neng_wen_ti_gai_ru_he_ru_shou/">卡顿性能问题该如何入手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_cun_chu_qi_zhi_keychain/">iOS存储器之Keychain</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GIT原理-一个KV文件存储系统</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一、为什么说Git是一个KV文件存储系统？            导语 Git作为一个常用版本控制系统，我们仅仅是熟悉使用肯定是不够，还需要深究一下其原理，本文是我阅读《Pro Git Book》写的一篇引导向的文章。      一、为什么说Git是一个KV文件存储系统？在开始之前，我们先准备一个空的仓库。后...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>GIT原理-一个KV文件存储系统</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>simonhao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#其他" title="Category: 其他" rel="category">其他</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Git" title="Tag: Git" rel="tag">Git</a-->
+        <a href="/tag/#Git" title="Tag: Git" rel="tag">Git</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一为什么说git是一个kv文件存储系统" id="markdown-toc-一为什么说git是一个kv文件存储系统">一、为什么说Git是一个KV文件存储系统？</a></li>
+  <li><a href="#二如何实现版本管理" id="markdown-toc-二如何实现版本管理">二、如何实现版本管理？</a></li>
+  <li><a href="#三在文件kv系统上如何构建分支" id="markdown-toc-三在文件kv系统上如何构建分支">三、在文件KV系统上如何构建分支</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 Git作为一个常用版本控制系统，我们仅仅是熟悉使用肯定是不够，还需要深究一下其原理，本文是我阅读《Pro Git Book》写的一篇引导向的文章。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="一为什么说git是一个kv文件存储系统">一、为什么说Git是一个KV文件存储系统？</h3>
+
+<p>在开始之前，我们先准备一个空的仓库。后面的文档会基于这个仓库做一些操作。
+<!--more--></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git init test
+# cd test
+</code></pre>
+</div>
+
+<p> 既然说Git是一个KV文件存储系统，那么他就应该像其他KV系统一样，至少有Get和Set两个方法。下面两个命令就是Git的Get和Set方法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git hash-object
+# git cat-file
+</code></pre>
+</div>
+
+<p>hash-object命令用来向Git增加文件。cat-file命令用来从Git读取文件。下面我们操作一下。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># echo 'test content' | git hash-object -w --stdin
+&gt; d670460b4b4aece5915caf5c68d12f560a9fe3e4  
+# git cat-file -p d670460b4b4aece5915caf5c68d12f560a9fe3e4  
+&gt; test content
+</code></pre>
+</div>
+
+<p>先看hash-
+object操作，-w参数指的是保存，不然只会计算文件的SHA1而不保存，–stdin指的是从标准输入读内容。最后返回的SHA1就是文件在该KV系统内的KEY。</p>
+
+<p>再看cat-file操作，-p参数表示返回文件的详细信息。加上前面得到的KEY，从GIT中读取文件内容。</p>
+
+<p>现在你应该可以理解Git是一个什么样的KV文件系统了吧！接下来我们进入仓库的.git目录，看下都有哪些内容。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cd .git
+# ls -la
+-rw-r--r--   1 simonhao  staff   23 12 29 11:18 HEAD
+drwxr-xr-x   2 simonhao  staff   68 12 29 11:18 branches
+-rw-r--r--   1 simonhao  staff  137 12 29 11:18 config
+-rw-r--r--   1 simonhao  staff   73 12 29 11:18 description
+drwxr-xr-x  12 simonhao  staff  408 12 29 11:18 hooks
+drwxr-xr-x   3 simonhao  staff  102 12 29 11:18 info
+drwxr-xr-x   5 simonhao  staff  170 12 29 11:24 objects
+drwxr-xr-x   4 simonhao  staff  136 12 29 11:18 refs
+</code></pre>
+</div>
+
+<p>objects目录就是整个KV系统的存储目录，我们所有的文件都会存储到objects目录里。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cd objects  
+&gt; d6
+
+# cd d6  
+&gt; 70460b4b4aece5915caf5c68d12f560a9fe3e4
+</code></pre>
+</div>
+
+<p>在objects目录下只包含一个名为d6的文件夹，d6文件夹下有一个名字很长的文件。可能你已经发现了，目录名加上文件名就是前面我们添加的那个文件的SHA1。是的，GIT就是用SHA1前两位做文件夹名，剩余的做文件名的方式来存储文件。现在我们已经知道了GIT是如何存储文件的了。是时候来点高级的了。我们使用
+add和commit的命令来操作一下，然后看看GIT是不是这么做的呢。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># echo fitst_lint &gt; fitst_file
+# git add .
+# git commit -m 'first_commit'
+
+
+# cd objects  
+&gt; 08  
+&gt; 66  
+&gt; 96  
+&gt; d6 [使用hash-object写入的]
+</code></pre>
+</div>
+
+<p> 喵了个咪的！我就提交一个文件，怎么变四个了！莫慌，我们使用前面学到的cat-file命令来看看这些文档都是设么鬼！</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git cat-file -p 96f8dc00bdda6b464a82f5b5f73d95465fa7da20
+&gt; tree 08f86d54525fa50c4a1625699338abf440105880  
+&gt; author SimonHao  1514519431 +0800
+&gt; committer SimonHao  1514519431 +0800  
+&gt;  
+&gt; first_commit  
+
+# git cat-file -p 08f86d54525fa50c4a1625699338abf440105880
+&gt; 100644 blob 66075654c600b895c037c3f84556f8f410df2445 fitst_file  
+
+# git cat-file -p 66075654c600b895c037c3f84556f8f410df2445  
+&gt; fitst_lint
+</code></pre>
+</div>
+
+<p>这下你是不是发现了什么！第一个96开头的文件包含了我们提交的日志，并用一个tree字段指向了另一个08开头的文件，而08开头的文件则包含了一个列表，其中一项是指向66开头的文件，66开头的文件则包含我们文件的实际内容。我隐隐觉得这三个文件可能作用不一样，在GIT中承担的职责也不一样
+。还是用cat-file命令看一下。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git cat-file -t 96f8dc00bdda6b464a82f5b5f73d95465fa7da20  
+&gt; commit  
+
+# git cat-file -t 08f86d54525fa50c4a1625699338abf440105880  
+&gt; tree  
+
+# git cat-file -t 66075654c600b895c037c3f84556f8f410df2445  
+&gt; blob
+</code></pre>
+</div>
+
+<p>到现在我们可以用一个更高级的定义了！我们存储到GIT中的文件可以称之为“对象”，对象包含commit对象，tree对象，blob对象。blob对象包含的包含文件的内容，tree对象包含的目录的信息，commit对象包含每次提交记录的信息。有了对象的基本概念之后，我们接下来看Git是如何实现版本管理的。</p>
+
+<h3 id="二如何实现版本管理">二、如何实现版本管理？</h3>
+
+<p>我们修改下刚才的那个文件再提交一次。这样这个文件就有了两个版本。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># echo second_line &gt; fitst_file
+# git add .
+# git commit -m 'second commit'
+</code></pre>
+</div>
+
+<p>我们再看一下objects目录，发现又多了三个以61，68和d1开头的对象。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cd objects  
+&gt; 08  
+&gt; 61  
+&gt; 66  
+&gt; 68  
+&gt; 96  
+&gt; d1  
+&gt; d6 [使用hash-object写入的]
+</code></pre>
+</div>
+
+<p> 我们查看一下这三个对象。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git cat-file -p 61edbc644569e291a02c9c30f2125fcd622d8fad
+&gt; tree 68469fa51f07b7d370e8a61d0d9bded8bf7ea5f6  
+&gt; parent 96f8dc00bdda6b464a82f5b5f73d95465fa7da20  
+&gt; author SimonHao  1514528154 +0800  
+&gt; committer SimonHao  1514528154 +0800  
+&gt;  
+&gt; second commit   
+# git cat-file -p 68469fa51f07b7d370e8a61d0d9bded8bf7ea5f6   
+&gt; 100644 blob d11fb9fc76917bde506646efc6c1825d459ee020 fitst_file  
+  
+# git cat-file -p d11fb9fc76917bde506646efc6c1825d459ee020   
+&gt;second_line
+</code></pre>
+</div>
+
+<p>和第一个commit对象不同之处在于，这个commit对象多了一个parent，而这个paren正好指向上一个commit对象。而且也生成了一个新的tree对象，其实，在Git中tree对象也可以再包含tree对象。至此，我们脑海中可以形成这样一幅图：通过commit对象来形成一个个版本记录，每个commit指向一个tree对象(根目录)，然后每个tree对象包含一系列的blob对象和文件对象。这样就形成了一个版本记录。</p>
+
+<p><img src="/image/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/71c6500942336de604d23685967f503c0f4ec16cd4f659a4ddaa16803949d041" alt="" /></p>
+
+<h3 id="三在文件kv系统上如何构建分支">三、在文件KV系统上如何构建分支</h3>
+
+<p>在日常开发中，我们最常用的分支是怎么实现的呢？其实，分支在Git中很简单，仅仅是指向一个commit对象的指针。所有的分支都存储在refs目录下。我们看看这个目录下的内容：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cd refs  
+&gt; heads  
+&gt; tags
+</code></pre>
+</div>
+
+<p>里面两个文件夹，一个heads，一个tags。所有的分支记录在heads目录中。这里还有一个tags文件夹，可以想到，Git的tag也和分支一样仅仅是指向commit对象的一个指针。我们看一下默认分支master的内容。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cat heads/master  
+&gt; 61edbc644569e291a02c9c30f2125fcd622d8fad
+</code></pre>
+</div>
+
+<p> 可以看到，事实就是如此，一个分支仅仅只是一个指向commit对象的指针。我们创建一个test分支。然后看一下他的内容。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># git branch test
+# cat heads/test  
+&gt; 61edbc644569e291a02c9c30f2125fcd622d8fad
+</code></pre>
+</div>
+
+<p>可以看到，test分支是和master分支一样的指针。其情形大概如下图：</p>
+
+<p><img src="/image/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/b8ddf174a69a8f3b3b6183bfce13380ae15b56c0ceb80339131a67be1ce5c7c6" alt="" /></p>
+
+<p>在Git中创建一个分支，仅仅是创建一个指向commit对象的指针，所以Git创建分支很快，应该多开分支。在Git中这种指向对象的指针被定义为“引用”。最终我们可以想象一下Git整个内部的指向结构，大概如下图：</p>
+
+<p><img src="/image/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/03cc71b3da7ca6dedf8dd911b80c91055843e1bb2fe3c5a0233af6037636c9f3" alt="" /></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/shi_yong_audiorecord_yi_ji_audiotrack_lu_zhi_ji_bo_fang_yin_pin/">使用AudioRecord以及AudioTrack录制及播放音频</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/">给你的SpannableString设置点击态</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

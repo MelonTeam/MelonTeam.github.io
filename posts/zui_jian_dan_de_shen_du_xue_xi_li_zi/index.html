@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>最简单的深度学习例子</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="这里我要说的是一个最简单的深度学习的例子，这是一个监督学习，只有一个神经元，总共两层，一层输入，一层输出，输入输出都是一个神经元.例子描述是这样的：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/zui_jian_dan_de_shen_du_xue_xi_li_zi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/zui_jian_dan_de_shen_du_xue_xi_li_zi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/zui_jian_dan_de_shen_du_xue_xi_li_zi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>最简单的深度学习例子</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>kylepeng
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#deep" title="Category: deep" rel="category">deep</a>&nbsp;
+    
+        <a href="/category/#learning" title="Category: learning" rel="category">learning</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0" title="Tag: 深度学习" rel="tag">深度学习</a-->
+        <a href="/tag/#深度学习" title="Tag: 深度学习" rel="tag">深度学习</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%85%A5%E9%97%A8%E4%BE%8B%E5%AD%90" title="Tag: 入门例子" rel="tag">入门例子</a-->
+        <a href="/tag/#入门例子" title="Tag: 入门例子" rel="tag">入门例子</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%9C%80%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90" title="Tag: 最简单例子" rel="tag">最简单例子</a-->
+        <a href="/tag/#最简单例子" title="Tag: 最简单例子" rel="tag">最简单例子</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>这里我要说的是一个最简单的深度学习的例子，这是一个监督学习，只有一个神经元，总共两层，一层输入，一层输出，输入输出都是一个神经元.</p>
+
+<p>例子描述是这样的：
+<!--more--></p>
+
+<p>      有一个一元一次函数</p>
+
+<p>          y = wx＋ｂ，给定一组输入x和输出y，要求经过训练得到最接近真实w和b的值。</p>
+
+<p><img src="/image/zui_jian_dan_de_shen_du_xue_xi_li_zi/c97ee7b111dd26572ef57bd5a4717568ae82871d62d3cf08033094bd2cd1ad56" alt="" /></p>
+
+<p>为了使代码容易读，没有使用任何深度学习框架，只使用了numpy的随机数的功能</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import numpy as np
+# 待训练的函数是y = rw * x + rb
+rw = 0.7  # 实际函数， 这里真实的w是0.7，可以改成任意值
+rb = 0.5  # 实际函数， 这里真实的b是0.5，可以改成任意值,
+
+w = 123  # 初始值可以随便起
+b = 345  # 初始值可以随便起
+lr = 0.4  # 学习率，每次修改w和b时，用来确定修改的幅度，太大和太小都不行
+for step in range(600):
+	x = np.random.random(1)  # 取一个随机数作为输入x
+	y_data = x * 0.7 + 0.3   # 真实函数的值
+	y = w * x + b            # 待训练函数的值
+	loss = y - y_data        # 损失函数，直接用相减的
+	w -= lr * x * loss       # 根据loss值和lr来修改w，这里对于w，线性函数的导数就是x
+	b -= lr * loss           # 根据loss值和lr来修改b，这里对于b，也是一个线性函数，导数是1
+	if step % 20 == 0:
+		print(step, loss, w, b) # 输出中间的训练值
+
+print(step, loss, w, b) # 最终的训练结果
+</code></pre>
+</div>
+
+<p> 最后的输出结果是：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>D:\Python35\python.exe D:/code/python/project1/my_train6.py
+0 [ 423.24400268] [ 14.2730071] [ 175.70239893]
+20 [-14.98016745] [-50.52669027] [ 30.4672526]
+40 [ 3.47404761] [-31.04573414] [ 8.95671096]
+60 [-0.38188363] [-16.62122489] [ 9.34188667]
+80 [ 2.48362047] [-11.47812076] [ 3.90794217]
+100 [ 0.53636773] [-5.63841272] [ 4.30183396]
+120 [ 0.99799242] [-3.96176024] [ 3.87079422]
+140 [ 1.13443525] [-1.92039743] [ 2.05398891]
+160 [ 0.422589] [-1.37312857] [ 1.46196931]
+180 [-0.08370248] [-0.31636993] [ 0.90667603]
+200 [ 0.34132817] [-0.00133022] [ 0.58215472]
+220 [-0.08850977] [ 0.34097343] [ 0.52312156]
+240 [ 0.12776686] [ 0.51868385] [ 0.3993196]
+260 [ 0.00352236] [ 0.57043185] [ 0.34088821]
+280 [ 0.03461357] [ 0.63303328] [ 0.32141318]
+300 [ 0.003671] [ 0.66572717] [ 0.3074886]
+320 [ 0.00891448] [ 0.67791102] [ 0.30758382]
+340 [-0.00138188] [ 0.68842784] [ 0.31047437]
+360 [ 0.00340177] [ 0.69087143] [ 0.30510176]
+380 [-0.00026014] [ 0.69494954] [ 0.302101]
+400 [-0.00095819] [ 0.69729735] [ 0.3020769]
+420 [ 0.00030542] [ 0.69783388] [ 0.30078744]
+440 [ -2.75936661e-05] [ 0.69894329] [ 0.30052175]
+460 [-0.00012052] [ 0.69940182] [ 0.30046619]
+480 [-0.00012904] [ 0.69954173] [ 0.30023906]
+500 [ -5.73504501e-05] [ 0.69980514] [ 0.3001714]
+520 [ -8.86725691e-05] [ 0.69990466] [ 0.30007628]
+540 [  8.76286775e-07] [ 0.69993761] [ 0.30003142]
+560 [  4.39496769e-06] [ 0.69996094] [ 0.30001406]
+580 [ -1.19611531e-05] [ 0.69998241] [ 0.30001239]
+599 [  2.22493371e-06] [ 0.69998736] [ 0.30000404]
+</code></pre>
+</div>
+
+<p> 最终结果w是0.69998736， b是0.30000404，符合预期的要求，其实再继续训练，w可以得到0.7，b得到0.3的”真实值”。</p>
+
+<p>大家可以调整lr参数来看看学习的效率。</p>
+
+<p>如果是用Tensorflow来实现相同的功能，可以写成这样：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import tensorflow as tf
+x = tf.random_uniform([]) - 1
+w = tf.Variable(tf.random_normal([1]))
+b = tf.Variable(tf.random_normal([1]))
+
+rw = 0.7
+rb = 0.5
+
+lr = 0.3
+y_data = tf.multiply(w, x) + b
+y = tf.multiply(rw, x) + rb
+loss = tf.reduce_mean(tf.square(y - y_data))
+optimizer = tf.train.GradientDescentOptimizer(lr)
+train = optimizer.minimize(loss)
+init = tf.global_variables_initializer()
+with tf.Session() as sess:
+    sess.run(init)
+    for i in range(600):
+        if (i % 100 == 0):
+            print (i, sess.run (w), sess.run (b), sess.run(loss), sess.run(x))
+        sess.run(train)
+
+    print(sess.run(w), sess.run(b))
+</code></pre>
+</div>
+
+<p>这里要把loss函数定义好，把w和b用tf.Variable()定义好，还有这里使用的是GradientDescentOptimizer(),梯度下降的更新方式，tensorflow会自动在训练时帮你更新w和b的值</p>
+
+<p>最后输出的结果是：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0 [ 0.57953322] [-1.16369092] 2.6697 -0.334543
+100 [ 0.66026205] [ 0.49130747] 1.92708e-06 -0.593292
+200 [ 0.6995675] [ 0.49980775] 2.73976e-08 -0.900224
+300 [ 0.69999492] [ 0.49999711] 1.9984e-13 -0.680359
+400 [ 0.69999993] [ 0.49999994] 3.55271e-15 -0.42842
+500 [ 0.69999999] [ 0.5] 0.0 -0.000955105
+[ 0.69999999] [ 0.5]
+</code></pre>
+</div>
+
+<p> 从以上例子可以了解到一个NN大概是怎么工作的，就是通过以下几个步骤：</p>
+
+<p>1.进行一次训练，通过输入x，使用y=w * x + b的函数，得到训练的输出值y， 真实值是y_data = rw * x + rb</p>
+
+<p>2.使用一个loss函数根据y和y_data获取到一个差值loss，</p>
+
+<p>3.然后使用这个loss和learning
+rate根据对应w和b的导数来反过来更新w和b的值，这样每次更新都使得下次使用新的w和b时，训练的输出值都会向真实值靠近。</p>
+
+<p>4.然后回到第1步进行下一次训练，或者训练一定次数后结束</p>
+
+<p>这个例子对于线性方程的求参数是合适的，但一般的NN中在y = w * x +
+b只有还会使用一个非线性的函数来把y再处理一次，这样的NN才能解决复杂的非线性问题，并且还需要添加隐藏层来增加NN的包容性，理论上来说，神经元越多，层数越多，这样NN能解决问题得更好，但会增加训练时间，所以如何定义一个好的NN就是在一定的训练时间内，训练好的NN准确率越高越好。</p>
+
+<p>下面的例子是在上面的例子基础上增加了一个非线性函数的变化，这样更贴近实际的应用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import tensorflow as tf
+x = tf.random_uniform([]) - 1
+w = tf.Variable(tf.random_normal([1]))
+b = tf.Variable(tf.random_normal([1]))
+
+rw = 0.7
+rb = 0.5
+
+lr = 0.3
+y_data = tf.nn.relu(tf.multiply(w, x) + b)  # 使用relu的非线性函数
+y = tf.nn.relu(tf.multiply(rw, x) + rb)  # 使用relu的非线性函数
+lost = tf.reduce_mean(tf.square(y - y_data))
+optimizer = tf.train.GradientDescentOptimizer(lr)
+train = optimizer.minimize(lost)
+init = tf.global_variables_initializer()
+with tf.Session() as sess:
+    sess.run(init)
+    for i in range(600):
+        if (i % 100 == 0):
+            print(i, sess.run(w), sess.run(b), sess.run(lost), sess.run(x))
+        sess.run(train)
+
+    print(sess.run(w), sess.run(b))
+</code></pre>
+</div>
+
+<p> 输出的结果：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0 [ 0.73066127] [ 0.1496086] 0.0 -0.827446
+100 [ 0.69404763] [ 0.49660107] 2.52274e-06 -0.858425
+200 [ 0.6986388] [ 0.4994503] 2.30201e-08 -0.209107
+300 [ 0.69977814] [ 0.49992299] 7.48489e-10 -0.751075
+400 [ 0.69996154] [ 0.49999216] 8.20819e-11 -0.344968
+500 [ 0.69999588] [ 0.49999738] 2.40163e-12 -0.650979
+[ 0.69999915] [ 0.4999997]
+</code></pre>
+</div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/">#音视频技术学习笔记（1）-基础入门</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ru_he_de_dao_mi_fa_shou_lian_de_markov_zhuan_yi_ju_zhen/">如何得到幂法收敛的Markov转移矩阵</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Swift 函数派发机制</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  一  常见的函数派发机制| 导语 作为苹果为开发者极力推荐的一种语言，swift 的使用已经越来越广泛，而且swift 4.0 已经发布了，这意味着swift日趋稳定。之前已经写过一篇关于swift 基本语法的介绍，今天要谈的比较深入一点，主要是介绍swift的函数派发机制。一  常见的函数派发机制">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/swift_han_shu_pai_fa_ji_zhi/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/swift_han_shu_pai_fa_ji_zhi/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/swift_han_shu_pai_fa_ji_zhi/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Swift 函数派发机制</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>jackzkzhang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Swift" title="Tag: Swift" rel="tag">Swift</a-->
+        <a href="/tag/#Swift" title="Tag: Swift" rel="tag">Swift</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%87%BD%E6%95%B0%E6%B4%BE%E5%8F%91" title="Tag: 函数派发" rel="tag">函数派发</a-->
+        <a href="/tag/#函数派发" title="Tag: 函数派发" rel="tag">函数派发</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一-常见的函数派发机制" id="markdown-toc-一-常见的函数派发机制">一  常见的函数派发机制</a></li>
+  <li><a href="#二-swift-的函数派发机制" id="markdown-toc-二-swift-的函数派发机制">二  swift 的函数派发机制</a></li>
+</ul>
+
+<p>| 导语 作为苹果为开发者极力推荐的一种语言，swift 的使用已经越来越广泛，而且swift 4.0 已经发布了，这意味着swift
+日趋稳定。之前已经写过一篇关于swift 基本语法的介绍，今天要谈的比较深入一点，主要是介绍swift的函数派发机制。</p>
+
+<h3 id="一-常见的函数派发机制">一  常见的函数派发机制</h3>
+
+<!--more-->
+<p>首先，我们先来了解下编译型语言常见的三种派发方式：直接派发，函数表派发和消息机制派发。</p>
+
+<p>1.直接派发 （direct dispatch）</p>
+
+<p>  直接派发是最快的，因为编译器需要调用的指令集更少，而且还能有较大的优化空间，比如函数内联等，c语言的函数调用，以及c++的非虚函数
+都是使用这种派发机制。</p>
+
+<p>2.函数表派发 （table dispatch）</p>
+
+<p>  是编译型语言实现动态性最常见的方式，一般是使用数组来存储类声明的每一个函数指针，常见的使用有 c++虚函数表，swift witness table
+等。</p>
+
+<p>  下面的例子 阐述了函数表派发机制</p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/3a3149964c4e7bb207a54c02c1c1f0a76e77d16743f2b5d24e490d37e37a378a" alt="" /></p>
+
+<p>3. 消息机制派发（message dispatch）</p>
+
+<p> 这个写object-c 的同学相信就非常熟悉了，oc的动态性实现，比如kvo,swizzling 都是使用这种机制。</p>
+
+<p> 还是用例子来 大概阐述下这个机制：</p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/0a1914958d6ebe42c658893e5326e2577522b980eae7b60346a49d752683c9e3" alt="" /></p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/52f851eeffbc79538b10dcfe6c5caaacbd29d291583eca7b4d7950885dba22de" alt="" /></p>
+
+<p>常见的几种编译型语言中：java 默认使用函数表派发，但可以通过final修饰符改成直接派发；</p>
+
+<p>c++默认使用直接派发，但可以通过加上virtual 修饰符改成函数表派发；</p>
+
+<p>object-c 使用消息机制派发；</p>
+
+<p>而 swift 则以上三种派发方式都有用到。</p>
+
+<h3 id="二-swift-的函数派发机制">二  swift 的函数派发机制</h3>
+
+<p>上面说到，swift的函数派发 用到了<strong>直接派发</strong>，<strong>函数表派发</strong>和<strong>消息机制派发</strong>三种。而swift 的函数选择哪一种，于下面几个因素有关：</p>
+
+<p>1. 声明的位置</p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/8567dad22082d5075fe5692e6017d7266b406f1559a34b6d53df41a0857d8e90" alt="" /></p>
+
+<p>关于 上面四种类型，这里简单介绍一下：</p>
+
+<p> value type 和 class：值类型和类类型。swift里面，枚举和结构体属于值类型，类则属于类类型。而
+dictionary,array等常见集合在swift里面都是结构体。</p>
+
+<p> protocol：协议，和object-c的相同</p>
+
+<p> nsobject subclass：指的是 swift里面 实现nsobject协议的类，这些类常用于 于object-c交互。</p>
+
+<p> extension：拓展 ，和object-c的相同</p>
+
+<p>也就是说，如果函数</p>
+
+<p>  定义在值类型 以及 它的拓展中，使用的是直接派发；</p>
+
+<p>  定义在协议里，使用的是函数表派发；定义在协议的拓展里，使用的是直接派发</p>
+
+<p>  定义在类类型里，使用的是函数表派发；定义在类类型的拓展里，使用的是直接派发</p>
+
+<p>  定义在实现了nsobject协议的类里，使用的是函数表派发；定义在它的拓展里，使用的是消息机制派发</p>
+
+<p>2. 代码中指定派发方式</p>
+
+<p>final 修饰符</p>
+
+<p>final 允许类里面的函数使用直接派发，这个修饰符会让函数失去动态性，任何函数都可以使用final 修饰符</p>
+
+<p>dynamic</p>
+
+<p>dynamic 可以让类 以及 其协议里面的函数 使用消息机制派发，任何实现了nsobject协议的类和swift原生类里面的函数都可以 使用这个修饰符。</p>
+
+<p>@objc &amp; @nonobjc</p>
+
+<p>@objc 和 @nonobjc 显示地声明一个函数能否被object-c 运行时捕获到。swift函数默认 添加@objc（起码在swift
+4.0上尝试如此）。而@nonobjc 可以用来禁止消息机制派发这个函数，不让这个函数注册到object-c的运行时里。</p>
+
+<p>final &amp; @objc</p>
+
+<p>可以在标记为final的同时，也使用@objc 来让函数可以使用消息机制派发。这么做的结果就是，调用函数的时候会使用直接派发，但也会在object-c
+的运行时里注册相应的selector。函数可以响应perform(selector：) 以及别的object-c 特性。</p>
+
+<p>用下面一张图来表示各种修饰符对应的派发方式：</p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/9c6789bc0d69c56a3f72673df6ab89e9fab5f82fcc7609fe145e2faf836c343b" alt="" /></p>
+
+<p>3. 显示的优化</p>
+
+<p>  swift 底层会尽最大的努力去优化 函数派发的方式。例如：如果你类类型里面 定义了一个函数，但该函数从来没有被override，swift
+就会检测并且在可能的情况下 使用直接派发。</p>
+
+<p> 在swift 文档里有这样一段例子说明：</p>
+
+<p>Applying the private keyword to a declaration restricts the visibility of the
+declaration to the current file. This allows the compiler to find all
+potentially overriding declarations. The absence of any such overriding
+declarations enables the compiler to infer the final keyword automatically and
+remove indirect calls for methods and property accesses.</p>
+
+<p>翻译成中文就是：在函数前面加上private 关键字可以把函数的可见范围限制在当前文件里面。这就允许编译器去尝试找到所有 对这个函数的override 。
+如果这个函数没有被override，那么编译器就能自动的在函数前面插入final 关键字，从而使得这个函数可以被直接派发。</p>
+
+<p><img src="/image/swift_han_shu_pai_fa_ji_zhi/74d46e2b1480f87ea94f603d93a0825ea4ea919132f91a3ce02df4d05eae6bba" alt="" /></p>
+
+<p>综上所述，swift的函数派发
+用到了直<strong>接派发</strong>，<strong>函数表派发</strong>和<strong>消息机制派发</strong>三种。具体使用哪一种，主要看函数<strong>声明的位置</strong>和<strong>代码中指定的派发方式</strong>，除此之外，还要考虑
+是否会受编译器<strong>显示优化</strong>的影响。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_hui_tu_xing_neng_bi_jiao/">iOS 绘图性能比较</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/">Objc 中 “== YES”  的愚蠢行为有多可怕</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>轮播图解决方案</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  关于本文的一些约定| 导语在手机APP中，轮播图是一种很常见的图片展示方式，比如广告条、头像墙等等。本文主要介绍了轮播图widget的设计与实现。基于ViewPager，从无限循环的实现、改进以及性能优化、组件化等方面，设计并实现了一个轮播图组件。寻求性能、扩展性等方面的最优解。关于本文的一些约定">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/lun_bo_tu_jie_jue_fang_an/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/lun_bo_tu_jie_jue_fang_an/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/lun_bo_tu_jie_jue_fang_an/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>轮播图解决方案</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-04
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>hiwang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%BB%91%E5%8A%A8" title="Tag: 滑动" rel="tag">滑动</a-->
+        <a href="/tag/#滑动" title="Tag: 滑动" rel="tag">滑动</a>&nbsp;
+    
+        <!--a href="/tag/#%E8%BD%AE%E6%92%AD" title="Tag: 轮播" rel="tag">轮播</a-->
+        <a href="/tag/#轮播" title="Tag: 轮播" rel="tag">轮播</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%A4%B4%E5%83%8F%E5%A2%99" title="Tag: 头像墙" rel="tag">头像墙</a-->
+        <a href="/tag/#头像墙" title="Tag: 头像墙" rel="tag">头像墙</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF" title="Tag: 无限循环" rel="tag">无限循环</a-->
+        <a href="/tag/#无限循环" title="Tag: 无限循环" rel="tag">无限循环</a>&nbsp;
+    
+        <!--a href="/tag/#ViewPager" title="Tag: ViewPager" rel="tag">ViewPager</a-->
+        <a href="/tag/#ViewPager" title="Tag: ViewPager" rel="tag">ViewPager</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#关于本文的一些约定" id="markdown-toc-关于本文的一些约定">关于本文的一些约定</a>    <ul>
+      <li><a href="#背景与功能简介" id="markdown-toc-背景与功能简介">背景与功能简介</a></li>
+      <li><a href="#无限循环滑动" id="markdown-toc-无限循环滑动">无限循环滑动</a>        <ul>
+          <li><a href="#方法a通过在getcount中返回integermax_value实现无限循环" id="markdown-toc-方法a通过在getcount中返回integermax_value实现无限循环">方法A：通过在getCount中返回Integer.MAX_VALUE实现无限循环</a></li>
+          <li><a href="#方法b通过页面的瞬间切换实现无限循环" id="markdown-toc-方法b通过页面的瞬间切换实现无限循环">方法B：通过页面的瞬间切换实现无限循环</a></li>
+        </ul>
+      </li>
+      <li><a href="#无限循环的改进" id="markdown-toc-无限循环的改进">无限循环的改进</a></li>
+      <li><a href="#自动播放" id="markdown-toc-自动播放">自动播放</a></li>
+      <li><a href="#viewpager局部刷新" id="markdown-toc-viewpager局部刷新">ViewPager局部刷新</a></li>
+      <li><a href="#数据一致性" id="markdown-toc-数据一致性">数据一致性</a></li>
+      <li><a href="#良好的可扩展性" id="markdown-toc-良好的可扩展性">良好的可扩展性</a></li>
+      <li><a href="#多思考一点" id="markdown-toc-多思考一点">多思考一点</a></li>
+      <li><a href="#遇到的问题" id="markdown-toc-遇到的问题">遇到的问题</a></li>
+      <li><a href="#手q中的应用" id="markdown-toc-手q中的应用">手Q中的应用</a></li>
+      <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>| 导语
+在手机APP中，轮播图是一种很常见的图片展示方式，比如广告条、头像墙等等。本文主要介绍了轮播图widget的设计与实现。基于ViewPager，从无限循环的实现、改进以及性能优化、组件化等方面，设计并实现了一个轮播图组件。寻求性能、扩展性等方面的最优解。</p>
+
+<h1 id="关于本文的一些约定">关于本文的一些约定</h1>
+
+<!--more-->
+<p>在本文中，会多次提到一些重复的概念，为了统一概念，方便理解。下面对一些表述用语进行必要的约定：</p>
+
+<ol>
+  <li>AvatarWallViewPager：本文设计并实现了一个可用的轮播图组件，基于ViewPager，命名为AvatarWallViewPager。</li>
+  <li>Pager：轮播图会有一页或多页界面，每一页都是一个视图，定义为Pager。</li>
+  <li>DataList：数据集，代表轮播图显示的图片的数组集合。</li>
+</ol>
+
+<h2 id="背景与功能简介">背景与功能简介</h2>
+
+<p>在Android手Q中有多处用到了轮播图效果，比如群资料卡、附近资料卡等等。如果能写一个公共的轮播图widget，就不必每次都重新写。减少了重复的工作，提高了开发效率。另外，还能减轻手Q较为严格的安装包增量压力。</p>
+
+<p>手Q中现有的轮播图效果展示示例（从左至右依次是 附近资料卡、个性装扮、QQ钱包）：</p>
+
+<p><img src="" alt="" />￼<img src="/image/lun_bo_tu_jie_jue_fang_an/a463404e442a3bdf65184bfc8576115f60a90fb69b81c656d72b5be2260fa02c" alt="" /></p>
+
+<p>本轮播图widget主要有以下几个特点与功能：</p>
+
+<ol>
+  <li>无限循环滑动</li>
+  <li>小圆点指示</li>
+  <li>自动循环播放</li>
+  <li>良好的扩展性</li>
+  <li>较小的性能消耗</li>
+  <li>稳定可用</li>
+</ol>
+
+<h2 id="无限循环滑动">无限循环滑动</h2>
+
+<p>无限循环滑动的意思是不管往哪个方向，滑动多少次，都不会滑动到边界。ViewPager本身是不支持无限循环的，当滑动到最后一页后不能继续往后滑动，只能反过来往前滑动。所以要通过一些技巧实现。无限循环的实现大致有两种方法。</p>
+
+<p>假设轮播图有三张图片，分别为A、B、C，那么正常的逻辑是：</p>
+
+<p><img src="/image/lun_bo_tu_jie_jue_fang_an/c87ad5a95b8470e679c7129e0cbf3c20b883233ff4696c1658c36bb7abd0f7a2" alt="" /></p>
+
+<p>这种情况只能在A、B、C之间滑动，A和C在两端，只能单向滑动，B在中间，可以双向滑动。</p>
+
+<h3 id="方法a通过在getcount中返回integermax_value实现无限循环">方法A：通过在getCount中返回Integer.MAX_VALUE实现无限循环</h3>
+
+<p>如果我们假设有非常多的图片呢，总共有Integer.MAX_VALUE张图片。然后序列是 。。。ABCABCABCABCABC。。。</p>
+
+<p><img src="/image/lun_bo_tu_jie_jue_fang_an/9cb4e9cf57358c1d173c82f925ba2657cdf70ea7fb2112ce3d7936f04c0e13e9" alt="" /></p>
+
+<p>在上图中，如果我们直接定位到_位置02_。</p>
+
+<p>这时候可以往左滑动到_Pic C_，继续划到_Pic B_，再划就是_Pic A_，以此类推，往左划不到头，所以是无限循环。</p>
+
+<p>同时，这时候可以往右滑动到_Pic A_，继续划到_Pic B_，再划就是_Pic C_，以此类推，往右划不到头，所以是无限循环。</p>
+
+<p>综上，左右两边都是无限循环，所以也就实现了无限循环的效果。</p>
+
+<p><strong>但是这种方式有个问题</strong><br />
+当ViewPager页数很多的时候，比如Integer.MAX_VALUE的值是2147483647。直觉上就会感觉容易出问题。经过查看源码和写demo验证，这种方式确实有问题。</p>
+
+<p>查看ViewPager的源码可以看到，在ViewPager填充一页View的时候会调用populate方法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    // 为了节省篇幅、突出重点，对代码进行了精简。
+    void populate(int newCurrentItem) {
+        if (curItem != null) {
+        
+            for (int pos = mCurItem - 1; pos &gt;= 0; pos--) {
+                // do sth;
+                // 这里有个0~Integer.MAX_VALUE/2的循环
+            }
+            
+            if (extraWidthRight &lt; 2.f) {
+                for (int pos = mCurItem + 1; pos &lt; N; pos++) {
+                    // do sth;
+                    // 这里有个Integer.MAX_VALUE/2~Integer.MAX_VALUE的循环
+                }
+            }
+        }
+</code></pre>
+</div>
+
+<p>从上面的代码可以看到，在每次加载一页新的视图时，populate都会执行一次从0至Integer.MAX_VALUE的for循环，这个会让APP直接ANR。</p>
+
+<p>当然，这两个for循环中有break的逻辑，也就是不一定所有的执行都会循环Integer.MAX_VALUE，但是偶尔的ANR也是无法接受的。</p>
+
+<p>有时会通过减小ViewPager的页数来预防ANR，比如getCount不返回Integer.MAX_VALUE，而是返回一个比较小的数字，比如2000，这样的话，在大多数手机上都不会卡顿。但是，这个貌似不算是无限循环。并且，频繁的2000次循环，在某些低端手机上也不能保证一定不会ANR.</p>
+
+<h3 id="方法b通过页面的瞬间切换实现无限循环">方法B：通过页面的瞬间切换实现无限循环</h3>
+
+<p>方法A容易ANR的主要原因是因为页数太多。那么我们能不能用比较少的页数实现无限循环呢。答案是肯定的。</p>
+
+<p><img src="/image/lun_bo_tu_jie_jue_fang_an/a6fe71643d1b4579fefb973ace467198bbde50c2b55fdd5acc762b663d7612d5" alt="" /></p>
+
+<p>如上图所以，在图片序列的两边分别增加一张图片。可以实现无限循环滑动。</p>
+
+<p>初始位置为_位置02<em>，当用户往右划动时显示_位置01_的_Pic
+C</em>，然后瞬间跳到_位置04<em>，对用户来说，什么也感觉不到，但是其实ViewPager显示的View的位置已经变了。然后用户继续右划到_Pic
+B</em>，再划到_Pic A_，再划到_Pic C_，然后瞬间跳到_位置04_。如此，便可以实现向右滑动的无限循环。</p>
+
+<p>初始位置为_位置02<em>，当用户往左划动时显示_位置03_的_Pic B</em>，然后用户继续左划到_Pic C_，再划到_Pic
+A_，然后瞬间跳到_位置02_。如此，便可以实现向左滑动的无限循环。</p>
+
+<p>综上，可以实现左右两个方向的无限循环。</p>
+
+<p>这种情况由于页数较少，只比真正要显示的页数多了两页，而且没有什么特殊的逻辑，适用性很强。所以我们下面也是使用这种方式实现无限循环。</p>
+
+<h2 id="无限循环的改进">无限循环的改进</h2>
+
+<p>经过上面的讨论，我们最终选择了方法B来实现无限循环。接下来，我们要重新审视这种方法，考虑是否能优化一下性能和体验？</p>
+
+<p><strong>通过预加载优化体验</strong><br />
+在方案B中，存在ViewPager的页面的瞬间跳转。比如从_位置01<em>瞬间跳到_位置04</em>。由于速度很快，导致用户根本看不到跳转的存在，操作的体验是无限循环，这也是方案B实现无限循环的原理。</p>
+
+<p>那么问题就来了。视图加载需要时间，在从_位置01_瞬间跳到_位置04_的时候，_位置04_的View可能还没加载，如果直接跳过去，ViewPager会临时加载该位置的View，由于加载不会那么快完成，就会出现界面“闪一下”的效果。</p>
+
+<p>如果总共有三张图片，每滑动三次界面就闪一次，这个体验简直不容易接受。所以这里需要优化。</p>
+
+<p>预加载的思想其实在开发中比较常见，通过提前加载必要的数据，等到真正用到的时候，速度就会很快，给人以更流畅的感觉。这里也是通过预加载解决这个问题。</p>
+
+<h2 id="自动播放">自动播放</h2>
+
+<p><strong>实现方式</strong><br />
+有的需求需要轮播图自动轮播，比如每隔2秒自动切换到下一页。</p>
+
+<p>要实现固定间隔重复操作，可以开启子线程，每隔两秒回调一次主线程，这样就可以实现自动播放的效果。但是这个方法对性能的损耗太大，也没必要。可以使用Handler，每隔固定的时间发送一次切换界面的消息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (mAdapter.getCount() &gt; 1 || bScrollWithOnePic) {
+                //在这里自动切换到下一个item
+                mCurrItem++;
+                mCurrItem = mCurrItem % mAdapter.getCount();
+                mViewPager.setCurrentItem(mCurrItem, true);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(), mSwitchInterval);
+            }
+        }
+    };
+</code></pre>
+</div>
+
+<p><strong>优化性能</strong><br />
+自动播放的目的是给用户看，当轮播图不可见时，就没必要再循环播放了。Android中，Activity界面不可见会调用onStop，界面重新可见会调用onStart。所以，可以利用这两个声明周期函数来实现轮播图的暂停与恢复，从而优化性能。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    public void onStart() {
+        if (bAutoScroll) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(), mSwitchInterval);
+        }
+    }
+
+    public void onStop() {
+        mHandler.removeCallbacksAndMessages(null);
+    }
+</code></pre>
+</div>
+
+<h2 id="viewpager局部刷新">ViewPager局部刷新</h2>
+
+<p>当数据集发生改变的时候，我们需要刷新AvatarWallViewPager。最常见的是全部刷新，也就是重新加载每一个Pager。这种方式对CPU消耗较大，因为可能Pager的数量会较多，或者Pager比较复杂，加载起来比较慢。</p>
+
+<p>数据集的更新，其实无非是数据的增、删、调换顺序等基本操作。在这些操作中，有很多时候某一些Pager根本没有任何改动，可能仅仅是调换了位置。</p>
+
+<p><img src="/image/lun_bo_tu_jie_jue_fang_an/2d69321f8bce0f1e52806131a555587a67d9b3e06aa223e171ab40ae3420cccd" alt="" /></p>
+
+<p>上图中，数据集本身并没有变动，只是调整了顺序。对应的Pager也只是顺序发生了改变，不需要重新加载。ViewPager提供了判断某个Pager是否需要更新的函数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        @Override
+        public int getItemPosition(Object object) {
+            if (object对应的View依然存在）{
+                return 对应的position；
+            } else {
+                return POSITION_NONE;
+            }
+        }
+</code></pre>
+</div>
+
+<p>上面的伪代码描述了局部刷新的大致逻辑。当然，真正写起来会稍微复杂一些。</p>
+
+<p>由全部刷新改为局部刷新，至少有下面两个优点：<br />
+1. 优化性能：重用部分Pager，节省CPU消耗，提高响应速度<br />
+2. 优化体验：由于少加载了部分Pager，用起来更加流畅</p>
+
+<h2 id="数据一致性">数据一致性</h2>
+
+<p>这里的数据一致性指的是View中显示的数据和DataList一致，如果不一致就会产生问题。</p>
+
+<p>常规的AdapterView，比如ListView、将getCount以及getItem等获取数据的函数暴露到外部，AdapterView本身并不维护数据列表。当数据发生改变时，不一定会及时通知AdapterView，导致程序crash。</p>
+
+<p>比如在ViewPager中，当数据不一致时就会crash。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    // 摘取自ViewPager中的populate方法
+    if (N != mExpectedAdapterCount) {
+            String resName;
+            try {
+                resName = getResources().getResourceName(getId());
+            } catch (Resources.NotFoundException e) {
+                resName = Integer.toHexString(getId());
+            }
+            throw new IllegalStateException("The application's PagerAdapter changed the adapter's"
+                    + " contents without calling PagerAdapter#notifyDataSetChanged!"
+                    + " Expected adapter item count: " + mExpectedAdapterCount + ", found: " + N
+                    + " Pager id: " + resName
+                    + " Pager class: " + getClass()
+                    + " Problematic adapter: " + mAdapter.getClass());
+        }
+</code></pre>
+</div>
+
+<p>下面以ViewPager为例，说明数据一致性的必要性。</p>
+
+<p><img src="" alt="" />￼<img src="/image/lun_bo_tu_jie_jue_fang_an/33708cbf2cb7da3338b5c5c0bb591c77ed2997332f5641cddd8bccb09f1bdd52" alt="" /></p>
+
+<p>如图，ViewPager从业务侧获取DataList，DataList存放于业务逻辑侧，并且会经常被modify。如果modify之后没有update，就会发生crash。</p>
+
+<p>另外的，DataList有可能在短时间内修改多次，比如用户操作移动图片的排序，其实完全不需要每次改动顺序都update一下ViewPager，频繁的update操作会影响性能。只需要在用户操作完毕后，点击确认提交修改之后才update。</p>
+
+<p>似乎多次修改DataList之后，只需要在必要的时候update一次就可以满足需求。</p>
+
+<p><img src="/image/lun_bo_tu_jie_jue_fang_an/67ba5d0c881d3a65140943025070c05eb21d290ed3903d6099a18219f40ae19f" alt="" /><img src="" alt="" />￼</p>
+
+<p>如上图所示，在ViewPager中维护一个DataList A，业务侧也有一个DataList B，业务逻辑随意修改DataList
+B，待需要更新ViewPager时，调用一次update操作，使DataList A和DataList B保持一致。</p>
+
+<p>解决这个问题的一个办法是收拢数据输入入口，只留一个更新数据的入口，并在内部维护一个数据列表。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    /**
+     * 更新数据
+     * @param newDataList
+     */
+    public void updateDataList(List newDataList) {
+        mDataListInPager.clear();
+        if (newDataList != null) {
+            mDataListInPager.addAll(newDataList);
+        }
+        mViewPager.refreshDotViews();
+        mInnerPagerAdapter.notifyDataSetChanged();
+    }
+</code></pre>
+</div>
+
+<p>通过收拢入口，达到了数据一致性的效果：Pager中的数据和数据列表始终保持一致。</p>
+
+<h2 id="良好的可扩展性">良好的可扩展性</h2>
+
+<p>一个组件最重要的特性之一就是可重用。AvatarWallViewPager在设计上注重重用能力。</p>
+
+<p><strong>通过引入泛型实现自定义数据格式</strong></p>
+
+<p>在解决数据一致性问题的时候，我们收拢了数据入口，所以在调用adapter.updateDataList()更新数据的时候应该传入什么类型的数据呢。有可能是List，也有可能是List。</p>
+
+<p>通过引入泛型可以解决数据类型不确定的问题，在创建Adapter的时候传入数据的类型。</p>
+
+<p>Adapter的定义为：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public abstract class AvatarWallPagerAdapter {
+
+}
+</code></pre>
+</div>
+
+<p>创建Adapter时传入具体的数据类型：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>AvatarWallAdapter adapter = new AvatarWallAdapter();
+</code></pre>
+</div>
+
+<p><strong>灵活设置小圆点</strong></p>
+
+<p>在AvatarWallViewPager左右滑动的时候，总会有相同数量的小圆点在对应着变化，给用户友好的指示。在不同业务场景中，小圆点的样式、位置、大小等等都可能不一样。这里同样保留了较大的自定义空间。<br />
+使用者可以完全自定义小圆点的样式和位置等信息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// AvatarWallAdapter.java
+public abstract View getDotView(boolean focused, int pos); 
+</code></pre>
+</div>
+
+<p>调用者可以在该函数中返回pos位置的小圆点View，并且会告知当前是否正在显示该Pager。</p>
+
+<p>同样，也可以重新设置小圆点的位置。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    /**
+     * 设置小圆点容器的布局参数
+     *
+     */
+    public void setDotLayoutParams(RelativeLayout.LayoutParams lp) {
+        if (lp != null) {
+            mDotContainerLayout.setLayoutParams(lp);
+        }
+    }
+</code></pre>
+</div>
+
+<h2 id="多思考一点">多思考一点</h2>
+
+<p><strong>内存泄漏风险？</strong></p>
+
+<p>内存泄漏是个严重的问题，在编码过程中应该注意避免。在界面销毁的时候，所有的资源都应该被释放，所有的异步代码块都不应该被执行。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+        if (mAdapter != null) {
+            mAdapter.onDestroy();
+            mAdapter = null;
+        }
+    }
+</code></pre>
+</div>
+
+<h2 id="遇到的问题">遇到的问题</h2>
+
+<p><strong>右划退出界面的bug</strong></p>
+
+<p>在手Q中，很多页面都可以右划退出界面。但是如果用户向右滑动AvatarWallViewPager，此时分两种情况：<br />
+1. AvatarWallViewPager处于第一页，右划直接退出界面<br />
+2. AvatarWallViewPager不处于第一页，右划切换Pager</p>
+
+<p>在情况2的时候，亲测发现有一定几率会退出界面。需要处理一下Touch事件。至于具体代码就不贴了，比较多。</p>
+
+<h2 id="手q中的应用">手Q中的应用</h2>
+
+<p>目前AvatarWallViewPager应用于附近资料卡的头像墙。后续将继续应用于群资料卡、编辑群资料等界面。</p>
+
+<p><img src="" alt="" />￼<img src="/image/lun_bo_tu_jie_jue_fang_an/bbb65363bdb8f9dff3ed7da93ebd720a41f062ab0e608284b192f4fde7926387" alt="" /></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文讲到了轮播图widget的设计与实现过程，考虑了一些扩展性、性能点等问题，以及自己的一些思考和踩的坑。体会最深的是，在编程时，实现功能是最基本的要求，要多考虑重用、性能、稳定等方面。当然，一个人的能力有限，难免有疏漏和可以优化之处，欢迎各位拍砖。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/bitmap_yuan_ma_yue_du_bi_ji/">Bitmap 源码阅读笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/shu_ju_ke_xue_gong_ju_jupyter_notebook_jiao_cheng_in_python/">数据科学工具 Jupyter Notebook教程 in Python</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

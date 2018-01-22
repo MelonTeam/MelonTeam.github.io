@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>OpenGL ES (iOS) 学习笔记 — 基础篇（二）</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="上一篇文章（&lt;ES是如果描述2D世界的，这篇我们将走入3D世界，里面的内容是我学习后想记录的。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenGL ES (iOS) 学习笔记 — 基础篇（二）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>justinytang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#openglES%E5%9F%BA%E7%A1%80" title="Tag: openglES基础" rel="tag">openglES基础</a-->
+        <a href="/tag/#openglES基础" title="Tag: openglES基础" rel="tag">openglES基础</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#透视投影和正交投影" id="markdown-toc-透视投影和正交投影"><strong>透视投影和正交投影</strong></a>    <ul>
+      <li><a href="#透视投影" id="markdown-toc-透视投影">透视投影</a></li>
+      <li><a href="#正交投影" id="markdown-toc-正交投影">正交投影</a></li>
+    </ul>
+  </li>
+  <li><a href="#摄像机" id="markdown-toc-摄像机"><strong>摄像机</strong></a></li>
+  <li><a href="#基本的光照和纹理" id="markdown-toc-基本的光照和纹理">基本的光照和纹理</a>    <ul>
+      <li><a href="#光照模型" id="markdown-toc-光照模型">光照模型</a></li>
+      <li><a href="#纹理模型" id="markdown-toc-纹理模型">纹理模型</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>上一篇文章（&lt;
+ES是如果描述2D世界的，这篇我们将走入3D世界，里面的内容是我学习后想记录的。</p>
+
+<!--more-->
+<p>根据上一篇文章的总结，整个OpenGL ES基础知识可以分成四个部分：</p>
+
+<p>一、Shader的应用。</p>
+
+<p>二、基本图形的绘制和变换。</p>
+
+<p>三、透视投影和正交投影以及摄像机。</p>
+
+<p>四、光照和纹理的应用。</p>
+
+<p>前两个部分已经介绍过，我们这次介绍后面两个部分，已经它们在3D渲染中的作用。</p>
+
+<h2 id="透视投影和正交投影"><strong>透视投影和正交投影</strong></h2>
+
+<p>这两个投影是描述看世界的方式：</p>
+
+<p>透视投影主要作用是模仿人眼观察3D世界的规律，让物体近大远小，所以被称为透视。</p>
+
+<p>正交投影主要作用是将坐标系映射到其他大小，主要用于2D UI绘制。</p>
+
+<h3 id="透视投影">透视投影</h3>
+
+<p>对于3D世界的物体来说，透视投影就是将其投射在观察平面上，下面是透视投影的示意图：</p>
+
+<p><img src="" alt="" /><img src="/image/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/8fb716d22c83e2aa2698b700ea094430e1f27f8ae371958748b82da94d4ebd65" alt="" /></p>
+
+<p>先来看一下透视投影的代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 透视投影
+    float aspect = self.view.frame.size.width / self.view.frame.size.height;
+    GLKMatrix4 perspectiveMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90), aspect, 0.1, 10.0);
+    GLKMatrix4 translateMatrix = GLKMatrix4MakeTranslation(0, 0, -1.6);
+    self.transformMatrix = GLKMatrix4Multiply(translateMatrix, rotateMatrix);
+    self.transformMatrix = GLKMatrix4Multiply(perspectiveMatrix, self.transformMatrix);  
+</code></pre>
+</div>
+
+<blockquote>
+  <p>GLKMathDegreesToRadians是将角度转换成弧度</p>
+</blockquote>
+
+<p>分析一下，GLKit提供了<code class="highlighter-rouge">GLKMatrix4MakePerspective</code>方法便捷的生成透视投影矩阵。方法有4个参数<code class="highlighter-rouge">float
+fovyRadians, float aspect, float nearZ, float
+farZ</code>。<code class="highlighter-rouge">fovyRadians</code>表示视角。<code class="highlighter-rouge">aspect</code>表示屏幕宽高比，为了将所有轴的单位长度统一，所以需要知道屏幕宽高比多少。<code class="highlighter-rouge">nearZ</code>表示可视范围在Z轴的起点到原点(0,0,0)的距离，<code class="highlighter-rouge">farZ</code>表示可视范围在Z轴的终点到原点(0,0,0)的距离,<code class="highlighter-rouge">nearZ</code>和<code class="highlighter-rouge">farZ</code>始终为正。下面是透视投影的剖面示意图：</p>
+
+<p><img src="/image/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/59b3f029d473736064a85357fd0ae47612c425ca02420db2aee6ccde5df9f193" alt="" /></p>
+
+<p>透视投影矩阵默认的可视方向是向Z轴的反方向生长的。视角（fovyRadians）越大，看到的东西就越多。只有在nearZ和farZ两个平面范围内的点才会被投影到屏幕上，当然这些点也必须在视角的范围内。</p>
+
+<h3 id="正交投影">正交投影</h3>
+
+<p>老规矩先看一下代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> // 正交投影
+    float viewWidth = self.view.frame.size.width;
+    float viewHeight = self.view.frame.size.height;
+    GLKMatrix4 orthMatrix = GLKMatrix4MakeOrtho(-viewWidth/2, viewWidth/2, -viewHeight / 2, viewHeight/2, -10, 10);
+    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(200, 200, 200);
+    self.transformMatrix = GLKMatrix4Multiply(scaleMatrix, rotateMatrix);
+    self.transformMatrix = GLKMatrix4Multiply(orthMatrix, self.transformMatrix);
+</code></pre>
+</div>
+
+<p> 正交投影其实比较好理解，原先屏幕的X轴从左到右是-1到1，Y轴从上到下是1到-1，经过<code class="highlighter-rouge">GLKMatrix4 orthMatrix =
+GLKMatrix4MakeOrtho(-viewWidth/2, viewWidth/2, -viewHeight / 2, viewHeight/2,
+-10, 10)</code>正交矩阵的变换，就会变成X轴从左到右是-viewWidth/2到viewWidth/2，Y轴从上到下是viewHeight/2到-
+viewHeight / 2，viewWidth和viewHeight是屏幕的宽和高。</p>
+
+<p>这里增加了一个缩放矩阵<code class="highlighter-rouge">GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(200, 200,
+200)</code>，是为了可以看见渲染出来的矩形。因为它原本只有1 x
+1的大小，在正交投影后，也就是一个像素的大小，几乎是看不见的。正交投影里的nearZ和farZ代表可视的Z轴范围，超出的点就不可见了。</p>
+
+<h2 id="摄像机"><strong>摄像机</strong></h2>
+
+<p>上面介绍的是投影矩阵，但是我们在观察一个3D的物体的时候，并不只有投影矩阵在作用，整个观察的系统可以用MVP矩阵模型来描述。</p>
+
+<p>MVP表示的是模型矩阵（Model），观察矩阵（View），投影矩阵（Projection）。</p>
+
+<p>投影矩阵上面介绍过了。</p>
+
+<p>模型矩阵针对的是单个3D模型，渲染每一个3D模型前，需要将各自的模型矩阵传递给Vertex Shader。</p>
+
+<p>观察矩阵针对的是场景中的所有物体，当观察矩阵改变时，所有顶点的位置都会受到影响，就好比在现实生活中，你移动摄像机会导致拍摄到的场景不一样。所以观察矩阵可以理解为OpenGL
+3D世界中的摄像机。有了这个矩阵的存在，我们就可以自由的在3D世界中浏览，以第一人称的身份观察这个世界。</p>
+
+<p>实现MVP矩阵很简单，只要我们修改一下Vertex Shader。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>attribute vec4 position;
+attribute vec4 color;
+
+uniform float elapsedTime;
+uniform mat4 projectionMatrix;
+uniform mat4 cameraMatrix;
+uniform mat4 modelMatrix;
+
+varying vec4 fragColor;
+
+void main(void) {
+    fragColor = color;
+    mat4 mvp = projectionMatrix * cameraMatrix * modelMatrix;
+    gl_Position = mvp * position;
+}
+</code></pre>
+</div>
+
+<p> 需要注意的是相乘的顺序，这个顺序的结果是先进行模型矩阵变换，再是观察矩阵，最后是投影矩阵变换。</p>
+
+<p>而观察矩阵的初始化也很简单：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 使用透视投影矩阵
+    float aspect = self.view.frame.size.width / self.view.frame.size.height;
+    self.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90), aspect, 0.1, 100.0);
+    
+    // 设置摄像机在 0，0，2 坐标，看向 0，0，0点。Y轴正向为摄像机顶部指向的方向
+    self.cameraMatrix = GLKMatrix4MakeLookAt(0, 0, 2, 0, 0, 0, 0, 1, 0);
+    
+    // 先初始化矩形1的模型矩阵为单位矩阵
+    self.modelMatrix1 = GLKMatrix4Identity;
+    // 先初始化矩形2的模型矩阵为单位矩阵
+    self.modelMatrix2 = GLKMatrix4Identity;
+</code></pre>
+</div>
+
+<p>上述代码中，投影矩阵使用了透视投影进行初始化。两个模型矩阵初始化为单位矩阵。观察矩阵初始化为摄像机在（0，0，2）坐标，看向（0，0，0）点，向上朝向（0，1，0）。<code class="highlighter-rouge">GLKMatrix4MakeLookAt</code>提供了快捷创建观察矩阵的方法，需要传递9个参数，摄像机的位置eyeX，eyeY，eyeZ，摄像机看向的点centerX，centerY，centerZ，摄像机向上的朝向upX,
+upY, upZ。改变这几个参数就能控制摄像机在3D世界中通过不同角度拍摄物体。</p>
+
+<p>修改一下透视投影的示意图，加入观察矩阵后的示意图：</p>
+
+<p><img src="/image/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/f2b334a7a9470393dd3e7edfb48332ec53b021d0002d9f7bfd671bf444618301" alt="" /></p>
+
+<blockquote>
+  <p>图中的lookAt就是center。游戏中通过观察矩阵，可以让第一人称玩家360度观察周边景物。</p>
+</blockquote>
+
+<h2 id="基本的光照和纹理">基本的光照和纹理</h2>
+
+<h3 id="光照模型">光照模型</h3>
+
+<p>现实世界的光照是极其复杂的，诸多因素的影响会导致各种变化，这是我们很难模拟的。因此OpenGL的光照仅仅使用了简化的模型并基于对现实的估计来进行模拟，这样处理起来会更容易一些，而且看起来也差不多一样。这些光照模型都是基于我们对光的物理特性的理解。</p>
+
+<p>其中一个模型被称为冯氏光照模型(Phong Lighting
+Model)。冯氏光照模型的主要结构由3个元素组成：环境(Ambient)、漫反射(Diffuse)和镜面(Specular)光照。</p>
+
+<ul>
+  <li>环境光照(Ambient Lighting)：即使在黑暗的情况下，现实世界也会有一些光亮(例如月亮、一个来自远处的光等)，所以物体永远不会是完全黑暗的。我们使用环境光照来模拟这种情况，也就是无论如何永远都给物体一些颜色。</li>
+  <li>漫反射光照(Diffuse Lighting)：模拟一个发光物对物体的方向性影响(Directional Impact)。它是冯氏光照模型最显著的组成部分。面向光源的一面比其他面会更亮。</li>
+  <li>镜面光照(Specular Lighting)：模拟有光泽物体上面出现的亮点。镜面光照的颜色，相比于物体的颜色更倾向于光的颜色。</li>
+</ul>
+
+<p>实现上述的三种光照，除了需要光照方向以外，还需要了解法线向量，通过法线向量，我们可以知道平面的朝向。在具体实现中，每个点都会有一个法线向量。所谓法线向量就是垂直于平面的一个三维向量，如下图所示。</p>
+
+<p><img src="/image/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/7701077a41b0522994ec5a1eee18a5989c141d2f2379dc2ec9d5275be48fd3c7" alt="" /></p>
+
+<p>图中展示了两种法线向量的表示方法，左边是每个多边形的每个点有一个法线向量，右边是每个点有一个法线向量，共享点的法线向量是这个点在所有平面上的法线向量之和。法线向量应该总是被规范化成单位向量。有了法线向量和光照方向之后，只要将它们相乘即可得到光照强度。</p>
+
+<p>具体实现代码就不贴出来了，这里只需要将<code class="highlighter-rouge">attribute vec4 color</code>换成了<code class="highlighter-rouge">attribute vec3
+normal</code>，不再传递颜色数据，改为法线向量。然后将法线向量传递给Fragment Shader就可以了 <code class="highlighter-rouge">fragNormal = normal</code>。</p>
+
+<h3 id="纹理模型">纹理模型</h3>
+
+<p>纹理通常来说就是一张图片，我们为每一个顶点指定纹理坐标，然后就可以在Shader中获取相应的纹理像素点颜色了。了解纹理之前，我们先了解一下纹理坐标。</p>
+
+<p><img src="/image/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/33bfd8e51ad647d3b6d3fcecbfd2b4abf90380991aba843325101a1b3ddc2565" alt="" /></p>
+
+<p>纹理坐标一般用（u，v）来展示，通过将顶点坐标和纹理坐标进行映射来实现对应顶点的纹理加载。有了正确的纹理坐标，我们该怎么加载纹理呢？</p>
+
+<p>首先，我们要生成纹理，可以利用GLKit提供的方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">GLKTextureInfo</span> <span class="o">*</span><span class="n">diffuseTexture</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">genTexture</span> <span class="p">{</span>   
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">textureFile</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="nf">mainBundle</span><span class="p">]</span> <span class="nf">pathForResource</span><span class="p">:</span><span class="s">@"texture"</span> <span class="nf">ofType</span><span class="p">:</span><span class="s">@"jpg"</span><span class="p">];</span>   
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>   
+    <span class="n">self</span><span class="p">.</span><span class="n">diffuseTexture</span> <span class="o">=</span> <span class="p">[</span><span class="n">GLKTextureLoader</span> <span class="nf">textureWithContentsOfFile</span><span class="p">:</span><span class="n">textureFile</span> <span class="nf">options</span><span class="p">:</span><span class="nb">nil</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>   
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p> diffuseTexture是GLKTextureInfo类型的，它的属性<code class="highlighter-rouge">name</code>将会被用来和OpenGL系统进行交互。</p>
+
+<p>其次，我们需要绑定和使用纹理。</p>
+
+<p>绑定纹理的流程是：</p>
+
+<ol>
+  <li>激活纹理的某个通道<code class="highlighter-rouge">glActiveTexture(GL_TEXTURE0)</code>,OpenGL ES中最多可以激活8个通道。通道0是默认激活的。</li>
+  <li>绑定生成的纹理到<code class="highlighter-rouge">GL_TEXTURE_2D</code>， <code class="highlighter-rouge">glBindTexture(GL_TEXTURE_2D, self.diffuseTexture.name)</code>，注意这里是绑定到<code class="highlighter-rouge">GL_TEXTURE_2D</code>而不是<code class="highlighter-rouge">GL_TEXTURE0</code>。</li>
+  <li>将0传递给<code class="highlighter-rouge">uniform</code> <code class="highlighter-rouge">diffuseMap</code>,如果激活的是<code class="highlighter-rouge">GL_TEXTURE1</code>就传递1，以此类推。</li>
+</ol>
+
+<p>Fragment Shader中增加了<code class="highlighter-rouge">uniform sampler2D
+diffuseMap</code>，<code class="highlighter-rouge">sampler2D</code>是纹理的参数类型。然后将<code class="highlighter-rouge">diffuseMap</code>在纹理坐标<code class="highlighter-rouge">fragUV</code>上的像素颜色作为基本色<code class="highlighter-rouge">vec4
+materialColor = texture2D(diffuseMap,
+fragUV)</code>。<code class="highlighter-rouge">texture2D</code>函数用来采样纹理在某个<code class="highlighter-rouge">uv</code>坐标下的颜色，返回值类型是<code class="highlighter-rouge">vec4</code>。</p>
+
+<p>这样就可以实现将一个图片作为纹理加载到模型上了。</p>
+
+<p>以上介绍的都是OpenGL
+3D世界中最基础的概念，想要实现更复杂的场景，需要更多的知识积累。下一篇我将通过全景视频播放器的实现来介绍这些基础的概念是怎么应用到实际的场景中的。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_cun_chu_qi_zhi_keychain/">iOS存储器之Keychain</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_hui_tu_xing_neng_bi_jiao/">iOS 绘图性能比较</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

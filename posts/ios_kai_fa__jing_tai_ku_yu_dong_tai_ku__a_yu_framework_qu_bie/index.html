@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ios开发：静态库与动态库&amp;.a与.framework区别</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  前言：前言：  最近接手互联SDK的工作，期间不断接触静态库，动态库，.a，.framework，.dylib，这里做一个记录和比较他们之间的异同">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_kai_fa__jing_tai_ku_yu_dong_tai_ku__a_yu_framework_qu_bie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_kai_fa__jing_tai_ku_yu_dong_tai_ku__a_yu_framework_qu_bie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_kai_fa__jing_tai_ku_yu_dong_tai_ku__a_yu_framework_qu_bie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>ios开发：静态库与动态库&.a与.framework区别</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>rucasli
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E9%9D%99%E6%80%81%E5%BA%93%2F%E5%8A%A8%E6%80%81%E5%BA%93" title="Tag: 静态库/动态库" rel="tag">静态库/动态库</a-->
+        <a href="/tag/#静态库/动态库" title="Tag: 静态库/动态库" rel="tag">静态库/动态库</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#framework" title="Tag: framework" rel="tag">framework</a-->
+        <a href="/tag/#framework" title="Tag: framework" rel="tag">framework</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%9D%99%E6%80%81%E5%BA%93" title="Tag: 静态库" rel="tag">静态库</a-->
+        <a href="/tag/#静态库" title="Tag: 静态库" rel="tag">静态库</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#前言" id="markdown-toc-前言">前言：</a></li>
+  <li><a href="#什么是库" id="markdown-toc-什么是库">什么是库：</a></li>
+  <li><a href="#静态库与动态库的区别" id="markdown-toc-静态库与动态库的区别">静态库与动态库的区别</a></li>
+  <li><a href="#ios里面静态库与动态库的形式" id="markdown-toc-ios里面静态库与动态库的形式">iOS里面静态库与动态库的形式</a></li>
+  <li><a href="#a与framework的区别" id="markdown-toc-a与framework的区别">.a与.framework的区别</a></li>
+  <li><a href="#为什么要使用静态库" id="markdown-toc-为什么要使用静态库">为什么要使用静态库</a></li>
+  <li><a href="#制作静态库时的几点注意" id="markdown-toc-制作静态库时的几点注意">制作静态库时的几点注意</a></li>
+  <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+</ul>
+
+<h5 id="前言">前言：</h5>
+
+<blockquote>
+  <p>最近接手互联SDK的工作，期间不断接触静态库，动态库，.a，.framework，.dylib，这里做一个记录和比较他们之间的异同
+<!--more--></p>
+</blockquote>
+
+<h5 id="什么是库">什么是库：</h5>
+
+<p>库是共享程序代码的方式，一般分为静态库和动态库。</p>
+
+<h5 id="静态库与动态库的区别">静态库与动态库的区别</h5>
+
+<ul>
+  <li>静态库：链接时完整地拷贝至可执行文件中，被多次使用就有多份冗余拷贝。</li>
+  <li>动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</li>
+</ul>
+
+<h5 id="ios里面静态库与动态库的形式">iOS里面静态库与动态库的形式</h5>
+
+<ul>
+  <li>静态库：.a和.framework两种形式</li>
+  <li>动态库：.dylib和.framework两种</li>
+</ul>
+
+<p>这里需要注意的是：系统的.framework是动态库，我们自己建立的.framework是静态库。</p>
+
+<h5 id="a与framework的区别">.a与.framework的区别</h5>
+
+<ul>
+  <li>.a是一个纯二进制文件，.framework中除了有二进制文件之外还有资源文件。.a文件不能直接使用，至少要有.h文件配合，</li>
+  <li>.framework文件可以直接使用。</li>
+</ul>
+
+<p>所以可以这样理解：.a + .h + sourceFile = .framework。这里建议使用.framework。</p>
+
+<h5 id="为什么要使用静态库">为什么要使用静态库</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.方便共享代码，便于合理使用。
+2.实现iOS程序的模块化。可以把固定的业务模块化成静态库。
+3.和别人分享你的代码库，但不想让别人看到你代码的实现。
+4.开发第三方sdk的需要。
+</code></pre>
+</div>
+
+<h5 id="制作静态库时的几点注意">制作静态库时的几点注意</h5>
+
+<ol>
+  <li>
+    <p>注意理解：无论是.a静态库还.framework静态库，我们需要的都是二进制文件+.h+其它资源文件的形式，不同的是，.a本身就是二进制文件，需要我们自己配上.h和其它文件才能使用，而.framework本身已经包含了.h和其它文件，可以直接使用。</p>
+  </li>
+  <li>
+    <p>图片资源的处理：两种静态库，一般都是把图片文件单独的放在一个.bundle文件中，一般.bundle的名字和.a或.framework的名字相同。.bundle文件很好弄，新建一个文件夹，把它改名为.bundle就可以了，右键，显示包内容可以向其中添加图片资源。</p>
+  </li>
+  <li>
+    <p>category是我们实际开发项目中经常用到的，把category打成静态库是没有问题的，但是在用这个静态库的工程中，调用category中的方法时会有找不到该方法的运行时错误（selector not recognized），解决办法是：在使用静态库的工程中配置other linker flags的值为-ObjC。</p>
+  </li>
+  <li>
+    <p>如果一个静态库很复杂，需要暴露的.h比较多的话，就可以在静态库的内部创建一个.h文件（一般这个.h文件的名字和静态库的名字相同），然后把所有需要暴露出来的.h文件都集中放在这个.h文件中，而那些原本需要暴露的.h都不需要再暴露了，只需要把.h暴露出来就可以了。</p>
+  </li>
+</ol>
+
+<h5 id="其他">其他</h5>
+
+<ol>
+  <li>关注framework对安装包的增量影响，这里可以关注二进制包的优化或编译选项优化</li>
+  <li>对二进制文件的分析推荐MachOView</li>
+</ol>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/xue_xi_bi_ji__objective_c_runtime_yi_/">[学习笔记] Objective-C Runtime（一）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/gui_yi_de_oom__fd_xie_lou/">诡异的oom---fd泄漏</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>诡异的oom---fd泄漏</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 oom一定是因为内存不足吗？未必！         最近组件更新，三方反馈一个诡异问题outofmemoryerror.">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/gui_yi_de_oom__fd_xie_lou/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/gui_yi_de_oom__fd_xie_lou/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/gui_yi_de_oom__fd_xie_lou/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>诡异的oom---fd泄漏</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-05
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>henrikwu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%B3%84%E6%BC%8F" title="Tag: 泄漏" rel="tag">泄漏</a-->
+        <a href="/tag/#泄漏" title="Tag: 泄漏" rel="tag">泄漏</a>&nbsp;
+    
+        <!--a href="/tag/#fd" title="Tag: fd" rel="tag">fd</a-->
+        <a href="/tag/#fd" title="Tag: fd" rel="tag">fd</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%BA%BF%E7%A8%8B" title="Tag: 线程" rel="tag">线程</a-->
+        <a href="/tag/#线程" title="Tag: 线程" rel="tag">线程</a>&nbsp;
+    
+        <!--a href="/tag/#OOM" title="Tag: OOM" rel="tag">OOM</a-->
+        <a href="/tag/#OOM" title="Tag: OOM" rel="tag">OOM</a>&nbsp;
+    
+        <!--a href="/tag/#OutOfMemoryError" title="Tag: OutOfMemoryError" rel="tag">OutOfMemoryError</a-->
+        <a href="/tag/#OutOfMemoryError" title="Tag: OutOfMemoryError" rel="tag">OutOfMemoryError</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 oom一定是因为内存不足吗？未必！</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>   最近组件更新，三方反馈一个诡异问题outofmemoryerror.</p>
+
+<!--more-->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>java.lang.OutOfMemoryError: Could not allocate JNI Env
+java.lang.Thread.nativeCreate(Native Method)
+java.lang.Thread.start(Thread.java:729)
+com.tencent.mobileqq.msf.sdk.k.d(MsfServiceProxy.java:197)
+com.tencent.mobileqq.msf.sdk.x.onServiceConnected(RemoteServiceProxy.java:59)
+android.app.LoadedApk$ServiceDispatcher.doConnected(LoadedApk.java:1475)
+android.app.LoadedApk$ServiceDispatcher$RunConnection.run(LoadedApk.java:1492)
+android.os.Handler.handleCallback(Handler.java:754)
+android.os.Handler.dispatchMessage(Handler.java:95)
+android.os.Looper.loop(Looper.java:163)
+android.app.ActivityThread.main(ActivityThread.java:6337)
+java.lang.reflect.Method.invoke(Native Method)
+com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:880)
+com.android.internal.os.ZygoteInit.main(ZygoteInit.java:770)
+</code></pre>
+</div>
+
+<p>单看这个异常堆栈，发现是在创建线程时oom。这就很奇怪了，因为这个是发生在daemon进程，这只是一个守护进程并没有高内存的操作，并且打出内存信息发现确实内存还很足。那发生oom就是一个超出我们理解的事情了。</p>
+
+<p>    不明白是为什么。之后三方给了我一个链接<a href="https://mp.weixin.qq.com/s/AjtzDxwJzyqC95FXgDPS1g">https://mp.weixin.qq.com/s/AjtzDxwJzyqC95FXgDPS1g</a></p>
+
+<p>发现了新大陆，原来fd(文件描述符)超出限制也会导致linux系统抛oom.</p>
+
+<p><img src="/image/gui_yi_de_oom__fd_xie_lou/93cbae14b171934ef34b78f8450d3817b2e20588bf6ad4bc4a212d385eff920c" alt="" /></p>
+
+<p>再分析我们的组件代码,发现在异常情况下，我们确实会打开大量fd而没有关闭进而导致创建新线程时发现fd不足，进而系统抛出oom.</p>
+
+<p>结论：</p>
+
+<p>    打开的fd一定要及时关闭。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_kai_fa__jing_tai_ku_yu_dong_tai_ku__a_yu_framework_qu_bie/">ios开发：静态库与动态库&.a与.framework区别</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/lua_xue_xi_shou_ji/">Lua 学习手记</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

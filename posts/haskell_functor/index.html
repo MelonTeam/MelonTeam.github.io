@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Haskell Functor</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  范畴范畴要想了解Haskell的Functor，首先先简单了解下“范畴论”里面的“范畴”的概念，下面先看下wiki的定义：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/haskell_functor/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/haskell_functor/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/haskell_functor/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Haskell Functor</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>siriushe
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#haskell" title="Tag: haskell" rel="tag">haskell</a-->
+        <a href="/tag/#haskell" title="Tag: haskell" rel="tag">haskell</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#范畴" id="markdown-toc-范畴"><strong>范畴</strong></a></li>
+  <li><a href="#函子" id="markdown-toc-函子">函子</a></li>
+  <li><a href="#举个栗子" id="markdown-toc-举个栗子">举个栗子</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+
+<h3 id="范畴"><strong>范畴</strong></h3>
+
+<p>要想了解Haskell的Functor，首先先简单了解下“范畴论”里面的“范畴”的概念，下面先看下wiki的定义：
+<!--more--></p>
+
+<p><img src="/image/haskell_functor/9abcf825fa07562b9f268ffa37bf4d5c495938e0f294b518f86aad211b1ff3df" alt="" /></p>
+
+<p>范畴有三个要点：</p>
+
+<p>1）一系列的object，这里的object标识一类有共同属性的物体，可以用编程语言的class来理解。</p>
+
+<p>2）一个态射，可以理解为我们常说的映射。</p>
+
+<p>3）态射间满足结合律和单位态射。结合律即 h.(g.f) = (h.g).f。范畴内单位态射必须存在，也就是结构里面的每个object
+a，都存在一个态射使得 a -&gt; a。</p>
+
+<p>Haskell本质上也属于范畴。</p>
+
+<p>Haskell是强类型的，也有typeClass的概念，因此1条件满足。</p>
+
+<p>Haskell是函数式变成，Function本质上也是一种映射，比如一个最简单的例子</p>
+
+<p><img src="/image/haskell_functor/8973936c800a3cdfd082223666d1e2f85a4a5a80833d4005af6b359789cd56d9" alt="" /></p>
+
+<p>就是将满足（Eq ,Num） typeclass的 x 映射到Bool 。</p>
+
+<h3 id="函子">函子</h3>
+
+<p>如果我们把范畴看作是更高层范畴的对象，那么范畴之间的态射就是所谓的函子（Functor）。我们定义函子F，则 F
+把范畴A中的对象映射给范畴B，并且将范畴A中的态射映射到范畴B的态射。</p>
+
+<p>也就是 F： A -&gt; B ，F使得A中的任意一个元素Ax映射到Bx，其中Bx属于B范畴，同时范畴A的态射Af 也映射到B的态射 Bf。</p>
+
+<p>我们可以看下Haskell里面Functor的定义：</p>
+
+<p><img src="/image/haskell_functor/41e9a5410abdf4431cd57d9f46a94c99dc53c9c9778c874ab37c422846448cd4" alt="" /></p>
+
+<p>Functor定义了一个操作fmap，里面实现了两个态射的态射，也就是将态射(a -&gt; b) 映射到态射 f a里面去，生成态射f b。</p>
+
+<p>借用网上的一个图表示一下<img src="/image/haskell_functor/35f4aa7565190275ffa1bad1fe63f26d1a532fcc6e2dbd1df81877517a5f1cce" alt="" /></p>
+
+<p>假设有两个范畴C1和C2，C1有类型Int和String，C2有类型List[Int]和List[String]。C1和C2间有Functor
+F，则F使Intc1 映射到List[Intc2]，Stringc1 映射到List[Stringc2]，  C1有态射Intc1 -&gt;
+Stringc2，则C2中也会存在List[Intc1] -&gt; List[Stringc2] 的态射。</p>
+
+<h3 id="举个栗子">举个栗子</h3>
+
+<p>Haskell里面List是Functor的一个实例，List 里面的map操作既是fmap</p>
+
+<p><img src="/image/haskell_functor/1b48e2cd02bf6377dcad2467aaaa6e3e37f39e83e4ab602ae4f4c177c5a5332e" alt="" /></p>
+
+<p>看下这波操作，fmap 将 （+1） 这个态射给映射到[1 , 2 ,3] 这个List里面，结果是生成了一个新的List[2,3,4]
+,他的过程就是将态射(+1)作用到List的每个元素上面，生成新的List。</p>
+
+<h3 id="总结">总结</h3>
+
+<p>总的来说，在Haskell里面Functor就是任何能用fmap操作的数据类型。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">相关文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/posts/haskell_io/">Haskell IO
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/opengl_es_xue_xi_bi_ji__san___tou_ying_ji_ge_zhong_bian_huan/">OpenGL ES学习笔记（三）——投影及各种变换</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/mediacodec_yuan_ma_qian_xi__yi____chu_shi_hua_guo_cheng/">MediaCodec源码浅析(一)-----初始化过程</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">相关文章</a></li>
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

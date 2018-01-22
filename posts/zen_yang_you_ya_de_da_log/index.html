@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>怎样优雅的打log</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="一、背景随着app业务场景越来越多，场景越来越复杂，log在我们开发定位问题显得越来越重要了。而大部分同学可能对log打印比较茫然，感觉打log无从下手。打多了影响性能，打少了又定位不到问题，显得有些尴尬。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/zen_yang_you_ya_de_da_log/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/zen_yang_you_ya_de_da_log/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/zen_yang_you_ya_de_da_log/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>怎样优雅的打log</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>peterlmeng
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#log" title="Tag: log" rel="tag">log</a-->
+        <a href="/tag/#log" title="Tag: log" rel="tag">log</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%97%A5%E5%BF%97" title="Tag: 日志" rel="tag">日志</a-->
+        <a href="/tag/#日志" title="Tag: 日志" rel="tag">日志</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>一、背景</p>
+
+<p>随着app业务场景越来越多，场景越来越复杂，log在我们开发定位问题显得越来越重要了。而大部分同学可能对log打印比较茫然，感觉打log无从下手。打多了影响性能，打少了又定位不到问题，显得有些尴尬。
+<!--more--></p>
+
+<p>二、手Q中log</p>
+
+<p>在手Q中，log一般分为</p>
+
+<ul>
+  <li>QLog_Event，记录MSF、大数据通道等基本框架的关键Log输出，以及各个业务关键路径和异常逻辑等，在发布版本中输出log</li>
+  <li>QLog_InfoP，在发布版本可能需要定位问题的一些关键路径信息，在发布版本默认不输出，通过染色号码可以输出该log</li>
+  <li>QLog_Info，记录各个业务逻辑更详细的信息，在发布版本中不能输出</li>
+  <li>QLog_Debug，用于一些临时性定位问题等，在发布前进行删除清理</li>
+</ul>
+
+<p>我们常用的log，一般有event级别log和infoP级别的log。event用于打印关键信息，这种级别的log需要慎重使用，因为所有用户都会输出这种log。</p>
+
+<p>三、推荐打log的地方</p>
+
+<ul>
+  <li>初始化</li>
+</ul>
+
+<p><img src="/image/zen_yang_you_ya_de_da_log/f8f4102b032fe15cc75df9924dea83262072597b2c32af85e7ee00499abe0961" alt="" /></p>
+
+<p>初始化场景是一个很普遍的场景。简单的初始化场景其实没有必要打log。但是像上面这种很多场景的初始化逻辑，建议重要分支用infoP级别log。</p>
+
+<ul>
+  <li>网络</li>
+</ul>
+
+<p>网络场景是一个很常见的场景。我们大部分log都在定位网络波动与网络异常。所以在网络判断，网络回包，网络异常等情况，都建议打infoP级别log。</p>
+
+<ul>
+  <li>异常（异常return或else）</li>
+</ul>
+
+<p><img src="/image/zen_yang_you_ya_de_da_log/abf36e8366fea78b8bebeb2870f7090832f39d3341af98843dbc023e95619c04" alt="" /></p>
+
+<p><img src="/image/zen_yang_you_ya_de_da_log/f7399f55b8e1b4b166e5feed6c8751793d383814795b2e8663fe57a9d96450a0" alt="" /></p>
+
+<p>在我们的很多逻辑判断中，有很多异常情况，当一些异常的逻辑（异常的返回，或者异常的else）出现的时候，可能会出现bug。推荐在一些严重的异常分支前，打上event
+log。</p>
+
+<ul>
+  <li>通知，代理</li>
+</ul>
+
+<p>通知和代理一般分为两种情况，一种是系统的通知和代理。这种通知和代理一般出错的可能性不太大，所以不推荐打log。而另一种就是使用别人的通知和代理。这种情况下推荐在重要地方打上infoP
+log。</p>
+
+<ul>
+  <li>IO操作</li>
+</ul>
+
+<p>IO操作是一个比较常见的操作。但是IO操作有一个特点，就是出了问题，一般不太好复现，也不太好定位。所以这种IO操作异常，一般推荐打event log。</p>
+
+<p>四、推荐工具</p>
+
+<ul>
+  <li>TextAnalysisTool（https://textanalysistool.github.io/）</li>
+</ul>
+
+<p><img src="/image/zen_yang_you_ya_de_da_log/81ff04e2182552d5d9b9b6af446e373d1bd46d57fe51865001f5cc86f1d68d2d" alt="" /></p>
+
+<p>1.支持大文件，文件打开速度快。</p>
+
+<p>2.支持文本高亮，支持多关键字不同高亮颜色。</p>
+
+<p>3.支持文本过滤，支持过滤文本导入（可团队维护同一份）。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/">易踩的坑：32&64bit架构下BOOL类型不同</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/">把你的Android Library开源给全世界</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

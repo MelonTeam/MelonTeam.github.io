@@ -5,24 +5,27 @@
     <description>腾讯移动终端团队, 拥有丰富的移动终端的开发经验, 专注于前沿技术的探索和研究</description>
     <link>http://MelonTeam.com/</link>
     <atom:link href="http://MelonTeam.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Dec 2017 19:03:26 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 19:03:26 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Jan 2018 16:02:22 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Jan 2018 16:02:22 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>Bitmap 源码阅读笔记</title>
+        <title>初探kotlin异步 async/await</title>
         <description>
-| 导语 Android 系统上的图片的处理，跟Bitmap
-这个类脱不了关系，我们有必要去深入阅读里面的源码，以便在工作中能更好的处理Bitmap相关的问题。
+&lt;ul&gt;
+  &lt;li&gt;在接触kotlin之前，常用的Android异步实现有asynctask，thread handler兄弟；除了写法繁琐外，他们一般的坑： &lt;/li&gt;
+&lt;/ul&gt;
 
-Bitmap 源码阅读笔记
+&lt;ol&gt;
+  &lt;li&gt;写法不当，容易产生匿名内部类持有外部类实例引起的内存泄露；&lt;/li&gt;
+&lt;/ol&gt;
 
 </description>
-        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/bitmap_yuan_ma_yue_du_bi_ji/</guid>
+        <pubDate>Sun, 31 Dec 2017 21:15:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/chu_tan_kotlin_yi_bu_async_await/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/chu_tan_kotlin_yi_bu_async_await/</guid>
         
-        <category>Bitmap</category>
+        <category>kotlin入门</category>
         
         
         <category>android</category>
@@ -30,31 +33,126 @@ Bitmap 源码阅读笔记
       </item>
     
       <item>
-        <title>Heskell与函数式编程</title>
+        <title>视频编解码模式</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#haskell简介&quot; id=&quot;markdown-toc-haskell简介&quot;&gt;Haskell简介&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#视频编解码模式&quot; id=&quot;markdown-toc-视频编解码模式&quot;&gt;视频编解码模式&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;导语 这个系列打算分为三部分，由浅入深地介绍所谓的函数式编程 1）Haskell入门 2）Monad介绍 3）函数式编程的思想&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;h2 id=&quot;视频编解码模式&quot;&gt;视频编解码模式&lt;/h2&gt;
 
-&lt;h1 id=&quot;haskell简介&quot;&gt;Haskell简介&lt;/h1&gt;
-
-Haskell诞生于1990年，是一门纯函数式编程语言，和我们经常使用的JAVA不一样，JAVA是一门命令式编程语言。函数式编程和命令式编程有本质上的区别，命令式编程是基于冯诺依曼体系的抽象，通俗点来说就是像电脑运作般思考，而函数式编程更多是数学抽象上函数的概念，也就是输入和输出的映射关系。
+&lt;blockquote&gt;
+  对视频编解码做一定的介绍，方便大家对视频编解码有比较深入的了解
+&lt;/blockquote&gt;
 
 </description>
-        <pubDate>Thu, 31 Aug 2017 23:46:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/heskell_yu_han_shu_shi_bian_cheng/</guid>
+        <pubDate>Sun, 31 Dec 2017 19:08:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/shi_pin_bian_jie_ma_mo_shi/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/shi_pin_bian_jie_ma_mo_shi/</guid>
+        
+        <category>ffmpeg</category>
+        
+        <category>视频编解码</category>
+        
+        <category>码率</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>Haskell IO</title>
+        <description>
+Haskell是一门纯函数式语言，所谓的纯函数式有一个非常重要的特征，那就是函数没有副作用。这里引用维基上面对于函数副作用的定义：
+
+“在计算机科学中，&lt;strong&gt;函数副作用&lt;/strong&gt;指当调用[函数](https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B0
+
+</description>
+        <pubDate>Sat, 30 Dec 2017 16:46:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/haskell_io/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/haskell_io/</guid>
         
         <category>haskell</category>
         
-        <category>函数式编程</category>
+        
+        <category>android</category>
+        
+      </item>
+    
+      <item>
+        <title>给你的SpannableString设置点击态</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#背景&quot; id=&quot;markdown-toc-背景&quot;&gt;背景&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 让你的ui更加灵动&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
+
+为了使界面的点击操作能更加形象化，我们通常会给点击的View 添加点击态，让使用者发现，哦，原来这个view在响应我的点击动作。
+
+</description>
+        <pubDate>Sat, 30 Dec 2017 00:20:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/</guid>
+        
+        <category>TextView</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>GIT原理-一个KV文件存储系统</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#一为什么说git是一个kv文件存储系统&quot; id=&quot;markdown-toc-一为什么说git是一个kv文件存储系统&quot;&gt;一、为什么说Git是一个KV文件存储系统？&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;导语 Git作为一个常用版本控制系统，我们仅仅是熟悉使用肯定是不够，还需要深究一下其原理，本文是我阅读《Pro Git Book》写的一篇引导向的文章。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;一为什么说git是一个kv文件存储系统&quot;&gt;一、为什么说Git是一个KV文件存储系统？&lt;/h3&gt;
+
+在开始之前，我们先准备一个空的仓库。后面的文档会基于这个仓库做一些操作。
+
+</description>
+        <pubDate>Fri, 29 Dec 2017 15:06:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/</guid>
+        
+        <category>Git</category>
+        
+        
+        <category>其他</category>
+        
+      </item>
+    
+      <item>
+        <title>使用AudioRecord以及AudioTrack录制及播放音频</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#audiorecord录制&quot; id=&quot;markdown-toc-audiorecord录制&quot;&gt;AudioRecord录制&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;audiorecord录制&quot;&gt;AudioRecord录制&lt;/h3&gt;
+
+</description>
+        <pubDate>Fri, 29 Dec 2017 01:33:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/shi_yong_audiorecord_yi_ji_audiotrack_lu_zhi_ji_bo_fang_yin_pin/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/shi_yong_audiorecord_yi_ji_audiotrack_lu_zhi_ji_bo_fang_yin_pin/</guid>
+        
+        <category>Android</category>
         
         
         <category>android</category>
@@ -62,67 +160,72 @@ Haskell诞生于1990年，是一门纯函数式编程语言，和我们经常使
       </item>
     
       <item>
-        <title>IntelliJ IDEA开发设置</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#一设置参数优化开发体验&quot; id=&quot;markdown-toc-一设置参数优化开发体验&quot;&gt;一、设置参数，优化开发体验&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
+        <title>单变量线性回归模型介绍</title>
+        <description>
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;导语 介绍一些IntelliJ IDEA使用过程中可以提高工作效率和改善心情的开发设置&lt;/td&gt;
+      &lt;td&gt;导语 本文介绍机器学习中的一种入门级模型：单变量线性回归模型。总结于吴恩达的机器学习课程，ppt已经上传到文档列表中。&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h1 id=&quot;一设置参数优化开发体验&quot;&gt;一、设置参数，优化开发体验&lt;/h1&gt;
+单变量线性回归模型介绍
 
-Help -&amp;gt; Edit Custom VM Options，创建一份vmoptions文件。
+一、模型分类
 
 </description>
-        <pubDate>Thu, 31 Aug 2017 23:37:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/intellij_idea_kai_fa_she_zhi/</guid>
+        <pubDate>Thu, 28 Dec 2017 22:56:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/</guid>
         
-        <category>IntelliJ</category>
+        <category>ml</category>
         
-        <category>idea</category>
+        <category>线性回归</category>
         
-        <category>Android</category>
+        
+        <category>deep</category>
+        
+        <category>learning</category>
+        
+      </item>
+    
+      <item>
+        <title>Android圆形图片组件RotateCircleImageView简介</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#介绍&quot; id=&quot;markdown-toc-介绍&quot;&gt;介绍&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
+
+Android开发中经常会需要展示圆形图片尤其是头像，但是SDK并没有直接支持，需要开发者自行实现。RotateCircleImageView正是这样一个圆形图片UI组件，使用它不仅可以快速简单实现圆形图片，还有多种展示风格可以选择：
+
+</description>
+        <pubDate>Wed, 27 Dec 2017 19:27:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/</guid>
+        
+        <category>圆形图片组件</category>
+        
+        
+        <category>未分类</category>
+        
+      </item>
+    
+      <item>
+        <title>JNI简介</title>
+        <description>
+JNI (Java Native
+Interface)，也叫做java本地接口，可以允许java程序与其他语言编写的程序交互（本地交互／本地调用），从而可以扩展java程序功能，在一些场景下还可以用于提升性能。
+
+</description>
+        <pubDate>Sun, 17 Dec 2017 21:31:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/jni_jian_jie/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/jni_jian_jie/</guid>
         
         <category>java</category>
         
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>Android旁门左道之动态替换应用程序类</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#一引子&quot; id=&quot;markdown-toc-一引子&quot;&gt;一，引子&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;导语 本文讲述如何通过替换应用程序类的方法，可以协助开发调试甚至应用于项目中。&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-作者： yarkeyzhang  2017.8.31
-
-&lt;h1 id=&quot;一引子&quot;&gt;一，引子&lt;/h1&gt;
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 23:04:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/android_pang_men_zuo_dao_zhi_dong_tai_ti_huan_ying_yong_cheng_xu_lei/</guid>
-        
-        <category>Android</category>
-        
-        <category>旁门左道</category>
+        <category>Jungle</category>
         
         
         <category>未分类</category>
@@ -130,165 +233,28 @@ Help -&amp;gt; Edit Custom VM Options，创建一份vmoptions文件。
       </item>
     
       <item>
-        <title>Android动态权限</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#概述&quot; id=&quot;markdown-toc-概述&quot;&gt;概述&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;导语 随机聊需求中出现几个涉及权限的bug，所以对动态权限机制做了一个简单的整理。&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;概述&quot;&gt;概述&lt;/h2&gt;
-
-Android应用程序通过请求权限来访问设备数据，例如联系人，短信，SD卡，相机，蓝牙等。应用所需的权限需要在manifest文件中声明，在安装的时候由用户授予。
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 21:50:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/android_dong_tai_quan_xian/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/android_dong_tai_quan_xian/</guid>
-        
-        <category>Android</category>
-        
-        <category>动态权限</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>OpenGL-投影和摄像机</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#1opengl中的摄像机视景体近平面&quot; id=&quot;markdown-toc-1opengl中的摄像机视景体近平面&quot;&gt;1.OpenGL中的摄像机、视景体、近平面&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1opengl中的摄像机视景体近平面&quot;&gt;1.OpenGL中的摄像机、视景体、近平面&lt;/h2&gt;
-
-OpenGL的摄像机和现实世界中的人眼很相似，都有一个三维的坐标表示位置，眼睛的朝向和视野范围，位置和眼睛朝向不同，所观察到的物体的形态就会有所不同，视野范围则规定了只有在该范围的物体才会进入人的视线，超出视野范围的部分就无法被观察到(人总不可能观察到耳朵两边和后脑勺的物体吧。)
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 21:12:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/opengl_tou_ying_he_she_xiang_ji/</guid>
-        
-        <category>Android</category>
-        
-        <category>OpenGL</category>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>全卷积神经网络fcn学习笔记</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#一caffe环境搭建&quot; id=&quot;markdown-toc-一caffe环境搭建&quot;&gt;一、caffe环境搭建&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-| 导语 前段时间学习了一下全卷积神经网络fcn，现以笔记的形式总结学习的过程。主要包括四个部分：
-（1）caffe框架的搭建；（2）fcn原理介绍；（3）分析具体fcn网络；（4）使用caffe框架进行fcn的训练和预测
-
-&lt;h1 id=&quot;一caffe环境搭建&quot;&gt;一、caffe环境搭建&lt;/h1&gt;
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 21:01:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/quan_juan_ji_shen_jing_wang_luo_fcn_xue_xi_bi_ji/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/quan_juan_ji_shen_jing_wang_luo_fcn_xue_xi_bi_ji/</guid>
-        
-        <category>深度学习</category>
-        
-        <category>全卷积神经网络</category>
-        
-        <category>fcn</category>
-        
-        
-        <category>ai</category>
-        
-      </item>
-    
-      <item>
-        <title>[译]Android Interpolator详解</title>
+        <title>Lua 学习手记</title>
         <description>
-原文地址：&amp;lt;https://blog.mindorks.com/understanding-interpolators-in-android-
-ce4e8d1d71cd&amp;gt;
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 20:39:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/yi_android_interpolator_xiang_jie/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_interpolator_xiang_jie/</guid>
-        
-        <category>Android</category>
-        
-        <category>动画</category>
-        
-        <category>插值器</category>
-        
-        <category>Interpolator</category>
-        
-        
-        <category>未分类</category>
-        
-      </item>
-    
-      <item>
-        <title>[译]Android TensorFlow机器学习示例</title>
-        <description>
-原文地址：&amp;lt;https://blog.mindorks.com/android-tensorflow-machine-learning-example-
-ff0e9b2654cc&amp;gt;
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 20:25:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/yi_android_tensorflow_ji_qi_xue_xi_shi_li/</guid>
-        
-        <category>tensorflow</category>
-        
-        <category>机器学习</category>
-        
-        <category>Android</category>
-        
-        
-        <category>未分类</category>
-        
-      </item>
-    
-      <item>
-        <title>Viewpager循环滑动的实现</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#方案1&quot; id=&quot;markdown-toc-方案1&quot;&gt;&lt;strong&gt;方案1：&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;导语 本文讲述实现ViewPager循环滑动效果的两种方案：&lt;/td&gt;
+      &lt;td&gt;导语 介绍 Lua 的语法和优化细节&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h3 id=&quot;方案1&quot;&gt;&lt;strong&gt;方案1：&lt;/strong&gt;&lt;/h3&gt;
-
-复写ViewPager或者Adapter，扩展dataList，左右各加1。
+Lua 是一种轻量小巧的脚本语言，一个完整的 Lua 解释器不过200k，用标准 C 语言编写并以源代码形式开放。但麻雀虽小五脏俱全，Lua
+本身其设计目的就是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。在所有的脚本引擎中，Lua的速度是最快的。像《魔兽世界》的插件，手机游戏《大掌门》《神曲》《迷失之地》等都是用Lua来写的逻辑。
 
 </description>
-        <pubDate>Thu, 31 Aug 2017 20:22:00 +0800</pubDate>
-        <link>http://MelonTeam.com/posts/viewpager_xun_huan_hua_dong_de_shi_xian/</link>
-        <guid isPermaLink="true">http://MelonTeam.com/posts/viewpager_xun_huan_hua_dong_de_shi_xian/</guid>
+        <pubDate>Sun, 10 Dec 2017 12:42:00 +0800</pubDate>
+        <link>http://MelonTeam.com/posts/lua_xue_xi_shou_ji/</link>
+        <guid isPermaLink="true">http://MelonTeam.com/posts/lua_xue_xi_shou_ji/</guid>
         
-        <category>adapter</category>
-        
-        <category>ViewPager</category>
-        
-        <category>循环</category>
+        <category>LUA</category>
         
         
-        <category>android</category>
+        <category>后端</category>
         
       </item>
     

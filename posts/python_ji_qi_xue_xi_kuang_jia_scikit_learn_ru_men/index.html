@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>python机器学习框架Scikit-learn入门</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="Scikit-learn是什么，它能做什么[Scikit-learn](http://scikit-">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>python机器学习框架Scikit-learn入门</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-31
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yellowye
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#deep" title="Category: deep" rel="category">deep</a>&nbsp;
+    
+        <a href="/category/#learning" title="Category: learning" rel="category">learning</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" title="Tag: 机器学习" rel="tag">机器学习</a-->
+        <a href="/tag/#机器学习" title="Tag: 机器学习" rel="tag">机器学习</a>&nbsp;
+    
+        <!--a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a-->
+        <a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p><strong>Scikit-learn是什么，它能做什么</strong></p>
+
+<p><a href="http://scikit-
+&lt;!--more--&gt;
+learn.org/stable/index.html">Scikit-learn</a>简称sklearn，是一种机器学习的python框架，<a href="http://scikit-
+learn.org/stable/install.html">安装</a>非常简单，并且其文档支持和例子感人。基本功能主要被分为六大部分：分类，回归，聚类，数据降维，模型选择和数据预处理，但并<strong>不适用于强化学习和多层神经网络深度学习</strong>。</p>
+
+<p><strong>Scikit-learn怎么用</strong></p>
+
+<ol>
+  <li>这是一张官网的函数库的说明图：</li>
+</ol>
+
+<p><img src="/image/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/de648cde1edf7b3ad62a49b4c116d2069c5c1b10ca3ee66e3b1226895b58d938" alt="" /></p>
+
+<p>这张图很清晰的说明了sklearn能做什么，并且告诉开发者该怎么根据数据集和目标来选取对应的库：</p>
+
+<ul>
+  <li>算法库分为四类：分类，回归，聚类和降维，其中分类和回归是监督式学习，聚类是非监督式学习；降维是指当数据集有很多属性的场景时，归纳为少量特征输入的方法；</li>
+  <li>判断完问题属于哪一类问题后，看数据集大小来选取对应的模型方法。</li>
+</ul>
+
+<p>2.强大的<a href="http://scikit-learn.org/stable/modules/classes.html#module-
+sklearn.datasets">数据集</a></p>
+
+<p>sklearn不仅提供了多样的数据集loaders，还提供接口自定义数据集generator,我们可以通过以下方法来定义不同量级和维度数据集：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sklearn.datasets.make_regression(n_samples=100, n_features=100, n_informative=10, n_targets=1, bias=0.0, effective_rank=None, tail_strength=0.5, noise=0.0, shuffle=True, coef=False, random_state=None)
+</code></pre>
+</div>
+
+<p> 虽然sklearn本身不支持深度学习，但它的数据集是可以为深度学习训练所用的。</p>
+
+<p><img src="/image/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/e903df6b60f6140a832d082252bb2b52a0fa36539f5108b5aff84de687ea1b97" alt="" /></p>
+
+<p>3.为模型打分校验和参数调整</p>
+
+<p><strong>打分举例：</strong></p>
+
+<p>例子出自<a href="https://morvanzhou.github.io/tutorials/machine-
+learning/">莫烦机器学习</a>，这个博文讲的很好，推荐大家也去看下。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from sklearn.datasets import load_iris # iris数据集
+from sklearn.model_selection import train_test_split # 分割数据模块
+from sklearn.neighbors import KNeighborsClassifier # K最近邻(kNN，k-NearestNeighbor)分类算法
+
+#加载iris数据集
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+#分割数据并
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=4)
+
+#建立模型
+knn = KNeighborsClassifier()
+
+#训练模型
+knn.fit(X_train, y_train)
+
+#将准确率打印出
+print(knn.score(X_test, y_test))
+# 0.973684210526
+</code></pre>
+</div>
+
+<p><strong>sklearn中的交叉验证的使用举例：</strong></p>
+
+<p>对于判定我们选择的模型和模型的参数是否是合理的的方法有很多种，其中Sklearn中的Cross Validation
+(交叉验证)有着很好的评定作用，也提供了良好的api和可视化库的支持。</p>
+
+<p>什么是<a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81">交叉验证</a></p>
+
+<p>交叉验证（Cross validation)，交叉验证用于防止模型过于复杂而引起的过拟合，有时亦称循环估计，
+是一种统计学上将数据样本切割成较小子集的实用方法。于是可以先在一个子集上做分析， 而其它子集则用来做后续对此分析的确认及验证。
+一开始的子集被称为训练集。而其它的子集则被称为验证集或测试集。交叉验证是一种评估统计分析、机器学习算法对独立于训练数据的数据集的泛化能力（generalize）</p>
+
+<p>一般要满足：</p>
+
+<ul>
+  <li>训练集的比例要足够多，一般大于一半</li>
+  <li>训练集和测试集要均匀抽样</li>
+</ul>
+
+<p><img src="/image/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/c6477049d80e1786332c6e9c1638e51f4fd57efc8832c1171237deeb1b34486d" alt="" /></p>
+
+<p><strong>交叉验证对k近邻分类算法的k值的验证：</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import matplotlib.pyplot as plt #可视化模块
+
+#建立测试参数集
+k_range = range(1, 31)
+
+k_scores = []
+
+#藉由迭代的方式来计算不同参数对模型的影响，并返回交叉验证后的平均准确率
+for k in k_range:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
+    k_scores.append(scores.mean())
+
+#可视化数据
+plt.plot(k_range, k_scores)
+plt.xlabel('Value of K for KNN')
+plt.ylabel('Cross-Validated Accuracy')
+plt.show()
+</code></pre>
+</div>
+
+<p> <img src="/image/python_ji_qi_xue_xi_kuang_jia_scikit_learn_ru_men/0098329eaec8213f4166d702f3ba75197c7db289a240683599726d9027eb7cc8" alt="交叉验证 1 Cross-
+validation-0" /></p>
+
+<p>从结论可知，选择12~18的k值最好，18之后，准确率开始下降则是因为过拟合(Over fitting)的问题。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ying_bian_ma__ying_zai_na_li_/">硬编码，硬在哪里~</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/listview_kai_fa_zhong_yu_dao_de_keng_ji_yuan_ma_fen_xi/">ListView开发中遇到的坑及源码分析</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

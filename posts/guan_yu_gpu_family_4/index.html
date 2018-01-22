@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>关于GPU Family 4</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语 这篇文章是对苹果官网https://developer.apple.com/documentation/metal/about_gpu_family_4?language=objc文章的翻译了解A11功能，包括光栅顺序组，tile着色器和图像块。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/guan_yu_gpu_family_4/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/guan_yu_gpu_family_4/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/guan_yu_gpu_family_4/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>关于GPU Family 4</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-21
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yockieyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%9B%BE%E5%83%8F" title="Tag: 图像" rel="tag">图像</a-->
+        <a href="/tag/#图像" title="Tag: 图像" rel="tag">图像</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%B8%B2%E6%9F%93" title="Tag: 渲染" rel="tag">渲染</a-->
+        <a href="/tag/#渲染" title="Tag: 渲染" rel="tag">渲染</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>| 导语 这篇文章是对苹果官网
+https://developer.apple.com/documentation/metal/about_gpu_family_4?language=objc
+文章的翻译</p>
+
+<p>了解A11功能，包括光栅顺序组，tile着色器和图像块。<br />
+<!--more-->
+<strong>概述</strong><br />
+GPU Family 4描述了A11芯片及其苹果设计的图形处理单元（GPU）架构支持的新功能和性能增强功能。<br />
+iOS和tvOS设备中的GPU实现了一种称为基于tile延迟呈现渲染（TBDR）的渲染技术，以优化性能和功耗效率。在传统的即时模式（IM）渲染器中，当三角形提交到GPU进行处理时，它立即呈现给设备内存。三角形即使它们被稍后提交给GPU的其他图元遮挡，他也会被光栅化和片段函数处理。<br />
+<strong>基于tile的延迟呈现渲染</strong><br />
+TBDR对IM架构进行了一些重大改变，在提交了所有图元之后才对其进行处理。屏幕被分割成单独处理的图块。
+与tile相交的所有几何图形都被同时处理，遮蔽的片段在光栅化和片段着色阶段之前被丢弃。一个tile被渲染进GPU上的快速本地存储器，并且只有在渲染完成之后才被写入设备存储器。<br />
+TBDR允许顶点和片段级别异步运行 - 提供超过IM的显着性能改进。
+当运行着一个片段阶段的渲染过程时，硬件并行运行着一个未来的顶点阶段的渲染过程。顶点阶段通常会大量使用固定功能硬件，而片段级使用计算器和带宽。同时使用它们可以使得GPU所有的硬件块得到充分的运用。<br />
+TBDR使用的tile内存有三个重要特征。
+首先，着色器核心和tile存储器之间的带宽比GPU和器件存储器之间的带宽高出许多倍，并且与着色器核心数量成正比。第二，tile内存的内存访问延迟比访问设备内存的延迟要低很多倍。
+最后，tile内存的功耗明显低于设备内存。<br />
+在基于A7至A10的设备上，Metal并没有明确描述这种基于tile的架构; 代替的，您可以使用它为底层实现提供提示。
+例如，加载和存储动作控制哪些数据被加载到本地存储器中以及哪些数据被写出到设备存储器中。类似地，无记忆缓存器指定仅在渲染过程期间使用的每像素中间数据;
+在实践中，该数据存储在一个在快读本地存储内存中的tile中。<br />
+<strong>Metal2在A11的GPU</strong><br />
+A11中的Apple设计的GPU提供了显着增强TBDR的几项功能。 这些功能通过附加的Metal 2
+API提供，并允许您的应用和游戏实现新的性能和功能水平。<br />
+这些功能包括图像块，tile着色，光栅顺序组，图像块样本覆盖控制和线程组共享。 A11
+GPU上的metal2也提高了片段废弃性能。一般来说，这些功能可以更好地控制内存布局和访问存储在tile中的数据，并提供更细粒度的同步，以便在GPU上保持更多的工作。最终的结果是，您可以在单个渲染过程中执行比以前更多种类的计算，将计算保留在快速本地内存中。A11上的Metal2还简化了一些技术诸如隐藏层的散射，无秩序的透明度和机遇tile的灯光算法。<br />
+<strong>下面详细介绍GPU Family 4的一些特征：</strong><br />
+<strong>1.关于图像块</strong><br />
+了解图像块如何您定义和操作高带宽tile内存中的像素数据结构。<br />
+<strong>概述</strong><br />
+图像块是存储在本地存储器中的结构化图像数据的tile，允许您描述A11图形处理单元（GPU）可以有效操作的tile内存中的图像数据。<br />
+它们与片段处理和A11的tile着色阶段深度集成，并且还可用于计算内核。Metal通常在IOS设备上渲染图像块，但A11上的Metal
+2通过将图像块视为已完全控制的数据结构来扩展此功能。<br />
+<strong>图像块用于用于在片段和tile之间传递数据的阶段</strong><br />
+图1显示了A11 GPU架构以及图像块如何在片段和tile传递数据阶段的渲染过程。 虽然线程组存储器适用于非结构化数据，但建议使用图像块作为图像数据。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/cc39fce67f324de93f0060611127b9b30f33b762534289da7ddacfd405c8839e" alt="" /></p>
+
+<p><strong>图像块结构</strong><br />
+图像块是具有宽度，高度和像素深度的2D数据结构。
+图像块中的每个像素可以由多个分量组成，并且每个分量可以被寻址为其自己的图像切片。图2显示由代表反照率，镜面反射率和正常分量的三个图像切片组成的图像块。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/3a7cfc11ec7de5775d262b696f100115251a0838584dcf055c9728f175b5aa55" alt="" /></p>
+
+<p>图像块可用于内核和片段功能，并且在绘图和调度的整个生命周期中持续存在。 图像块持久化意味着您可以在单个渲染遍中混合渲染和计算操作，同时访问相同的本地内存。
+通过在tile中保持多个操作，您可以创建保留在本地GPU内存中的复杂算法。<br />
+您现有的代码会自动创建与您的渲染attachments格式相匹配的图像块。 但是，您也可以在着色器中完全定义自己的图像块。
+您定义的图像块可能比渲染attachments创建的图像更复杂; 例如，它们可以包括附加通道，数组和嵌套结构。
+此外，您定义的图像块可以在计算的不同阶段用于不同的目的。<br />
+在片段着色器中，当前片段只能访问与该片段中的位置相关联的tile中的图像块数据。在计算功能中，线程可以访问所有的图像块数据。
+当使用具有attachments的渲染时，加载和存储操作将继续作为数据片段从tile内存中读取和写入的手段。<br />
+但是，如果您使用显式的图像块，则可以使用计算函数来显式读取和写入设备内存。 通常可以通过使用内存硬件的块传输来执行写入。<br />
+<strong>2.关于Tile着色</strong><br />
+了解如何在共享本地内存的同时将渲染和计算操作合并到单个渲染过程中。<br />
+<strong>概述</strong><br />
+许多渲染技术需要绘制和计算命令的混合。 传统上，渲染和计算命令被分成不同的通行。这些过程无法直接相互通信;
+一次通过的结果被复制到设备内存中，只能通过下一遍复制回本地内存。在多相渲染算法中，中间数据可能被复制到设备存储器多次，该过程被显示在图1。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/7ffc2b2d43f9da70de35d873a488cbd293246dc136c855db6176a6f23a87530c" alt="" /></p>
+
+<p>tile着色器是作为渲染过程的一部分执行的计算或片段功能，允许在渲染阶段之间使用持久内存进行计算。<br />
+图2表明tile着色器工作的tile存储器保留在图形处理单元（GPU）的片上存储器中。因此，您不必将中间结果存储到设备内存中。
+任何后续片段阶段都可以从一个阶段的tile内存获得。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/49bbe32a5a58a344e1bc1bedbb4bca8e6c909e195404b99fb404a78f732bdf1c" alt="" /></p>
+
+<p><strong>3.关于光栅顺序组</strong><br />
+了解如何精确控制访问相同像素坐标的并行片段着色器线程的顺序。<br />
+<strong>概述</strong><br />
+Metal2引入了光栅顺序组，它们从片段着色器提供有序的存储器访问，并简化渲染技术，例如独立于命令的透明度，双层G缓冲区和体素化(体素化（Voxelization）是将物体的几何形式表示转换成最接近该物体的体素表示形式，产生体数据集，其不仅包含模型的表面信息，而且能描述模型的内部属性)。<br />
+给定一个包含两个重叠三角形的场景，Metal保证混合发生在绘制调用顺序中，给出三角形被连续渲染的错觉。图一显示显示一个由三角形绿色部分遮挡的蓝色三角形。<br />
+然而，在幕后，这个过程是高度平行的;
+多个线程同时运行，并且不能保证后三角形的片段着色器在前三角形的片段着色器之前执行。图1显示，虽然两个线程同时执行，但是在绘图调用顺序中发生混合。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/33678614d6c878395a94d3b61989187a1d15a7a53f53a1f4c614c9ba572bc0ab" alt="" /></p>
+
+<p>您的片段着色器中的自定义混合函数可能需要读取后三角形片段着色器的结果在前三角形片段应用该函数之前。由于并发性，此读 - 修改 - 写序列可以产生竞争条件。
+图2显示了线程2尝试同时读取线程1正在写入的相同内存。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/617d40676153c9ea2930815bc924b04805fc8022da36e1a8ecf2bc33161d8d6a" alt="" /></p>
+
+<p><strong>克服访问冲突的光栅顺序组</strong><br />
+栅格顺序组通过同步访问相同像素坐标和样本的线程来克服这种访问冲突（如果每个样本阴影被激活）。<br />
+您可以通过使用属性限定符注释到内存的指针来实现光栅顺序组。 然后，按照像素提交顺序完成对这些指针的访问。
+在当前线程进行之前，硬件等待与当前线程重叠的任何旧片段着色器线程完成。<br />
+图3显示了光栅顺序组如何同步两个线程，以便线程2在尝试读取该内存之前等待写入完成。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/fc5be21118b88494ed9b8357a2be4090b13907c92b00ae6b7cd229ba0eaa8a3c" alt="" /></p>
+
+<p><strong>A11metal2的扩展光栅顺序组</strong><br />
+A11上的Metal 2扩展了具有附加功能的光栅顺序组。 首先，它允许图像块和线程组存储器的各个通道的同步。
+其次，它允许创建多个顺序组，让您进行更精细的同步，并最大限度减少线程等待访问的频率。<br />
+A11图形处理单元（GPU）上的光栅订单组的附加功能提高性能的示例是延迟着色。 传统上，延迟着色需要两个阶段。第一阶段填充G缓冲区并产生多个纹理。
+第二阶段消耗这些纹理，并计算着色结果以渲染发光物体，如图4所示。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/1c9c9ca157eca98f56c41631190257bc8d1c78b33b89d47e9b0e7fcc0b415366" alt="" /></p>
+
+<p>由于中间纹理被写入设备内存并从设备内存中读取，因此延迟着色是带宽密集型的。 A11 GPU能够利用多个顺序组将两个渲染阶段合并成一个，从而无需中间纹理。
+此外，它可以将G缓冲区保留在保留在本地图像块存储器中的块大小的块中。<br />
+为了演示A11
+GPU多个顺序组如何提高延迟着色的性能，图5显示了传统GPU如何调度线程用于照明阶段。负责第二个Light的线程必须等待从先前的线程访问完成之后才能开始。
+这种等待强制这两个线程的执行顺序运行，即使访问不相互冲突。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/1b07748459b157f592adfe057cb452f9e270a4935360638f87960fd508f510e5" alt="" /></p>
+
+<p>图6显示了多个顺序组如何允许您同时运行非冲突读取，两个线程在执行结束时同步以合成Light。通过将三个G缓冲区（反照率，正常和深度）声明为第一组，累积的照明结果位于第二组来实现。<br />
+A11 GPU能够分别对两组进行排序，第二个组的写入不需要等待第一个组的读取。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/5d53e6b92660552a11a94f8f9a57ff09db4bf77ba4def3c58f98da5f784bad8e" alt="" /></p>
+
+<p>对于多个顺序组，更多的线程可以同时运行，从而允许更多的并行性和改进的性能。<br />
+<strong>4.关于增强型MSAA和图像块样本覆盖率控制</strong><br />
+了解如何在tile着色器中访问多采样跟踪数据，从而实现自定义MSAA解析算法的开发等。<br />
+<strong>概述</strong><br />
+多采样抗锯齿（MSAA）是一种用于通过为每个像素使用多个深度和颜色样本来改善原始边缘外观的技术。 图1显示了没有MSAA渲染的三角形。
+因为每个像素具有单个样本位置，它被覆盖或不被三角形覆盖，导致锯齿状边缘。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/ce546ef797509beb1e1bb6267bc0505ef47462c9f71dc1b3d88e65eea9c3704a" alt="" /></p>
+
+<p>图2显示了使用4x MSAA渲染的相同三角形; 也就是说，每个像素具有四个采样位置。 图形处理单元（GPU）对像素内的每个样本的颜色进行平均以确定最终颜色。
+该过程导致更平滑的外观并减少锯齿状边缘。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/68db9d2673cf44fe32a37bf2ab09227973b948d6b0f6d5101c23185b66a3760e" alt="" /></p>
+
+<p>苹果的A系列GPU具有高效的MSAA实现。 硬件跟踪每个像素是否包含原始边缘，以便只有在必要时，您的混合才能执行。
+如果一个像素中的所有样本均被单个图元覆盖，则GPU将整个像素混合一次。<br />
+<strong>图像块的样本覆盖率控制</strong><br />
+A11上的metal2跟踪每个像素的唯一样本（或颜色）的数量，在渲染新图元时更新此信息。
+例如，图3中的像素包含两个重叠三角形的边缘，并且样本位置被三个独特的颜色覆盖。在当前的A系列GPU中，该像素混合了三个覆盖的样本。 在A11
+GPU上，这个像素只混合两次，因为两个覆盖的样本共享相同的颜色。 在这种情况下，索引1处的颜色是绿色和粉色的混合，索引2处的颜色是粉红色。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/f4d439026d92ea31f78b4afdc8f0dff3658682a8cafea4ec76ef1fa8baa42a42" alt="" /></p>
+
+<p>A11上的metal2可以减少像素中独特颜色的数量。 在图4中，一个额外的不透明三角形呈现在较早的图元的顶部。
+因为所有的样品都被新的三角形覆盖并且可以用单一的颜色表示，所以A11 GPU将三种颜色合并成一个。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/660e0dfa9375f44f83df84f845df63762eb21240f79ba2c92486d18e5eded460" alt="" /></p>
+
+<p>此外，您可以访问和修改tile着色器中的样本覆盖数据，以实现自定义分辨率算法。
+例如，给出一个包含不透明和半透明几何的独立渲染阶段的复杂场景，您可以在混合半透明几何之前添加一个tile着色器来解析不透明几何的样本数据。使用A11上的Metal
+2，此tile着色器用于本地内存中的数据，可以是不透明几何相的一部分，如图5所示。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/00c3043a87066e0b69f62c6628933039b2410c9008eca2860e92b2214ad7d1bc" alt="" /></p>
+
+<p><strong>5.关于线程组的共享</strong><br />
+了解增强内存模型，允许在线程之间灵活高效地共享数据。<br />
+<strong>概述</strong><br />
+A11上的Metal 2引入了一种新的内存模型，它采用和扩展了C ++ 11一致性模型。
+该模型具有新功能，允许线程组中的线程组和线程使用原子操作或内存栅栏彼此进行通信，而不是昂贵的阻塞。<br />
+线程组需要通信的一个例子是一个内核，它将浮点数组合，如图1所示。传统上，您可以使用内核来实现这个求和，该内核计算每个线程组的值之和，并将这些值写入中间缓冲区。
+因为这些线程组不能通信，所以您需要调度一个计算中间缓冲区值的最后一个总和的第二个内核。<br />
+因为启动每个内核是有代价的，所以这种方法可能不是有效的。 另外，因为第二个内核使用单个线程组，所以它不能完全利用图形处理单元（GPU）。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/03f701d61d83729b64eaa49bf090e2226db0b87277ba769d3beffb5cc5d28013" alt="" /></p>
+
+<p>使用线程组共享，一个内核和一个调度可以对输入数组中的每个元素求和。 您可以使用原子操作来计算已完成线程组的数量。
+当所有的线程组已经完成时，最后一个执行的线程组可以计算最后的和总和，如图2所示。</p>
+
+<p><img src="/image/guan_yu_gpu_family_4/30cff18ccfb5b2cc75aebda94aea4aed1c69675661a4b01c0d492178509f270d" alt="" /></p>
+
+<p>A11上的Metal 2引入了原子函数，允许对内存位置进行互斥访问，并允许您指定线程组内或跨线程组中的线程之间如何同步内存。
+您为每个原子操作指定内存顺序和内存范围。<br />
+内存顺序用于指定如何在同步操作周围排列内存操作。 内存顺序可以relaxed - 这是最快的模式，只提供独占访问原子操作的保证。 如果需要在线程之间同步数据
+，请使用acquire-release。 在这种模式下，写入内存的线程执行释放以允许线程获取相同的内存并读取最新的数据。<br />
+内存范围是基于GPU内存层次结构和线程是否需要同步原子操作在一个SIMD组或者线程组或者设备。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_listview_shi_yong_zhu_yi_shi_xiang/">Android ListView使用注意事项</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/">iOS 11 兼容引起的UI问题记录</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

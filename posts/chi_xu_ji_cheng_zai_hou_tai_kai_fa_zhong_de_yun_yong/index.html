@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>持续集成在后台开发中的运用</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 探索持续集成在后台开发中的运用      什么是持续集成随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的问题。尤其是近些年来，敏捷（Agile）">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>持续集成在后台开发中的运用</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>fredcmeng
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#后端" title="Category: 后端" rel="category">后端</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90" title="Tag: 持续集成" rel="tag">持续集成</a-->
+        <a href="/tag/#持续集成" title="Tag: 持续集成" rel="tag">持续集成</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 探索持续集成在后台开发中的运用</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>什么是持续集成</p>
+
+<p>随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的问题。尤其是近些年来，敏捷（Agile）
+<!--more-->
+在软件工程领域越来越红火，如何能再不断变化的需求中快速适应和保证软件的质量也显得尤其的重要。<br />
+持续集成正是针对这一类问题的一种软件开发实践。它倡导团队开发成员必须经常集成他们的工作，甚至每天都可能发生多次集成。而每次的集成都是通过自动化的构建来验证，包括自动编译、发布和测试，从而尽快地发现集成错误，让团队能够更快的开发内聚的软件。</p>
+
+<p>持续集成对于后台开发的重要性</p>
+
+<p>后台开发测试流程一般主要是开发机开发编译——》拷贝文件到测试机——》重启服务这三个环节，每一步都有很多影响工作效率的问题。首先，在编译环节，随着工程复杂度和代码量的增加，编译耗时越来越久，等待编译是一个很浪费时间的事情，人工切换无法及时得到编译结果；其次，拷贝文件到测试机，不仅需要手动登录到测试机的相关目录，文件过大时，拷贝的过程也需要一些时间；最后重启服务也需要手动执行命令，在敏捷开发的过程中，这些操作需要频繁重复执行，如果有一个平台可以把这些操作集成起来自动执行，则可以极大的提高开发人员的工作效率，持续集成就是专门为解决这类问题而产生的。</p>
+
+<p>持续集成在后台开发中的运用</p>
+
+<p>持续集成的工具有很多，每个工具的侧重点不同适用于不同的场景，在这个页面上<a href="https://en.wikipedia.org/wiki/Comparison_of_continuous_integration_software">https://en.wikipedia.org/wiki/Comparison_of_continuous_integration_software</a>有对常见的一些工具通过不同的角度做了比较，其中jenkins相对来说功能较为全面，安装使用极其简单，公司内部很多团队也有在使用，因此我们也选择了它作为我们的尝试，因为后台都是在linux下开发测试，所以下面主要讲述jenkins在linux系统下的安装使用。</p>
+
+<p>jenkins的运行需要依赖jdk，所以首先需要下载安装jdk，然后从官网上下载jenkins的war包源码。<img src="/image/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/9b5bf2ff11acb58c7a3414674aab01faccd7d333159614b1729b1db6bba21ec0" alt="" /></p>
+
+<p>得到源码之后，有两种运行方式，一是把jenkins放在tomcat容器中运行，这种方式相对比较简单，只需要配置好tomcat就可以执行；二是通过java命令行java
+-jar
+jenkins.war的方式运行，因为jenkins自带一些命令行参数支持，所以命令行模式下，可以对jenkins做很多定制化的设置，例如jenkins首页链接后缀的修改，默认情况下只能通过服务器的80端口访问，而80端口一般都是由nginx服务监听占用的，所以我们通过修改url后缀，让jenkins监听非80端口，通过nginx的链接转发配置来访问。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>java -jar jenkins.war --httpPort=8090 --prefix=/jenkins
+</code></pre>
+</div>
+
+<p>因为链接需要域名加后缀，人工记忆输入极为不便，所以我们选择把jenkins集成到现有的内部网站中作为其中一个tab页面，通过点击跳转来访问。<img src="/image/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/733931fad072d17245117cde6f3b767ad9ec3ad94032da44a298db9e54daf369" alt="" /></p>
+
+<p>jenkins的安全管理有多种模式，可以不需要登录直接访问，或者允许注册用户登录访问，不登录直接访问太不安全，注册用户需要大家再记忆一套账号密码，而且也无法直接和本人对应起来，不方便问题的查找和定位，我们选择通过安装公司同事分享的rtx登录插件，使用rtx的方式登录，这样大家可以直观的看到历史版本的编译记录和对应负责人。<img src="/image/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/f865dac27d22a99acef23160a900c2a243a7a7b2380dca712507f4b988d86dbd" alt="" /></p>
+
+<p>接下来就是工程的配置，jenkins支持svn、git等多种代码托管方式，因为涉及权限问题，这里我们不做代码托管，而是通过执行shell命令，登录到开发机上进行代码的更新和编译，文件的拷贝以及服务重启也都是通过配置拷贝文件、远程登录测试机并执行重启的shell命令来实现，基本做到一键完成代码更新、编译、文件拷贝和服务重启整个流程。</p>
+
+<p><img src="/image/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/fbd0be4eb6f02708f1daaf47a84f557e6aca91971d17d757ba94435c8b570cc2" alt="" /><img src="/image/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/62d270041c0537db9e59d87020fe25bf89af1cd454cdddef8d74a143325fb213" alt="" /></p>
+
+<p>可不可以做得更好</p>
+
+<p>除了编译和部署，自动化测试也是持续集成中非常重要的一部分，jenkins自身的插件包支持Junit单元测试，其他的测试工具可以手动部署，通过配置shell脚本的方式来执行，jenkins还有生成html格式报告的功能，可以把执行结果生成html报告，方便查看和存档，目前后台主要是用c++进行开发，这方面的功能还需要继续探索实践。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/c__ban_zhuan_min_gong_xue_xi_go_yu_yan/">C++搬砖民工学习Go语言</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/qia_dun_xing_neng_wen_ti_gai_ru_he_ru_shou/">卡顿性能问题该如何入手</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

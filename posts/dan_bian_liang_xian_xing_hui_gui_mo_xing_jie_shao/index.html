@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>单变量线性回归模型介绍</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 本文介绍机器学习中的一种入门级模型：单变量线性回归模型。总结于吴恩达的机器学习课程，ppt已经上传到文档列表中。      单变量线性回归模型介绍一、模型分类">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>单变量线性回归模型介绍</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-28
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>zehongliu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#deep" title="Category: deep" rel="category">deep</a>&nbsp;
+    
+        <a href="/category/#learning" title="Category: learning" rel="category">learning</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ml" title="Tag: ml" rel="tag">ml</a-->
+        <a href="/tag/#ml" title="Tag: ml" rel="tag">ml</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92" title="Tag: 线性回归" rel="tag">线性回归</a-->
+        <a href="/tag/#线性回归" title="Tag: 线性回归" rel="tag">线性回归</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 本文介绍机器学习中的一种入门级模型：单变量线性回归模型。总结于吴恩达的机器学习课程，ppt已经上传到文档列表中。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>单变量线性回归模型介绍</p>
+
+<p>一、模型分类
+<!--more--></p>
+
+<p>在机器学习领域，学习的方式可以简单地被分为两类：有监督学习和无监督学习。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/1dc682412dddb6fae81446f82c731763a5f2b914763e6c0bc80d3d6ee043e395" alt="" /></p>
+
+<p>有监督学习指对分类结果有明确预判的问题，比如我们针对一个患有肿瘤的病人，根据其肿瘤大小来判断肿瘤的性质属于恶性还是良性。由于我们已知预测结果只有恶性和良性两种可能，所以此行为属于有监督学习。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/af2769b8c7bc9b3b5985f3b67ec26f984b442f17167d50087c14e20db5a07f29" alt="" /></p>
+
+<p>无监督学习指对预测结果没有预判的问题，比如在GOOGLE新闻网页中，GOOGLE官方会将每天发生的新闻按照类别自动聚合。由于每天产生的新闻无法预判，所以这种聚类的方式属于无监督学习。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/c3e811c845e550def7874b4d592513211c292b1ae7b23c89f174485433afd6f0" alt="" /></p>
+
+<p>在有监督学习中，主要又可以分为具有连续结果的回归模型，和具有离散结果的分类模型。之前提到的肿瘤预测良性恶性属于分类模型，因为分类结果非黑即白，属于离散结果。举一个预测房价的例子，如果我们通过房屋面积预测房屋价格，会得到下图所示的一条曲线。这种拥有连续结果的预测模型属于回归模型。</p>
+
+<p>单变量线性回归模型是回归模型的一种最简单的呈现方式。由于其只有一个变量，且假设函数是线性的，十分易于理解。</p>
+
+<p>二、 单变量线性回归模型</p>
+
+<p>1. 代价函数</p>
+
+<p>我们使用之前通过房屋面积预测房屋价格的例子，假设房屋的价格面积对应关系如下表所示。表中的每一行数据都是一个输入样本和一个输出样本的集合，也称作训练集。所有样本的数量用小写m表示，输入样本用x表示，输出样本用y表示。x和y的对应关系称作假设函数h。我们要做的就是通过训练集找到假设函数h，确定了假设函数之后就可以进行预测了。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/5e5cc0d152816e24a2fa07ffd8ea905449cc52e2cac089bee2f1de48cb11aeaa" alt="" /><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/07689ec61e85aa5228184ecb8f58d4d50b8583c4601101befb734b0eae96b685" alt="" /></p>
+
+<p>假设函数h：</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/19b63a931600b62ad508f2735d125654d1d03769ec28dbcf850d6770bcac9f6d" alt="" /></p>
+
+<p>    通过假设函数h我们可以在训练集的坐标轴上画出一条线。由于是单变量线性回归，这条假设函数线是一条直线，它会尽可能多的靠近训练集样本点。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/9b97fc6f7c99911d61ccd02da94d2d1f90547abd6df70201d98b7836bda61729" alt="" /></p>
+
+<p>那么，如何评价一个假设函数是否准确呢？或者说如何衡量这条直线是否贴近了足够多的训练集样本点呢？我们使用代价函数来评价假设函数的优劣。代价函数用J表示，描述了假设函数上取每一个输入样本点，和输出样本做差后再求平方和。可以理解为假设函数上每个点到真实样本之间的距离。显然，总距离越近，J越小，假设函数就越合理。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/06f84f21f91d3793c48bff4a5aa033560f9d8a6d71ed6e6dc56da4a95632407f" alt="" /></p>
+
+<p>我们的目的是得到最小的代价函数J：</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/89bd778b2b809e1d15196b5139a37ea420bcfbef1666678f0b70d94b1486b031" alt="" /></p>
+
+<p>从下面的3D图中可以看到，代价函数J呈一个碗状，在碗底的最低点，就是最佳的系数取值点，从此确定假设函数h。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/46eb9ac0a5b9ca24006621e80f46f1ebaa28981d537adb265528ae71af5718ca" alt="" /></p>
+
+<p>2. 梯度下降</p>
+
+<p>接上文，我们如何确定这个碗的碗底在哪里呢？显然遍历所有的系数θ取值点不是一个可行的好办法。一般会采取一些下降算法，最普遍的就是梯度下降法。</p>
+
+<p>梯度下降法的做法是，针对一个假设函数h，对其系数θ随机找到两个初始点，然后同步地、持续地改变系数θ的值，直到获得最小的代价函数J。可以理解为从碗的任意一点出发，逐步地向碗底进发。一般来说，每一步前进的方向是代价函数J对系数θ自身的偏导数，用这个偏导数乘上学习速率α就是每一步的大小。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/4e45903ec484524644ed88d7207f6bdd7881dd01c0cb9357924f656a4d0b08bd" alt="" /></p>
+
+<p>注意，梯度是一个向量，由两个偏导数一起合成出来，所以要同步改变两个系数的值，左下图是正确的。右下图先改变了一个系数，另一个系数是在其基础上改变的，不属于同步改变，在编程中值得注意。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/b37e3a8d88259511b0b8c828f12929a5e1805b4c93235eb35015f9c3859ce7dd" alt="" /><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/59d025d4a15e520feae8d770dad3b965bbea69d7bb2789d41323785e8aed6fae" alt="" /></p>
+
+<p>另外，注意区别全局最优和局部最优，下图中一个是全局最优，一个是局部最优，在机器学习中，陷入局部最优解是一个很常见且很难排查的一种情况，需要留意分析。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/13732e372f70aaf2c23f960abab551bbb08c5d97cf7f6c9e99e3ff3ee6096db1" alt="" /></p>
+
+<p>局部最优</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/f6152e7df3d49ea69878b593e3eaddcc3569b77630f67bee6df3277aec28a099" alt="" /></p>
+
+<p>全局最优</p>
+
+<p>学习速率α是一个描述步长的人工设定的参数，学习速率越大，每次梯度下降的幅度越大，反之越小。在下面四个图中，上方两个图分别描述了学习速率过大和过小的情况。如果学习速率过大，有可能跳过最低点，反而无法收敛。如果学习速率过小，收敛过于缓慢，无法适应大规模问题。左下图表示，当到达最低点时，代价函数将不会再发生移动，达到收敛状态。右下图表示，只要最初定好学习速率，不用中途随时调整，因为随着下降的过程，下降的曲线会变缓，步长会变小，不需要调整学习速率以免跳过最低点。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/dce5649a27cf5b825ba9d7a0edd3c77eaa3f8b72c502b04c3bbe741f6b4beb25" alt="" /></p>
+
+<p>综合上文中所描述的假设函数h、代价函数J以及梯度下降算法中系数的下降函数，可以得到单变量线性回归模型中假设函数系数的回归模型。</p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/ed1ea1e1cdd355f9bce551656543900616e73335e6fe1397f82bfe5dfd24ee36" alt="" /></p>
+
+<p><img src="/image/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/2b0d08ef67afe218864853b01b64c1fffd84809a41de308e5ddd0f6cd3998597" alt="" /></p>
+
+<p>本文简单描述了机器学习中一类入门模型：单变量线性回归模型。图片素材来自吴恩达机器学习视频课程。PPT已上传文档。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/">Android圆形图片组件RotateCircleImageView简介</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/shi_yong_audiorecord_yi_ji_audiotrack_lu_zhi_ji_bo_fang_yin_pin/">使用AudioRecord以及AudioTrack录制及播放音频</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

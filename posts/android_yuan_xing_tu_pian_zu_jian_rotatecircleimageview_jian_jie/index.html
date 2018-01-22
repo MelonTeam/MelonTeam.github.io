@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android圆形图片组件RotateCircleImageView简介</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  介绍介绍Android开发中经常会需要展示圆形图片尤其是头像，但是SDK并没有直接支持，需要开发者自行实现。RotateCircleImageView正是这样一个圆形图片UI组件，使用它不仅可以快速简单实现圆形图片，还有多种展示风格可以选择：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Android圆形图片组件RotateCircleImageView简介</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-27
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>vincanyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%9C%86%E5%BD%A2%E5%9B%BE%E7%89%87%E7%BB%84%E4%BB%B6" title="Tag: 圆形图片组件" rel="tag">圆形图片组件</a-->
+        <a href="/tag/#圆形图片组件" title="Tag: 圆形图片组件" rel="tag">圆形图片组件</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#介绍" id="markdown-toc-介绍">介绍</a></li>
+  <li><a href="#使用方法" id="markdown-toc-使用方法">使用方法</a></li>
+  <li><a href="#代码引用gradle" id="markdown-toc-代码引用gradle">代码引用（gradle）</a></li>
+  <li><a href="#代码使用" id="markdown-toc-代码使用">代码使用</a></li>
+  <li><a href="#源码及demo" id="markdown-toc-源码及demo">源码及DEMO</a></li>
+  <li><a href="#已应用app" id="markdown-toc-已应用app">已应用App</a>    <ul>
+      <li><a href="#手q" id="markdown-toc-手q">手Q</a></li>
+    </ul>
+  </li>
+  <li><a href="#版本发布" id="markdown-toc-版本发布">版本发布</a></li>
+  <li><a href="#源码解读" id="markdown-toc-源码解读">源码解读</a></li>
+</ul>
+
+<h2 id="介绍">介绍</h2>
+
+<p>Android开发中经常会需要展示圆形图片尤其是头像，但是SDK并没有直接支持，需要开发者自行实现。RotateCircleImageView正是这样一个圆形图片UI组件，使用它不仅可以快速简单实现圆形图片，还有多种展示风格可以选择：
+<!--more--></p>
+
+<p>1.圆形头像，默认</p>
+
+<p>2.圆形头像，且带有边框</p>
+
+<p>3.圆形头像，且带有分段边框（适合区分数据状态场景）</p>
+
+<p>4.圆形头像，且带有转圈的边框（适合展示加载数据场景）</p>
+
+<p>目前代码已开源至github，详见<a href="https://github.com/yangwencan2002/RotateCircleImageView">这里</a>。</p>
+
+<p><img src="/image/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/bd090a794e1621d5fa8fe58d6b8144a9b068d53a66c5a4b5ffbb8373c159258a" alt="" /></p>
+
+<p>[ RotateCircleImageView ]</p>
+
+<h2 id="使用方法">使用方法</h2>
+
+<h2 id="代码引用gradle">代码引用（gradle）</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dependencies {
+    ...
+    compile 'com.vincan:rotatecircleimageview:1.0.0'
+}
+</code></pre>
+</div>
+
+<h2 id="代码使用">代码使用</h2>
+
+<p>XML</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;com.vincan.rotatecircleimageview.RotateCircleImageView
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:src="@drawable/penguin"
+    app:rciv_border_width="2dp"
+    app:rciv_border_padding="2dp"
+    app:rciv_border_colors="@array/border_colors"
+    app:rciv_border_style="rotate"/&gt;
+</code></pre>
+</div>
+
+<p>Java</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rotateCircleImageView.setBorderWidth(2);//设置边框宽度
+rotateCircleImageView.setBorderPadding(2);//设置边框和头像的间距
+rotateCircleImageView.setBorderColors(new int[]{Color.BLUE, Color.LTGRAY});//设置边框颜色，多个颜色值表示分段边框的颜色，且起点为12点钟顺时针方向
+rotateCircleImageView.setBorderStyle(BorderStyle.ROTATE);//设置边框风格，BorderStyle.ROTATE表示旋转，BorderStyle.STILL表示静态，即非旋转状态
+</code></pre>
+</div>
+
+<h2 id="源码及demo">源码及DEMO</h2>
+
+<p>参见<a href="https://github.com/yangwencan2002/RotateCircleImageView">github</a></p>
+
+<h2 id="已应用app">已应用App</h2>
+
+<h4 id="手q">手Q</h4>
+
+<p><img src="/image/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/105d377f3422186c6a25bc9b9802b2327a131445829630d8324732c87bdbc894" alt="" /></p>
+
+<p>[ 手Q ]</p>
+
+<h2 id="版本发布">版本发布</h2>
+
+<p><a href="https://bintray.com/yangwencan2002/maven/RotateCircleImageView">bintray.com</a></p>
+
+<h2 id="源码解读">源码解读</h2>
+
+<p>待补充</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/jni_jian_jie/">JNI简介</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/dan_bian_liang_xian_xing_hui_gui_mo_xing_jie_shao/">单变量线性回归模型介绍</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

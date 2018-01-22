@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>JNI简介</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="JNI (Java NativeInterface)，也叫做java本地接口，可以允许java程序与其他语言编写的程序交互（本地交互／本地调用），从而可以扩展java程序功能，在一些场景下还可以用于提升性能。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/jni_jian_jie/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/jni_jian_jie/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/jni_jian_jie/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>JNI简介</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-17
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>collinxu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#java" title="Tag: java" rel="tag">java</a-->
+        <a href="/tag/#java" title="Tag: java" rel="tag">java</a>&nbsp;
+    
+        <!--a href="/tag/#Jungle" title="Tag: Jungle" rel="tag">Jungle</a-->
+        <a href="/tag/#Jungle" title="Tag: Jungle" rel="tag">Jungle</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>JNI (Java Native
+Interface)，也叫做java本地接口，可以允许java程序与其他语言编写的程序交互（本地交互／本地调用），从而可以扩展java程序功能，在一些场景下还可以用于提升性能。</p>
+
+<!--more-->
+<p><strong>JNI适用场景</strong></p>
+
+<p>1.为了使用底层主机平台的某些特性，而这些特性不能直接通过JAVA API访问，比如JDK中需要与操作系统交互的底层方法大多都是native的</p>
+
+<p>2.为了访问一个已有的库，而这个库不是用JAVA编写的，比如需要在java程序中使用l5，cmlb，uls等这些C/C++组件就需要使用native接口<br />
+3.前面两个是被动使用JNI的场景，还有一种是为了提升java程序的性能，主动将某一些核心处理模块用更高效的语言（如C/C++等）编写，然后上级模块通过JNI去调用，比如百度开源的HCE（Hadoop
+C++ Extension），用C++重写了Hadoop的MapReduce组件以提升性能。</p>
+
+<p><strong>编写native接口步骤</strong></p>
+
+<p>以C/C++程序为例：</p>
+
+<p>1. 在java程序中申明相应的方法为native</p>
+
+<p>2. 编译生成.h</p>
+
+<p>3. 在.c文件中实现该native方法</p>
+
+<p>4. 将c程序编译生成动态链接库</p>
+
+<p>5. 在java程序中通过System.loadLibrary()加载生成的动态链接库</p>
+
+<p><strong>编写native接口的小例子</strong></p>
+
+<p>1. 编写java程序</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>package test.ntv;
+
+public class Test {
+  public native void hello();
+
+  static {
+    System.loadLibrary("hello");
+   }
+
+  public static void main(String[] args) {
+    new Test().hello();
+  }
+}
+</code></pre>
+</div>
+
+<p>2. 编译java程序生成.class</p>
+
+<p>~/java$   javac test/ntv/Test.java</p>
+
+<p>3. 生成.h文件，本例中会生成名为test_ntv_Test.h的文件</p>
+
+<p>~/java$   javah -jni test.ntv.Test</p>
+
+<p>可以看下生成的test_ntv_Test.h的内容</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/* DO NOT EDIT THIS FILE - it is machine generated */
+#include 
+/* Header for class test_ntv_Test */
+
+#ifndef _Included_test_ntv_Test
+#define _Included_test_ntv_Test
+#ifdef __cplusplus
+extern "C" {
+#endif
+/*
+* Class: test_ntv_Test
+* Method: hello
+* Signature: ()V
+*/
+JNIEXPORT void JNICALL Java_test_ntv_Test_hello
+(JNIEnv *, jobject);
+
+#ifdef __cplusplus
+}
+#endif
+#endif
+</code></pre>
+</div>
+
+<p>4. 编写.c文件，实现native接口</p>
+
+<p>~/java$  cat test_ntv_Test.c</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#include "test_ntv_Test.h"
+
+JNIEXPORT void JNICALL Java_test_ntv_Test_hello
+(JNIEnv * env, jobject obj) {
+   printf("hello from c\n");
+}
+</code></pre>
+</div>
+
+<p>5. 编译c程序，生成动态链接库</p>
+
+<p>~/java$  gcc -fPIC -shared test_ntv_Test.c -o libhello.so -I
+/usr/lib/jvm/java-6-openjdk-amd64/include/</p>
+
+<p>注：由于生成的test_ntv_Test.h文件依赖jni.h文件，需要指定jni文件路径</p>
+
+<p>6. 运行可执行程序test</p>
+
+<p>~/java$  java -Djava.library.path=.   test.ntv.Test</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/lua_xue_xi_shou_ji/">Lua 学习手记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_yuan_xing_tu_pian_zu_jian_rotatecircleimageview_jian_jie/">Android圆形图片组件RotateCircleImageView简介</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

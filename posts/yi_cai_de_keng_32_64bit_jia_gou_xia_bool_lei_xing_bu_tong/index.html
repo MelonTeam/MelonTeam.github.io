@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>易踩的坑：32&amp;64bit架构下BOOL类型不同</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="起因之前接到一个关于某UI控件在部分机型上无法正常显示的bug单，定位至此：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>易踩的坑：32&64bit架构下BOOL类型不同</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>dalei
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#32bit" title="Tag: 32bit" rel="tag">32bit</a-->
+        <a href="/tag/#32bit" title="Tag: 32bit" rel="tag">32bit</a>&nbsp;
+    
+        <!--a href="/tag/#64bit" title="Tag: 64bit" rel="tag">64bit</a-->
+        <a href="/tag/#64bit" title="Tag: 64bit" rel="tag">64bit</a>&nbsp;
+    
+        <!--a href="/tag/#BOOL" title="Tag: BOOL" rel="tag">BOOL</a-->
+        <a href="/tag/#BOOL" title="Tag: BOOL" rel="tag">BOOL</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p><strong>起因</strong></p>
+
+<p>之前接到一个关于某UI控件在部分机型上无法正常显示的bug单，定位至此：
+<!--more--></p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/238a73d60e869be02f1d0731bdb14df39d3fe854f948726914eab9d0545c1e6a" alt="" /></p>
+
+<p>发现是由于这行语句在部分机型上无法将UI控件的hidden属性置为NO。</p>
+
+<p>此外，控件在iphone5上不可见，在iphone5s及以上机型中均可正常显示。</p>
+
+<p><strong>思路</strong></p>
+
+<p>首先，iPhone 5是32位架构，苹果从iPhone 5s开始对全线移动产品使用64位架构。</p>
+
+<p>其次，performSelector: withObject:要求所传参数为对象。</p>
+
+<p>因此初步判断，这是在32、64位操作系统中，NSNumber与BOOL类型之间转换结果不同导致的。</p>
+
+<p><strong>验证</strong></p>
+
+<p>验证结果的确如此。</p>
+
+<p>在iphone5s（64位架构）上，将由NO初始而来的NSNumber赋予BOOL变量，得到的仍为NO：</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/bef790253f37a5b2c9f26d68e85c183a3dda18458630e91b7867ecb7fbd45b4c" alt="" /></p>
+
+<p>但在iphone5（32位架构）上，结果却既非YES也非NO</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/9d9e985a670f277aac759d0a4a3a357c57270203f4c3b4ff5f28cb5e32247b8a" alt="" /></p>
+
+<p><strong>探寻</strong></p>
+
+<p>究其原因，32-bit下，@encode(BOOL)返回’c’</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/a3bd9880512cbb2962237d073a4ceaa351e6cb94d303ae09b93c040c6ed14a42" alt="" /></p>
+
+<p>而在64-bit下，@encode(BOOL)返回’B’</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/37c03c2ca00e0db1aa6df0f5cbc750aabddfba6d250090b771bb64345d84b9ef" alt="" /></p>
+
+<p>根据苹果官方文档：</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/21ddee992364f87168a620122eac810fad8a294a28757ceeda1c9d8f56342474" alt="" /></p>
+
+<p>由上可知，32-bit下，BOOL被定义为signed char；64-bit下，BOOL被定义为bool。</p>
+
+<p>因此，32-bit版本的BOOL包括了256个值的可能性，而64-bit下只有0（NO），1（YES）两种可能，是真正意义上的Boolean类型。</p>
+
+<p><strong>结论</strong></p>
+
+<p>通过performSelector等方式调用系统API时，若参数为BOOL，不可直接传由BOOL值初始而来的NSNumber（除非APP已不需要支持iphone5及其以下的机型）。</p>
+
+<p>可调用自定义函数来实现相同的功能，比如此例中的修改方式便为：</p>
+
+<p><img src="/image/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/ebac2973fac44e9da5db7ab4a96ecf5c4ccfdd687af380e143ace82f0f0f469b" alt="" /></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/">iOS 11 兼容引起的UI问题记录</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/zen_yang_you_ya_de_da_log/">怎样优雅的打log</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

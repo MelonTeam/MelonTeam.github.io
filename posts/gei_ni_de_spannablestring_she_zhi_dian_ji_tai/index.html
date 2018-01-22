@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>给你的SpannableString设置点击态</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  背景            导语 让你的ui更加灵动      背景为了使界面的点击操作能更加形象化，我们通常会给点击的View 添加点击态，让使用者发现，哦，原来这个view在响应我的点击动作。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/gei_ni_de_spannablestring_she_zhi_dian_ji_tai/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>给你的SpannableString设置点击态</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-12-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>nearlei
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#TextView" title="Tag: TextView" rel="tag">TextView</a-->
+        <a href="/tag/#TextView" title="Tag: TextView" rel="tag">TextView</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
+  <li><a href="#思路" id="markdown-toc-思路">思路</a></li>
+  <li><a href="#实现" id="markdown-toc-实现">实现</a></li>
+  <li><a href="#用法" id="markdown-toc-用法">用法</a></li>
+  <li><a href="#结语" id="markdown-toc-结语">结语</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 让你的ui更加灵动</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="背景">背景</h3>
+
+<p>为了使界面的点击操作能更加形象化，我们通常会给点击的View 添加点击态，让使用者发现，哦，原来这个view在响应我的点击动作。
+<!--more--></p>
+
+<p>而我们给一个普通的View添加点击态的普通做法就是，给它设置一个 selector</p>
+
+<p>类似这样 设置在不同点击状态下显示不同的背景图片</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;item android:drawable="@drawable/install_btn_press" android:state_pressed="true"/&gt;
+    &lt;item android:drawable="@drawable/install_btn" android:state_enabled="true"/&gt;
+    &lt;item android:drawable="@drawable/install_btn_disabled" android:state_enabled="false"/&gt;
+selector&gt;
+</code></pre>
+</div>
+
+<p>又类似这样 给TextView 设置不同点击状态下的文字颜色，粗细，字体等</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;item android:color="@color/qim_text_color" android:state_pressed="true"/&gt;
+    &lt;item android:color="@color/qim_text_color"/&gt;
+selector&gt;
+</code></pre>
+</div>
+
+<p>基本上，这些设置都够用了。</p>
+
+<p>然而，当我们需要在文本的不同部分显示不同的样式时，譬如，一篇文章里面，当中显示的人名需要加粗，显示的号码需要变成另外一种染色，显示的链接则需要加下划线,
+并且各自都有自己的点击事件。<br />
+Android系统为开发者提供了 SpannableString 和 SpannableStringBuilder 去实现上面的效果，（具体使用方法查看
+<a href="https://developer.android.com/reference/android/text/SpannableString.html">https://developer.android.com/reference/android/text/SpannableString.html</a> ）<br />
+本文主要针对SpannableStringBuilder，因为它更加灵活。</p>
+
+<p>开发者使用SpannableStringBuilder 的SetSpan
+函数，指定需要的特殊样式，指定该部分的开始和结束位置，即可以得到上面的效果，android原生SDK就提供了ClickableSpan
+实现指定位置响应点击事件的类，但是，并没有提供一个能给指定位置设置点击态的Span。</p>
+
+<p>没有，我们就自己实现一个SelectorSpan吧~~</p>
+
+<h3 id="思路">思路</h3>
+
+<p>TextView 里绘制文字相关的工作都有 TextLine 来负责，查看里面的绘制相关的逻辑，里面处理Span 的代码如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>      if (mSpanned == null) {
+      // 没Span，直接绘制
+          TextPaint wp = mWorkPaint;
+          wp.set(mPaint);
+          final int mlimit = measureLimit;
+          return handleText(wp, start, mlimit, start, limit, runIsRtl, c, x, top,
+                  y, bottom, fmi, needWidth || mlimit &lt; measureLimit);
+      }
+
+      // 按行循环处理
+      final float originalX = x;
+      for (int i = start, inext; i &lt; measureLimit; i = inext) {
+          TextPaint wp = mWorkPaint;
+          wp.set(mPaint);
+
+         // 处理其他不相干的Span类型的代码，目前先忽略
+        .... hide code ....
+        //
+
+          if (replacement != null) {
+               x += handleReplacement(replacement, wp, i, mlimit, runIsRtl, c, x, top, y,
+                       bottom, fmi, needWidth || mlimit &lt; measureLimit);
+                continue;
+           }
+
+           // 按位置处理相关的Span
+          for (int j = i, jnext; j &lt; mlimit; j = jnext) {
+              jnext = mCharacterStyleSpanSet.getNextTransition(mStart + j, mStart + mlimit) -
+                      mStart;
+
+              wp.set(mPaint);
+              for (int k = 0; k &lt; mCharacterStyleSpanSet.numberOfSpans; k++) {
+                  // Intentionally using &gt;= and &lt;= as explained above
+                  if ((mCharacterStyleSpanSet.spanStarts[k] &gt;= mStart + jnext) ||
+                          (mCharacterStyleSpanSet.spanEnds[k] &lt;= mStart + j)) continue;
+
+                  CharacterStyle span = mCharacterStyleSpanSet.spans[k];
+                  // 找到这个位置里所有的Span，把绘制的textPaint 传给对应的Span让他去设置画笔样式
+                  span.updateDrawState(wp);
+              }
+
+              // Only draw hyphen on last run in line
+              if (jnext &lt; mLen) {
+                  wp.setHyphenEdit(0);
+              }
+              x += handleText(wp, j, jnext, i, inext, runIsRtl, c, x,
+                      top, y, bottom, fmi, needWidth || jnext &lt; measureLimit);
+          }
+      }
+</code></pre>
+</div>
+
+<p>具体流程是 <strong>TextView的onDraw —&gt; Layout的onDraw —&gt; TextLine的draw —&gt;
+当前Span的updateDrawState 方法设置画笔 —&gt; 真正执行绘制</strong></p>
+
+<p>如果想要特殊的点击态，可以使用 ReplacementSpan，不仅可以设置画笔，还提供了draw方法给你重写。实现更加丰富的样式。</p>
+
+<p>我们目前需要的点击态只是字体颜色变一下，就不必劳师动众了。</p>
+
+<p>再来跟踪一下TextView 怎么分发点击事件给Span，要设置ClickableSpan
+，TextView都需要设置MoVeMentMethod才能生效，普通做法如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// LinkMovementMethod 基本够用了~~
+textView.setMovementMethod(LinkMovementMethod.getInstance());
+</code></pre>
+</div>
+
+<p>从这里切入进去查看具体分发逻辑，这个Movement 是在TextView里的onTouch 方法里被调用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //...省略无关代码
+        if ((mMovement != null || onCheckIsTextEditor()) &amp;&amp; isEnabled()
+                &amp;&amp; mText instanceof Spannable &amp;&amp; mLayout != null) {
+            boolean handled = false;
+
+            if (mMovement != null) {
+                handled |= mMovement.onTouchEvent(this, (Spannable) mText, event);
+            }
+
+            // ...省略无关代码
+        }
+        // ...省略无关代码
+    }
+</code></pre>
+</div>
+
+<p>TextView 的onTouch 里调用了Movement 的onTouch 去处理Spanable的click
+事件,我们直接看LinkMovementMethod 里的实现</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Override
+    public boolean onTouchEvent(TextView widget, Spannable buffer,
+                                MotionEvent event) {
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_UP ||
+            action == MotionEvent.ACTION_DOWN) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+
+            x -= widget.getTotalPaddingLeft();
+            y -= widget.getTotalPaddingTop();
+
+            x += widget.getScrollX();
+            y += widget.getScrollY();
+
+            Layout layout = widget.getLayout();
+            // 计算出当前点击的行数
+            int line = layout.getLineForVertical(y);
+            // 计算出当前点击的具体位置
+            int off = layout.getOffsetForHorizontal(line, x);
+
+            // 查找这个位置设置的ClickableSpan
+            ClickableSpan[] link = buffer.getSpans(off, off, ClickableSpan.class);
+
+            if (link.length != 0) {
+                if (action == MotionEvent.ACTION_UP) {
+                    // 抬起手指，就当是响应了点击事件，调用第一个ClickableSpan的onClick 回调
+                    link[0].onClick(widget);
+                } else if (action == MotionEvent.ACTION_DOWN) {
+                    // 按下手指，把当前部分设置为选中状态
+                    Selection.setSelection(buffer,
+                                           buffer.getSpanStart(link[0]),
+                                           buffer.getSpanEnd(link[0]));
+                }
+
+                return true;
+            } else {
+                Selection.removeSelection(buffer);
+            }
+        }
+
+        return super.onTouchEvent(widget, buffer, event);
+    }
+</code></pre>
+</div>
+
+<p>具体就是当TextView 收到onTouch 事件的时候，把事件传给对应的Movement处理，Movement
+根据具体的点击位置，找出当前位置的ClickableSpan，当手指抬起后，调用ClickableSpan的onClick回调。</p>
+
+<p>了解完Span绘制和分发点击事件的大概逻辑，我们就有了如下思路：</p>
+
+<p>一. <strong>首先新添加一个SelectorSpan
+继承ForegroundColorSpan（这里我们只想做一个颜色变浅的点击态，所以选择了设置前台颜色的Span来继承，如果有其他需求可以自行选择父类）</strong></p>
+
+<p>二. <strong>我们模仿
+LinkMovementMethod，实现一个新MovementMethod设置给TextView，在他的onTouch方法里实现，在手指按下时，找出点击位置的SelectorSpan
+，把他的状态设置成 点击状态，当手指抬起后，把他的状态设置成普通状态。</strong></p>
+
+<p>三、<strong>重写SelectorSpan的updateDrawState方法，根据不同的状态去设置不同的样式</strong></p>
+
+<h3 id="实现">实现</h3>
+
+<p>添加一个SelectorSpan</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    public static class SelectorSpan extends ForegroundColorSpan{
+
+        private int pressColor;
+
+        private boolean isPressed;
+
+        public SelectorSpan(int color,int pressColor) {
+            super(color);
+            this.pressColor = pressColor;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            if(isPressed){
+                ds.setColor(pressColor);
+            }else{
+                super.updateDrawState(ds);
+            }
+        }
+
+        public void pressStateChange(boolean isPressed){
+            this.isPressed = isPressed;
+        }
+    }
+</code></pre>
+</div>
+
+<p>继承 LinkMovementMethod 类，并且重写他的onTouchEvent方法 如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    @Override
+    public boolean onTouchEvent(TextView widget, Spannable buffer,
+                                MotionEvent event) {
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_UP ||
+            action == MotionEvent.ACTION_DOWN ||
+            action == MotionEvent.ACTION_CANCEL ) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+
+            boolean ret = false;
+
+            x -= widget.getTotalPaddingLeft();
+            y -= widget.getTotalPaddingTop();
+
+            x += widget.getScrollX();
+            y += widget.getScrollY();
+
+            Layout layout = widget.getLayout();
+            int line = layout.getLineForVertical(y);
+            int off = layout.getOffsetForHorizontal(line, x);
+
+            ClickableSpan[] link = buffer.getSpans(off, off, ClickableSpan.class);
+
+            if (link.length != 0) {
+                if (action == MotionEvent.ACTION_UP) {
+                    link[0].onClick(widget);
+                } 
+                // 去掉画选中状态的代码
+                ret = true;
+            }
+
+            // 上面几乎是抄LinkMovementMethod的源码
+            // 下面是点击态相关逻辑代码，上下两段其实可以合并一些逻辑，有兴趣可以改动一下
+            switch (action){
+                   case MotionEvent.ACTION_DOWN: {
+                       SelectorSpan[] selectorSpans = stext.getSpans(off, off, SelectorSpan.class);
+                       if (selectorSpans.length != 0) {
+                           selectorSpans[0].pressStateChange(true);
+                           widget.invalidate();
+                       }
+                   }
+                       break;
+                   case MotionEvent.ACTION_UP: {
+                       SelectorSpan[] selectorSpans = stext.getSpans(0, stext.length(),
+                        SelectorSpan.class);
+                       for(SelectorSpan selectorSpan : selectorSpans) {
+                           selectorSpan.pressStateChange(false);
+                           widget.invalidate();
+                       }
+                   }
+                       break;
+                   case MotionEvent.ACTION_CANCEL: {
+                       SelectorSpan[] selectorSpans = stext.getSpans(0, stext.length(),
+                        SelectorSpan.class);
+                       for(SelectorSpan selectorSpan : selectorSpans) {
+                           selectorSpan.pressStateChange(false);
+                           widget.invalidate();
+                       }
+                   }
+                       break;
+                }
+        }
+
+
+
+        return super.onTouchEvent(widget, buffer, event);
+    }
+</code></pre>
+</div>
+
+<p>为了避免某些特殊情况下，被设成点击状态的Span没有接受到ACTION_DOWN ， 和 ACTION_CANCEL
+事件，我们也可以重写一下TextView 里的 drawableStateChange 方法</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        // 加入兜底逻辑，当view状态变为非点击状态时，找出全部的 SelectorSpan，把他们设成普通状态
+        // 避免出现变显示错误
+        if(!isPressed()) {
+            Spannable stext = Spannable.Factory.getInstance().newSpannable(getText());
+            MainActivity.SelectorSpan[] selectorSpens = stext.getSpans(0, stext.length(),
+             MainActivity.SelectorSpan.class);
+            for (MainActivity.SelectorSpan selectorSpan : selectorSpens) {
+                selectorSpan.pressStateChange(false);
+            }
+        }
+    }
+</code></pre>
+</div>
+
+<h3 id="用法">用法</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 构造一个SpannableStringBuilder
+SpannableStringBuilder builder = new SpannableStringBuilder("哈哈哈哈哈");
+
+// 设置SelectorSpan 的点击态和普通态颜色，设置Span具体位置
+builder.setSpan(new SelectorSpan(normalColor,pressColor),start,end,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+// 设置我们重新实现的Movement
+textView..setMovementMethod(MyLinkMovementMethod);
+
+textView.setText(builder);
+</code></pre>
+</div>
+
+<h3 id="结语">结语</h3>
+
+<p>TextView 博大精深，功能丰富，希望大家继续深挖。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/git_yuan_li__yi_ge_kv_wen_jian_cun_chu_xi_tong/">GIT原理-一个KV文件存储系统</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/haskell_io/">Haskell IO</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

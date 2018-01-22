@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>#音视频技术学习笔记（1）-基础入门</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  音视频技术包括哪些内容| 导语最近在学习音视频的相关知识，这里整理一下学习的点，方便后续的学习。我也是刚开始学习，系统介绍音视频技术的书籍我没有找到，都是参考网上的文章学习，文章有问题欢迎大家指出。这篇文章主要是介绍音视频技术要入门的话，需要接触哪些技术，然后怎样去学习。音视频技术包括哪些内容">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>#音视频技术学习笔记（1）-基础入门</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>stevcao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#android" title="Category: android" rel="category">android</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E9%9F%B3%E8%A7%86%E9%A2%91" title="Tag: 音视频" rel="tag">音视频</a-->
+        <a href="/tag/#音视频" title="Tag: 音视频" rel="tag">音视频</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#音视频技术包括哪些内容" id="markdown-toc-音视频技术包括哪些内容">音视频技术包括哪些内容</a></li>
+  <li><a href="#学习音视频技术的流程" id="markdown-toc-学习音视频技术的流程">学习音视频技术的流程</a></li>
+</ul>
+
+<p>| 导语
+最近在学习音视频的相关知识，这里整理一下学习的点，方便后续的学习。我也是刚开始学习，系统介绍音视频技术的书籍我没有找到，都是参考网上的文章学习，文章有问题欢迎大家指出。这篇文章主要是介绍音视频技术要入门的话，需要接触哪些技术，然后怎样去学习。</p>
+
+<h2 id="音视频技术包括哪些内容">音视频技术包括哪些内容</h2>
+
+<!--more-->
+<p>首先我们分析一下一个<strong>视频的播放过程</strong>吧，视频播放器播放一个互联网上的视频文件，需要经过以下几个步骤：解协议，解封装，解码视音频，视音频同步。如果播放本地文件则不需要解协议，为以下几个步骤：解封装，解码视音频，视音频同步。他们的过程如图所示。</p>
+
+<p><img src="/image/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/d9993a9e4c8675866e66f0dbd17d8901378327f2ae13f6114354d1d3cc94b0b8" alt="" /></p>
+
+<p>上图演示了一个网络视频文件在播放的过程中解码的过程，首先是解流媒体协议，如果参考一个网页的解析，我们会容易理解一些：浏览器如果要展示网页，需要从服务器获取html格式的数据去解析并渲染展示，html（超文本传输协议）就是页面展示的组织内容，但是我们从服务器中获取的不是直接的html代码，而是一个http的协议包，包体中包含有html的内容用于展示；那么流媒体协议也是一样的，用一层协议来包裹着视频的数据，流媒体协议有HTTP、RTMP、MMS等。经过解协议之后，输出的是视频的封装格式；</p>
+
+<p><strong>那么什么是视频的封装格式？</strong> 视频的封装格式是对视频和音频的压缩数据的一个封装，将视频和音频的压缩数据按照一定的格式放在一起；那解封装得到的就是视频和音频的压缩数据。视频的封装格式有mp4、mkv、rmvb、avi、flv、ts等。这些名字应该很熟悉了，就是我们常见的视频文件的后缀名。<br />
+下面这个链接有对视频的封装格式的一个对比：</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Comparison_of_video_codecs">视频封装格式对比</a></p>
+
+<p>经过上一步的解封装，我们得到的是视频的压缩格式，为啥是压缩数据呢？看字面意思就知道是对音视频的原始帧数据的一个压缩，主要作用是减少音视频数据在存储和传输过程中的一个成本。如果不压缩，一个普通的电影文件可能有上百个G。音频和视频的压缩数据需要进一步解码才能得到音频和视频的原始数据，这个解码过程就要看音频和视频的压缩用的编码标准是什么了。<strong>常见的视频编码方式有</strong>：H.264、MPEG2
+、VC-
+1等，视频经过解码之后得到的是视频非压缩的颜色数据，如果RGB、YUV420等；<strong>常见的音频压缩标准有</strong>：aac、mp3、AC-3、WMA等等，音频经过解压缩之后得到的非压缩数据即音频的抽样数据，例如PCM数据。音视频的压缩技术，是比较复杂的，也是后续学习的重难点。<br />
+下面列举了一些视频和音频的编码格式对比：</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Comparison_of_video_codecs">视频编码格式对比</a></p>
+
+<p><a href="https://en.wikipedia.org/wiki/Comparison_of_audio_coding_formats">音频编码格式对比</a></p>
+
+<p><strong>那么如何查看视频的封装格式、压缩格式这些数据呢</strong><br />
+这里简单介绍一种方法:</p>
+
+<p>1、首先安装ffmpeg,一行命令搞定</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install ffmpeg
+</code></pre>
+</div>
+
+<p>2、使用ffmpeg命令查看视频数据</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ffmpeg -i file.mp4
+</code></pre>
+</div>
+
+<p>结果如下图，命令输出了很多信息，比如说帧率、大小、时长、编码格式等，我的测试视频的封装格式是mp4，包括是视频和音频的数据信息，视频流采用h264压缩格式对原始数据压缩，原始数据是采用yuv420格式存储的，yuv是一种不同于rgb颜色表示，yuv420指的是yuv的采样存储的方式。那么为啥不是rgb呢？这个后面我们的学习应该能够了解这个问题。然后看我们的音频数据,使用acc编码格式压缩，音频的原始数据存储格式是fltp，同yuv420一样，这个也是一种对原始PCM数据的一种采样存储方式。</p>
+
+<p><img src="/image/yin_shi_pin_ji_shu_xue_xi_bi_ji_1__ji_chu_ru_men/a2050015cf81a3e3e1a2452ba03b7046bafdf6cbee657a849d33641c7b334cfe" alt="" /></p>
+
+<p>综上所述，音视频技术可以简单的概括为以下几个大点：</p>
+
+<p>1、流媒体协议，用于网络视频的在线播放<br />
+2、视频的封装格式<br />
+3、视频的压缩格式<br />
+4、视频原始数据采样<br />
+5、视频工具学习 ffmpeg等</p>
+
+<h2 id="学习音视频技术的流程">学习音视频技术的流程</h2>
+
+<p>上面介绍的视频的流媒体协议、封装格式、音频视频编码技术这些暂时没有做进一步的深入学习，我的计划是从底层的一层一层网上学习：</p>
+
+<ol>
+  <li>音视频的原始数据以及处理</li>
+  <li>音视频的压缩编码原理</li>
+  <li>音视频的封装格式原理</li>
+  <li>流媒体协议</li>
+</ol>
+
+<p>中间会穿插着使用音视频处理的一些库，比如ffmpeg，这个也是需要学习的。</p>
+
+<p>基于这样的一个学习堆栈，应该就可以对音视频的基础知识有一个初步的了解了。</p>
+
+<p>学习上面的文章主要参考的是下面这篇文章：
+<a href="http://blog.csdn.net/leixiaohua1020/article/details/18893769">http://blog.csdn.net/leixiaohua1020/article/details/18893769</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/ba_ni_de_android_library_kai_yuan_gei_quan_shi_jie/">把你的Android Library开源给全世界</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/zui_jian_dan_de_shen_du_xue_xi_li_zi/">最简单的深度学习例子</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

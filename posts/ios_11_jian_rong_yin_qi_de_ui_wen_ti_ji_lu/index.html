@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iOS 11 兼容引起的UI问题记录</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="1，NavigationBar的变化       在iOS">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>iOS 11 兼容引起的UI问题记录</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>doreencao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>&nbsp;
+    
+        <!--a href="/tag/#iOS11" title="Tag: iOS11" rel="tag">iOS11</a-->
+        <a href="/tag/#iOS11" title="Tag: iOS11" rel="tag">iOS11</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>1，NavigationBar的变化</p>
+
+<p>       在iOS
+<!--more-->
+11之前，导航栏的title添加于UINavigationItemView上，navigationBarButton直接添加于navigationBar上。如果设置了titleView，titleView也是直接添加于navigationBar。</p>
+
+<p>        iOS
+11对NavigationBar的图层进行了调整，UINavigationBar有两个子视图，分别是UIBarBackground和UINavigationBarContentView。从下图可以看出，左右navigationBarButton和titileView均被添加于新增的UINavigationBarContentView上。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/9c51964faad603bdacabba803b3a9328767980d6ebb0ec2244a3890838cb189d" alt="" /></p>
+
+<p>对于navigationBarButton，在它与UINavigationBarContentView之间还有一层_UIButtonBarStackView，navigationBarButton被添加于_UIButtonBarStackView上。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/23ad57a0dc0a780317c4606908660c568ed2559af2d3ed79d3ce01242ae05fac" alt="" /></p>
+
+<p>       iOS11对导航栏里的item边距也做了调整[1]：</p>
+
+<p>（1）如果只是设置了titleView，没有设置barbutton，把titleview的宽度设置为屏幕宽度，则titleview距离屏幕的边距，iOS11之前，在iPhone6p上是20p，在iPhone6p之前是16p；iOS11之后，在iPhone6p上是12p，在iPhone6p之前是8p。</p>
+
+<p>（2）如果只是设置了barbutton，没有设置titleview，则在iOS11里，barButton距离屏幕的边距是20p和16p；在iOS11之前，barButton距离屏幕的边距也是20p和16p。</p>
+
+<p>（3）如果同时设置了titleView和barButton，则在iOS11之前，titleview和barbutton之间的间距是6p，在iOS11上titleview和barbutton之间无间距。</p>
+
+<p>2，NavigationBar的titleView的宽度适配</p>
+
+<p>由于NavigationBar图层的变化，在navigatioBar上的使用自定义的titleView（如searchBar、segmentControl），iOS
+11下可能会出现宽度异常，如下图。</p>
+
+<p>iOS 11：</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/ab20174530857942b74abdd4f6508c93366213db10c07da5bf8dbf0bd3f79192" alt="" /></p>
+
+<p>理想情况：</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/915bdb0d31946bd18552047bd22c278a7256f678cc2bfa950bd1b475a4199856" alt="" /></p>
+
+<p>以截图的场景为例，解决这个问题的方案是在自定义的titleView中重写intrinsicContentSize属性get函数，视具体情况返回size值。</p>
+
+<p>3，从二级页面返回后searchBar背景色设置失效</p>
+
+<p>       如下图所示，点击“更多精华话题”，进入二级页面后返回，底色变为灰色。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/c6ba8d23d1e1f61e77e8f864d4e888e15f8231aa4c52b2fca82d8645f9de2ce0" alt="" />
+<img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/13437e8957a298ecc406e6394053cbebcd708aadfc11b0db1f17f1ffc18b985d" alt="" /></p>
+
+<p>在这里searchBar是作为rightBarButtonItem展示在navigationBar中，如下图所示，searchBar添加于图层_UITAMICAdaptorView上，这也是iOS
+11的新特性。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/c3178e300b99c1e39319214c89c2134282a237cdc6ef46c8aa52fe37d5abc479" alt="" /></p>
+
+<p>图(1)</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/37388f0af916fbf66af5da3d332191cd71c5f46399fa635371fea6ddda5ac454" alt="" /></p>
+
+<p>图(2)</p>
+
+<p>上图(1)是第一次进入搜索页面展示的正常UI，图(2)对应着从二级页面返回后的视图结构。可以看出UI异常是由于原本隐藏的UISearchBarBackground图层又展示出来。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/d807a51cf25b1862976880469963cb3094165b651e548e7c9eea3a740ce5a223" alt="" /></p>
+
+<p>UISearchBarBackground用于设置背景效果，解决这个问题最简单的方法是在初始化searchBar时将UISearchBarBackground对象从父视图中移除。</p>
+
+<p><img src="/image/ios_11_jian_rong_yin_qi_de_ui_wen_ti_ji_lu/8f35dec13adf390556a3d29122f560856c73c559cc01b1235807645ca992bd86" alt="" /></p>
+
+<p>参考文章：</p>
+
+<p>[1]<a href="http://www.jianshu.com/p/352f101d6df1">App界面适配iOS11</a></p>
+
+<p>[2]<a href="https://ioslittlewhite.github.io/2017/09/21/iOS11适配之：0代码实现导航栏UIBarButtonItem间距调整/">iOS11适配之：0代码实现导航栏UIBarButtonItem间距调整</a></p>
+
+<p>[3]<a href="http://www.jianshu.com/p/d4a17c32abdf">What’s new in iOS 11 -
+部分iOS11新特性整理</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/guan_yu_gpu_family_4/">关于GPU Family 4</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/yi_cai_de_keng_32_64bit_jia_gou_xia_bool_lei_xing_bu_tong/">易踩的坑：32&64bit架构下BOOL类型不同</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

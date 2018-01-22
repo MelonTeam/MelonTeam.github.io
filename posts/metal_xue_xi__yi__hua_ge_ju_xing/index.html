@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Metal学习（一）-画个矩形</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  Metal概要            导语 Metal学习开篇，简单介绍iOS上的Metal，从零开始画一个矩形。      Metal概要iOS 8.0起，Apple为了更充分地发挥GPU的潜力，引入了Metal框架。Metal提供了比OpenGL">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/metal_xue_xi__yi__hua_ge_ju_xing/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/metal_xue_xi__yi__hua_ge_ju_xing/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/metal_xue_xi__yi__hua_ge_ju_xing/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Metal学习（一）-画个矩形</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-14
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>chaodong
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Metal" title="Tag: Metal" rel="tag">Metal</a-->
+        <a href="/tag/#Metal" title="Tag: Metal" rel="tag">Metal</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#metal概要" id="markdown-toc-metal概要">Metal概要</a></li>
+  <li><a href="#基本概念" id="markdown-toc-基本概念">基本概念</a>    <ul>
+      <li><a href="#metal特有概念" id="markdown-toc-metal特有概念">Metal特有概念</a>        <ul>
+          <li><a href="#mtldevice" id="markdown-toc-mtldevice">MTLDevice</a></li>
+          <li><a href="#mtlcommandqueue" id="markdown-toc-mtlcommandqueue">MTLCommandQueue</a></li>
+          <li><a href="#mtlcommandbuffercommandencoder" id="markdown-toc-mtlcommandbuffercommandencoder">MTLCommandBuffer&amp;CommandEncoder</a></li>
+          <li><a href="#暂态的对象创建和销毁是廉价的它们的创建方法都返回-autoreleased对象" id="markdown-toc-暂态的对象创建和销毁是廉价的它们的创建方法都返回-autoreleased对象">暂态的对象（创建和销毁是廉价的，它们的创建方法都返回 autoreleased对象）</a></li>
+          <li><a href="#非暂态的对象在性能相关的代码里应该尽量重用它避免反复创建" id="markdown-toc-非暂态的对象在性能相关的代码里应该尽量重用它避免反复创建">非暂态的对象（在性能相关的代码里应该尽量重用它,避免反复创建）</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#metal实战" id="markdown-toc-metal实战">Metal实战</a>    <ul>
+      <li><a href="#初始化metal" id="markdown-toc-初始化metal">初始化Metal</a>        <ul>
+          <li><a href="#1创建mtldevice" id="markdown-toc-1创建mtldevice">1.创建MTLDevice</a></li>
+          <li><a href="#2创建一个cametallayer" id="markdown-toc-2创建一个cametallayer">2.创建一个CAMetalLayer</a></li>
+          <li><a href="#3创建一个vertex-buffer" id="markdown-toc-3创建一个vertex-buffer">3.创建一个Vertex Buffer</a></li>
+          <li><a href="#4创建一个vertex-shader" id="markdown-toc-4创建一个vertex-shader">4.创建一个Vertex Shader</a></li>
+          <li><a href="#5创建一个fragment-shader" id="markdown-toc-5创建一个fragment-shader">5.创建一个Fragment Shader</a></li>
+          <li><a href="#6创建一个render-pipeline" id="markdown-toc-6创建一个render-pipeline">6.创建一个Render Pipeline</a></li>
+          <li><a href="#7创建一个command-queue" id="markdown-toc-7创建一个command-queue">7.创建一个Command Queue</a></li>
+        </ul>
+      </li>
+      <li><a href="#渲染" id="markdown-toc-渲染">渲染</a>        <ul>
+          <li><a href="#1创建一个display-link" id="markdown-toc-1创建一个display-link">1.创建一个Display link。</a></li>
+          <li><a href="#2创建一个render-pass-descriptor" id="markdown-toc-2创建一个render-pass-descriptor">2.创建一个Render Pass Descriptor</a></li>
+          <li><a href="#3创建一个command-buffer" id="markdown-toc-3创建一个command-buffer">3.创建一个Command Buffer</a></li>
+          <li><a href="#4创建一个render-command-encoder" id="markdown-toc-4创建一个render-command-encoder">4.创建一个Render Command Encoder</a></li>
+          <li><a href="#5提交command-buffer的内容" id="markdown-toc-5提交command-buffer的内容">5.提交Command Buffer的内容</a></li>
+        </ul>
+      </li>
+      <li><a href="#shader编写" id="markdown-toc-shader编写">Shader编写</a></li>
+    </ul>
+  </li>
+  <li><a href="#参考附录" id="markdown-toc-参考附录">参考附录</a></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>导语 Metal学习开篇，简单介绍iOS上的Metal，从零开始画一个矩形。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="metal概要">Metal概要</h1>
+
+<p>iOS 8.0起，Apple为了更充分地发挥GPU的潜力，引入了Metal框架。Metal提供了比OpenGL
+<!--more-->
+ES更底层的接口，可以更加高效的利用GPU资源。通过Metal，我们可以直接使用通用计算流水线，也就是GPU的Compute Shader（OpenGL
+ES 3.1开始支持）。因此，在目前的Metal框架中可以使用三种着色器——Vertex Shader、Fragment Shader以及Compute
+Shader。</p>
+
+<h1 id="基本概念">基本概念</h1>
+
+<h2 id="metal特有概念">Metal特有概念</h2>
+
+<h3 id="mtldevice">MTLDevice</h3>
+
+<p>在Metal 的架构中，MTLDevice 协议定义了简单的代表GPU
+的接口,此协议提供了方法去查询设备的属性,创建设备的特殊对象，比如缓冲区或者纹理，编码和排队渲染和计算命令被提交给GPU执行。</p>
+
+<h3 id="mtlcommandqueue">MTLCommandQueue</h3>
+
+<p>命令通过与 Metal 设备相关联的命令队列提交给 Metal
+设备。接受GPU将要顺序执行的命令缓冲区对象的列表，命令队列以线程安全的方式接收命令并顺序执行。</p>
+
+<h3 id="mtlcommandbuffercommandencoder">MTLCommandBuffer&amp;CommandEncoder</h3>
+
+<p>MTLCommandBuffer 协议提供了一下几种编码类型，决定了编码不同种类的GPU工作，到指定的命令缓冲区中。<br />
+MTLRenderCommandEncoder：主要用户绘图编码<br />
+MTLComputeCommandEncoder： 主要用于并行计算<br />
+MTLBlitCommandEncoder：编码简单的缓冲区和纹理拷贝操作</p>
+
+<p>a)在任何时候,只有单个命令编码器可以被激活,添加命令到一个命令缓冲区上去,下一个命令编码器被创建和用与同一缓冲区之前,必须将上一个命令编码器结束掉<br />
+b)当所有编码完成时,你提交MTLCommandBuffer 对象,这就意味着GPU 已经标记了命令缓冲区,准备开<br />
+始执行</p>
+
+<p>下图展示了MTLCommandBuffer，CommandEncoder，CommandQueue之间的关系</p>
+
+<p><img src="/image/metal_xue_xi__yi__hua_ge_ju_xing/515b24074ea5b569187ae0a97c6d5202ade68b6cd4f3bcdabe9f60ee1adcbd3a" alt="" /></p>
+
+<h3 id="暂态的对象创建和销毁是廉价的它们的创建方法都返回-autoreleased对象">暂态的对象（创建和销毁是廉价的，它们的创建方法都返回 autoreleased对象）</h3>
+
+<p>1.Command Buffers<br />
+2.Command Encoders</p>
+
+<h3 id="非暂态的对象在性能相关的代码里应该尽量重用它避免反复创建">非暂态的对象（在性能相关的代码里应该尽量重用它,避免反复创建）</h3>
+
+<p>1.Command Queues<br />
+2.Buffers<br />
+3.Textures<br />
+4.Sampler States Libraries<br />
+5.Compute States<br />
+6.Render Pipeline States<br />
+7.Depth/Stencil States</p>
+
+<h1 id="metal实战">Metal实战</h1>
+
+<p>下面就来展示下代码，如何在屏幕上画一个矩形</p>
+
+<h2 id="初始化metal">初始化Metal</h2>
+
+<h3 id="1创建mtldevice">1.创建MTLDevice</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    _device = MTLCreateSystemDefaultDevice();
+</code></pre>
+</div>
+
+<h3 id="2创建一个cametallayer">2.创建一个CAMetalLayer</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    _metalLayer = [CAMetalLayer layer];
+    _metalLayer.device = _device;
+    _metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;//MTLTexture的像素格式，现在支持MTLPixelFormatBGRA8Unorm和MTLPixelFormatBGRA8Unorm_sRGB
+    _metalLayer.framebufferOnly = YES;
+    _metalLayer.frame = self.view.layer.frame;
+    [self.view.layer addSublayer:_metalLayer];
+</code></pre>
+</div>
+
+<p>CAMetalLayer 是 CALayer 的子类，它可以展示 Metal 帧缓冲区的内容。我们必须告诉 layer 该使用哪个 Metal 设备
+(我们刚创建的那个)，并通知它所预期的像素格式。我们选择 8-bit-per-channel BGRA 格式，即每个像素由蓝，绿，红和透明组成，值从
+0-255。</p>
+
+<h3 id="3创建一个vertex-buffer">3.创建一个Vertex Buffer</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    GLuint dataSize = sizeof(GLfloat) * 3 * 6; //获取vertex data的字节大小
+    _vertexBuffer = [_device newBufferWithBytes:&amp;vertices length:dataSize options:MTLResourceCPUCacheModeDefaultCache];//在GPU创建一个新的buffer，将数据传到GPU中
+</code></pre>
+</div>
+
+<p>这里的vertices是我们的顶点数据，声明如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>GLfloat vertices[] = {
+    -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f,
+    -0.5f,  0.5f, 0.0f,
+
+    0.5f, -0.5f, 0.0f,
+    -0.5f,  0.5f, 0.0f,
+    0.5f,  0.5f, 0.0f
+};
+</code></pre>
+</div>
+
+<p>因为我们要绘制一个矩形，所以顶点数组里有两个三角形的顶点，共同拼成一个矩形。</p>
+
+<h3 id="4创建一个vertex-shader">4.创建一个Vertex Shader</h3>
+
+<h3 id="5创建一个fragment-shader">5.创建一个Fragment Shader</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    id &lt;MTLLibrary&gt; defaultLibrary = [_device newDefaultLibrary];
+    id &lt;MTLFunction&gt; vertextProgram = [defaultLibrary newFunctionWithName:@"basic_vertex"];
+    id &lt;MTLFunction&gt; fragmentProgram = [defaultLibrary newFunctionWithName:@"basic_fragment"];
+</code></pre>
+</div>
+
+<p>一个 Metal 库是一组函数的集合。你的所有写在工程内的着色器函数都将被编译到默认库中，这个库可以通过设备获得；我们通过对应的方法名可以查找到相应的方法。</p>
+
+<h3 id="6创建一个render-pipeline">6.创建一个Render Pipeline</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [MTLRenderPipelineDescriptor new];
+    pipelineStateDescriptor.vertexFunction = vertextProgram;
+    pipelineStateDescriptor.fragmentFunction = fragmentProgram;
+    pipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm; //指定MTLTexture的像素颜色格式
+
+    NSError *error = nil;
+    _renderPipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&amp;error];
+</code></pre>
+</div>
+
+<p>我们需要一个渲染管线将vertextProgram和fragmentProgram组合起来。</p>
+
+<h3 id="7创建一个command-queue">7.创建一个Command Queue</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>_commandQueue = [_device newCommandQueue];
+</code></pre>
+</div>
+
+<p>创建一个CommandQueue，我们要在GPU中执行的命令都会放入到这个队列中并按顺序执行。</p>
+
+<h2 id="渲染">渲染</h2>
+
+<p>完成Metal的初始化了就要开始绘制了</p>
+
+<h3 id="1创建一个display-link">1.创建一个Display link。</h3>
+
+<p>我们创建一个DisplayLink进行屏幕刷新</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(render)];
+    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+</code></pre>
+</div>
+
+<p>并在render中实现每次渲染需要的操作</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)render{
+
+}
+</code></pre>
+</div>
+
+<h3 id="2创建一个render-pass-descriptor">2.创建一个Render Pass Descriptor</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    id&lt;CAMetalDrawable&gt; drawable = _metalLayer.nextDrawable;
+    MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor new];
+    renderPassDescriptor.colorAttachments[0].texture = drawable.texture;//nextDrawable()方法，它会返回需要绘制的纹理，使其显示在屏幕上
+    renderPassDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;//loadAction设置为清除，这意味着“在绘制之前，将纹理设置为透明色”
+    renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 1.f, 1.f);//指定透明色。是RGBA的颜色格式，这里指定的是蓝色。
+</code></pre>
+</div>
+
+<h3 id="3创建一个command-buffer">3.创建一个Command Buffer</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    id &lt;MTLCommandBuffer&gt; commandBuffer = [_commandQueue commandBuffer];
+</code></pre>
+</div>
+
+<p>要放入设备的命令队列的命令必须被编码到命令缓冲区里。命令缓冲区是一个或多个命令的集合，可以以一种 GPU 了解的紧凑的方式执行和编码。</p>
+
+<h3 id="4创建一个render-command-encoder">4.创建一个Render Command Encoder</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    id &lt;MTLRenderCommandEncoder&gt; renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor]; //创建一个RenderCommandEncoder
+    [renderEncoder setRenderPipelineState:_renderPipelineState]; //指定之前创建好的RenderPipeline
+    [renderEncoder setVertexBuffer:_vertexBuffer offset:0 atIndex:0];//设置顶点缓存
+
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6];//指定要绘制的形状和顶点总数
+    [renderEncoder endEncoding];//告诉Encoder我们设置已经完成
+</code></pre>
+</div>
+
+<h3 id="5提交command-buffer的内容">5.提交Command Buffer的内容</h3>
+
+<p>现在我们的绘制指令已经被编码并准备就绪，我们需要通知命令缓冲区应该将结果在屏幕上显示出来。调用 presentDrawable，使用当前从 Metal
+layer 中获得的 drawable 对象作为参数:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    [commandBuffer presentDrawable:drawable];
+</code></pre>
+</div>
+
+<p>执行 commit 告诉缓冲区已经准备好安排并执行:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    [commandBuffer commit];
+</code></pre>
+</div>
+
+<h2 id="shader编写">Shader编写</h2>
+
+<p>Metal的Shader与OpenGL ES的shader稍有不同，更加接近C++的语法<br />
+我们可以看下编写出来的shader</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#include 
+using namespace metal;
+
+vertex float4 basic_vertex(const device packed_float3* vertex_array [[ buffer(0) ]], unsigned int vid [[ vertex_id ]]) {
+    return float4(vertex_array[vid], 1.0);
+}
+
+fragment half4 basic_fragment() {
+    return half4(1, 0, 0, 1);
+}
+</code></pre>
+</div>
+
+<p>可以看出来整体语法更加贴近C++，并且Vertex和Fragment两个Shader写到同一个文件中了，并不像OpenGL ES那样分来来。</p>
+
+<p>我们一行行拆开来看</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#include 
+using namespace metal;
+</code></pre>
+</div>
+
+<p>导入<code class="highlighter-rouge">metal_stdlib</code>头文件，指定metal的命名空间。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>vertex float4 basic_vertex(const device packed_float3* vertex_array [[ buffer(0) ]], unsigned int vid [[ vertex_id ]]) {
+    return float4(vertex_array[vid], 1.0);
+}
+</code></pre>
+</div>
+
+<ol>
+  <li>所有的vertex shaders必须以关键字vertex开头。函数必须至少返回顶点的最终位置——你通过指定float4（一个元素为4个浮点数的向量）。然后你给一个名字给vetex shader，以后你将用这个名字来访问这个vertex shader。</li>
+  <li>第一个参数是一个指向一个元素为packed_float3(一个向量包含3个浮点数)的数组的指针，如：每个顶点的位置。这个 [[ … ]] 语法被用在声明那些能被用作特定额外信息的属性，像是资源位置，shader输入，内建变量。这里你把这个参数用 [[ buffer(0) ]] 标记，来指明这个参数将会被在你代码中你发送到你的vertex shader的第一块buffer data所遍历。</li>
+  <li>vertex shader会接受一个名叫vertex_id的属性的特定参数，它意味着它会被vertex数组里特定的顶点所装入。</li>
+  <li>现在你基于vertex id来检索vertex数组中对应位置的vertex并把它返回。同时你把这个向量转换为一个float4类型，最后的value设置为1.0。</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>fragment half4 basic_fragment() {
+    return half4(1, 0, 0, 1);
+}
+</code></pre>
+</div>
+
+<ol>
+  <li>所有fragment shaders必须以fragment关键字开始。这个函数必须至少返回fragment的最终颜色——你通过指定half4（一个颜色的RGBA值）来完成这个</li>
+  <li>这里你返回half4(1, 0, 0, 1)的颜色，也就是红色。</li>
+</ol>
+
+<h1 id="参考附录">参考附录</h1>
+
+<p>1.<a href="https://developer.apple.com/library/content/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014221-CH1-SW1">https://developer.apple.com/library/content/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014221-CH1-SW1</a><br />
+2.<a href="https://www.objccn.io/issue-18-2/">https://www.objccn.io/issue-18-2/</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/opengl4_3_xin_te_xing__ji_suan_zhao_se_qi_compute_shader/">OpenGL4.3新特性: 计算着色器 Compute Shader</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/shou_ba_shou_jiao_ni_shi_yong_xcode_clang_cha_jian/">手把手教你使用Xcode clang插件</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

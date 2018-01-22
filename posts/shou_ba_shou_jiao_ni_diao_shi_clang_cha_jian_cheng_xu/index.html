@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>手把手教你调试Clang插件程序</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="| 导语上一篇文章介绍了怎么给自己的Xcode安装Clang插件程序，但是有个问题，当我们想修改我们的插件代码的时候，却无法调试我们的程序，因为我们运行完MyPlugin后Xcode直接生成的相应地dylib，由于没有输入文件，所以我们是无法断点到我们的demo程序的。这篇文章主要给大家介绍怎么调试Clang插件...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>手把手教你调试Clang插件程序</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-14
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>yockieyang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%8F%92%E4%BB%B6" title="Tag: 插件" rel="tag">插件</a-->
+        <a href="/tag/#插件" title="Tag: 插件" rel="tag">插件</a>&nbsp;
+    
+        <!--a href="/tag/#%E8%B0%83%E8%AF%95" title="Tag: 调试" rel="tag">调试</a-->
+        <a href="/tag/#调试" title="Tag: 调试" rel="tag">调试</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>| 导语
+上一篇文章介绍了怎么给自己的Xcode安装Clang插件程序，但是有个问题，当我们想修改我们的插件代码的时候，却无法调试我们的程序，因为我们运行完MyPlugin后Xcode直接生成的相应地dylib，由于没有输入文件，所以我们是无法断点到我们的demo程序的。这篇文章主要给大家介绍怎么调试Clang插件程序。</p>
+
+<p><strong>1.libTooling的简介</strong><br />
+在我们学习调试插件程序之前，先大概了解一下libTooling这个库，根据相应参考文件中的解释，通过这个库我们很容易搭建我们编译器的前端工具。与之相对的还有一个libclang的库，这个库与libTooling相比就是他比较稳定，基本上没有什么更新。而libTooling跟clang是经常更新的，优缺点明显，缺点就是可能你在旧版本能跑的程序在新版本就不能跑了，优点就是提供给使用者远比libclang强大全面的AST解析和控制能力。至于该如何选择用libTooling和libclang，还是看官方说法吧。下面是官网的地址：<br />
+<!--more-->
+<a href="http://clang.llvm.org/docs/Tooling.html">http://clang.llvm.org/docs/Tooling.html</a><br />
+<strong>2.生成libTooling程序</strong><br />
+这步跟上一遍文章生成myPlugin差不多<br />
+1.生成MyPluginTooling文件</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/6e121c95e80e88f60db5ea3de746849bb5450f6ac2b8715e709cdab84069662c" alt="" /></p>
+
+<p>2.添加myPluginTooling代码，其实就是把昨天的MyPlugin代码的静态注册插件<br />
+static clang::FrontendPluginRegistry::AddX(“MyPlugin”, “My plugin”);的部分改成以下代码。</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/4a042681dbf41f29b46edbbc76e7ac6ceb6165bb3194a25d91418861a5468ebd" alt="" /></p>
+
+<p>同时把这个MyPluginASTAction这个方法给删了，以及更改成继承ASTFrontendAction</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/83d31fb65ea29b23eff4b5b8e0dbdee9f9ea507f8c35baaedc2fef85ac9deef3" alt="" /></p>
+
+<p>3.添加CMakeLists.txt文件，这个文件主要是用来设置运行你这个cpp所用到的库和相应的支持</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/921d1f9b800b2a362dc6cb9d91ffb459dad767a32456f95806cfb248a44c27a3" alt="" /></p>
+
+<p>4.然后外面的CMakeLists.txt文件添加下面这一行</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/305a5d654607c4b9d0ae133a178e30e97e83a18eda11593a5e6146be0d0f0f06" alt="" /></p>
+
+<p>5.跟上篇文章一样CMake来更新相应的LLVM程序<br />
+6.最后看是否编译成功，确实是成功的</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/5a935c3ffe35618f3d4df3ff8a11c2ab5fc1b49bbb44c6545b41c698ea13ee66" alt="" /></p>
+
+<p>7.但是我们此时和上篇文章有一个问题，就是没有输入文件，我们执行这个程序是没有任何效果的。这就需要我们给她指定一个输入文件。在Manage
+Scheme里面一个一个添加下面这些配置：<br />
+/Users/yockieyang/Desktop/homeWork/test1/test1/adsd_dasd.m<br />
+（—）（下面给的图把，只打——会出问题）<br />
+-isysroot<br />
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk<br />
+-isystem<br />
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.1.0/include<br />
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1<br />
+-I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include<br />
+-F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/7f420051ff7d9410ae2b4d8c28bd702e18a5e30477d9c45ecfa202e490ac8b09" alt="" /></p>
+
+<p>上面—是高速你要编译这个adsd_dasd.m文件必须使用下面-I，-F标出来的库，也就是当编译器执行到adsd_dasd.m里面的#import
+这段代码的时候，系统会在你标注中的-I,-F的库寻找相应的文件，编译才能正常执行下去。否则会报找不到的错误。<br />
+8.最后编译运行，效果和上篇文章一样</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/f73a5e4b9eebe66ab541efa48e44bc683a4eb21e2dc9ac24de371ea38e3cca4e" alt="" /></p>
+
+<p>9.但是我们却可以断点调了</p>
+
+<p><img src="/image/shou_ba_shou_jiao_ni_diao_shi_clang_cha_jian_cheng_xu/e3739361517772e6e75382a80e9fc5bc0545d012b9d7428fe88f612dcee64043" alt="" /></p>
+
+<p><strong>3.总结</strong><br />
+这篇文章主要告诉你怎么样调试Xcode clang 程序，具体clang,AST相关的知识将在以后学习给出来<br />
+参考文件：<a href="http://www.jianshu.com/p/01c988cae897">http://www.jianshu.com/p/01c988cae897</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/shou_ba_shou_jiao_ni_shi_yong_xcode_clang_cha_jian/">手把手教你使用Xcode clang插件</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_listview_shi_yong_zhu_yi_shi_xiang/">Android ListView使用注意事项</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

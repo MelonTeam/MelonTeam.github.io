@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iOS 绘图性能比较</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="在iOS中绘制UI一般有两种方法：一种是通过UIImageView或者UILabel建立相关图片和文字对象，然后添加到对应的父View中作为其SubView来实现；另外一种方法是直接在UIView中通过CoreGraphics框架进行绘制。在一般情况下，这两种方法的性能孰优孰劣呢？">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/ios_hui_tu_xing_neng_bi_jiao/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/ios_hui_tu_xing_neng_bi_jiao/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/ios_hui_tu_xing_neng_bi_jiao/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>iOS 绘图性能比较</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>louisysshen
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#iOS%E7%BB%98%E5%9B%BE" title="Tag: iOS绘图" rel="tag">iOS绘图</a-->
+        <a href="/tag/#iOS绘图" title="Tag: iOS绘图" rel="tag">iOS绘图</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" title="Tag: 性能优化" rel="tag">性能优化</a-->
+        <a href="/tag/#性能优化" title="Tag: 性能优化" rel="tag">性能优化</a>&nbsp;
+    
+        <!--a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a-->
+        <a href="/tag/#iOS" title="Tag: iOS" rel="tag">iOS</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#实验结果分析" id="markdown-toc-实验结果分析">实验结果分析</a>    <ul>
+      <li><a href="#图片平铺时" id="markdown-toc-图片平铺时">图片平铺时</a></li>
+      <li><a href="#图片重叠时" id="markdown-toc-图片重叠时">图片重叠时</a></li>
+      <li><a href="#图层持有动画时" id="markdown-toc-图层持有动画时">图层持有动画时</a></li>
+    </ul>
+  </li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+
+<p>在iOS中绘制UI一般有两种方法：一种是通过UIImageView或者UILabel建立相关图片和文字对象，然后添加到对应的父View中作为其SubView来实现；另外一种方法是直接在UIView中通过Core
+Graphics框架进行绘制。在一般情况下，这两种方法的性能孰优孰劣呢？</p>
+
+<!--more-->
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/332ec0fa1d55899bdbfc3eabf6b213e47710a41178a573590cabfc6085c730bc" alt="" /></p>
+
+<p>[ 直接添加SubView实现UI绘制 ]</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/3fd62a7bd5d4b6175b7aa11991168cc43f8490f22495bf73054cf99c287c80b3" alt="" /></p>
+
+<p>[ 通过Core graphics实现UI绘制 ]</p>
+
+<p>毛主席说过，实践是检验真理的唯一标准，为了得到一个令人信服的答案，up主做了一个简单的测试，通过实验验证两种方法的性能。测试程序生成了几十到上千张数量不等的图片，并分别通过上述两种方式绘制在相同的UIView上，利用Instruments监控时间和内存的消耗，实验结果如下所示。为了叙述方便，在下文中两种方法分别被称为添加法和绘制法。</p>
+
+<h2 id="实验结果分析">实验结果分析</h2>
+
+<h3 id="图片平铺时">图片平铺时</h3>
+
+<p>当图片的排列方式为不重叠的平铺在父View上时，两种方式的时间消耗如下图所示。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/8f10bb5fcafc76aeaad13f890c5dcdb5ac7e9cf3fcdf40a13f4ae55e7f206bb9" alt="" /></p>
+
+<p>[ 图片平铺时的时间开销 ]</p>
+
+<p>从时间开销上来看，两者差距不大。进一步分析两种方式时间开销的来源可以看到，两种方式的时间开销来源并不相同，</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/66e51a36fc11443281fa822db5a6345c07a112a6493ae9446360065db0a2f741" alt="" /></p>
+
+<p>[ 添加法时间开销来源 ]</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/0e543159458dceee32f59f73c9976fe28c47b12878f7f305b8344e613a2b93e9" alt="" /></p>
+
+<p>[ 绘制法时间开销来源 ]</p>
+
+<p>对于添加法来说，主要的时间开销来自三部分：UIImage对象的初始化，UIimageView对象的初始化，以及将UIimageView添加到父View上展示的渲染时间。而对于绘制法来说，相比添加法省去了初始化UIimageView对象的时间，但是在渲染的性能上差了一些。原因是Core
+Graphics调用了CPU进行绘制，相对来说性能会有一定的损失。综合起来看，<strong>时间开销</strong>上两种方式的差距不大。</p>
+
+<p>另一方面，从内存占用情况看，两者的差距比较明显。添加法的内存占用随着图片数量的增长上升很快，而绘制的的内存占用则与图片数量的关系不大。原因也很好解释，添加法的额外内存开销就是对UIImageView对象的初始化。当图片数量增多时，iOS在这里似乎并没有重用的机制（即便所有UIImageView对象对应的是同一张图片），导致内存占用显著上升。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/13d726d614714b0bf4878893e1d992102f5baa48bfb5c41721b35e1a1bff89f9" alt="" /></p>
+
+<p>[ 图片平铺时的内存开销 ]</p>
+
+<h3 id="图片重叠时">图片重叠时</h3>
+
+<p>当图片的排列方式为层层重叠在父View上时，两种方式的性能与平铺时的情况有所不同。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/0f8076d5e3d69676f25f133a5545508d07bcc31d30e29cd4d2fa52ccdf724507" alt="" /></p>
+
+<p>[ 图片覆盖时的时间开销 ]</p>
+
+<p>在图片以覆盖的方式展示时，添加法的性能与平铺时相比并没有太大的变化，但是绘制法的性能出现了严重的问题。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/083bd2e3669e769a560a19ecb32b0e388225b0c3a4b883621e5efe2880b10190" alt="" /></p>
+
+<p>[ 图片重叠时绘制法时间开销来源 ]</p>
+
+<p>从Time
+Profiler的分析结果来看，绘制法的时间开销主要来自UIimage的<code class="highlighter-rouge">drawInRect</code>方法的调用。这个方法有两个参数<code class="highlighter-rouge">blendMode</code>和<code class="highlighter-rouge">alpha</code>。<code class="highlighter-rouge">alpha</code>是up主熟知的透明度。<code class="highlighter-rouge">blendMode</code>则是图片的混合模式，该属性的默认值为<code class="highlighter-rouge">kCGBlendModeNormal</code>，即前景图的颜色会覆盖背景图，有趣的是，即便在这种情况下，在图片渲染时似乎仍对混合后的图片颜色进行了计算，而非像alpha值一样在不透明时直接不做计算，采用顶层图片的透明度。推测这里可能是导致性能下降的关键原因。</p>
+
+<h3 id="图层持有动画时">图层持有动画时</h3>
+
+<p>当对应的父View持有动画时，两种方式会对动画的性能产生影响吗？从测试的结果看，在图片数量增多时，采用添加法会导致动画的帧数明显下降，而绘制法则不会对动画性能产生影响。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/a9a0454a1c1dab9d8b5d7b66cf68011aad028eeb5046b7fe865ddab092b7901a" alt="" /></p>
+
+<p>[ 动画性能比较 ]</p>
+
+<p>显然，当图层数量较多时，动画的性能会受到明显的影响。绘制法的好处是把绘制后的结果合成为一个图层，从而提升了动画的性能。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>综合上面的分析，两种方法的优缺点就很明显了。添加法的优点是通过GPU的渲染使得渲染速度较快，缺点则是会生成较多图层，内存占用高，且会影响动画性能；绘制法的优点是只生成一个图层，占用内存少，动画性能好，缺点是CPU渲染，速度慢，且在图片重叠时性能很差。那么，有没有两全齐美的方法呢？答案是有的，在《iOS核心动画高级技巧中》有这样的一段话：</p>
+
+<blockquote>
+  <p>使用CALayer renderInContext方法，你可以将图层及其子图层快照进一个Core
+Graphics上下文然后得到一个图片，它可以直接显示在UIImageView中，或者作为另一个图层的contents。</p>
+</blockquote>
+
+<p>具体来说。可以先通过添加法绘制图层，然后通过父View的renderInContext方法将所有图层合成为一张图片，这样就兼顾了两种方法的性能优势。</p>
+
+<p><img src="/image/ios_hui_tu_xing_neng_bi_jiao/e075e0b9bcae9e43287c95036e24386c7ce736627d2a458095a1955048451eb2" alt="" /></p>
+
+<p>[ 两全齐美的方法 ]</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/opengl_es_ios__xue_xi_bi_ji___ji_chu_pian__er_/">OpenGL ES (iOS) 学习笔记 — 基础篇（二）</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/swift_han_shu_pai_fa_ji_zhi/">Swift 函数派发机制</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

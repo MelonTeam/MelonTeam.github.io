@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>[学习笔记] Objective-C Runtime（一）</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="  ClassClassid是指向objc_object结构体的指针，表示指向类的实例对象，">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/xue_xi_bi_ji__objective_c_runtime_yi_/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/xue_xi_bi_ji__objective_c_runtime_yi_/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/xue_xi_bi_ji__objective_c_runtime_yi_/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>[学习笔记] Objective-C Runtime（一）</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-30
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>doreencao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#ios" title="Category: ios" rel="category">ios</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#runtime" title="Tag: runtime" rel="tag">runtime</a-->
+        <a href="/tag/#runtime" title="Tag: runtime" rel="tag">runtime</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#class" id="markdown-toc-class">Class</a>    <ul>
+      <li><a href="#objc_getclass和object_getclass" id="markdown-toc-objc_getclass和object_getclass">objc_getClass和object_getclass</a></li>
+    </ul>
+  </li>
+  <li><a href="#ivar" id="markdown-toc-ivar">Ivar</a></li>
+  <li><a href="#objc_property_t" id="markdown-toc-objc_property_t">objc_property_t</a></li>
+  <li><a href="#method" id="markdown-toc-method">Method</a></li>
+  <li><a href="#一个动态创建类的例子" id="markdown-toc-一个动态创建类的例子">一个动态创建类的例子</a></li>
+  <li><a href="#方法的调用" id="markdown-toc-方法的调用">方法的调用</a>    <ul>
+      <li><a href="#消息转发机制" id="markdown-toc-消息转发机制">消息转发机制</a>        <ul>
+          <li><a href="#动态方法解析" id="markdown-toc-动态方法解析">动态方法解析</a></li>
+          <li><a href="#备用接收者" id="markdown-toc-备用接收者">备用接收者</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="class">Class</h2>
+
+<p><code class="highlighter-rouge">id</code>是指向<code class="highlighter-rouge">objc_object</code>结构体的指针，表示指向类的实例对象，
+<!--more--></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct objc_object {
+    Class _Nonnull isa;
+};
+
+typedef struct objc_object *id;  
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">isa</code>是一个<code class="highlighter-rouge">Class</code>类型的指针，可以利用<code class="highlighter-rouge">isa</code>指针获取对象所属的类。而类本身同时也是一个对象，因此可以看到<code class="highlighter-rouge">objc_class</code>结构体中也有一个<code class="highlighter-rouge">isa</code>指针。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct objc_class *Class;
+
+struct objc_class {
+    //指向metaclass
+    Class isa;
+
+#if !__OBJC2__
+
+    //指向父类
+    Class super_class;
+
+    //类名
+    const char * name;
+
+    //版本信息，用于对象序列化，识别不同类定义版本中实例变量布局的改变
+    long version;
+
+    //标识信息
+    long info;
+
+    //实例变量的大小
+    long instance_size;
+
+    //存放成员变量、属性信息，Ivar指针数组
+    struct objc_ivar_list * ivars;
+
+    //实例方法列表
+    struct objc_method_list ** methodLists;
+
+    //缓存调用过的方法，对象接受消息时先在cache中查找，提高效率
+    struct objc_cache * cache;
+
+    //类实现的协议列表
+    struct objc_protocol_list * protocols;
+#endif
+
+};
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">isa</code>指向元类(meta class)，类对象所属的类称为元类，存储着类方法即类对象的实例方法。元类同样也是对象，它是根元类(root meta
+class)的实例，根元类的<code class="highlighter-rouge">isa</code>指针则指向自己。</p>
+
+<p>由于类方法保存在元类中，为了保证父类的类方法可以在子类中被调用，类的元类会继承父类的元类，换而言之，类对象和元类对象有着同样的继承关系。</p>
+
+<p><code class="highlighter-rouge">super_class</code>指向父类，根类(如<code class="highlighter-rouge">NSObject</code>)的<code class="highlighter-rouge">super_class</code>指针为空。</p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/26483098fc25fb5a8eb0e170b598e8022ad0436065a2f9a49cc2683e913c7ed7" alt="" /></p>
+
+<p><code class="highlighter-rouge">cache</code>用于缓存最近调用过的方法，在实际使用中，类的实例方法只有一部分是常用的，调用过一个方法后该方法会被缓存到<code class="highlighter-rouge">cache</code>列表中，作为一种提高效率的策略，每一次接收消息优先在<code class="highlighter-rouge">cache</code>中查询，避免了反复遍历<code class="highlighter-rouge">methodLists</code>。</p>
+
+<h5 id="objc_getclass和object_getclass">objc_getClass和object_getclass</h5>
+
+<p><code class="highlighter-rouge">objc_getClass</code>参数是类名的字符串，返回的就是这个类的类对象；<code class="highlighter-rouge">object_getClass</code>参数是<code class="highlighter-rouge">id</code>类型，它返回的是这个<code class="highlighter-rouge">id</code>的<code class="highlighter-rouge">isa</code>指针所指向的<code class="highlighter-rouge">Class</code>，如果传参是<code class="highlighter-rouge">Class</code>，则返回该<code class="highlighter-rouge">Class</code>的<code class="highlighter-rouge">metaClass</code>。</p>
+
+<p>当<code class="highlighter-rouge">id</code>为实例对象时，<code class="highlighter-rouge">[id
+class]</code>与<code class="highlighter-rouge">object_getClass(id)</code>等价，因为前者会调用后者。<code class="highlighter-rouge">object_getClass([id class])</code>得到元类。</p>
+
+<p>当<code class="highlighter-rouge">id</code>为类对象时，<code class="highlighter-rouge">[id class]</code>返回值为自身，<code class="highlighter-rouge">object_getClass(id)</code>与<code class="highlighter-rouge">object_getClass([id
+class])</code>等价，得到元类。</p>
+
+<h2 id="ivar">Ivar</h2>
+
+<p><code class="highlighter-rouge">Ivar</code>代表类中实例变量，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct ivar_t *Ivar  
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">class_copyIvarList</code>获取的不仅有实例变量，还有属性。但会在原本的属性名前加上一个下划线，且不包含父类中声明的变量。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 获取实例变量
+Ivar *class_copyIvarList(Class cls, unsigned int *outCount) 
+
+// 获取成员变量名,“_”前缀
+const char *ivar_getName(Ivar v) 
+
+// 获取成员变量类型编码
+const char *ivar_getTypeEncoding(Ivar v)
+
+// 获取指定名称的成员变量
+Ivar class_getInstanceVariable(Class cls, const char *name)
+
+// 获取某个对象成员变量的值
+id object_getIvar(id obj, Ivar ivar);
+
+// 设置某个对象成员变量的值
+void object_setIvar(id obj, Ivar ivar);
+
+// 添加成员变量    
+BOOL class_addIvar ( Class cls, const char *name, size_t size, uint8_t alignment, const char *types );  
+</code></pre>
+</div>
+
+<h2 id="objc_property_t">objc_property_t</h2>
+
+<p><code class="highlighter-rouge">objc_property_t</code>是表示Objective-C声明的属性的类型，为一个指向<code class="highlighter-rouge">objc_property</code>结构体的指针，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct property_t *objc_property_t
+
+// 获取指定的属性
+objc_property_t class_getProperty ( Class cls, const char *name );
+
+// 获取属性列表
+objc_property_t * class_copyPropertyList ( Class cls, unsigned int *outCount );
+
+// 为类添加属性
+BOOL class_addProperty ( Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount );
+
+// 替换类的属性
+void class_replaceProperty ( Class cls, const char *name, const objc_property_attribute_t *attributes, unsigned int attributeCount )
+
+// 获取属性名称
+const char *property_getName(objc_property_t property)
+
+// 获取属性描述信息
+const char *property_getAttributes(objc_property_t property);
+
+// 获取属性attribute数组
+objc_property_attribute_t * property_copyAttributeList ( objc_property_t property, unsignedint *outCount );
+</code></pre>
+</div>
+
+<p>较之<code class="highlighter-rouge">class_copyIvarList</code>函数，使用<code class="highlighter-rouge">class_copyPropertyList</code>函数只能获取类的属性，而不包含成员变量，此时获取的属性名是不带下划线的。</p>
+
+<h2 id="method">Method</h2>
+
+<p><code class="highlighter-rouge">Method</code>表示类中定义的方法，是指向<code class="highlighter-rouge">objc_method</code>结构体的指针，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct objc_method *Method;
+
+struct objc_method {
+    SEL _Nonnull method_name;
+    char * _Nullable method_types;
+    IMP _Nonnull method_imp;
+};  
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">SEL</code>是方法选择器，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct objc_selector *SEL;
+</code></pre>
+</div>
+
+<p>它代表方法的签名，在类对象的方法列表中存储着方法签名与方法代码的对应关系，每一个方法都有一个对应的<code class="highlighter-rouge">SEL</code>，同名方法具有相同的<code class="highlighter-rouge">SEL</code>。因此同一个类的继承体系中，不能存在两个及以上的同名而不同参数类型的方法，这会被视为编译错误。但不同的类可以具有同名方法，尽管方法的<code class="highlighter-rouge">SEL</code>相同，在实例对象需要执行方法时，会在自己的方法列表中根据<code class="highlighter-rouge">SEL</code>索引对应的<code class="highlighter-rouge">IMP</code>。</p>
+
+<p><code class="highlighter-rouge">IMP</code>是一个函数指针，指向方法的实现，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#if !OBJC_OLD_DISPATCH_PROTOTYPES
+typedef void (*IMP)(void /* id, SEL, ... */ ); 
+#else
+typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...); 
+#endif
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">Method</code>相关函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 添加方法
+BOOL class_addMethod ( Class cls, SEL name, IMP imp, const char *types );
+
+// 获取实例方法，会搜索父类实现
+Method class_getInstanceMethod ( Class cls, SEL name );
+
+// 获取类方法，会搜索父类实现
+Method class_getClassMethod ( Class cls, SEL name );
+
+// 获取方法列表，不包含父类实现
+Method * class_copyMethodList ( Class cls, unsigned int *outCount );
+
+// 替换方法的实现
+// 若不存在name指定的方法，类似class_addMethod实现功能，反之类似method_setImplementation实现功能
+IMP class_replaceMethod ( Class cls, SEL name, IMP imp, const char *types );
+
+// 设置方法的具体实现
+IMP method_setImplementation(Method m, IMP imp)；
+
+// 返回方法的具体实现
+IMP class_getMethodImplementation ( Class cls, SEL name );
+IMP class_getMethodImplementation_stret ( Class cls, SEL name );
+
+// 类实例是否响应指定的selector
+BOOL class_respondsToSelector ( Class cls, SEL sel );  
+</code></pre>
+</div>
+
+<p>向实例发消息时会调用<code class="highlighter-rouge">class_getMethodImplementation</code>，返回指向方法实现函数的指针。返回的函数指针可能是一个指向runtime内部的函数，而不一定是方法的实际实现。例如，如果类实例无法响应<code class="highlighter-rouge">selector</code>，则返回的函数指针将是运行时消息转发机制的一部分。</p>
+
+<h2 id="一个动态创建类的例子">一个动态创建类的例子</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> //动态创建类
+Class newClass = objc_allocateClassPair([NSObject class], "NewClass", 0);
+NSLog(@"creat class named newClass");
+
+//类方法
+class_addMethod(object_getClass(newClass), @selector(newClassClassMethod),(IMP)class_method , "v@:");
+
+//实例方法
+class_addMethod(newClass, @selector(newClassInstanceMethod), (IMP)instance_method, "v@:");
+
+//成员变量
+class_addIvar(newClass, "_ivar1", sizeof(NSString *), log(sizeof(NSString *)), "i");
+
+//属性
+objc_property_attribute_t type = {"T", "@\"NSString\""};
+objc_property_attribute_t ownership = { "C", "" };
+objc_property_attribute_t backingivar = { "V", "_ivar1"};
+objc_property_attribute_t attrs[] = {type, ownership, backingivar};
+class_addProperty(newClass, "property2", attrs, 3);
+
+objc_registerClassPair(newClass);
+
+//调用
+[newClass performSelector:@selector(newClassClassMethod)];
+id instance = [[newClass alloc] init];
+[instance performSelector:@selector(newClassInstanceMethod)];  
+</code></pre>
+</div>
+
+<p>方法实现如下，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> void class_method(id self , SEL _cmd) {
+    NSLog(@"class_method called");
+    NSLog(@"class name: %s", class_getName(self));
+}
+
+
+void instance_method(id self , SEL _cmd) {
+    NSLog(@"instance_method called");
+    Class cls = [self class];
+    unsigned int outCount = 0;
+    // 成员变量
+       Ivar *ivars = class_copyIvarList(cls, &amp;outCount);
+    for (int i = 0; i &lt; outCount; i++) {
+        Ivar ivar = ivars[i];
+        NSLog(@"instance variable name: %s ", ivar_getName(ivar));
+    }
+    free(ivars);
+
+    // 属性操作
+    objc_property_t * properties = class_copyPropertyList(cls, &amp;outCount);
+    for (int i = 0; i &lt; outCount; i++) {
+        objc_property_t property = properties[i];
+        NSLog(@"property name: %s , attribute: %s", property_getName(property), property_getAttributes(property));
+    }
+    free(properties);
+
+    // 方法操作
+    Method *methods = class_copyMethodList(cls, &amp;outCount);
+    for (int i = 0; i &lt; outCount; i++) {
+        Method method = methods[i];
+        NSLog(@"instance method signature: %s", method_getName(method));
+    }
+    free(methods);
+}  
+</code></pre>
+</div>
+
+<p>输出，</p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/8201365acbce994094ca3822b963eea502de8978aca26b4f7828a048547ca8ff" alt="" /></p>
+
+<h2 id="方法的调用">方法的调用</h2>
+
+<p>runtime是OC区别于静态语言的一个重要特性，它实现了在运行时才将消息绑定到方法实现上的动态特性。编译器会将OC语法中的方法调用<code class="highlighter-rouge">[receiver
+message]</code>表达式转化为消息函数<code class="highlighter-rouge">objc_msgSend</code>的调用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>objc_msgSend(id self, SEL op, ...)
+</code></pre>
+</div>
+
+<p>这个函数完成了动态绑定的工作：<br />
+1，根据消息接收者的类和<code class="highlighter-rouge">SEL</code>索引到对应的方法实现<br />
+2，将消息接收者和参数传递给方法实现<br />
+3，返回该方法实现的返回值</p>
+
+<p>当一个新对象被创建时，其<code class="highlighter-rouge">isa</code>指针也会被初始化，指向所属类的<code class="highlighter-rouge">objc_class</code>结构体，<code class="highlighter-rouge">objc_class</code>内有<code class="highlighter-rouge">isa</code>指针以及指向父类的指针，因而对象可以访问类以及类的继承体系。</p>
+
+<p>当对象接收到消息时，通过对象的<code class="highlighter-rouge">isa</code>指针获取类的<code class="highlighter-rouge">objc_class</code>，在<code class="highlighter-rouge">cache</code>中查找<code class="highlighter-rouge">SEL</code>对应的<code class="highlighter-rouge">IMP</code>即方法实现，若查找不到，转至<code class="highlighter-rouge">methodLists</code>中查找。</p>
+
+<p>若无查找结果，通过<code class="highlighter-rouge">objc_method</code>中指向父类的指针，在父类中重复查找过程，沿着类的继承体系一直查找到<code class="highlighter-rouge">NSObject</code>。</p>
+
+<p>查找到方法实现的入口后，传入参数执行方法；若最终仍未查找到方法实现的入口，则进入消息转发流程。</p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/74eead62f518e3c1988e6aaa2d00ef09ed9c8d5d67f6adf134285deacf5f428c" alt="" /></p>
+
+<h3 id="消息转发机制">消息转发机制</h3>
+
+<p>当一个对象无法接收指定消息时，会启动消息转发机制(message
+forwarding),用于告知对象如何处理未知消息。默认情况下，如果对象收到位置消息，会收到由<code class="highlighter-rouge">NSObject</code>的<code class="highlighter-rouge">doesNotRecognizeSelector</code>抛出的异常。借助于消息转发机制，可以采取一些处理方法使程序执行特定的逻辑。</p>
+
+<p>消息转发机制分为三步：<br />
+1，动态方法解析 - <code class="highlighter-rouge">resolveInstanceMethod:</code><br />
+2，备用接收者 - <code class="highlighter-rouge">forwardingTargetForSelector:</code><br />
+3，完整转发 - <code class="highlighter-rouge">forwardInvocation:</code></p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/0fda076baf5fbc5b29aed3de173ca6b32be4e46315bac0843065fc6dd29d9e9f" alt="" /></p>
+
+<h4 id="动态方法解析">动态方法解析</h4>
+
+<p>在对象收到未知消息时，系统会首先会调用<code class="highlighter-rouge">resolveInstanceMethod:</code>或<code class="highlighter-rouge">resolveClassMethod:</code>方法来添加实例方法或类方法的实现，使用<code class="highlighter-rouge">class_addMethod</code>添加某种方法实现。</p>
+
+<p>举例：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>classModel *model = [[classModel alloc] init];
+NSLog(@"instance perform selector InstanceMethod");
+[model performSelector:@selector(InstanceMethod)];  
+</code></pre>
+</div>
+
+<p>m文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">functionInstanceMethod</span> <span class="p">(</span><span class="n">id</span> <span class="n">self</span> <span class="p">,</span> <span class="n">SEL</span> <span class="n">_cmd</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@"functionInstanceMethod called for %@ instance"</span> <span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="nf">class</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="k">@implementation</span> <span class="nc">classModel</span>
+
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">resolveInstanceMethod</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">sel</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">NSStringFromSelector</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"InstanceMethod"</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">class_addMethod</span><span class="p">([</span><span class="n">self</span> <span class="nf">class</span><span class="p">],</span> <span class="k">@selector</span><span class="p">(</span><span class="n">InstanceMethod</span><span class="p">),</span> <span class="p">(</span><span class="n">IMP</span><span class="p">)</span><span class="n">functionInstanceMethod</span><span class="p">,</span> <span class="s">"@:"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="nf">resolveInstanceMethod</span><span class="p">:</span><span class="n">sel</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>  
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/eda624774198ce5c800d44c423734cbcd6f6178e235d0952d91fadb54e579d5f" alt="" /></p>
+
+<h4 id="备用接收者">备用接收者</h4>
+
+<p>如果动态方法解析无法解决问题，在进入完整消息转发流程前还有一个机制，可以将消息接收者替换为其他对象。调用’forwardingTargetForSelector:’方法，返回期待其接收消息的另一个对象，如果返回<code class="highlighter-rouge">nil</code>或者<code class="highlighter-rouge">self</code>，则会进入消息转发机制。
+这种机制通常在对象内部实现，在调用方看来仍是由对象亲自处理消息。</p>
+
+<p>举例：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>classModel *model = [[classModel alloc] init];
+NSLog(@"instance perform selector backupModelInstanceMethod");
+[model performSelector:@selector(backupModelInstanceMethod)]; 
+</code></pre>
+</div>
+
+<p>m文件：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">backupModel</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">backupModelInstanceMethod</span>
+<span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"backupModelInstanceMethod called by %@ instance"</span> <span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="nf">class</span><span class="p">]);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+
+<span class="k">@interface</span> <span class="nc">classModel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">backupModel</span> <span class="o">*</span><span class="n">_backupModel</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">classModel</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">_backupModel</span> <span class="o">=</span> <span class="p">[</span><span class="n">backupModel</span> <span class="nf">new</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">forwardingTargetForSelector</span><span class="o">:</span><span class="p">(</span><span class="n">SEL</span><span class="p">)</span><span class="n">sel</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">([</span><span class="n">NSStringFromSelector</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"backupModelInstanceMethod"</span><span class="p">]){</span>
+        <span class="k">return</span> <span class="n">_backupModel</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="nf">forwardingTargetForSelector</span><span class="p">:</span><span class="n">sel</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<p><img src="/image/xue_xi_bi_ji__objective_c_runtime_yi_/bed8bc3c4ce01565c27b02b19a1a185ef3ac96f2881694c0bc4b12fd6f995082" alt="" /></p>
+
+<p>本文参考链接：</p>
+
+<p>[Objective-C Runtime Programming
+Guide](<br />
+<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/#objc-
+property-t">Objective-C
+Runtime</a><br />
+<a href="http://blog.devtang.com/2013/10/15/objective-c-object-
+model/">Objective-C对象模型及应用</a><br />
+<a href="http://southpeak.github.io/2014/11/03/objective-c-runtime-3/">Objective-C Runtime
+运行时之三：方法与消息</a></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/objc_zhong___yes__de_yu_chun_xing_wei_you_duo_ke_pa/">Objc 中 “== YES”  的愚蠢行为有多可怕</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/ios_kai_fa__jing_tai_ku_yu_dong_tai_ku__a_yu_framework_qu_bie/">ios开发：静态库与动态库&.a与.framework区别</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

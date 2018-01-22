@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>C++搬砖民工学习Go语言</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 go语言      由于项目需要，最近开始接触Go语言。从C++程序员的角度来看看go语言的新特性，谈谈自己的感触。">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/c__ban_zhuan_min_gong_xue_xi_go_yu_yan/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/c__ban_zhuan_min_gong_xue_xi_go_yu_yan/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/c__ban_zhuan_min_gong_xue_xi_go_yu_yan/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>C++搬砖民工学习Go语言</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-29
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>xiaomao
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#其他" title="Category: 其他" rel="category">其他</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#C%2B%2B" title="Tag: C++" rel="tag">C++</a-->
+        <a href="/tag/#C++" title="Tag: C++" rel="tag">C++</a>&nbsp;
+    
+        <!--a href="/tag/#go%E8%AF%AD%E8%A8%80" title="Tag: go语言" rel="tag">go语言</a-->
+        <a href="/tag/#go语言" title="Tag: go语言" rel="tag">go语言</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 go语言</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>由于项目需要，最近开始接触Go语言。从C++程序员的角度来看看go语言的新特性，谈谈自己的感触。</p>
+
+<!--more-->
+
+<p>【1】语法后置，为啥这么搞？</p>
+
+<p>刚接触Go语言，常常会很疑惑为什么这门语言的声明语法会和传统的C家族语言不同。Go的语法，如变量、函数的声明和定义，和我们常见的语言语法相比，都是类型后置，这点着实有些不习惯。为啥要这么搞？</p>
+
+<p>    Rob Pike 曾经在 Go
+官方博客解释过这个问题：不是为了与众不同，而是为了更加清晰易懂。特别是当类型比较复杂时，Go的类型语法要比C的容易懂。</p>
+
+<p>【2】多重赋值和多返回值</p>
+
+<p>多重赋值的典型用法，交换2个变量的值：</p>
+
+<p>x,y := 1,2</p>
+
+<p>x,y = y,x //交换x,y</p>
+
+<p>对c++来说，要实现函数返回多个数据，要么封装一个结构体，要不就只能通过函数传参实现。但再Go语言里，直接返回，多直接。举个例子来说明多返回值的用法：</p>
+
+<p>func swapAndAdd(x, y int) (int, int, int) {</p>
+
+<p>    if x &gt; y {</p>
+
+<p>        x,y = y,x</p>
+
+<p>    }</p>
+
+<p>    return x,y, x+y</p>
+
+<p>}</p>
+
+<p>【3】错误处理</p>
+
+<p>GO语言引入了内置的错误（error）类型以及defer关键字来编写异常安全代码。多返回值应用最多的场景就是第二个参数传回函数的错误状态，比如以下用法：</p>
+
+<p>if inFile, err := os.Open(filename); err != nil {</p>
+
+<p>    /<em> 错误处理 </em>/</p>
+
+<p>}</p>
+
+<p>defer inFile.Close()</p>
+
+<p>C/C++对错误的处理一般都是通过错误码来确定一个函数是否正确调用，因此相比C/C++而言，go的错误处理代码更简洁，看上去也美观。</p>
+
+<p>Go引入了3个关键字（defer、panic和
+recover）用于标准的错误处理流程；defer关键字的引入，保证错误处理的代码在发现错误时一定能够被调用，不会因为业务分支逻辑上的修改而漏调。</p>
+
+<p>【4】接口</p>
+
+<p>Go语言的接口，并不是我们在Java中看到的接口。在Go语言中，接口是一个自定义类型，它声明了一个或多个方法签名。接口是完全抽象的，不能将其实例化。如果某个具体类型实现了某个接口所有的方法，那么这个类型就被认为实现了该接口。下面给一个测试用例：</p>
+
+<p>package main</p>
+
+<p>import (</p>
+
+<p>    ”fmt”</p>
+
+<p>)</p>
+
+<p>type Exchanger interface {</p>
+
+<p>    Exchange()</p>
+
+<p>}</p>
+
+<p>type StringPair struct {</p>
+
+<p>    first, second string</p>
+
+<p>}</p>
+
+<p>func (pair *StringPair) Exchange() {</p>
+
+<p>    pair.first, pair.second = pair.second, pair.first</p>
+
+<p>}</p>
+
+<p>func exchangeFunc(exchagers…Exchanger) {</p>
+
+<p>    for _, exchanger := range exchagers {</p>
+
+<p>        exchanger.Exchange();</p>
+
+<p>    }</p>
+
+<p>}</p>
+
+<p>func main() {</p>
+
+<p>    str := StringPair{“A”, ”B”}</p>
+
+<p>    fmt.Println(“[1]”, str) //{A B}</p>
+
+<p>    str.Exchange();</p>
+
+<p>    fmt.Println(“[2]”, str) //{B A}</p>
+
+<p>    exchangeFunc(&amp;str)</p>
+
+<p>    fmt.Println(“[3]”, str) //{A B}</p>
+
+<p>}</p>
+
+<p>【5】并发编程</p>
+
+<p>Go语言层面支持协程，将并发业务逻辑从异步转为同步，大幅提高开发效率。在C++中，做并发编程目前主流的方案是事件驱动（单线程/多线程/多进程模型等)，而事件驱动就需要一个IO多路复用的分发器（select/epoll）。这样，就造成了业务逻辑的断开，在代码层面为异步模型，比如：</p>
+
+<p>1).先是一段业务代码；</p>
+
+<p>2).调用IO；</p>
+
+<p>3).IO完成后的后续处理逻辑；</p>
+
+<p>而go中的协程的支持让这样的开发工作就轻松多了，按照同步的方式顺序写业务逻辑，遇到IO也没关系，一个线程中可以创建成上百万个协程，这个协程阻塞了就跑下一个，不需要应用代码层面来负责IO后续调度的处理。</p>
+
+<p>比起自己用C/C++去封装底层或调用libevent之类的库，Go的优势是将事件机制封装成了CSP模式，编程变得方便了，但是需要付出goroutine调度的开销。</p>
+
+<p>【6】垃圾回收</p>
+
+<p>Go有了垃圾回收机制，不需要开发者自行控制内存的释放，这样可避免一堆问题（重复释放、忘记释放内存、访问已释放的内存等）。当然，C++11引入的智能指针（unique_ptr等）如果在程序中应用的普遍，也可以达到类似垃圾回收的目的。</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/android_dai_ma_shang_jian_shao_fang_fa_shu_de_yi_xie_qi_ji_yin_qiao/">Android代码上减少方法数的一些奇技淫巧</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/chi_xu_ji_cheng_zai_hou_tai_kai_fa_zhong_de_yun_yong/">持续集成在后台开发中的运用</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

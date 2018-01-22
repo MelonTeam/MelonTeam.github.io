@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>线程启动器适配任意类型</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="框架的线程启动器start以前只能启动继承自common::Runnable的类（以一个线程去run这个任务类），这在绝大部分的业务代码中都是合理的；但有时候你需要写一个工具或者一个简单的任务处理（比如一个函数），再去继承一个Runnable就显得略微繁琐了些。基于次背景我们决定扩充下start的能力。_**">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/xian_cheng_qi_dong_qi_shi_pei_ren_yi_lei_xing/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/xian_cheng_qi_dong_qi_shi_pei_ren_yi_lei_xing/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/xian_cheng_qi_dong_qi_shi_pei_ren_yi_lei_xing/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>线程启动器适配任意类型</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-16
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>tangfutang
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#后端" title="Category: 后端" rel="category">后端</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#yaaf" title="Tag: yaaf" rel="tag">yaaf</a-->
+        <a href="/tag/#yaaf" title="Tag: yaaf" rel="tag">yaaf</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%80%82%E9%85%8D" title="Tag: 适配" rel="tag">适配</a-->
+        <a href="/tag/#适配" title="Tag: 适配" rel="tag">适配</a>&nbsp;
+    
+        <!--a href="/tag/#sfinae" title="Tag: sfinae" rel="tag">sfinae</a-->
+        <a href="/tag/#sfinae" title="Tag: sfinae" rel="tag">sfinae</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>框架的线程启动器start以前只能启动继承自common::Runnable的类（以一个线程去run这个任务类），这在绝大部分的业务代码中都是合理的；但有时候你需要写一个工具或者一个简单的任务处理（比如一个函数），再去继承一个Runnable就显得略微繁琐了些。基于次背景我们决定扩充下start的能力。_**</p>
+
+<!--more-->
+
+<p><em><strong>1. 实现功能 - start_any</strong></em><br />
+c++11的thread支持传统C函数，C++成员函数，函数对象（实现了（）运算符的类的实例），lambda表达式（特殊函数对象）等作为参数传入，极大的简化了代码。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>template &lt;typename Callable, typename... Args&gt; 
+start_any(Callable&amp;&amp; fn, Args&amp;&amp;... args) 
+{ 
+    std::thread *t = new std::thread(std::forward(func), std::forward(args)...); 
+    std_threads_.push_back(t); 
+}
+</code></pre>
+</div>
+
+<p><em><strong>2. 老接口融合 - SFINAE</strong></em><br />
+start_any的名字对开发来说比较陌生，如果能统一用start来启动会更加便利。函数名称相同的情况下问题就落在如何区分传入参数是Runnable的继承类这个问题上了，既然用了模板，那么就应该能使用“模板替换不是一个错误”原则来规避。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>template &lt;typename Callable, 
+typename... Args, 
+typename = typename std::enable_if &lt; !std::is_base_of&lt;:common::runnable class="hljs-keyword"&gt;typename std::remove_pointer::type&gt;::value &gt;::type &gt; 
+start(Callable&amp;&amp; fn, Args&amp;&amp;... args)
+{
+    std::thread *t = new std::thread(std::forward(func), std::forward(args)...); 
+    std_threads_.push_back(t); 
+}
+</code></pre>
+</div>
+
+<p><em><strong>3. 兼容所有形式 - std::decay</strong></em><br />
+上面的版本，发现在某些场景中is_base_of判断会失效，原因是模板类型没有“清洗”干净，比如const T&amp; 跟
+T不是一个类型，使用decay退化掉所有修饰验证通过。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typename = typename std::enable_if &lt; !std::is_base_of&lt;:common::runnable class="hljs-keyword"&gt;typename std::remove_pointer&lt;typename std::decay::type&gt;::type&gt;::value &gt;::type
+</code></pre>
+</div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/da_yin_yin_yu_shi__ling_kuan_zi_fu_jie_shao/">大隐隐于市——零宽字符介绍</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/android_chang_jian_nei_cun_xie_lou_wen_ti/">Android常见内存泄漏问题</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>

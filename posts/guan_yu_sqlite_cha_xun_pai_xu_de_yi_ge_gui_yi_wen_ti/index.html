@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>关于sqlite查询排序的一个诡异问题</title>
+    <meta name="keywords" content="Android, iOS, 深度学习, 人工智能">
+    <meta name="description" content="            导语 sqlite3关于unique关键字有一个排序的坑，一不小心就会踩上。      首先建一个表，CREATE TABLE post_gift (_id INTEGER PRIMARY KEY AUTOINCREMENT,bidINTEGER,gift_count INTEGER DE...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://MelonTeam.com/posts/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/">
+    <link rel="alternate" type="application/rss+xml" title="MelonTeam" href="http://MelonTeam.com/feed.xml ">
+
+    <!-- some other meta -->
+    
+    <!-- some other stuff like link or script -->
+    
+<!-- UY BEGIN -->
+<script type="text/javascript">
+var uyan_config = {
+     'url':'http://MelonTeam.com/posts/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/',
+     'du':'http://MelonTeam.com', 
+     'su':'http://MelonTeam.com/posts/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/' 
+};
+</script>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136610"></script>
+<!-- UY END -->
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">MelonTeam</a>
+        <small>移动终端前沿技术的探索者</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/project/">
+                        
+                            <i class="fa fa-folder-open"></i>开源项目
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/class/">
+                        
+                            <i class="fa fa-book"></i>公开课
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/board/">
+                        
+                            <i class="fa fa-pencil"></i>留言板
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>关于sqlite查询排序的一个诡异问题</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-07
+            </div>
+            
+            <div class="label-card">
+                <i class="fa fa-user"></i>henrikwu
+            </div>
+            
+            
+            
+            <div class="label-card">
+            
+
+
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#未分类" title="Category: 未分类" rel="category">未分类</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+
+            </div>
+            
+            
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#sqlite" title="Tag: sqlite" rel="tag">sqlite</a-->
+        <a href="/tag/#sqlite" title="Tag: sqlite" rel="tag">sqlite</a>&nbsp;
+    
+        <!--a href="/tag/#%E6%8E%92%E5%BA%8F" title="Tag: 排序" rel="tag">排序</a-->
+        <a href="/tag/#排序" title="Tag: 排序" rel="tag">排序</a>&nbsp;
+    
+        <!--a href="/tag/#unique" title="Tag: unique" rel="tag">unique</a-->
+        <a href="/tag/#unique" title="Tag: unique" rel="tag">unique</a>
+    
+  
+
+</span>
+
+
+
+            </div>
+            
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<table>
+  <tbody>
+    <tr>
+      <td>导语 sqlite3关于unique关键字有一个排序的坑，一不小心就会踩上。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>首先建一个表，CREATE TABLE post_gift (_id INTEGER PRIMARY KEY AUTOINCREMENT,bid
+INTEGER,gift_count INTEGER DEFAULT 1,gift_id INTEGER,pid TEXT,uid
+TEXT,UNIQUE(bid,gift_id,pid));
+<!--more--></p>
+
+<p><img src="/image/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/f7e0b2df3f5dae1070217254f4a3c9cb18aa7cc8134ee60189a9bcc9100073a1" alt="" /></p>
+
+<p>对于这个表，</p>
+
+<p>     select * from post_gift ;</p>
+
+<p>     select * from post_gift where post_gift.bid = 10171;</p>
+
+<p>    这两个sql查询结果一样吗？</p>
+
+<p>   答案可能出乎你意料之外，这两种查询结果并不一致!</p>
+
+<p>   select * from post_gift ; 的结果如下，我们看到是按着_id的自然插入顺序排的</p>
+
+<p><img src="/image/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/cf4a2195e78a93152bcda6db19008bed483934c02094cd185857edec2eeefa73" alt="" /></p>
+
+<p>    select * from post_gift where post_gift.bid = 10171;结果如下：</p>
+
+<p><img src="/image/guan_yu_sqlite_cha_xun_pai_xu_de_yi_ge_gui_yi_wen_ti/80d311f0a43c7ec01da5eb09932c10a95b0559a1c9b8138bc6c7063f69430a45" alt="" /></p>
+
+<p>    这里并没有按插入顺序给出结果，而似乎是按着gift_id升序给出的结果。但是我们的sql里面并没有按着gift_id的升序查询啊。</p>
+
+<p>    这里似乎是sqlite的一个问题，因为bid gift_id pid 是unique的，所以似乎在where语句中带上这里的unique
+key就会将结果按着这些unique key自然升序排序。不知道这算不算bug</p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/posts/shu_ju_ke_xue_gong_ju_jupyter_notebook_jiao_cheng_in_python/">数据科学工具 Jupyter Notebook教程 in Python</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/posts/opengl4_3_xin_te_xing__ji_suan_zhao_se_qi_compute_shader/">OpenGL4.3新特性: 计算着色器 Compute Shader</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">说一说</h2>
+        
+
+<div id="uyan_frame"></div>
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">说一说</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+            
+        </p>
+        <p class="power">
+            <span>
+                Copyright © 2017 <a href="https://github.com/MelonTeam" title="GitHub">MelonTeam <i class="fa fa-github" aria-hidden="true"></i></a>. All Rights Reserved.
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62569168" charset="UTF-8"></script>
+
+
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+  </body>
+
+</html>
